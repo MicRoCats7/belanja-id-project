@@ -12,7 +12,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 
-
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
