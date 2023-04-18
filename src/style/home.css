@@ -1,0 +1,169 @@
+.homepage {
+    width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.text-ajakan {
+    margin: 100px 0;
+}
+
+.text-ajakan h1 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #000;
+}
+
+.text-ajakan span {
+    color: #EF233C;
+}
+
+.btnBelanja {
+    background-color: #EF233C;
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: 0.3s ease-out;
+}
+
+.btnBelanja:hover {
+    background-color: #fff;
+    border: 1px solid #EF233C;
+    color: #EF233C;
+}
+
+.heroPage {
+    display: flex;
+    justify-content: center;
+}
+
+.img-homepage {
+    margin-top: 40px;
+}
+
+.img-homepage img {
+    width: 700px;
+}
+
+.Kategori {
+    width: 100%;
+    margin-top: 50px;
+}
+
+.Kategori h1 {
+    font-size: 25px;
+    font-weight: 700;
+    color: #000;
+}
+
+.container-kategori {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    gap: 25px;
+}
+
+.kategori-produk {
+    text-align: center;
+}
+
+.kategori-produk img {
+    width: 50px;
+    height: 50px;
+}
+
+.kategori-produk h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: #000;
+    margin-top: 10px;
+}
+
+.title-lainnya h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.container-lainnya {
+    margin-top: 30px;
+}
+
+.card-produk-lainnya {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+}
+
+.container-btnSeemore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+
+.container-btnSeemore button {
+    padding: 20px 30px;
+    background-color: #EF233C;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+/* responsive mobile */
+@media screen and (max-width: 600px) {
+
+    .heroPage {
+        flex-direction: column;
+        margin-left: 18px;
+    }
+
+    .text-ajakan {
+        margin: 30px 0;
+        width: 85%;
+    }
+
+    .text-ajakan h1 {
+        font-size: 25px;
+    }
+
+    .img-homepage {
+        display: none;
+    }
+
+    .btnBelanja {
+        margin-top: 20px;
+        padding: 12px 15px;
+        font-size: 12px;
+    }
+
+    .Kategori {
+        margin: 0 20px 0 18px;
+    }
+
+    .title-kategori h1 {
+        font-size: 20px;
+    }
+
+    .container-kategori {
+        display: flex;
+        overflow-x: scroll;
+        padding-right: 24px;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 24px;
+    }
+
+    .container-kategori .kategori-produk {
+        scroll-snap-align: start;
+    }
+}
