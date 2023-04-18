@@ -1,0 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.footer-bg {
+    background-color: #fff;
+    border-top: 1px solid #0000002c;
+    color: #fff;
+    width: 100vw;
+    position: relative;
+    left: 49%;
+    transform: translate(-50%, 0);
+    overflow: hidden;
+}
+
+.footer {
+    width: 100%;
+    color: #000;
+    margin: 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 55px 0;
+}
+
+.container-footer-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 34%;
+}
+
+.footer-logo {
+    position: relative;
+    width: 80%;
+}
+
+.container-footer-left h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.container-footer-left p {
+    font-size: 15px;
+    margin-top: 5px;
+    color: #00000062;
+}
+
+.footer-list {
+    width: 70%;
+    margin-left: 25px;
+}
+
+.footer-list li {
+    list-style: none;
+    line-height: 2.5;
+    font-size: 15px;
+    color: #00000062;
+    cursor: pointer;
+}
+
+.footer-list li:hover {
+    color: #EF233C;
+}
+
+.container-footer-right {
+    position: relative;
+    top: 40px;
+    width: 20%;
+}
+
+.footer-sosmed {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+}
+
+.footer-sosmed h3 {
+    font-size: 18px;
+    color: #000;
+    font-weight: 600;
+}
+
+.instagram {
+    display: flex;
+    align-items: center;
+    margin: 14px 0;
+}
+
+.instagram h3 {
+    font-size: 15px;
+    color: #967272;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.twitter {
+    display: flex;
+    align-items: center;
+    margin: 14px 0;
+}
+
+.twitter h3 {
+    font-size: 15px;
+    color: #967272;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.facebook {
+    display: flex;
+    align-items: center;
+    margin: 14px 0;
+}
+
+.facebook h3 {
+    font-size: 15px;
+    color: #967272;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.footer-bottom {
+    color: #000;
+    width: 100%;
+    height: 179px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+.footer-bottom .privacy {
+    display: flex;
+    align-items: center;
+    margin: 0 80px;
+    gap: 27px;
+}
+
+.footer-bottom .privacy p {
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.footer-bottom .privacy p:hover {
+    color: #EF233C;
+}
+
+.footer-bottom .copyright {
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    margin: 0 80px;
+    gap: 23px;
+}
+
+.footer-bottom .copyright p {
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+    font-weight: 700;
+}
