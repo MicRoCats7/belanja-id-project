@@ -1,19 +1,20 @@
-
 import './App.css';
-import { Routes,  Route} from "react-router-dom";
-import Login from './login/login';
 import Register from "./register/register";
 import Home from "./pages/home";
+import Login from "./login/login";
+import DetailProduct from "./pages/detailproduct";
 import Whislist from './whislist/whislist';
+
 
 function App() {  
   return (
     <div>
-      <Routes>  
+      <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
         <Route path="/whislist" element={<Whislist />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/detailproduct" element={<DetailProduct />} />
         </Routes>
     </div>
   );

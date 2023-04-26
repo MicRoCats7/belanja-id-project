@@ -1,9 +1,10 @@
 import React from "react";
 import "../../style/navbar.css";
 import logoBelanjaID from "../../assets/logoIMG/logo belanjaid.svg";
-import iconKeranjang from '../../assets/icon/keranjang.svg'
-import iconChat from '../../assets/icon/iconChat.svg'
-import IconNotif from '../../assets/icon/notif.svg'
+import iconKeranjang from "../../assets/icon/keranjang.svg";
+import iconChat from "../../assets/icon/iconChat.svg";
+import IconNotif from "../../assets/icon/notif.svg";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -39,8 +40,12 @@ function Navbar() {
           </div>
           <div className="line"></div>
           <div className="login-daftar">
-            <button class="login">Masuk</button>
-            <button class="daftar">Daftar</button>
+            <Link to="/login">
+              <button class="btn-login">Masuk</button>
+            </Link>
+            <Link to="/register">
+              <button class="daftar">Daftar</button>
+            </Link>
           </div>
         </div>
       </div>

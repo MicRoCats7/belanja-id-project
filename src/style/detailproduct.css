@@ -1,0 +1,443 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-detail {
+    background: rgba(237, 237, 237, 0.859)
+}
+
+.container-detail {
+    width: 1400px;
+    margin: 0 auto;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 22px;
+    margin: 20px 0;
+    background: rgba(255, 190, 190, 0.52);
+    border-radius: 10px;
+}
+
+.navigation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigation-item ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.navigation-item ul a {
+    text-decoration: none;
+    color: rgba(239, 35, 60, 0.69);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.navigation-item ul span {
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.detail-product {
+    display: flex;
+    background-color: #ffff;
+    margin: 20px 0;
+    border-radius: 10px;
+    padding: 51px 56px;
+}
+
+.detail-product-img h3 {
+    margin: 53px 0 23px 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.main-img img {
+    width: 95%;
+    border-radius: 10px;
+}
+
+.more-img {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.more-img img {
+    width: 20%;
+    border-radius: 10px;
+    border: 2px solid #000;
+}
+
+.detail-product-desc {
+    margin: 0 50px;
+}
+
+.detail-product-desc h1 {
+    font-size: 25px;
+    font-weight: 600;
+    color: #000;
+}
+
+.info-desc {
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 25% 10px 400px;
+    margin: 20px 0;
+    gap: 18px;
+}
+
+.sold {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sold h4 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.line-detail {
+    width: 3px;
+    height: 30px;
+    background-color: #FF0000;
+}
+
+.ratings {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ratings h4 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.like {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.like h4 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.toko {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toko h4 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.toko a {
+    text-decoration: none;
+}
+
+.harga {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 59px;
+}
+
+.harga h2 {
+    font-size: 25px;
+    font-weight: 700;
+    color: #000;
+}
+
+.harga h3 {
+    font-size: 15px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.pilih-product {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 34px;
+}
+
+.pilih-product .pilih-product-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 140px 140px;
+    gap: 20px;
+
+}
+
+.pilih-product h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+}
+
+.pilih-product-item .inactive {
+    width: 152px;
+    height: 37px;
+    border: 1px solid #797373;
+    border-radius: 10px;
+    background-color: #ffff;
+    color: #000;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pilih-product-item .active {
+    width: 152px;
+    height: 35px;
+    border: 1px solid #EF233C;
+    border-radius: 10px;
+    background-image: url(../assets/icon/icon\ active.svg);
+    background-position: start;
+    background-repeat: no-repeat;
+    background-color: #ffff;
+    color: #000;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.kuantitas {
+    display: flex;
+    align-items: center;
+    gap: 27px;
+    margin-bottom: 34px;
+}
+
+.kuantitas h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+}
+
+.kuantitas-item {
+    display: flex;
+    align-items: center;
+}
+
+.kuantitas-item button {
+    width: 38px;
+    height: 34px;
+    border: 1px solid #727272;
+    background-color: #ffff;
+    color: #000;
+    font-size: 25px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.kuantitas-item input {
+    width: 67px;
+    height: 34px;
+    border: 1px solid #727272;
+    background-color: #ffff;
+    color: #000;
+    font-size: 20px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.kuantitas p {
+    font-size: 15px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.btn-cartBuy {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    margin-bottom: 61px;
+}
+
+.btn-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 250px;
+    height: 60px;
+    border: 1px solid #F00000;
+    border-radius: 10px;
+    background-color: #ffff;
+    color: #EF233C;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.btn-buy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 250px;
+    height: 60px;
+    border: 1px solid #F00000;
+    border-radius: 10px;
+    background-color: #EF233C;
+    color: #ffff;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.spesifikasi h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 29px;
+}
+
+.spesifikasi-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.spesifikasi-item1 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spesifikasi-item1 h4 {
+    font-size: 16px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.spesifikasi-item .titik {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 16px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.spesifikasi-item2 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spesifikasi-item2 h4 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+}
+
+.deskripsi-produk {
+    margin: 50px 0;
+    background-color: #ffff;
+    border-radius: 10px;
+    padding: 51px 56px;
+}
+
+.deskripsi-produk h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 23px;
+}
+
+.deskripsi-produk p {
+    font-size: 16px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.penilaian-produk {
+    margin: 50px 0;
+    background-color: #ffff;
+    border-radius: 10px;
+    padding: 51px 56px;
+}
+
+.penilaian-produk h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 41px;
+}
+
+.penilaian-item1 {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 190, 190, 29%);
+    padding: 25px 39px;
+    border-radius: 10px;
+}
+
+.desc-penilaian {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.desc-penilaian h4 {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.like p {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.desc-penilaian p {
+    font-size: 16px;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 60%);
+}
+
+.tgl-penilaian {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.line-penilaian {
+    width: 2px;
+    height: 20px;
+    background-color: #F00000;
+    margin: 20px 0;
+}
