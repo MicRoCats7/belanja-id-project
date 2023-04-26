@@ -51,8 +51,6 @@
 }
 
 .text-regis h1{
-    /* margin-top: 91px; */
-    /* margin-left: 135px; */
     text-align: center;
     font-weight: 700;
     margin-bottom: 10px;
@@ -66,35 +64,41 @@
     font-size: 14px;
 }
 
-input {
+.con-form-email input{
     width: 100%;
-    padding: 16px 0px;
+    padding: 0px 10px;
     font-size: 15px;
     border: none;
 }
 
+.con-form-name input{
+    width: 100%;
+    padding: 0px 10px;
+    font-size: 15px;
+    border: none;
+}
 
 ::placeholder {
     color: rgb(178, 168, 168);
     font-size: 14px;
 }
 
-.btn-masuk{ 
+.btn-masukk{ 
     cursor: pointer;
-    /* margin-top: 22px; */
+
     color: #FFFFFF;
     border-radius: 6px;
     font-weight: 600;
     font-size: 16px;
     width: 100%;
-    /* margin-left: 40px; */
     padding: 14px 14px;
     border: 1px solid #EF233C;
     background-color: #EF233C;
     box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
     transition: all 0.5s;
 }
-.btn-masuk:hover {
+
+.btn-masukk:hover {
     color: #EF233C;
     /* width:; */
     box-shadow: 0 0 20px rgba(255, 255, 255,);
@@ -114,11 +118,8 @@ input {
   .validate p{
     margin: 0;
   }
-
-  .form-email{
-    /* margin-bottom: -15px; */
-    /* margin-top: -20px; */
-    padding: 0 16px;
+  .form-name{
+    padding: 10px 0px;
     width: 100%;
     border: 0.0px solid #000000;
     box-sizing: border-box;
@@ -127,7 +128,17 @@ input {
     border-radius: 6px;
   }
 
-  .input-form-email:focus, .input-form-password:focus{
+  .form-mail{
+    padding: 10px 0px;
+    width: 100%;
+    border: 0.0px solid #000000;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+  }
+
+  .input-form-email:focus, .input-form-password:focus, .input-form-nama:focus{
     outline: none;
   }
 
@@ -156,13 +167,13 @@ input {
     color: #000000;
   }
 
-.login-google button{
+.regis-google button{
     cursor: pointer;
     margin-top: 19px;
     border-radius: 6px;
     font-size: 16px;
     width: 100%;
-    padding: 3px 3px;
+    padding: 10px 10px;
     border: 1px solid #EF233C;
     background-color: #FFFFFF;
     box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
@@ -174,7 +185,7 @@ input {
     font-weight: 400;
   }
 
-.login-google img{
+.regis-google img{
     width: 30px;
 }
 
@@ -186,7 +197,7 @@ input {
 .form-password{
     display:flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 0 14px;
     border: 0.0px solid #000000;
     box-sizing: border-box;
     background: #FFFFFF;
@@ -213,7 +224,7 @@ input {
 }
 
 .daftar-dengan{
-    top: 400px;
+    top: 100;
 }
 .text-merah{
     color: #EF233C;
