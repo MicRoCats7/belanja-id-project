@@ -1,5 +1,4 @@
 
-// import './login.css';
 import bakcground from '../assets/bglogin.svg';
 import icon from '../assets/Belanja.id.svg';
 import React, { useState } from 'react';

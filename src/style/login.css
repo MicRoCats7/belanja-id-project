@@ -66,19 +66,13 @@
     font-size: 14px;
 }
 
-input {
+ input {
     width: 100%;
     padding: 16px 0px;
     font-size: 15px;
-    /* margin-left: 40px; */
-    /* margin-top: 22px; */
-    /* border: 0.0px solid #000000;
-    box-sizing: border-box;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 6px; */
     border: none;
 }
+
 
 
 ::placeholder {
@@ -123,9 +117,7 @@ input {
   }
 
   .form-email{
-    /* margin-bottom: -15px; */
-    /* margin-top: -20px; */
-    padding: 0 16px;
+    padding: 10px 0px;
     width: 100%;
     border: 0.0px solid #000000;
     box-sizing: border-box;
@@ -169,7 +161,7 @@ input {
     border-radius: 6px;
     font-size: 16px;
     width: 100%;
-    padding: 3px 3px;
+    padding: 10px 10px;
     border: 1px solid #EF233C;
     background-color: #FFFFFF;
     box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
@@ -181,7 +173,7 @@ input {
     font-weight: 400;
   }
 
-.login-google img{
+.login-googlee img{
     width: 30px;
 }
 
