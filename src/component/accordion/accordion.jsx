@@ -15,7 +15,7 @@ export default function SimpleAccordion() {
     borderRadius: "10px",
     padding: "16px",
     "&:before": {
-      display: "none",
+      display: "",
     },
   }));
 
