@@ -1,0 +1,301 @@
+.container-detailpesanan {
+    display: flex;
+    margin: 0 48px;
+    padding: 20px;
+    gap: 30px;
+}
+
+.container-detailpesanan .detailpesanan, .detail-pelanggan {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.34)
+}
+
+.detailpesanan-title {
+    background: #EF233C;
+    border-radius: 10px 10px 0 0;
+    padding: 21px;
+}
+
+.detailpesanan-title h1 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.detailpesanan-content {
+    padding: 44px;
+}
+
+.produkpesanan {
+    display: flex;
+    justify-content: space-between;
+    background: #EF233C;
+    padding: 22px;
+    border-radius: 10px;
+}
+
+.produkpesananimage {
+    display: flex;
+    align-items: center;
+}
+
+.produkpesananimage img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    aspect-ratio: 1/2;
+}
+
+.detailproduk {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 0 10px;
+}
+
+.detailproduk h4 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    width: 90%;
+    margin-bottom: 14px;
+}
+
+.detailproduk h3 {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.detailproduk-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 13px;
+}
+
+.detailproduk-bottom h4 {
+    font-size: 14px;
+    font-weight: normal;
+    color: #fff;
+}
+
+.detailproduk-bottom span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.btn-delete button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #ffffff00;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.line-detailpesanan {
+    width: 710px;
+    height: 2px;
+    background: #000000;
+    opacity: 0.34;
+    margin: 19px 0;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 13px;
+
+}
+
+.hargatotal, .totalharga {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.total .hargatotal h4 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #797979;
+}
+
+.total .totalharga h4 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #797979;
+}
+
+.detail-pelanggan-title {
+    background: #EF233C;
+    border-radius: 10px 10px 0 0;
+    padding: 21px;
+}
+
+.detail-pelanggan-title h1 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.detail-pelanggan-content {
+    padding: 44px;
+}
+
+.form-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.nama-lengkap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 48%;
+}
+
+.nama-lengkap h4 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.nama-lengkap input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.34);
+    padding: 0 10px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.nama-lengkap input[type=text]:focus {
+    border: 1px solid #EF233C;
+}
+
+.nomor-handphone {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 48%;
+}
+
+.nomor-handphone h4 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.nomor-handphone input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.34);
+    padding: 0 10px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.nomor-handphone input[type=text]:focus {
+    border: 1px solid #EF233C;
+}
+
+.form-pelanggan {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-pelanggan h4 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 8px 0;
+}
+
+.form-pelanggan .input-provinsi-kota {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.34);
+    padding: 0 10px;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.form-pelanggan .input-provinsi-kota option {
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #EF233C;
+    color: #fff;
+}
+
+.kurir-pengiriman {
+    margin-top: 20px;
+}
+
+.line-detail-pelanggan {
+    width: 100%;
+    height: 2px;
+    background: #000000;
+    opacity: 0.34;
+    margin: 19px 0;
+}
+
+.alamat-pengiriman {
+    margin-top: 20px;
+}
+
+.alamat-pengiriman h4 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 8px 0;
+}
+
+.alamat-pengiriman textarea {
+    width: 100%;
+    height: 130px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.63);
+    padding: 10px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+    resize: none;
+}
+
+.btn-belanja {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-belanja button {
+    width: 100%;
+    height: 50px;
+    background: #EF233C;
+    border-radius: 10px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 20px 0;
+}

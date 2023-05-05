@@ -277,6 +277,10 @@
     margin-bottom: 61px;
 }
 
+.btn-cartBuy a{
+    text-decoration: none;
+} 
+
 .btn-cart {
     display: flex;
     justify-content: center;
@@ -300,7 +304,7 @@
     gap: 10px;
     width: 250px;
     height: 60px;
-    border: 1px solid #F00000;
+    border: none;
     border-radius: 10px;
     background-color: #EF233C;
     color: #ffff;
@@ -308,6 +312,11 @@
     font-weight: normal;
     cursor: pointer;
 }
+
+.btn-buy:hover {
+    background: #ef233bc1;
+}
+
 
 .spesifikasi h3 {
     font-size: 18px;
