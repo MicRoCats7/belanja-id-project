@@ -123,7 +123,9 @@ function DetailProduct() {
                 <img src={cart} alt="" />
                 Tambahkan ke Keranjang
               </button>
-              <button className="btn-buy">Beli Sekarang</button>
+              <Link to={"/detailpesanan"}>
+                <button className="btn-buy">Beli Sekarang</button>
+              </Link>
             </div>
             <div className="spesifikasi">
               <h3>Spesifikasi Produk</h3>
