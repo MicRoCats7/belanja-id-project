@@ -40,14 +40,14 @@ function Register(){
           <div className="text-regis">
             <h1>Ayo Buat Akun</h1>
             <form onSubmit={handleSubmit(onSubmit)} className='form-regist'>
-            <div className="con-form-email">
-                <div className='form-email'>
-                  <input type="text" id="nama" name="email" placeholder="nama" {...register("nama", {required:true})} className='input-form-email'/>
+            <div className="cont-form-name">
+                <div className='form-name'>
+                  <input type="text" id="nama" name="email" placeholder="nama" {...register("nama", {required:true})} className='input-form-nama'/>
                 </div>
                 <span className='validate'>{errors.nama?.type === 'required' && <p role="alert">harap isi nama</p>}</span>
               </div>
               <div className="con-form-email">
-                <div className='form-email'>
+                <div className='form-mail'>
                   <input type="text" id="email" name="email" placeholder="email" {...register("email", {required:true})} className='input-form-email'/>
                 </div>
                 <span className='validate'>{errors.email?.type === 'required' && <p role="alert">harap isi email dahulu</p>}</span>
@@ -62,7 +62,7 @@ function Register(){
                 <span className='validate'>{errors.password?.type === 'required' && <p role="alert">harap isi password dahulu</p>}</span>
               </div>
               <div className="button">
-                <button className='btn-masuk'>Masuk</button>
+                <button className='btn-masukk'>Masuk</button>
               </div>
             </form>
             <div className='daftar-selain'>
@@ -70,8 +70,8 @@ function Register(){
               <p>atau daftar dengan</p>
               <div className='line-left'></div>
             </div>
-              <div className="login-google">
-                <button className='masuk-google'>
+              <div className="regis-google">
+                <button className='regis-google'>
                 <img src={imggoogle} className="login-icon" alt="icon" />
                 <p className='textgl'>Masuk Dengan Google</p>
                 </button>
