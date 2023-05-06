@@ -209,11 +209,9 @@
     align-items: center;
     justify-content: center;
     line-height: 19px;
+    margin-top: 20px;
 }
 
-.daftar-dengan{
-    top: 400px;
-}
 .text-merah{
     color: #EF233C;
 }

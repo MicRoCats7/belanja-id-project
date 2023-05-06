@@ -19,7 +19,6 @@ function App() {
         <Route path="/detailproduct" element={<DetailProduct />} />
         <Route path="/detailpesanan" element={<Detailpesanan />} />
       </Routes>
-        </Routes>
     </div>
   );
 }
