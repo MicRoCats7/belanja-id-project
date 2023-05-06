@@ -18,6 +18,7 @@ function Navbar() {
             <input type="text" placeholder="Cari Produk " />
             <button type="submit">Search</button>
           </div>
+          <p>Event</p>
           <div className="kategori">
             <button class="dropbtn">Kategori</button>
             <div className="dropdown-content">

@@ -30,6 +30,13 @@
     margin: 0 29px;
 }
 
+.listNavbar p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+    margin-left: 10px;
+}
+
 .search {
     display: flex;
     justify-content: space-between;
@@ -84,7 +91,7 @@ input[type="text"]:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 17px;
+    margin: 0 10px;
     position: relative;
     display: inline-block;
 }
@@ -233,6 +240,7 @@ input[type="text"]:focus {
         align-items: center;
     }
 }
+
 /* 
 @media only screen and (max-width: 926px) {
 
