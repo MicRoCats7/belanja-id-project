@@ -1,23 +1,49 @@
 
 import bakcground from '../assets/bglogin.svg';
 import icon from '../assets/Belanja.id.svg';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/login.css';
 import bglogin from '../assets/shipping.svg';
 import main from '../assets/bgmain.svg';
 import { useForm } from "react-hook-form";
 import imggoogle from '../assets/google.svg';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import apiurl from '../utils/apiurl';
+import axios from 'axios';
 
 function Login() {
+  const [email ,setEmail] = useState("")
+  const [password ,setPassword] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const navigate = useNavigate()
+  const onSubmit = async (data) => {
+    // e.preventDefault()
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('password',data.password);
+    await axios({
+      method: "post",
+      url: apiurl() + 'login',
+      data: formData,
+      headers: { 
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((response) => {
+        console.log (response)
+        localStorage.setItem('token', response.data.data.access_token);
+        navigate('/')
+      })
+      .catch((error) => {
+      })
+  };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordIcon, setPasswordIcon] = useState(<FaEyeSlash/>);
+  
 
-  const handleToggle = () =>{
+  const handleToggle = (e) =>{
+    e.preventDefault()
     if(passwordType === 'password'){
       setPasswordType('text');
       setPasswordIcon(FaEye);
