@@ -8,16 +8,15 @@ import main from '../assets/bgmain.svg';
 import { useForm } from "react-hook-form";
 import imggoogle from '../assets/google.svg';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import apiurl from '../utils/apiurl';
 import axios from 'axios';
-
 
 function Login() {
   const [email ,setEmail] = useState("")
   const [password ,setPassword] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm();
-  
+  const navigate = useNavigate()
   const onSubmit = async (data) => {
     // e.preventDefault()
     const formData = new FormData();
@@ -34,6 +33,7 @@ function Login() {
       .then((response) => {
         console.log (response)
         localStorage.setItem('token', response.data.data.access_token);
+        navigate('/')
       })
       .catch((error) => {
       })
