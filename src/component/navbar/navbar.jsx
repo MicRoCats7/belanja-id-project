@@ -71,7 +71,9 @@ function Navbar() {
             <img src={Icontoko} alt="toko-img" />
             </div>
             <h3 className="text-toko">{profile.name}</h3>
+            <div className="dropdown-profile">
             <img className="photo-profile" src={profile.profile_photo_url} alt="" />
+            </div>
           </div>
           :
               <div className="login-daftar">
