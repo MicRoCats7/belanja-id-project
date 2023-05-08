@@ -22,8 +22,8 @@ function Whislist() {
   ));
   return (
     <div className="whislist">
+      <Navbar />
       <div className="main">
-        <Navbar />
         <div className="nav-whislist">
           <h3 className="whisone">Whislist</h3>
           <img src={arrowWhislist} alt="arrow" loading="lazy" />
@@ -52,7 +52,7 @@ function Whislist() {
             <h2 className="name-filter">Filter</h2>
             <div>
               <FilterSimple />
-              </div>
+            </div>
           </div>
           <div className="card-barang">
             <h2 className="barang">barang</h2>
@@ -61,7 +61,7 @@ function Whislist() {
         </div>
       </div>
       <div>
-      <Footer />
+        <Footer />
       </div>
     </div>
   );
