@@ -27,14 +27,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 29px;
+    position: relative;
+    left: -20px;
 }
 
 .listNavbar p {
     font-size: 15px;
-    font-weight: 500;
+    font-weight: normal;
     color: #000;
-    margin-left: 10px;
+    margin: 0 20px 0 20px;
+    cursor: pointer;
 }
 
 .search {
@@ -187,35 +189,44 @@ input[type="text"]:focus {
     transition: 0.2s ease-in;
 }
 
-    .myshop{
-        gap: 12px;
-        display: flex;
-        align-items: center;
-    }
+.myshop {
+    gap: 12px;
+    display: flex;
+    align-items: center;
+}
 
-    .circle{
-        width: 40px;
-        height: 40px;
-        border-radius: 100%;
-        background: #f4f4f4;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.myshop h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #555;
+}
 
-    .circle img{
-        width: 20px;
-        height: 20px; 
-        cursor: pointer;
-    }
+.circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .text-toko{
-        font-weight: 600;
-        font-style: poppins;
-    }
-    .photo-profile{
-        border-radius: 100%;
-    }
+.circle img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.text-toko {
+    font-weight: 600;
+    font-style: poppins;
+}
+
+.photo-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
 
 @media only screen and (max-width: 480px) {
 
