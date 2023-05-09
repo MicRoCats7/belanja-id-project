@@ -40,9 +40,9 @@ function Whislist() {
                 class="custom-select sources"
                 placeholder="Source Type"
               >
-                <option value="profile">Profile</option>
-                <option value="word">Word</option>
-                <option value="hashtag">Hashtag</option>
+                <option value="profile">Terbaru</option>
+                <option value="word">Harga tertinggi</option>
+                <option value="hashtag">Harga terendah</option>
               </select>
             </div>
           </div>

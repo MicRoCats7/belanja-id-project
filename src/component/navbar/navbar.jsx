@@ -10,10 +10,8 @@ import apiurl from "../../utils/apiurl";
 import axios from "axios";
 
 function Navbar() {
-
-  const navigate = useNavigate()
-  const [ profile, setProfile ] = useState({});
-  const [profile, setProfile] = useState({})
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState({});
   const token = localStorage.getItem("token");
   async function getprofile() {
     await axios({
@@ -30,31 +28,28 @@ function Navbar() {
       .catch((error) => {});
   }
 
-  useEffect(()=>{
-    getprofile()
-  },[])
-
-  async function logout() {
-    await axios({
-      method: "post",
-      url: apiurl() + 'logout',
-      headers: { 
-        "Authorization":'Bearer '+ token,
-      },
-    })
-    .then((response) => {
-      console.log (response)
-      navigate('/login')
-    })
-    .catch((error) => {
-      })
-  }
-
-
   useEffect(() => {
     getprofile();
   }, []);
 
+  async function logout() {
+    await axios({
+      method: "post",
+      url: apiurl() + "logout",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        navigate("/login");
+      })
+      .catch((error) => {});
+  }
+
+  useEffect(() => {
+    getprofile();
+  }, []);
 
   return (
     <div className="navbar">
@@ -99,28 +94,19 @@ function Navbar() {
                 </Link>
               </div>
               <h3 className="text-toko">{"Toko"}</h3>
+              {/* <h3 className="text-toko">{profile.name}</h3> */}
               <img
                 className="photo-profile"
                 src={profile.profile_photo_url}
                 alt=""
               />
+              <button className="btn-logout" onClick={logout}>
+                Logout
+              </button>
             </div>
-
-            <h3 className="text-toko">{profile.name}</h3>
-              <img className="photo-profile" src={profile.profile_photo_url} alt="" />
-              <button className="btn-logout" onClick={logout}>Logout</button>
-          </div>
-          :
-              <div className="login-daftar">
-            <Link to="/login">
-              <button class="btn-login">Masuk</button>
-            </Link>
-            <Link to="/register">
-              <button class="daftar">Daftar</button>
-            </Link>
-          </div> 
-          }
-          ) : (
+          ) 
+          : 
+          (
             <div className="login-daftar">
               <Link to="/login">
                 <button class="btn-login">Masuk</button>

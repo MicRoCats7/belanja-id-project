@@ -71,29 +71,31 @@ function Login() {
           <h1>Silahkan Masuk</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="form-login">
             <div className="con-form-email">
+              <h3>Email</h3>
               <div className="form-email">
                 <input
                   type="text"
                   id="email"
                   name="email"
-                  placeholder="email"
+                  placeholder="Email"
                   {...register("email", { required: true })}
                   className="input-form-email"
                 />
               </div>
               <span className="validate">
                 {errors.email?.type === "required" && (
-                  <p role="alert">harap isi email dahulu</p>
+                  <p role="alert">Harap isi email dahulu</p>
                 )}
               </span>
             </div>
             <div className="con-form-password">
+              <h3>Password</h3>
               <div className="form-password">
                 <input
                   type={passwordType}
                   id="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="Password"
                   {...register("password", { required: true })}
                   className="input-form-password"
                 />
@@ -103,7 +105,7 @@ function Login() {
               </div>
               <span className="validate">
                 {errors.password?.type === "required" && (
-                  <p role="alert">harap isi password dahulu</p>
+                  <p role="alert">Harap isi password dahulu</p>
                 )}
               </span>
             </div>
