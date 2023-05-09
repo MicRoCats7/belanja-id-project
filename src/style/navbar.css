@@ -210,6 +210,19 @@ input[type="text"]:focus {
         border-radius: 100%;
     }
 
+    .btn-logout{
+        color: #EF233C;
+        font-size: 15px;
+        font-weight: 500;
+        padding: 4px 16px;
+        border: 1px solid #EF233C;
+        background-color: #ffff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.2s ease-in;   
+        }
+
+
 @media only screen and (max-width: 480px) {
 
     .navbar {

@@ -4,12 +4,13 @@ import logoBelanjaID from "../../assets/logoIMG/logo belanjaid.svg";
 import iconKeranjang from "../../assets/icon/keranjang.svg";
 import iconChat from "../../assets/icon/iconChat.svg";
 import IconNotif from "../../assets/icon/notif.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Icontoko from "../../assets/icon/tokoo.svg";
 import apiurl from "../../utils/apiurl";
 import axios from "axios";
 
 function Navbar() {
+  const navigate = useNavigate()
   const [ profile, setProfile ] = useState({});
   const token = localStorage.getItem("token");
   async function getprofile(){
@@ -30,6 +31,22 @@ function Navbar() {
   useEffect(()=>{
     getprofile()
   },[])
+
+  async function logout() {
+    await axios({
+      method: "post",
+      url: apiurl() + 'logout',
+      headers: { 
+        "Authorization":'Bearer '+ token,
+      },
+    })
+    .then((response) => {
+      console.log (response)
+      navigate('/login')
+    })
+    .catch((error) => {
+      })
+  }
 
 
   return (
@@ -71,9 +88,8 @@ function Navbar() {
             <img src={Icontoko} alt="toko-img" />
             </div>
             <h3 className="text-toko">{profile.name}</h3>
-            <div className="dropdown-profile">
-            <img className="photo-profile" src={profile.profile_photo_url} alt="" />
-            </div>
+              <img className="photo-profile" src={profile.profile_photo_url} alt="" />
+              <button className="btn-logout" onClick={logout}>Logout</button>
           </div>
           :
               <div className="login-daftar">

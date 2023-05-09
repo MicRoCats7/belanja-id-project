@@ -25,12 +25,13 @@ function Register(){
 
   const onSubmit = async (data) => {
     // e.preventDefault()
+    console.log(data)
     const formData = new FormData();
     formData.append('username', data.username);
-    formData.append('name', data.name);
+    formData.append('name', data.username);
     formData.append('email', data.email);
     formData.append('password',data.password);
-    formData.append('phone',data.phone);
+    formData.append('phone', Math.floor(Math.random() * 1000000000));
       
     await axios({
       method: "post",
@@ -43,7 +44,7 @@ function Register(){
       .then((response) => {
         console.log (response)
         localStorage.setItem('token', response.data.data.acces_token);
-        navigate('/')
+        navigate('/login')
       })
       .catch((error) => {
       })
