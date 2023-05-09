@@ -1,0 +1,50 @@
+.input-provinsi-kota {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    padding: 0 10px;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.input-provinsi-kota option {
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #EF233C;
+    color: #fff;
+}
+
+.input-kode {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    padding: 0 10px;
+    margin: 5px 0;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.input-kode option {
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #EF233C;
+    color: #fff;
+}
+
+div p {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+div .text-kode{
+    margin-top: 20px;
+}

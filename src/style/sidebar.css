@@ -1,0 +1,202 @@
+.container-sidebar {
+    display: flex;
+    background-color: #ECECEC;
+    height: 100vh;
+}
+
+main {
+    width: 100%;
+    padding: 20px;
+}
+
+.sidebar {
+    background-color: #FFFFFF;
+    color: #000;
+    height: 100vh;
+    width: 300px;
+}
+
+.sidebar .top_section {
+    padding: 15px 15px;
+}
+
+.sidebar .top_section .logo-toko {
+    display: flex;
+    align-items: center;
+    /* padding: 10px 0; */
+}
+
+.sidebar .top_section .logo-toko img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 100%;
+    object-fit: contain;
+    aspect-ratio: 1/2;
+}
+
+.sidebar .top_section .logo-toko h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.top_section .line-top_section {
+    margin: 10px 0;
+    border: 1px solid #ECECEC;
+}
+
+.top_section .saldo_info {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+}
+
+.top_section .saldo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.top_section .saldo h3 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #A5A5A5;
+}
+
+.top_section .saldo span {
+    font-size: 13px;
+    font-weight: normal;
+    color: #000;
+}
+
+.saldo_info .hide-saldo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.saldo_info .hide-saldo h3 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #A5A5A5;
+}
+
+.seller-info .jadwal-buka {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.seller-info .jadwal-buka h3 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #A5A5A5;
+}
+
+.seller-info .jadwal-buka span {
+    font-size: 13px;
+    font-weight: normal;
+    color: #000;
+}
+
+.seller-info .total-transaksi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.seller-info .total-transaksi h3 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #A5A5A5;
+}
+
+.seller-info .total-transaksi span {
+    font-size: 13px;
+    font-weight: normal;
+    color: #000;
+}
+
+.seller-info .followers {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.seller-info .followers h3 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #A5A5A5;
+}
+
+.seller-info .followers span {
+    font-size: 13px;
+    font-weight: normal;
+    color: #000;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    gap: 15px;
+}
+
+.link:hover {
+    background-color: #f0828f70;
+    color: #EF233C;
+}
+
+.active {
+    border-left: 4px solid #EF233C;
+    color: #EF233C;
+}
+
+.icon, .link_text {
+    font-size: 16px;
+}
+
+/* .link-submenu {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    gap: 15px;
+}
+
+.subMenu_link {
+    background-color: #f0828f70;
+    color: #EF233C;
+    height: 60px;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.subMenu_link:hover {
+    background-color: #f0828f70;
+    color: #EF233C;
+} */
