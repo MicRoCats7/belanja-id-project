@@ -12,6 +12,11 @@
     height: 6rem;
     background-color: #fff;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+    /* position: sticky;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    right: 0; */
 }
 
 .container-navbarToko {
@@ -21,13 +26,14 @@
     width: 100%;
     /* max-width: 1200px; */
     margin: 0 50px;
+
 }
 
 .listNavbarToko {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 29px;
+    margin: 0 auto;
 }
 
 .listNavbarToko p {
@@ -134,6 +140,12 @@ input[type="text"]:focus {
     border-radius: 5px;
     cursor: pointer;
     transition: 0.2s ease-in;
+}
+
+.photo-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
 }
 
 @media only screen and (max-width: 480px) {

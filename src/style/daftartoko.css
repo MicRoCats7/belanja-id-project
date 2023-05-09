@@ -159,12 +159,14 @@
 .btn-buatToko {
     display: flex;
     align-items: center;
-    margin: 20px 0 0 37px;
+    justify-content: space-evenly;
+    margin: 20px 0 0 -6px;
     width: 100%;
+    gap: 10px;
 }
 
-.btn-buatToko button {
-    width: 40%;
+.btn-buatToko a button {
+    width: 120%;
     height: 40px;
     border-radius: 5px;
     background-color: #EF233C;
@@ -176,8 +178,8 @@
     margin-left: 20px;
 }
 
-.btn-buatToko .btn-kembali {
-    width: 40%;
+.btn-buatToko a .btn-kembali {
+    width: 150%;
     height: 40px;
     border-radius: 5px;
     background-color: #fff;
