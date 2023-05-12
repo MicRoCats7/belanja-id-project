@@ -3,20 +3,19 @@ import main from "../assets/bgmain.svg";
 import { useForm } from "react-hook-form";
 import imggoogle from "../assets/google.svg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import bakcground from "../assets/bglogin.svg";
-import icon from "../assets/Belanja.id.svg";
-import "../style/register.css";
-import React, { useState } from "react";
-import axios from "axios";
-import apiurl from "../utils/apiurl";
-
+import { Link, useNavigate } from 'react-router-dom';
+import bakcground from '../assets/bglogin.svg';
+import icon from '../assets/Belanja.id.svg';
+import '../style/register.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import apiurl from '../utils/apiurl';
 function Register() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm()
   const [passwordType, setPasswordType] = useState("password");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,12 +29,11 @@ function Register() {
     // e.preventDefault()
     console.log(data);
     const formData = new FormData();
-    formData.append("username", data.username);
-    formData.append("name", data.username);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("phone", Math.floor(Math.random() * 1000000000));
-
+    formData.append('username', data.username);
+    formData.append('name', data.username);
+    formData.append('email', data.email);
+    formData.append('password',data.password);
+    formData.append('phone', Math.floor(Math.random() * 1000000000));
     await axios({
       method: "post",
       url: apiurl() + "register",
@@ -51,6 +49,7 @@ function Register() {
       })
       .catch((error) => {});
   };
+  
 
   const handleToggle = () => {
     if (passwordType === "password") {

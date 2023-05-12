@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../style/navbar.css";
 import logoBelanjaID from "../../assets/logoIMG/logo belanjaid.svg";
 import iconKeranjang from "../../assets/icon/keranjang.svg";
@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Icontoko from "../../assets/icon/tokoo.svg";
 import apiurl from "../../utils/apiurl";
 import axios from "axios";
+
 
 function Navbar() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function Navbar() {
         console.log(response);
         setProfile(response.data.data);
       })
-      .catch((error) => {});
+      .catch((error) => {})
   }
 
   useEffect(() => {
@@ -40,16 +41,14 @@ function Navbar() {
         Authorization: "Bearer " + token,
       },
     })
-      .then((response) => {
-        console.log(response);
-        navigate("/login");
-      })
-      .catch((error) => {});
+    .then((response) => {
+      console.log (response)
+      navigate('/login')
+    })
+    .catch((error) => {
+      })
   }
 
-  useEffect(() => {
-    getprofile();
-  }, []);
 
   return (
     <div className="navbar">
@@ -86,36 +85,32 @@ function Navbar() {
             <img src={IconNotif} alt="icon notif" />
           </div>
           <div className="line"></div>
-          {token ? (
-            <div className="myshop">
-              <div className="circle">
-                <Link to={"/daftartoko"}>
-                  <img src={Icontoko} alt="toko-img" />
-                </Link>
-              </div>
-              <h3 className="text-toko">{"Toko"}</h3>
-              {/* <h3 className="text-toko">{profile.name}</h3> */}
-              <img
-                className="photo-profile"
-                src={profile.profile_photo_url}
-                alt=""
-              />
-              <button className="btn-logout" onClick={logout}>
-                Logout
-              </button>
-            </div>
-          ) 
-          : 
-          (
-            <div className="login-daftar">
-              <Link to="/login">
-                <button class="btn-login">Masuk</button>
-              </Link>
-              <Link to="/register">
-                <button class="daftar">Daftar</button>
-              </Link>
-            </div>
-          )}
+          {token ? 
+      <div className="drop-profile">
+      <img className="photo-profile" src={profile.profile_photo_url} alt="" /> 
+     <div className="menu-dropdown">
+     <div className="user-info">
+     <img className="photo-profile" src={profile.profile_photo_url} alt="" /> 
+     <h3 className="nama-user">{profile.name}</h3> 
+     </div>
+     <hr />
+       <a href="/" className="sub-menu-link">Profile</a>
+       <a href="Whislist">Whislist</a>
+       <button className="btn-logout" onClick={logout}>Logout</button>
+     </div>
+     </div>
+
+          :
+              <div className="login-daftar">
+            <Link to="/login">
+              <button class="btn-login">Masuk</button>
+            </Link>
+            <Link to="/register">
+              <button class="daftar">Daftar</button>
+            </Link>
+          </div> 
+          }
+         
         </div>
       </div>
     </div>
