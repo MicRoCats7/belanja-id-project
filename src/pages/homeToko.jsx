@@ -38,7 +38,7 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Pesanan Baru</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="  right">
+                <Tooltip title="Pesanan Baru Kamu" placement="right">
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
@@ -54,7 +54,7 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Siap Dikirim</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="  right">
+                <Tooltip title="Pesanan Siap Kirim" placement="right">
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
@@ -70,7 +70,7 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Dalam Pengiriman</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="  right">
+                <Tooltip title="Pesanan Dalam Pengiriman" placement="right">
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
@@ -86,7 +86,7 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Ulasan Baru</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="  right">
+                <Tooltip title="Ulasan Produk Kamu" placement="right">
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
@@ -102,7 +102,7 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Chat Baru</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="  right">
+                <Tooltip title="Chat Baru" placement="right">
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
@@ -124,7 +124,7 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Total Produk</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="  right">
+                <Tooltip title="Total Produk yang kamu punya" placement="right">
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
@@ -140,7 +140,10 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Total Penjualan</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="right">
+                <Tooltip
+                  title="Total Penjualan yang sudah kamu jual"
+                  placement="right"
+                >
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
@@ -156,7 +159,7 @@ function HomeToko() {
             <div className="column-content-hari">
               <div className="text-hari-ini">
                 <h3>Rating Toko</h3>
-                <Tooltip title="Pesanan Baru Kamu" placement="right">
+                <Tooltip title="Rating Toko Kamu" placement="right">
                   <InfoOutlinedIcon fontSize="10px" />
                 </Tooltip>
               </div>
