@@ -10,6 +10,8 @@ import {
   RadioGroup,
 } from "@mui/material";
 import imgProduct from "../assets/image/imgProduk.svg";
+import DropdownProv from "../component/dropdown/dropdownProv";
+import DropdownKota from "../component/dropdown/dropdownKota";
 
 function Detailpesanan() {
   return (
@@ -81,26 +83,9 @@ function Detailpesanan() {
                 </div>
               </div>
               <h4>Provinsi</h4>
-              <select className="input-provinsi-kota" selected>
-                <option value="provinsi">-- Pilih Provinsi --</option>
-                <option value="provinsi">Nusa Tenggara Barat (NTB)</option>
-                <option value="provinsi">Jawa Tengah</option>
-                <option value="provinsi">DKI Jakarta</option>
-              </select>
+              <DropdownProv />
               <h4>Kota/Kabupaten</h4>
-              <select className="input-provinsi-kota">
-                <option value="provinsi">-- Pilih Kota --</option>
-                <option value="provinsi">Bima - (Kabupaten)</option>
-                <option value="provinsi">BIma - (Kota)</option>
-                <option value="provinsi">Dompu - (Kabupaten)</option>
-                <option value="provinsi">Lombok Barat - (Kabupaten)</option>
-                <option value="provinsi">Lombok Tengah - (Kabupaten)</option>
-                <option value="provinsi">Lombok Timur - (Kabupaten)</option>
-                <option value="provinsi">Lombok Utara - (Kabupaten)</option>
-                <option value="provinsi">Mataram - (Kota)</option>
-                <option value="provinsi">Sumbawa - (Kabupaten)</option>
-                <option value="provinsi">Sumbawa Barat - (Kabupaten)</option>
-              </select>
+              <DropdownKota />
             </div>
             <div className="kurir-pengiriman">
               <FormControl>

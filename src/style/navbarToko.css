@@ -4,7 +4,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.navbar {
+.navbarToko {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,34 +12,38 @@
     height: 6rem;
     background-color: #fff;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+    /* position: sticky;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    right: 0; */
 }
 
-.container-navbar {
+.container-navbarToko {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     /* max-width: 1200px; */
     margin: 0 50px;
+
 }
 
-.listNavbar {
+.listNavbarToko {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
-    left: -20px;
+    margin: 0 auto;
 }
 
-.listNavbar p {
+.listNavbarToko p {
     font-size: 15px;
-    font-weight: normal;
+    font-weight: 500;
     color: #000;
-    margin: 0 20px 0 20px;
-    cursor: pointer;
+    margin-left: 10px;
 }
 
-.search {
+.search-toko {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,10 +51,10 @@
     padding: 2px;
     border: 1px solid currentColor;
     border-radius: 5px;
-    width: 770px;
+    width: 900px;
 }
 
-input[type="text"] {
+.search-toko input[type="text"] {
     width: 100%;
     border: none;
     background: #0000;
@@ -63,11 +67,11 @@ input[type="text"] {
     font-family: 'Poppins', sans-serif;
 }
 
-input[type="text"]::placeholder {
+.search-toko input[type="text"]::placeholder {
     color: #bbb;
 }
 
-button[type="submit"] {
+.search-toko button[type="submit"] {
     text-indent: -999px;
     overflow: hidden;
     width: 40px;
@@ -80,83 +84,32 @@ button[type="submit"] {
     opacity: 0.7;
 }
 
-button[type="submit"]:hover {
+.search-toko button[type="submit"]:hover {
     opacity: 1;
 }
 
-button[type="submit"]:focus,
+.search-toko button[type="submit"]:focus,
 input[type="text"]:focus {
     outline-color: white;
 }
 
-.kategori {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 10px;
-    position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    background-color: #fff;
-    color: #555;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
-}
-
-.dropdown-content a {
-    color: fff;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #EF233C;
-    color: #ffff;
-}
-
-.kategori:hover .dropdown-content {
-    display: block;
-}
-
-.kategori:hover .dropbtn {
-    background-color: #EF233C;
-    color: #ffff;
-}
-
-.icon-navbar {
+.icon-navbarToko {
     display: flex;
     align-items: center;
-    gap: 12px;
+    margin: auto 20px;
 }
 
-.icon-navbar img {
+.icon-navbarToko img {
     width: 20px;
     height: 20px;
     cursor: pointer;
 }
 
-.line {
+.line-toko {
     width: 2px;
     height: 20px;
     background-color: #555;
-    margin: 0 22px;
+    margin: 0 22px 0 8px;
 }
 
 .login-daftar {
@@ -189,112 +142,11 @@ input[type="text"]:focus {
     transition: 0.2s ease-in;
 }
 
-.myshop {
-    gap: 12px;
-    display: flex;
-    align-items: center;
-}
-
-.myshop h3 {
-    font-size: 15px;
-    font-weight: 500;
-    color: #555;
-}
-
-.circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    background: #f4f4f4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.circle img {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.text-toko {
-    font-weight: 600;
-    font-style: poppins;
-}
-
 .photo-profile {
     width: 40px;
     height: 40px;
     border-radius: 100%;
 }
-
-    .btn-logout{
-        color: #000000;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 4px 17px;
-        border: 0px;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.2s ease-in;   
-        }
-        
-.menu-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #ffff;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 10px;
-}
-
-.drop-profile img{
-    width: 60px;
-    height: 60px;
-}
-
-.drop-profile:hover .menu-dropdown {
-     display: block;
-}
-
-.user-info{
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
-
-.user-info img{
-    width: 50px;
-    height: 50px;
-}
-
-.menu-dropdown hr{
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0));
-    margin: 10px 10px;
-}
-
-
-.menu-dropdown button{
-    background: none;
-}
-
-    
-.menu-dropdown a {
-    color: fff;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.nama-user h3{
-    font-weight: 500;
-}
-
 
 @media only screen and (max-width: 480px) {
 
@@ -331,12 +183,6 @@ input[type="text"]:focus {
         width: 20px;
         height: 20px;
     }
-
-    .circle img {
-        width: 20px;
-        height: 20px;
-    }
-
 
     .line {
         display: none;

@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+.produk a{
+    text-decoration: none;
+    color: #000;
+}
+
 .produk-pilihan {
     margin: 67px 0;
 }

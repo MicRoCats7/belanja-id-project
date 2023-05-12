@@ -1,4 +1,6 @@
-const apiurl = () =>{   
-    return "https://cors-anywhere.herokuapp.com/https://belanja.bimbelnesia.id/public/api/"
+
+const apiurl = () =>{
+    return "https://belanja.bimbelnesia.id/public/api/"
+
 }
 export default apiurl

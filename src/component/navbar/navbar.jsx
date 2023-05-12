@@ -11,34 +11,34 @@ import axios from "axios";
 
 
 function Navbar() {
-  const navigate = useNavigate()
-  const [ profile, setProfile ] = useState({});
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState({});
   const token = localStorage.getItem("token");
-  async function getprofile(){
+  async function getprofile() {
     await axios({
       method: "get",
-      url: apiurl() + 'user',
-      headers: { 
-        "Authorization":'Bearer '+ token,
+      url: apiurl() + "user",
+      headers: {
+        Authorization: "Bearer " + token,
       },
     })
       .then((response) => {
-        console.log (response)
-        setProfile(response.data.data)
+        console.log(response);
+        setProfile(response.data.data);
       })
-      .catch((error) => {
-      })
+      .catch((error) => {})
   }
-  useEffect(()=>{
-    getprofile()
-  },[])
+
+  useEffect(() => {
+    getprofile();
+  }, []);
 
   async function logout() {
     await axios({
       method: "post",
-      url: apiurl() + 'logout',
-      headers: { 
-        "Authorization":'Bearer '+ token,
+      url: apiurl() + "logout",
+      headers: {
+        Authorization: "Bearer " + token,
       },
     })
     .then((response) => {
@@ -47,21 +47,18 @@ function Navbar() {
     })
     .catch((error) => {
       })
-
   }
-  
+
 
   return (
     <div className="navbar">
       <div className="container-navbar">
         <div className="navbar-logo">
-          <img src={logoBelanjaID} alt="logo belanja.id" />
+          <Link to={"/"}>
+            <img src={logoBelanjaID} alt="logo belanja.id" />
+          </Link>
         </div>
         <div className="listNavbar">
-          <div className="search">
-            <input type="text" placeholder="Cari Produk " />
-            <button type="submit">Search</button>
-          </div>
           <div className="kategori">
             <button class="dropbtn">Kategori</button>
             <div className="dropdown-content">
@@ -77,34 +74,33 @@ function Navbar() {
               <a href="#">Kategori 12</a>
             </div>
           </div>
+          <div className="search">
+            <input type="text" placeholder="Cari Produk " />
+            <button type="submit">Search</button>
+          </div>
+          <p>Event</p>
           <div className="icon-navbar">
             <img src={iconChat} alt="icon chat" />
             <img src={iconKeranjang} alt="icon keranjang" />
             <img src={IconNotif} alt="icon notif" />
           </div>
           <div className="line"></div>
-          {
-            token ?
-            <div className="myshop">
-            <div className="circle">
-            <img src={Icontoko} alt="toko-img" />
-            </div>
-            <div className="drop-profile">
-             <img className="photo-profile" src={profile.profile_photo_url} alt="" /> 
-            <div className="menu-dropdown">
-            <div className="user-info">
-            <img className="photo-profile" src={profile.profile_photo_url} alt="" /> 
-            <h3 className="nama-user">{profile.name}</h3> 
-            </div>
-            <hr />
-              <a href="/" className="sub-menu-link">Profile</a>
-              <a href="Whislist">Whislist</a>
-              <button className="btn-logout" onClick={logout}>Logout</button>
-            </div>
-            </div>
-            
-              </div>
-              : 
+          {token ? 
+      <div className="drop-profile">
+      <img className="photo-profile" src={profile.profile_photo_url} alt="" /> 
+     <div className="menu-dropdown">
+     <div className="user-info">
+     <img className="photo-profile" src={profile.profile_photo_url} alt="" /> 
+     <h3 className="nama-user">{profile.name}</h3> 
+     </div>
+     <hr />
+       <a href="/" className="sub-menu-link">Profile</a>
+       <a href="Whislist">Whislist</a>
+       <button className="btn-logout" onClick={logout}>Logout</button>
+     </div>
+     </div>
+
+          :
               <div className="login-daftar">
             <Link to="/login">
               <button class="btn-login">Masuk</button>

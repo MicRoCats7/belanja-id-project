@@ -1,0 +1,219 @@
+.container-toko {
+    display: flex;
+    margin: 34px 48px 0 48px;
+    padding: 20px;
+    gap: 30px;
+}
+
+.con-img {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 70px 0;
+}
+
+.con-img h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+}
+
+.con-img p {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    color: #000;
+    text-align: center;
+    width: 78%;
+    margin-bottom: 25px;
+}
+
+.con-daftartoko {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.con-input {
+    margin-top: 31px;
+}
+
+.con-daftarToko h1 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.con-daftarToko span {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.step__number {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.step__number .circle-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #EF233C;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.number-timeline {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.step__marker-text h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    margin: 17px 0;
+}
+
+.inputNoHp {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #EF233C;
+}
+
+.inputNoHp input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 10px;
+    background-color: #fff;
+}
+
+.inputNoHp input::placeholder {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.step__marker .namatoko {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    margin: 10px 0;
+    background-color: #ffff;
+}
+
+.namatoko {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 10px;
+}
+
+.step__marker .namatoko input::placeholder {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.step__marker .namadomain {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    background-color: #fff;
+}
+
+.namadomain {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 10px;
+}
+
+.step__marker .namadomain input::placeholder {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.step__marker .dropdown {
+    width: 100%;
+}
+
+.btn-buatToko {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px 0 0 -6px;
+    width: 100%;
+    gap: 10px;
+}
+
+.btn-buatToko a button {
+    width: 120%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #EF233C;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.btn-buatToko a .btn-kembali {
+    width: 150%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #C7C7C7;
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.timeline-toko {
+    height: 54px;
+    width: 2px;
+    background-color: #EF233C;
+    margin: 7px 0;
+}
+
+.timeline-toko-domain {
+    height: 159px;
+    width: 2px;
+    background-color: #EF233C;
+    margin: 7px 0;
+}
+
+.main-input {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    width: 100%;
+}
+
+.main-input p {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: rgba(0, 0, 0, 0.5);
+}
