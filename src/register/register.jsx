@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import bakcground from '../assets/bglogin.svg';
 import icon from '../assets/Belanja.id.svg';
 import '../style/register.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import apiurl from '../utils/apiurl';
 
@@ -32,7 +32,7 @@ function Register(){
     formData.append('email', data.email);
     formData.append('password',data.password);
     formData.append('phone', Math.floor(Math.random() * 1000000000));
-      
+
     await axios({
       method: "post",
       url: apiurl() + 'register',
@@ -48,7 +48,9 @@ function Register(){
       })
       .catch((error) => {
       })
+      
   };
+  
 
   const handleToggle = () =>{
     if(passwordType === 'password'){
