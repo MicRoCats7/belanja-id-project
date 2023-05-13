@@ -15,6 +15,7 @@ import PesananToko from "./pages/pesananToko";
 import UlasanPembeli from "./pages/ulasanPembeli";
 import PengaturanToko from "./pages/pengaturanToko";
 import Sidebar from "./component/navbar/sidebar";
+import Profile from "./pages/profile";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/detailproduct" element={<DetailProduct />} />
         <Route path="/detailpesanan" element={<Detailpesanan />} />
         <Route path="/daftartoko" element={<DaftarToko />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Sidebar>
         <Routes>
