@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.toko {
+    display: flex;  
+    flex-direction: column;
+    background-color: #ECECEC;
+}
+
+.toko-content {
+    width: 100%;
+    display: flex;
+}
