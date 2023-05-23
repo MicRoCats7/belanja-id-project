@@ -118,7 +118,8 @@ function Navbar() {
                 </div>
               </div>
             </div>
-          ) : (
+          ) 
+          : (
             <div className="login-daftar">
               <Link to="/login">
                 <button class="btn-login">Masuk</button>
