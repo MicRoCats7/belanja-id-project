@@ -10,8 +10,9 @@ import '../style/register.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import apiurl from '../utils/apiurl';
+
 function Register() {
-  const {
+  const { 
     register,
     handleSubmit,
     formState: { errors },
@@ -110,7 +111,7 @@ function Register() {
                   <p role="alert">Harap isi email dahulu</p>
                 )}
               </span>
-            </div>
+            </div>  
             <div className="con-form-password">
               <div className="form-password">
                 <input

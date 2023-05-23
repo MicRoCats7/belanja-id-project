@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.box-biodata{
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 850px;
+    height: 600px;  
+    margin-top: 100px;
+    margin: 50px;
+}
+
+.top-text{
+    padding: 22px 46px;
+    width: 100%;
+}
+
+.box-photo{
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 210px;
+    height: 300px;
+} 
+
+.biodata-kiri h3{
+    color: rgba(107, 89, 89, 0.77);
+}
+
+.text-judul{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.img-foto{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+.isibox h3{
+    display: flex;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 10px;
+}
+
+.btn-editfoto{
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 47px;
+    border: none;
+    background-color: #EF233C;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.edit-biodata{
+    color: rgba(107, 89, 89, 0.77);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.container{
+    display: flex;
+    margin: 20px 40px 0 30px;
+    padding: 20px;
+    gap: 30px;
+    align-items: start;
+}
+
+.inputnama{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+}
+
+.inputnama input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 8px;
+    background-color: #D9D9D9;
+}
+
+.ubah-nama{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 21px;
+    color: #EF233C;
+}
+
+.biodata-kanan{
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.edit-nama{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    gap: 30px;
+}
+
+.text-nama{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #6B5959;
+}
+
+.txt-nama{
+    width: 20%;
+}
+
+.edit-tanggal{
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    width: 100%;
+}
+
+.text-tgl{
+    width: 20%;
+}
+
+.edit-tanggal h3 {
+    font-weight: 500;
+    font-size: 14px;
+    color: #6B5959; 
+}
+
+.inputtgl{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+}
+
+.inputtgl input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 8px;
+    background-color: #D9D9D9;
+}
+
+.jenis-kelamin{
+    margin-top: 20px;
+}
+
+.edit-kontak{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(107, 89, 89, 0.77)
+}
+
+.edit-kontak{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    gap: 30px;
+}
+
+.txt-email{
+    width: 20%;
+}
+
+.text-email{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #6B5959;
+}
+
+
+.inputemail input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 8px;
+    background-color: #D9D9D9;
+}
+
+.inputemail{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+}

@@ -88,32 +88,38 @@ function Navbar() {
           </div>
           <div className="line"></div>
           {token ? (
-            <div className="drop-profile">
-              <img
-                className="photo-profile"
-                src={profile.profile_photo_url}
-                alt=""
-              />
-              <div className="menu-dropdown">
-                <div className="user-info">
-                  <img
-                    className="photo-profile"
-                    src={profile.profile_photo_url}
-                    alt=""
-                  />
-                  <h3 className="nama-user">{profile.name}</h3>
+            <div className="myshop">
+              <div className="circle">
+                <img src={Icontoko} alt="icon keranjang" />
+              </div>
+              <div className="drop-profile">
+                <img
+                  className="photo-profile"
+                  src={profile.profile_photo_url}
+                  alt=""
+                />
+                <div className="menu-dropdown">
+                  <div className="user-info">
+                    <img
+                      className="photo-profile"
+                      src={profile.profile_photo_url}
+                      alt=""
+                    />
+                    <h3 className="nama-user">{profile.name}</h3>
+                  </div>
+                  <hr />
+                  <a href="/" className="sub-menu-link">
+                    Profile
+                  </a>
+                  <a href="/Whislist">Whislist</a>
+                  <button className="btn-logout" onClick={logout}>
+                    Logout
+                  </button>
                 </div>
-                <hr />
-                <a href="/" className="sub-menu-link">
-                  Profile
-                </a>
-                <a href="Whislist">Whislist</a>
-                <button className="btn-logout" onClick={logout}>
-                  Logout
-                </button>
               </div>
             </div>
-          ) : (
+          ) 
+          : (
             <div className="login-daftar">
               <Link to="/login">
                 <button class="btn-login">Masuk</button>
