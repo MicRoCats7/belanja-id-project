@@ -32,7 +32,7 @@ function Sidebar() {
       iconOpen: <MdOutlineKeyboardArrowUp />,
       subNav: [
         {
-          path: "tambahproduk",
+          path: "/tambahproduk",
           name: "Tambah Produk",
         },
         {

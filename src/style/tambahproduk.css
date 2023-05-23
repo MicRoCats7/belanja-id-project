@@ -1,0 +1,404 @@
+.tmbhpro {
+    background-color: #ECECEC;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container-tambahproduk {
+    margin: 48px 155px 0 155px;
+}
+
+.container-tambahproduk h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+}
+
+.container-infoProduk {
+    margin-top: 19px;
+    background-color: #ffff;
+    padding: 29px 30px 39px 30px;
+    border-radius: 10px;
+}
+
+.container-infoProduk h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 30px;
+}
+
+.container-inputProduk {
+    display: flex;
+    flex-direction: column;
+    gap: 46px;
+}
+
+.container-namaProduk {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.namapro {
+    width: 30%;
+    margin-right: 157px;
+}
+
+.fotopro {
+    width: 50%;
+    margin-right: 33px;
+}
+
+.minimumPro {
+    width: 50%;
+    margin-right: 13px;
+}
+
+.beratPro {
+    width: 30%;
+    margin-right: 50px;
+}
+
+.kondisipro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    margin-right: 157px;
+}
+
+.deskripsipro {
+    width: 40%;
+    margin-right: 93px;
+}
+
+.hargapro {
+    width: 33%;
+    margin-right: 71px;
+}
+
+.ukuranpro {
+    width: 30%;
+    margin-right: 70px;
+}
+
+.pengiriman {
+    width: 28%;
+    margin-right: 70px;
+}
+
+.namapro-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 17px;
+}
+
+.namapro-top h1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #606060;
+}
+
+.namapro-top .box-wajib {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 3px;
+    width: 51px;
+    height: 23px;
+    background-color: #F3F4F5;
+    border-radius: 5px;
+}
+
+.namapro-top .box-wajib p {
+    font-size: 11px;
+    font-weight: 600;
+    color: #A4B0C2;
+}
+
+.inputNamaProduk {
+    width: 100%;
+    height: 40px;
+}
+
+.inputNamaProduk input {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #787676;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.inputNamaProduk input:focus {
+    outline: 1px solid #EF233C;
+}
+
+.inputNamaProduk .bottom-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputNamaProduk .bottom-input p {
+    font-size: 12px;
+    font-weight: normal;
+    color: #606060;
+}
+
+.dropdown-kategoripro {
+    width: 100%;
+    height: 40px;
+}
+
+.dropdown-kategoripro select {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #787676;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.dropdown-kategoripro option {
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    border-radius: 10px;
+}
+
+.container-detailProduk {
+    margin-top: 19px;
+    background-color: #ffff;
+    padding: 29px 30px 39px 30px;
+    border-radius: 10px;
+}
+
+.inputFotoProduk {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 22px;
+    width: 100%;
+}
+
+.addImg {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.file-label {
+    border: 1px solid #606060;
+    border-radius: 5px;
+    padding: 1px;
+    width: 133px;
+    height: 123px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.uploaded-image {
+    width: 133px;
+    height: 123px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.no-border {
+    border: 2px dashed #EF233C;
+    border-radius: 5px;
+}
+
+.upload-row {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+.upload-content svg {
+    font-size: 16px;
+    color: #ffff;
+}
+
+.inputNamaProduk textarea {
+    width: 100%;
+    height: 225px;
+    border: 1px solid #787676;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 8px;
+    resize: none;
+}
+
+.harga-satuan {
+    display: flex;
+    gap: 15px;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    width: 80%;
+    height: 45px;
+}
+
+.gram {
+    display: flex;
+    gap: 15px;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    width: 30%;
+    height: 45px;
+}
+
+.gram input:focus {
+    outline: none;
+}
+
+.box-harga-satuan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #F3F4F5;
+    border-radius: 5px 0 0 5px;
+    width: 29px;
+}
+
+.box-gram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
+    background-color: #F3F4F5;
+    border-radius: 0 5px 5px 0;
+    width: 29px;
+}
+
+.box-gram h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #606060;
+}
+
+.harga-satuan input:focus {
+    outline: none;
+}
+
+.box-harga-satuan h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #606060;
+}
+
+.inputHargaProduk {
+    width: 100%;
+}
+
+.inputHargaProduk input {
+    width: 100%;
+    height: 45px;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.inputHargaProduk input:focus {
+    outline: 1px solid #D3D3D3;
+}
+
+.input-ukuranpro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-pengiriman {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+}
+
+.radion-button {
+    margin-bottom: 17px;
+}
+
+.info-pengiriman p {
+    font-size: 12px;
+    font-weight: normal;
+    color: #606060;
+}
+
+.info-pengiriman a {
+    font-size: 12px;
+    font-weight: 600;
+    color: #EF233C;
+}
+
+.btn-eksekusi {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 16px;
+    margin: 33px 0;
+}
+
+.btn-eksekusi .btn-btl {
+    width: 232px;
+    height: 44px;
+    border: 1px solid #C7C7C7;
+    border-radius: 5px;
+    background-color: #ffff;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-eksekusi .btn-baru {
+    width: 232px;
+    height: 44px;
+    border: 1px solid #EF233C;
+    border-radius: 5px;
+    background-color: #EF233C;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
