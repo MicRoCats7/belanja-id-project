@@ -1,0 +1,261 @@
+.container-daftarProduk {
+    margin: 30px 44px;
+    width: 80%;
+}
+
+.btn-tambahProduk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.btn-tambahProduk h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.btn-tambahProduk .tambah {
+    display: flex;
+    align-items: center;
+    width: 180px;
+    height: 40px;
+    padding: 20px;
+    background-color: #EF233C;
+    border: none;
+    border-radius: 5px;
+    color: #ffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tambah svg {
+    margin-right: 10px;
+    color: #ffff;
+}
+
+.table-daftarProduk {
+    background-color: #ffff;
+    border-radius: 10px;
+}
+
+.top-daftarProduk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.tab-daftar {
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid #EF233C;
+}
+
+.tab-daftar h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #EF233C;
+    padding: 16px 30px;
+}
+
+.filter-daftarproduk {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.search-daftar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #787676;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.search-daftar svg {
+    font-size: 20px;
+    color: #787676;
+}
+
+.search-daftar input {
+    width: 300px;
+    height: 40px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dropdown-produk select {
+    width: 210px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #787676;
+    padding: 0 10px;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.table-produk {
+    width: 100%;
+}
+
+.table-produk table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.info-produk {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.detail-produkTbl {
+    text-align: start;
+}
+
+.detail-produkTbl h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.detail-produkTbl p {
+    font-size: 12px;
+    font-weight: normal;
+    color: #676767;
+}
+
+.harga-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    width: 80%;
+}
+
+.box-harga {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #F3F4F5;
+    border-radius: 5px;
+    width: 29px;
+}
+
+.box-harga h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6F7277;
+}
+
+.harga-info h3 {
+    font-size: 14px;
+    font-weight: normal;
+    color: #000000;
+}
+
+.stoktabel {
+    padding: 30px;
+}
+
+.stokTbl {
+    border: 1px solid #676767;
+    border-radius: 5px;
+    padding: 10px 10px;
+}
+
+.stokTbl h3 {
+    font-size: 14px;
+    font-weight: normal;
+    color: #000000;
+}
+
+th {
+    border-bottom: 1px solid #DCDCDC;
+    padding: 25px 17px 17px 20px;
+    text-align: left;
+}
+
+td {
+    text-align: left;
+    border-bottom: 1px solid #DCDCDC;
+    padding-left: 25px;
+}
+
+.info-produk img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    aspect-ratio: 1/2;
+    border-radius: 50%;
+    margin: 17px 0;
+}
+
+.table-produk .btn-table {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-table .btn-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100px;
+    height: 40px;
+    background-color: #FBEFCD;
+    border: none;
+    border-radius: 5px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.btn-table .btn-edit svg {
+    font-size: 19px;
+    font-weight: normal;
+}
+
+.btn-table .btn-hapus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100px;
+    height: 40px;
+    background-color: #EF233C;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.btn-table .btn-edit svg {
+    font-size: 19px;
+    font-weight: normal;
+}

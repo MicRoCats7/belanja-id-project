@@ -16,8 +16,17 @@
     border: 1px solid #000;
     border-radius: 5px;
     padding: 0 10px;
-    margin: 10px 0 19px 0;
+    margin: 10px 0 10px 0;
     font-size: 25px;
+}
+
+.searchChat input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: normal;
+    padding:  10px;
+    color: #000;    
 }
 
 .list-chat {

@@ -10,9 +10,11 @@ import apiurl from "../../utils/apiurl";
 import axios from "axios";
 
 function Navbar() {
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const [profile, setProfile] = useState({});
   const token = localStorage.getItem("token");
+
   async function getprofile() {
     await axios({
       method: "get",
@@ -30,6 +32,7 @@ function Navbar() {
 
   useEffect(() => {
     getprofile();
+    getCategories();
   }, []);
 
   async function logout() {
@@ -47,6 +50,15 @@ function Navbar() {
       .catch((error) => {});
   }
 
+  function getCategories() {
+    axios
+      .get(apiurl() + "categories")
+      .then((response) => {
+        setCategories(response.data.data.data);
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
     <div className="navbar">
       <div className="container-navbar">
@@ -59,16 +71,9 @@ function Navbar() {
           <div className="kategori">
             <button class="dropbtn">Kategori</button>
             <div className="dropdown-content">
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
-              <a href="#">Kategori 12</a>
+              {categories?.map((categories) => {
+                return <a href="#">{categories.name}</a>;
+              })}
             </div>
           </div>
           <div className="search">

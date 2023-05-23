@@ -10,7 +10,7 @@ function SidebarChat() {
         <div className="top-sectionChat">
           <h3>Chat</h3>
           <div className="searchChat">
-            <input type="search" placeholder="Cari Chat" />
+            <input type="text" placeholder="Cari Chat" />
             <CiSearch />
           </div>
         </div>
