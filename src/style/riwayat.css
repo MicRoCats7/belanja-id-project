@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.text-judul h1{
+   font-size: 22px;
+   margin: 50px 0px;
+   font-weight: 700;
+}
+
+.search-riwayat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #555;
+    padding: 2px;
+    border: 1px solid currentColor;
+    border-radius: 5px;
+    width: 320px;
+}
+
+input[type="text"] {
+    width: 100%;
+    border: none;
+    background: #0000;
+    margin: 0;
+    padding: 7px 8px;
+    font-size: 14px;
+    color: inherit;
+    border: 1px solid transparent;
+    border-radius: inherit;
+    font-family: 'Poppins', sans-serif;
+}
+
+input[type="text"]::placeholder {
+    color: #bbb;
+}
+
+button[type="submit"] {
+    text-indent: -999px;
+    overflow: hidden;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: inherit;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+button[type="submit"]:hover {
+    opacity: 1;
+}
+
+button[type="submit"]:focus,
+input[type="text"]:focus {
+    outline-color: white;
+}
+
+.opsi{
+    display: flex;
+    gap: 20px;
+}
+
+.box-riwayat{
+    background: #FFFF;
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 720px;
+    height: 220px;
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    margin: 16px 0px;
+    padding: 16px;
+}
+
+.info-pesanan{
+    padding: 5px;
+    display: flex;
+    gap: 10px;
+}
+
+.text-belanja{
+    color: black;
+}
+
+.toko-barang{
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.toko-barang img{
+    width: 20px;
+}
+
+.info-detail-toko{
+    margin-left: 10px;
+}
+
+.images{
+    max-width: 70px;
+}
+
+.images img{
+    width: 100%;
+    height: auto;
+}
+
+.nama-toko{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.43;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.nama-barang{
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.43;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.info-detail-total{
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.total-barang{
+    color: var(--N700,rgba(49,53,59,0.68));
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.total-riwayat{
+    width: 25%;
+    padding-left: 16px;
+    border-left: 1.5px solid var(--N75,#d6d9dc);
+    width: 20%;
+}
+
+.txt-belanja{
+    font-size: 15px;
+    line-height: 20px;
+    color: black;
+}
+
+.harga-belanja{
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--N700,rgba(49,53,59,0.96));
+}
+
+.wrap{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* width: 100%; */
+}
+
+.opsi-belilagi-lihatdetail{
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.btn-detail-transaksi{
+    color: #EF233C;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 4px 16px;
+    border: 1px solid #EF233C;
+    background-color: #ffff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+
+.btn-belilagi{
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 4px 16px;
+    border: 1px solid #EF233C;
+    background-color: #EF233C;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+

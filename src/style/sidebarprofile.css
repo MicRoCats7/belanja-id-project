@@ -1,0 +1,81 @@
+
+.parent{
+    display: flex;
+    align-items: start ;  
+}
+.container-profile{
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 200px;
+    height: 600px;  
+    margin-top: 100px;
+    margin: 50px;
+}
+
+.user-prof {
+    display: flex;
+    align-items: center;
+    margin: 20px 20px;
+    gap: 13px;
+}
+
+.user-prof h3{
+    font-weight: 500;
+}
+
+.profil{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin: 20px 0 20px 17px ;
+}
+
+.profil h3{
+   font-weight: 600;
+   font-size: 15px;
+}
+
+.profil img{
+    width: 17%;
+    height: 17%;
+}
+
+.riwayat{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin: 20px 0 20px 19px ;
+    
+}
+
+.riwayat h3{
+    font-weight: 600;
+    font-size: 15px;
+ }
+
+.riwayat img{
+    width: 15%;
+    height: 15%;
+}
+
+.alamat{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin: 20px 0 20px 19px ;
+    
+}
+
+.alamat h3{
+    font-weight: 600;
+    font-size: 15px;
+ }
+
+.alamat img{
+    width: 13%;
+    height: 13%;
+}
+
+

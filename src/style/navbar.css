@@ -211,6 +211,7 @@ input[type="text"]:focus {
     justify-content: center;
 }
 
+
 .circle img {
     width: 20px;
     height: 20px;
@@ -228,17 +229,17 @@ input[type="text"]:focus {
     border-radius: 100%;
 }
 
-    .btn-logout{
-        color: #000000;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 4px 17px;
-        border: 0px;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.2s ease-in;   
-        }
+.btn-logout{
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 4px 17px;
+    border: 0px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in;   
+}
         
 .menu-dropdown {
     display: none;
@@ -252,8 +253,10 @@ input[type="text"]:focus {
 }
 
 .drop-profile img{
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    display: flex;
 }
 
 .drop-profile:hover .menu-dropdown {
