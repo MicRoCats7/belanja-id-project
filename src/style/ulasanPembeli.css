@@ -1,0 +1,390 @@
+.container-ulasan {
+    margin: 30px 30px;
+    width: 80%;
+    height: 100%;
+}
+
+.title-ulasan h1 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+.box-ulasan {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.tab-navigation {
+    display: flex;
+    position: relative;
+    border-bottom: 0.5px solid #E0E0E0;
+}
+
+.tab-navigation button {
+    /* Your tab button styles */
+    margin-right: 10px;
+    padding: 16px 20px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.tab-navigation button.active {
+    /* Your active tab button styles */
+    background-color: #fff;
+}
+
+.tab-indicator {
+    /* Tab indicator styles */
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #EF233C;
+    /* Adjust the color of the indicator */
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.tab-content {
+    /* Your tab content wrapper styles */
+    /* background-color: #EF233C; */
+}
+
+.newUlasan-tab {
+    /* Your reviews tab content styles */
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+}
+
+.tab-filterStar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 23px 20px;
+}
+
+.tab-filterStar p {
+    font-size: 13px;
+    font-weight: 600;
+    color: #000;
+    margin-right: 14px;
+}
+
+.tab-filterStar button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 12px;
+    width: 100%;
+    height: 30px;
+    border-radius: 9px;
+    border: 1px solid #E4E4E4;
+    background-color: #fff;
+    outline: none;
+    cursor: pointer;
+    color: #808080;
+}
+
+.tab-filterStar button svg {
+    color: #EDB902;
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.tab-filterStar button.active {
+    background-color: #F56C7D;
+    border: 1px solid #EF233C;
+    color: #fff;
+}
+
+.accordion {
+    width: 100%;
+}
+
+.accordion-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    border-top: 1px solid #E2E2E2;
+    border-bottom: 1px solid #E2E2E2;
+    border-left: none;
+    border-right: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    text-align: start;
+}
+
+.accordion-toggle .arrow {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-bottom: 3px solid #333;
+    border-left: 3px solid #333;
+    transition: transform 0.3s ease;
+}
+
+.accordion-toggle .accordion-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    margin-left: 50px;
+}
+
+.accordion-toggle p {
+    font-size: 14px;
+    font-weight: normal;
+    color: #989898;
+    margin-left: 5px;
+}
+
+.accordion-toggle .arrow.up {
+    transform: translateY(-25%) rotate(135deg);
+}
+
+.accordion-toggle .arrow.down {
+    transform: translateY(-70%) rotate(-45deg);
+}
+
+.accordion-content {
+    background-color: #f9f9f9;
+    padding: 0 10px;
+    /* margin-top: 10px; */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.accordion-content.open {
+    overflow-y: scroll;
+    max-height: 500px;
+    transition: max-height 0.3s ease;
+}
+
+.page-ulasan {
+    margin: 18px 20px 30px 5px;
+    display: flex;
+    align-items: start;
+    gap: 77px;
+}
+
+.info-ulasan {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rating-ulasan {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating-ulasan svg {
+    font-size: 70px;
+    color: #EDB902;
+}
+
+.rating-ulasan h3 {
+    font-size: 35px;
+    font-weight: normal;
+    color: #000;
+}
+
+.info-ulasan p {
+    font-size: 14px;
+    font-weight: normal;
+    color: #989898;
+    margin-left: 10px;
+}
+
+.info-ulasan span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+}
+
+.balas-ulasan {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.img-ulasan {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.balas-ulasan .img-ulasan img {
+    width: 54px;
+    height: 49px;
+    border-radius: 10px;
+}
+
+.img-ulasan p {
+    font-size: 13px;
+    font-weight: normal;
+    color: #989898;
+}
+
+.form-balasan {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    margin-top: 18px;
+    gap: 10px;
+}
+
+.form-balasan p {
+    font-size: 14px;
+    font-weight: normal;
+    color: #989898;
+}
+
+.form-balasan .textareaForm {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+}
+
+.form-balasan .underline-ulasan {
+    width: 2px;
+    height: 102px;
+    background-color: #E2E2E2;
+}
+
+.form-balasan textarea {
+    width: 440px;
+    height: 102px;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    resize: none;
+}
+
+.form-balasan .textareaForm button {
+    width: 95px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: #EF233C;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+}
+
+.underline {
+    width: 100%;
+    height: 2px;
+    background-color: #E2E2E2;
+    margin: 10px 0;
+}
+
+.belum-ulas {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+    margin: 18px 20px 30px 5px;
+    width: 100%;
+}
+
+.title-blmUlas {
+    display: flex;
+    align-items: center;
+    margin-left: 18px;
+}
+
+.title-blmUlas h1 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+}
+
+.pro-belum-ulas {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+
+.table-blmUlas {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #E2E2E2;
+    padding: 18px 20px;
+    margin: 10px 19px;
+}
+
+.pro {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+}
+
+.pro .img-pro img {
+    width: 54px;
+    height: 49px;
+    border-radius: 10px;
+}
+
+.form-blmUlas {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.form-blmUlas h3 {
+    font-size: 12px;
+    font-weight: normal;
+    color: #070707;
+}
+
+.textareaBlm {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.textareaBlm textarea {
+    width: 440px;
+    height: 102px;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    resize: none;
+}
+
+.textareaBlm textarea::placeholder{
+    font-size: 12px;
+}
+
+.textareaBlm button{
+    width: 95px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: #EF233C;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+}
