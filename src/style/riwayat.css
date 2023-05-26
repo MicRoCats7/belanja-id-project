@@ -4,10 +4,13 @@
     box-sizing: border-box;
 }
 
-.text-judul h1{
-   font-size: 22px;
+.text-histori h1{
+   font-size: 25px;
    margin: 50px 0px;
-   font-weight: 700;
+   font-weight: 600;
+}
+.content{
+    margin-top: 50px;
 }
 
 .search-riwayat {
@@ -16,7 +19,7 @@
     align-items: center;
     color: #555;
     padding: 2px;
-    border: 1px solid currentColor;
+    border: 1px solid rgb(224, 224, 224);
     border-radius: 5px;
     width: 320px;
 }
@@ -66,14 +69,23 @@ input[type="text"]:focus {
 }
 
 .box-riwayat{
-    background: #FFFF;
+    /* background: #FFFF;
     border-radius: 10px;
     box-sizing: border-box;
-    width: 720px;
+    width: 80%;
     height: 220px;
     border: 1px solid rgba(0, 0, 0, 0.32);
     margin: 16px 0px;
+    padding: 16px; */
+    display: block;
+    position: relative;
+    margin: 16px 0px;
     padding: 16px;
+    border-radius: 8px;
+    border-color: var(--NN200,#D6DFEB);
+    box-shadow: rgba(141, 150, 170, 0.4) 0px 1px 4px;
+    background-color: var(--NN0,#FFFFFF);
+    cursor: default;
 }
 
 .info-pesanan{
@@ -197,3 +209,10 @@ input[type="text"]:focus {
     transition: 0.2s ease-in;
 }
 
+.form-riwayat{
+    width: 800px;
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid rgb(224, 224, 224);
+    margin-top: 20px;
+}

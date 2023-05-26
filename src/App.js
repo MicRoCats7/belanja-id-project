@@ -11,6 +11,7 @@ import TambahProduk from "./pages/tambahProduk";
 import Profile from "./pages/profile";
 import Alamat from "./pages/alamat";
 import Riwayat from "./pages/riwayat";
+import Toko from "./pages/toko";
 function App() {
   return (
     <div>
@@ -26,6 +27,7 @@ function App() {
         <Route path="/daftartoko" element={<Alamat />} />
         <Route path="/daftartoko" element={<Riwayat />} />
         <Route path="/profile/*" element={<Profile />} />
+        <Route path="/toko/*" element={<Toko />} />
       </Routes>
     </div>
   );

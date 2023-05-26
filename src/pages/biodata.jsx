@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "../style/biodata.css";
-import ImagePhoto from "../assets/image/photo.svg"
+import Modal from "../component/dropdown/modal";
 import {
   FormControl,
   FormControlLabel,
@@ -8,46 +8,53 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import ModalEmail from "../component/dropdown/modalemail";
+import Modaldate from "../component/dropdown/modaldate";
+import ModalHp from "../component/dropdown/modalnohp";
+import ImageUploader from "../component/dropdown/testing";
 
 function Biodata() {
   return (
     <div className="box-biodata">
       <div className="top-text">
-        <h3 className="text-judul">Biodata Diri</h3>
+        <p className="text-judul">Biodata Diri</p>
       </div>
       <div className="container">
         <div className="biodata-kiri">
           <div className="box-photo">
-            <div className="isibox">
-              <img src={ImagePhoto} alt="" className="img-foto" />
-              <button className="btn-editfoto">Ubah Foto</button>
-              <h3 className="text-ukuran">
-                Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG
-              </h3>
+            <div>
+              <ImageUploader />
+              <div className="isibox">
+                <h3 className="text-ukuran">
+                  Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG
+                </h3>
+              </div>
             </div>
           </div>
         </div>
         <div className="biodata-kanan">
           <h3 className="edit-biodata">Ubah Biodata Anda</h3>
           <div className="edit-nama">
-            <div className="txt-nama">
+            {/* <div className="txt-nama">
             <h3 className="text-nama">Nama</h3>
             </div>
             <div className="inputnama">
               <input type="name" name="" id="" placeholder="Nama" />
+            </div> */}
+            <span className="nama-text">Nama</span>
+            <span className="nama-user">Ilyas</span>
+            <div>
+              <Modal />
             </div>
-            <h3 className="ubah-nama">Ubah</h3>
           </div>
           <div className="edit-tanggal">
-            <div className="text-tgl">
-              <h3>Tanggal Lahir</h3>
+            <span className="nama-tgl">Tanggal Lahir</span>
+            <span className="tgl-lahir-user">15 Januari 2021</span>
+            <div>
+              <Modaldate />
             </div>
-            <div className="inputtgl">
-              <input type="name" name="" id="" placeholder="Tanggal lahir" />
-            </div>
-            <h3 className="ubah-nama">Ubah</h3>
           </div>
-          <div className="jenis-kelamin">
+          {/* <div className="jenis-kelamin">
               <FormControl>
                 <p>Jenis Kelamin</p>
                 <RadioGroup
@@ -67,25 +74,26 @@ function Biodata() {
                   />
                 </RadioGroup>
               </FormControl>
-            </div>
-            <h3 className="edit-kontak">Ubah Kontak Anda</h3>
+            </div> */}
+          <h3 className="ubah-kontak">Ubah Kontak Anda</h3>
           <div className="edit-kontak">
-            <div className="txt-email">
-            <h3 className="text-email">Email</h3>
-            </div>
-            <div className="inputemail">
-              <input type="name" name="" id="" placeholder="Email" />
-            </div>
-            <h3 className="ubah-nama">Ubah</h3>
+            <span className="email-text">Email</span>
+            <span className="email-user">ilyas@gmail.com</span>
+            <div className="data-verifikasi">Terverifikasi</div>
+            <ModalEmail />
           </div>
-          <div className="edit-tanggal">
-            <div className="text-tgl">
+          <div className="edit-nohp">
+            {/* <div className="text-tgl">
               <h3>Nomer Hp</h3>
             </div>
             <div className="inputtgl">
               <input type="name" name="" id="" placeholder="Nomer hp" />
             </div>
-            <h3 className="ubah-nama">Ubah</h3>
+            <h3 className="ubah-nama">Ubah</h3> */}
+            <span className="text-nohp">No Hp</span>
+            <span className="nohp-user">082436236</span>
+            <div className="data-verifikasi">Terverifikasi</div>
+            <ModalHp />
           </div>
         </div>
       </div>
