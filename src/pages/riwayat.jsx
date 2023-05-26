@@ -4,11 +4,12 @@ import DropdownProduk from "../component/dropdown/dropdownproduk";
 import BagIcon from "../assets/icon/bag.svg";
 import icontoko from "../assets/icon/ilusToko.svg";
 import fotobarang from "../assets/image/fotobarangg.svg";
+import ImageUploader from "../component/dropdown/testing";
 
 function Riwayat() {
   return (
     <div className="content">
-      <div className="text-judul">
+      <div className="text-histori">
         <h1>Riwayat Pesanan</h1>
       </div>
       <div className="opsi">
@@ -19,6 +20,7 @@ function Riwayat() {
         <DropdownProduk />
       </div>
       <div className="form-riwayat">
+        <h3>Daftar Transaksi</h3>
         <div className="box-riwayat">
           <div className="info-pesanan">
             <img src={BagIcon} alt="" />

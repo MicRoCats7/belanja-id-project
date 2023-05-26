@@ -11,11 +11,72 @@
     background-size: 0.65rem auto;
 }
 
+.input-bulan{
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    padding: 0 15px;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.input-bulan option {
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.input-tahun{
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    padding: 0 15px;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.input-tahun option {
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+
 .input-provinsi-kota option {
     font-size: 14px;
     font-weight: normal;
     background-color: #EF233C;
     color: #fff;
+}
+
+.input-tanggal{
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    padding: 0 15px;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.input-tanggal option {
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .input-kode {
@@ -53,7 +114,7 @@ div .text-kode{
     width: 320px;
     height: 45px;
     border-radius: 5px;
-    border: 1px solid #555;
+    border: 1px solid rgb(224, 224, 224);
     padding: 0 10px;
     appearance: none;
     background-image: url(../assets/icon/dropdown\ arrow.svg);
@@ -65,6 +126,6 @@ div .text-kode{
 .input-produk option {
     font-size: 14px;
     font-weight: normal;
-    background-color: #EF233C;
-    color: #fff;
+    background-color: #ffffff;
+    color: #000000;
 }

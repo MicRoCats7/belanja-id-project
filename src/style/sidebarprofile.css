@@ -5,12 +5,10 @@
 }
 .container-profile{
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.32);
-    border-radius: 10px;
-    box-sizing: border-box;
     width: 200px;
     height: 600px;  
-    margin-top: 100px;
+    box-shadow: var(--NN200,#D6DFEB) 0px 1px 6px 0px;
+    border-radius: 12px;
     margin: 50px;
 }
 
@@ -29,53 +27,102 @@
     display: flex;
     align-items: center;
     gap: 13px;
-    margin: 20px 0 20px 17px ;
+    padding: 10px 0;
+    height: 100%;
+    transition: all 0.3s ease;
+    color: #000;
 }
 
 .profil h3{
-   font-weight: 600;
-   font-size: 15px;
+    font-size: 16px;
 }
 
-.profil img{
-    width: 17%;
-    height: 17%;
+
+.profil a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
 
 .riwayat{
     display: flex;
     align-items: center;
     gap: 13px;
-    margin: 20px 0 20px 19px ;
-    
+    padding: 10px 0;
 }
 
 .riwayat h3{
-    font-weight: 600;
-    font-size: 15px;
- }
+    font-size: 16px;
+}
 
-.riwayat img{
-    width: 15%;
-    height: 15%;
+.alamat h3{
+    font-size: 16px;
+}
+
+.riwayat a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .alamat{
     display: flex;
     align-items: center;
     gap: 13px;
-    margin: 20px 0 20px 19px ;
-    
+    padding: 10px 0;
 }
 
-.alamat h3{
-    font-weight: 600;
-    font-size: 15px;
+.alamat a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
  }
 
-.alamat img{
-    width: 13%;
-    height: 13%;
+.riwayat:hover {
+    background-color: #f0828f70;
+    color: #EF233C;
+}
+
+.riwayat svg{
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.alamat svg{
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.alamat:hover{
+    background-color: #f0828f70;
+    color: #EF233C;
+}
+
+.profil:hover {
+    background-color: #f0828f70;
+    color: #EF233C;
+}
+
+.profil svg{
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.active {
+    border-left: 4px solid #EF233C;
+    color: #EF233C;
+}
+
+.linkk{
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    gap: 15px;
 }
 
 

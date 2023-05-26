@@ -1,38 +1,43 @@
 import React from "react";
 import "../../style/sidebarprofile.css";
 import Photoprofile from "../../assets/icon/photo profile.svg";
-import IconProfil from "../../assets/icon/profil saya.svg";
-import IconRiwayat from "../../assets/icon/riwayat pesanan.svg";
-import IconAlamat from "../../assets/icon/icon alamat.svg";
-import { Link } from "react-router-dom";
-
+import { Link, NavLink } from "react-router-dom";
+import { BsPerson } from "react-icons/bs";
+import { BiTask } from "react-icons/bi";
+import { TfiLocationPin } from "react-icons/tfi";
 
 function Sidebarprofile() {
-    return (
-      <div className="parent">
-        <div className="container-profile">
-          <div className="user-prof">
+  return (
+    <div className="parent">
+      <div className="container-profile">
+        <div className="user-prof">
           <img src={Photoprofile} alt="" />
-            <h3 className="namaa">ilyas</h3>
-            </div>
-            <hr />
-          <div className="menu-profile">
+          <h3 className="namaa">ilyas</h3>
+        </div>
+        <hr />
+        <div className="menu-profile">
           <div className="profil">
-          <img src={IconProfil} alt="" />
-            <Link to={"biodata"}><h3 className="text-profile">Profile saya</h3></Link>
+            <NavLink to={"biodata"} activeclassName="active" className="linkk">
+              <BsPerson />
+              <h3 className="text-profile">Profile saya</h3>
+            </NavLink>
           </div>
-          <div className="riwayat">
-          <img src={IconRiwayat} alt="" />
-           <Link to={"riwayat"}> <h3 className="text-profile">Riwayat Pesanan</h3></Link>
+          <div className="riwayat" activeclassName="active">
+            <NavLink to={"riwayat"} activeclassName="active" className="linkk">
+              <BiTask />
+              <h3 className="text-profile">Riwayat Pesanan</h3>
+            </NavLink>
           </div>
-          <div className="alamat">
-          <img src={IconAlamat} alt="" />
-            <Link to={"alamat"}><h3 className="text-profile">Alamat</h3></Link>
+          <div className="alamat" activeclassName="active" >
+            <NavLink to={"alamat"}  activeclassName="active" className="linkk">
+              <TfiLocationPin />
+              <h3 className="text-profile">Alamat</h3>
+            </NavLink>
           </div>
-          </div>
-         </div>
+        </div>
       </div>
-    )
-  }
-  
-  export default Sidebarprofile;
+    </div>
+  );
+}
+
+export default Sidebarprofile;
