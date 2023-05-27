@@ -3,6 +3,8 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+
 .box-biodata{
     background: #FFFFFF;
     border: 1px solid var(--NN100,#d6d7da);
