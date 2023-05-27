@@ -1,0 +1,342 @@
+.pengaturan-toko {
+    width: 100%;
+    height: 100%;
+    margin: 33px 30px;
+}
+
+.box-pengaturan {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.pengaturan-toko .nama-toko {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pengaturan-toko .nama-toko h3 {
+    font-size: 23px;
+    font-weight: 600;
+    color: #000;
+}
+
+.pengaturan-toko .nama-toko svg {
+    font-size: 35px;
+}
+
+.pengaturan-tab {
+    padding: 26px 20px;
+}
+
+.tokomu h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.info-tokomu {
+    display: flex;
+    align-items: start;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 55px;
+}
+
+.tokomu {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    gap: 14px;
+    flex-direction: column;
+    margin-top: 14px;
+}
+
+.info-nama-toko {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 4px;
+    padding: 21px 30px;
+    background-color: #fff;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    width: 100%;
+    height: 233px;
+}
+
+.info-nama-toko h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6d7588;
+    margin-bottom: 4px;
+}
+
+.info-nama-toko p {
+    font-size: 15px;
+    font-weight: normal;
+    color: #6d7588;
+    margin-bottom: 15px;
+}
+
+.info-nama-toko .btn-ubah-info button {
+    background-color: #f1f1f1;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    padding: 13px 45px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #000;
+    cursor: pointer;
+}
+
+.deskripsi-tokomu {
+    padding: 21px 30px;
+    width: 50%;
+}
+
+.deskripsi-tokomu h2 {
+    font-size: 15px;
+    font-weight: normal;
+    color: #070707;
+    margin-bottom: 6px;
+}
+
+.deskripsi-tokomu .text-deskripsi-toko textarea {
+    width: 440px;
+    height: 233px;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #000;
+    resize: none;
+}
+
+.text-deskripsi-toko textarea:focus {
+    /* outline: 1px solid #23ef3b; */
+    outline: none;
+}
+
+.deskripsi-tokomu .btn-simpan-toko {
+    display: flex;
+    justify-content: end;
+    margin-top: 8px;
+}
+
+.deskripsi-tokomu .btn-simpan-toko button {
+    background-color: #EF233C;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 24px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #fff;
+    cursor: pointer;
+}
+
+.underline-info-toko {
+    width: 100%;
+    height: 1px;
+    background-color: #E2E2E2;
+    margin-bottom: 22px;
+}
+
+.gambar-toko h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #070707;
+    margin-bottom: 15px;
+}
+
+.ubah-gambar-toko {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 27px;
+}
+
+.image-toko {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    border: 1px solid #6d7588;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+}
+
+.image-toko img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.info-button-gambar {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 395px;
+    gap: 4px;
+}
+
+.info-button-gambar p {
+    font-size: 14px;
+    font-weight: normal;
+    color: #000;
+}
+
+.info-button-gambar button {
+    width: 325px;
+    height: 46px;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    padding: 6px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.jadwal-operasional h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.jadwal-operasional p {
+    font-size: 12px;
+    font-weight: normal;
+    color: #8E8E8E;
+}
+
+.jadwal-hari {
+    border: 1px solid #E2E2E2;
+    padding: 22px 49px;
+    border-radius: 10px;
+    margin-top: 22px;
+}
+
+.jadwal-hari .title-jadwal {
+    position: relative;
+    right: 30px;
+    display: flex;
+    align-items: start;
+    gap: 7px;
+    margin-bottom: 23px;
+}
+
+.icon-jam svg {
+    font-size: 22px;
+}
+
+.text-jam h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+}
+
+.text-jam p {
+    font-size: 12px;
+    font-weight: normal;
+    color: #8E8E8E;
+}
+
+.underline-jadwal {
+    width: 100%;
+    height: 1px;
+    background-color: #E2E2E2;
+    margin-bottom: 22px;
+}
+
+.container-hari {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    /* Jarak antar kotak */
+}
+
+.hari-operasional {
+    background-color: #f2f2f2;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.hari {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.jam-operasional {
+    margin-top: 5px;
+}
+
+.btn-ubah {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-ubah button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #EF233C;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 24px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #fff;
+    cursor: pointer;
+}
+
+.jam-operasional-edit {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 13px;
+}
+
+.jam-operasional-edit label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+}
+
+input[type="time"] {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Contoh styling untuk saat input time memiliki focus */
+input[type="time"]:focus {
+    outline: none;
+    border-color: #EF233C;
+    box-shadow: 0 0 0 2px #ef233b31;
+}
+
+.edit-mode-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.edit-mode-actions button{
+    background-color: #EF233C;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 24px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #fff;
+    cursor: pointer;
+}
