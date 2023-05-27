@@ -1,10 +1,15 @@
 import React from "react";
 import "../style/alamat.css";
 import Checklist from "../assets/image/checklist.svg";
-import addicon from "../assets/icon/add.svg";
+
 function Alamat() {
   return (
     <div className="contain">
+      <div className="plus-alamat">
+        <button className="btn-tambah">
+          <span>+ Tambah Alamat</span>
+        </button>
+      </div>
       <div className="box-alamat">
         <div className="isi-alamat">
           <div className="text-alamat">
@@ -22,11 +27,6 @@ function Alamat() {
             <h3>Ubah Alamat</h3>
           </div>
         </div>
-      </div>
-      <div className="plus-alamat">
-        <button className="btn-tambah">
-          <span>+ Tambah Alamat</span>
-        </button>
       </div>
     </div>
   );

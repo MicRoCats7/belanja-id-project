@@ -1,4 +1,5 @@
 import React from "react";
+import "../style/profile.css";
 import Navbar from "../component/navbar/navbar";
 import Sidebarprofile from "../component/sidebar/sidebarprofile";
 import Footer from "../component/footer/footer";
@@ -10,18 +11,16 @@ import { Route, Routes } from "react-router-dom";
 
 function Profile() {
   return (
-    <div>
+    <div className="nav-profil">
       <Navbar />
-      <div className="parent">
+        <div className="parent">
         <Sidebarprofile />
-        <div className="route">
           <Routes>
             <Route path="/biodata" element={<Biodata />} />
             <Route path="/riwayat" element={<Riwayat />} />
             <Route path="/alamat" element={<Alamat />} />
           </Routes>
         </div>
-      </div>
       <Footer />
     </div>
   );
