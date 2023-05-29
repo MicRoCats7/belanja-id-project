@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Navbar from "../component/navbar/navbar";
@@ -23,8 +23,23 @@ import Product from "../component/product/product";
 import { productData, responsive } from "../utils/data";
 import SimpleAccordion from "../component/accordion/accordion";
 import Footer from "../component/footer/footer";
+import axios from "axios";
+import apiurl from "../utils/apiurl";
 
 function Home() {
+  // const [product, setProduct] = useState([]);
+
+  // function getProduct() {
+  //   axios
+  //     .get(apiurl() + "products")
+  //     .then((response) => {
+  //       setProduct(response.data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }
+
+  // console.log(getProduct());
+
   const product = productData.map((item) => (
     <Product
       name={item.name}

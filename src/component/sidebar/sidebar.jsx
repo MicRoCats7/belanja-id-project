@@ -3,7 +3,7 @@ import "../../style/sidebar.css";
 import logoTokoSeller from "../../assets/image/imgToko.svg";
 import { BiHome, BiMessageDetail } from "react-icons/bi";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
-import { BsPersonHeart, BsGear, BsArchive } from "react-icons/bs";
+import { BsGear, BsArchive, BsPersonCheck } from "react-icons/bs";
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
@@ -49,7 +49,7 @@ function Sidebar() {
     {
       path: "ulasanpembeli",
       name: "Ulasan Pembeli",
-      icon: <BsPersonHeart />,
+      icon: <BsPersonCheck fontSize={20} />,
     },
     {
       path: "pengaturantoko",
@@ -109,37 +109,36 @@ function Sidebar() {
           <div className="line-top_section"></div>
         </div>
         {menuItem.map((item, index) => (
-          <NavLink
-            to={item.path}
-            onClick={item.subNav && showSubnav}
-            key={index}
-            className="link"
-            activeclassName="active"
-          >
-            <div className="icon">{item.icon}</div>
-            <div className="link_text">{item.name}</div>
-            <div className="subMenu">
-              {item.subNav && subnav
-                ? item.iconClosed
-                : item.subNav
-                ? item.iconClosed
-                : null}
-            </div>
+          <div key={index}>
+            <NavLink
+              to={item.path}
+              onClick={item.subNav ? showSubnav : null}
+              className="link"
+              activeClassName="active"
+            >
+              <div className="icon">{item.icon}</div>
+              <div className="link_text">{item.name}</div>
+              {item.subNav && (
+                <div className="subMenu">
+                  {subnav ? item.iconOpen : item.iconClosed}
+                </div>
+              )}
+            </NavLink>
             {subnav &&
-              item.subNav?.map((item, index) => {
+              item.subNav?.map((subItem, subIndex) => {
                 return (
                   <NavLink
-                    to={item.path}
-                    key={index}
+                    key={subIndex}
+                    to={subItem.path}
                     className="link-submenu"
-                    activeclassName="active"
+                    activeClassName="active"
                   >
-                    <div className="icon">{item.icon}</div>
-                    <div className="subMenu_link">{item.name}</div>
+                    <div className="icon">{subItem.icon}</div>
+                    <div className="subMenu_link">{subItem.name}</div>
                   </NavLink>
                 );
               })}
-          </NavLink>
+          </div>
         ))}
       </div>
     </div>
