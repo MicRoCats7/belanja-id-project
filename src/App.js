@@ -12,6 +12,8 @@ import Profile from "./pages/profile";
 import Alamat from "./pages/alamat";
 import Riwayat from "./pages/riwayat";
 import Toko from "./pages/toko";
+import Event from "./pages/event";
+import Detailevent from "./pages/detailevent";
 function App() {
   return (
     <div>
@@ -28,6 +30,8 @@ function App() {
         <Route path="/daftartoko" element={<Riwayat />} />
         <Route path="/profile/*" element={<Profile />} />
         <Route path="/toko/*" element={<Toko />} />
+        <Route path="/Event" element={<Event />} />
+        <Route path="/detailevent" element={<Detailevent />} />
       </Routes>
     </div>
   );

@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container-event{
+    display: flex;
+    margin: 34px 48px 0 48px;
+    padding: 20px;
+    gap: 30px;
+}
+
+.image-detail-event{
+    display: flex;
+    align-items: start;
+    position: sticky;
+    top: 10px;
+    height: 100%;
+}
+
+.con-detail-event{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 40px;
+}
+
+.desk-event-umkm{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.isi-deskripsi{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: justify;
+    color: #000000;
+    width: 459px;
+}
+
+.teks-ajakan{
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 20px;
+    color: #000000;
+    width: 650px;
+}
+
+.info-waktu-tempat{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tgl-hari{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.jam-event{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mentor-event{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tgl-hari svg{
+    font-size: 20px;
+}
+
+.jam-event svg{
+    font-size: 20px;
+}
+
+.mentor-event svg{
+    font-size: 20px;
+}
+
+.text-kelas-gratis{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+}
+
+.ayo-join h3{
+    width: 514px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.ayo-join p{
+    margin-top: 15px;
+    color: #000000;
+}
+
+.ayo-join a{
+    margin-top: 15px;
+    text-decoration: none;
+    color: #000000;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.btn-join-event button{
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 25px;
+    border: none;
+    background-color: #EF233C;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+
+
+
