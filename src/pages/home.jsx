@@ -27,28 +27,28 @@ import axios from "axios";
 import apiurl from "../utils/apiurl";
 
 function Home() {
-  // const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState([]);
 
-  // function getProduct() {
-  //   axios
-  //     .get(apiurl() + "products")
-  //     .then((response) => {
-  //       setProduct(response.data);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }
+  function getProduct() {
+    axios
+      .get(apiurl() + "products")
+      .then((response) => {
+        setProduct(response.data.data);
+      })
+      .catch((error) => console.error(error));
+  }
 
-  // console.log(getProduct());
+  console.log(getProduct());
 
-  const product = productData.map((item) => (
-    <Product
-      name={item.name}
-      url={item.image}
-      price={item.price}
-      rating={item.rating}
-      ulasan={item.ulasan}
-    />
-  ));
+  // const product = productData.map((item) => (
+  //   <Product
+  //     name={item.name}
+  //     url={item.image}
+  //     price={item.price}
+  //     rating={item.rating}
+  //     ulasan={item.ulasan}
+  //   />
+  // ));
 
   return (
     <div>

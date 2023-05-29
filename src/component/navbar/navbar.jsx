@@ -258,7 +258,7 @@ function Navbar() {
                     <button className="btn-menuju-profile">Profile</button>
                   </Link>
                   <Link to={"/Whislist"}>
-                  <button className="btn-menuju-whislist">Whislist</button>
+                    <button className="btn-menuju-whislist">Whislist</button>
                   </Link>
                   <button className="btn-logout" onClick={logout}>
                     Logout
