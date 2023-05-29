@@ -1,0 +1,281 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.box-biodata{
+    background: #FFFFFF;
+    border: 1px solid var(--NN100,#d6d7da);
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 900px;
+    height: 600px;  
+    margin-top: 50px;
+}
+
+.box-photo{
+    background: #FFFFFF;
+    width: 210px;
+    height: 335px;
+    padding: 10px;
+    display: flex;
+    border-radius: 8px;
+    border-color: var(--NN200,#D6DFEB);
+    box-shadow: rgba(141, 150, 170, 0.4) 0px 1px 4px
+} 
+
+.box-photo div{
+    align-self: flex-end;
+}
+
+.biodata-kiri h3{
+    color: rgba(107, 89, 89, 0.77);
+}
+
+.text-judul{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--NN600,#6D7588);
+    padding: 22px 46px;
+}
+
+.isibox h3{
+    display: flex;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 10px;
+}
+
+.input-image{
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 30px;
+    text-decoration: none;
+    border: none;
+    background-color: #EF233C;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-bapak{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+
+.img-besar-kecil{
+    /* display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    margin-bottom: 10px; */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.add-foto{
+    display: none;
+}
+
+.edit-biodata{
+    color: var(--NN600,#6D7588);
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.container{
+    display: flex;
+    padding: 35px;
+    gap: 30px;
+    align-items: start;
+}
+/* 
+.inputnama{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+}
+
+.inputnama input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 8px;
+    background-color: #D9D9D9;
+} */
+
+.ubah-nama{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 21px;
+    color: #EF233C;
+}
+
+.biodata-kanan{
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-nama{
+    align-items: center;
+    display: flex;
+}
+
+.nama-text{
+    width: 130px;
+}
+
+.tgl-lahir-user{
+    margin-right: 12px;
+}
+
+.nama-user{
+    margin-right: 12px;
+}
+
+.nama-tgl{
+    width: 130px;
+}
+.edit-tanggal{
+    display: flex;
+    align-items: center;
+}
+
+.text-tgl{
+    width: 20%;
+}
+
+
+.email-text{
+    width: 130px;
+}
+
+.email-user{
+    margin-right: 12px;
+}
+
+.ubah-email{
+    color: #EF233C;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+
+/* .inputtgl{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+} */
+
+/* .inputtgl input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 8px;
+    background-color: #D9D9D9;
+} */
+
+.data-verifikasi{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    border-radius: 3px;
+    line-height: 16px;
+    padding: 0px 8px;
+    height: 20px;
+    font-size: 0.714286rem;
+    background-color: rgb(238, 243, 239);
+    color: rgb(201, 36, 18);
+    justify-content: center;
+    transition: all 300ms ease-out 0s;
+}
+
+.jenis-kelamin{
+    margin-top: 20px;
+}
+
+.nohp-user{
+    margin-right: 12px;
+}
+
+.edit-kontak{
+    align-items: center;
+    display: flex;
+}
+
+.edit-nohp{
+    align-items: center;
+    display: flex;
+}
+
+.text-nohp{
+    width: 130px;
+}
+
+.ubah-kontak{
+    color: var(--NN600,#6D7588);
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* .txt-email{
+    width: 20%;
+}
+
+.text-email{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #6B5959;
+} */
+
+/* 
+
+.inputemail input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 8px;
+    background-color: #D9D9D9;
+}
+
+.inputemail{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+} */

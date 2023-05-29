@@ -12,8 +12,15 @@ import {
 import imgProduct from "../assets/image/imgProduk.svg";
 import DropdownProv from "../component/dropdown/dropdownProv";
 import DropdownKota from "../component/dropdown/dropdownKota";
+import { useState } from "react";
 
 function Detailpesanan() {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(URL.createObjectURL(file));
+  };
   return (
     <div>
       <Navbar />

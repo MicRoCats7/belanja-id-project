@@ -1,0 +1,128 @@
+
+/* .parent{
+    display: flex;
+    align-items: start ;  
+} */
+.container-profile{
+    background: #FFFFFF;
+    width: 200px;
+    height: 600px;  
+    box-shadow: var(--NN200,#D6DFEB) 0px 1px 6px 0px;
+    border-radius: 12px;
+    margin: 50px;
+}
+
+.user-prof {
+    display: flex;
+    align-items: center;
+    margin: 20px 20px;
+    gap: 13px;
+}
+
+.user-prof h3{
+    font-weight: 500;
+}
+
+.profil{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 10px 0;
+    height: 100%;
+    transition: all 0.3s ease;
+    color: #000;
+}
+
+.profil h3{
+    font-size: 16px;
+}
+
+
+.profil a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.riwayat{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 10px 0;
+}
+
+.riwayat h3{
+    font-size: 16px;
+}
+
+.alamat h3{
+    font-size: 16px;
+}
+
+.riwayat a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alamat{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 10px 0;
+}
+
+.alamat a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+ }
+
+.riwayat:hover {
+    background-color: #f0828f70;
+    color: #EF233C;
+}
+
+.riwayat svg{
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.alamat svg{
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.alamat:hover{
+    background-color: #f0828f70;
+    color: #EF233C;
+}
+
+.profil:hover {
+    background-color: #f0828f70;
+    color: #EF233C;
+}
+
+.profil svg{
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.active {
+    border-left: 4px solid #EF233C;
+    color: #EF233C;
+}
+
+.linkk{
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    gap: 15px;
+}
+
+
