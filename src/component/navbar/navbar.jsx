@@ -1,4 +1,4 @@
-// import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useState } from "react";
 // import "../../style/navbar.css";
 // import logoBelanjaID from "../../assets/logoIMG/logo belanjaid.svg";
 // import iconKeranjang from "../../assets/icon/keranjang.svg";
@@ -15,39 +15,39 @@
 //   const [profile, setProfile] = useState({});
 //   const token = localStorage.getItem("token");
 
-//   async function getprofile() {
-//     await axios({
-//       method: "get",
-//       url: apiurl() + "user",
-//       headers: {
-//         Authorization: "Bearer " + token,
-//       },
-//     })
-//       .then((response) => {
-//         console.log(response);
-//         setProfile(response.data.data);
-//       })
-//       .catch((error) => {});
+//   async function getProfile() {
+//     try {
+//       const response = await axios.get(apiurl() + "user", {
+//         headers: {
+//           Authorization: "Bearer " + token,
+//         },
+//       });
+//       setProfile(response.data.data);
+//     } catch (error) {
+//       console.error(error);
+//     }
 //   }
 
 //   useEffect(() => {
-//     getprofile();
+//     getProfile();
 //     getCategories();
 //   }, []);
 
 //   async function logout() {
-//     await axios({
-//       method: "post",
-//       url: apiurl() + "logout",
-//       headers: {
-//         Authorization: "Bearer " + token,
-//       },
-//     })
-//       .then((response) => {
-//         console.log(response);
-//         navigate("/login");
-//       })
-//       .catch((error) => {});
+//     try {
+//       await axios.post(
+//         apiurl() + "logout",
+//         {},
+//         {
+//           headers: {
+//             Authorization: "Bearer " + token,
+//           },
+//         }
+//       );
+//       navigate("/login");
+//     } catch (error) {
+//       console.error(error);
+//     }
 //   }
 
 //   function getCategories() {
@@ -71,8 +71,8 @@
 //           <div className="kategori">
 //             <button class="dropbtn">Kategori</button>
 //             <div className="dropdown-content">
-//               {categories?.map((categories) => {
-//                 return <a href="#">{categories.name}</a>;
+//               {categories?.map((category) => {
+//                 return <a href="#">{category.name}</a>;
 //               })}
 //             </div>
 //           </div>
@@ -87,7 +87,7 @@
 //             <img src={IconNotif} alt="icon notif" />
 //           </div>
 //           <div className="line"></div>
-//           { token ? (
+//           {token ? (
 //             <div className="myshop">
 //               <div className="circle">
 //                 <img src={Icontoko} alt="icon keranjang" />
@@ -118,8 +118,7 @@
 //                 </div>
 //               </div>
 //             </div>
-//           )
-//           : (
+//           ) : (
 //             <div className="login-daftar">
 //               <Link to="/login">
 //                 <button class="btn-login">Masuk</button>
@@ -136,7 +135,7 @@
 // }
 
 // export default Navbar;
-    
+
 // export default Navbar;
 import React, { useEffect, useRef, useState } from "react";
 import "../../style/navbar.css";
@@ -195,6 +194,7 @@ function Navbar() {
       }
     }
   };
+
   function getCategories() {
     axios
       .get(apiurl() + "categories")
@@ -203,6 +203,8 @@ function Navbar() {
       })
       .catch((error) => console.error(error));
   }
+
+  console.log(profile.user && profile.user.name);
 
   return (
     <div className="navbar">
@@ -216,8 +218,8 @@ function Navbar() {
           <div className="kategori">
             <button class="dropbtn">Kategori</button>
             <div className="dropdown-content">
-              {categories?.map((categories) => {
-                return <a href="#">{categories.name}</a>;
+              {categories?.map((category) => {
+                return <a href="#">{category.name}</a>;
               })}
             </div>
           </div>
@@ -237,28 +239,27 @@ function Navbar() {
               <div className="circle">
                 <img src={Icontoko} alt="icon keranjang" />
               </div>
-
               <div className="drop-profile">
                 <img
                   className="photo-profile"
-                  src={profile.profile_photo_url}
+                  src={profile.user?.profile_photo_url}
                   alt=""
                 />
                 <div className="menu-dropdown">
                   <div className="user-info">
                     <img
                       className="photo-profile"
-                      src={profile.profile_photo_url}
+                      src={profile.user?.profile_photo_url}
                       alt=""
                     />
-                    <h3 className="nama-user">{profile.name}</h3>
+                    <h3 className="nama-user">{profile.user && profile.user.name}</h3>
                   </div>
                   <hr />
                   <Link to={"/profile"}>
                     <button className="btn-menuju-profile">Profile</button>
                   </Link>
                   <Link to={"/Whislist"}>
-                  <button className="btn-menuju-whislist">Whislist</button>
+                    <button className="btn-menuju-whislist">Whislist</button>
                   </Link>
                   <button className="btn-logout" onClick={logout}>
                     Logout
