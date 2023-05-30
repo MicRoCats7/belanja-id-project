@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Navbar from "../component/navbar/navbar";
@@ -33,22 +33,14 @@ function Home() {
     axios
       .get(apiurl() + "products")
       .then((response) => {
-        setProduct(response.data.data);
+        setProduct(response.data.data.data);
       })
       .catch((error) => console.error(error));
   }
 
-  console.log(getProduct());
-
-  // const product = productData.map((item) => (
-  //   <Product
-  //     name={item.name}
-  //     url={item.image}
-  //     price={item.price}
-  //     rating={item.rating}
-  //     ulasan={item.ulasan}
-  //   />
-  // ));
+  useEffect(() => {
+    getProduct();
+  }, []);
 
   return (
     <div>
@@ -173,7 +165,20 @@ function Home() {
             <div className="img-produk-pilihan">
               <img src={imgProdukPilihan} alt="Produk pilihan " />
             </div>
-            {product}
+            {product?.map((item, index) => (
+              <Product
+                key={index}
+                name={item.name}
+                url={item.image}
+                location={item.product_origin}
+                price={item.price}
+                rating={item.rate}
+                ulasan={item.ulasan}
+                stok={item.stok}
+                id={item.id}
+              />
+            ))}
+            {/* {product} */}
           </Carousel>
           <div className="line-produk"></div>
           <div className="title-produkPilihan">
@@ -187,7 +192,20 @@ function Home() {
             <div className="img-produk-pilihan">
               <img src={imgProdukOlahan} alt="Produk pilihan " />
             </div>
-            {product}
+            {product?.map((item, index) => (
+              <Product
+                key={index}
+                name={item.name}
+                url={item.image}
+                location={item.product_origin}
+                price={item.price}
+                rating={item.rate}
+                ulasan={item.ulasan}
+                stok={item.stok}
+                id={item.id}
+              />
+            ))}
+            {/* {product} */}
           </Carousel>
           <div className="line-produk"></div>
           <div className="title-produkPilihan">
@@ -201,7 +219,20 @@ function Home() {
             <div className="img-produk-pilihan">
               <img src={imgProdukFashion} alt="Produk pilihan" />
             </div>
-            {product}
+            {product?.map((item, index) => (
+              <Product
+                key={index}
+                name={item.name}
+                url={item.image}
+                location={item.product_origin}
+                price={item.price}
+                rating={item.rate}
+                ulasan={item.ulasan}
+                stok={item.stok}
+                id={item.id}
+              />
+            ))}
+            {/* {product} */}
           </Carousel>
           <div className="line-produk"></div>
           <div className="title-produkPilihan">
@@ -215,7 +246,20 @@ function Home() {
             <div className="img-produk-pilihan">
               <img src={imgProdukKerajinan} alt="Produk pilihan" />
             </div>
-            {product}
+            {product?.map((item, index) => (
+              <Product
+                key={index}
+                name={item.name}
+                url={item.image}
+                location={item.product_origin}
+                price={item.price}
+                rating={item.rate}
+                ulasan={item.ulasan}
+                stok={item.stok}
+                id={item.id}
+              />
+            ))}
+            {/* {product} */}
           </Carousel>
           <div className="line-produk"></div>
           <div className="produk-lainnya">
@@ -223,7 +267,23 @@ function Home() {
               <h1>Produk Lainnya</h1>
             </div>
             <div className="container-lainnya">
-              <div className="card-produk-lainnya">{product}</div>
+              <div className="card-produk-lainnya">
+                {" "}
+                {product?.map((item, index) => (
+                  <Product
+                    key={index}
+                    name={item.name}
+                    url={item.image}
+                    location={item.product_origin}
+                    price={item.price}
+                    rating={item.rate}
+                    ulasan={item.ulasan}
+                    stok={item.stok}
+                    id={item.id}
+                  />
+                ))}
+                {/* {product} */}
+              </div>
             </div>
             <div className="container-btnSeemore">
               <button>Muat Lebih Banyak</button>

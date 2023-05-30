@@ -12,6 +12,8 @@ import Profile from "./pages/profile";
 import Alamat from "./pages/alamat";
 import Riwayat from "./pages/riwayat";
 import Toko from "./pages/toko";
+import Event from "./pages/event";
+import Detailevent from "./pages/detailevent";
 function App() {
   return (
     <div>
@@ -19,15 +21,17 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/whislist" element={<Whislist />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register />} /> 
         <Route path="/tambahproduk" element={<TambahProduk />} />
-        <Route path="/detailproduct" element={<DetailProduct />} />
+        <Route path="/detailproduct/:id" element={<DetailProduct />} />
         <Route path="/detailpesanan" element={<Detailpesanan />} />
         <Route path="/daftartoko" element={<DaftarToko />} />
         <Route path="/daftartoko" element={<Alamat />} />
         <Route path="/daftartoko" element={<Riwayat />} />
         <Route path="/profile/*" element={<Profile />} />
         <Route path="/toko/*" element={<Toko />} />
+        <Route path="/Event" element={<Event />} />
+        <Route path="/detailevent" element={<Detailevent />} />
       </Routes>
     </div>
   );

@@ -235,7 +235,9 @@ function Navbar() {
           {localStorage.getItem("token") ? (
             <div className="myshop">
               <div className="circle">
-                <img src={Icontoko} alt="icon keranjang" />
+                <Link to={"/daftartoko"}>
+                  <img src={Icontoko} alt="icon keranjang" />
+                </Link>
               </div>
 
               <div className="drop-profile">

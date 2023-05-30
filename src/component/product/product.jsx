@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 function Product(props) {
   return (
     <div className="produk">
-      <Link to={"/detailproduct"}>
+      <Link to={"/detailproduct/" + props.id}>
         <div className="card-produkPilihan">
           <img src={produkImg} alt="" />
           <div className="nama-produk">
@@ -18,7 +18,7 @@ function Product(props) {
           <div className="harga-produk">
             <div className="location">
               <img src={locatian} alt="" />
-              <p>Jakarta</p>
+              <p>{props.location}</p>
             </div>
             <h3>{props.price}</h3>
           </div>

@@ -2,21 +2,25 @@ import React from "react";
 import Navbar from "../component/navbar/navbar";
 import "../style/detailproduct.css";
 import iconHome from "../assets/icon/icon home.svg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import iconSold from "../assets/icon/icon sold.svg";
 import iconLove from "../assets/icon/icon love.svg";
 import iconRatings from "../assets/icon/icon star.svg";
 import iconToko from "../assets/icon/icon toko.svg";
 import imgProduct from "../assets/image/imgProduk.svg";
 import cart from "../assets/icon/cart.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import exampProfile from "../assets/image/profile.png";
 import { Rating } from "@mui/material";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import Footer from "../component/footer/footer";
+import axios from "axios";
+import apiurl from "../utils/apiurl";
 
 function DetailProduct() {
   const [value, setValue] = React.useState(5);
+  const [detail, setDetail] = useState([]);
+  const { id } = useParams();
 
   const [appState, changeState] = useState({
     activeObject: null,
@@ -35,6 +39,24 @@ function DetailProduct() {
     }
   }
 
+  function getDetail(id) {
+    axios
+      .get(apiurl() + "products")
+      .then((response) => {
+        let filteredData = response.data.data.data.filter(
+          (item) => item.id == id
+        );
+        if (filteredData.length > 0) {
+          setDetail(filteredData);
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
+  useEffect(() => {
+    getDetail(id);
+  }, [id]);
+
   return (
     <div className="main-detail">
       <Navbar />
@@ -47,9 +69,9 @@ function DetailProduct() {
                 <h4>Home /</h4>
               </Link>
               <Link to={"/pakaian"}>
-                <h4>Pakaian /</h4>
+                <h4>{detail.length > 0 ? detail[0].slug : ""} /</h4>
               </Link>
-              <span>Baju Polo, Pria lengan pendek polos original Ukuran L</span>
+              <span>{detail.length > 0 ? detail[0].name : ""}</span>
             </ul>
           </div>
         </div>
@@ -66,7 +88,7 @@ function DetailProduct() {
             </div>
           </div>
           <div className="detail-product-desc">
-            <h1>Baju Polo, Pria lengan pendek polos original Ukuran L</h1>
+            <h1>{detail.length > 0 ? detail[0].name : ""}</h1>
             <div className="info-desc">
               <div className="sold">
                 <img src={iconSold} alt="" />
@@ -75,14 +97,16 @@ function DetailProduct() {
               <div className="line-detail"></div>
               <div className="ratings">
                 <img src={iconRatings} alt="" />
-                <h4>4.6 (3.450 Ulasan)</h4>
+                <h4>
+                  {detail.length > 0 ? detail[0].rate : ""} (3.450 Ulasan)
+                </h4>
               </div>
               <div className="like">
                 <img src={iconLove} alt="" />
                 <h4>Suka (3.250)</h4>
               </div>
               <div className="line-detail"></div>
-              <div className="toko">
+              <div className="toko-detail">
                 <img src={iconToko} alt="" />
                 <Link to={"/toko"}>
                   <h4>Toko : Penuh Makna</h4>
@@ -90,7 +114,7 @@ function DetailProduct() {
               </div>
             </div>
             <div className="harga">
-              <h2>Rp 35.000</h2>
+              <h2>{detail.length > 0 ? detail[0].price : ""}</h2>
               <h3>Dapatkan barang pesananmu atau uang kembali.</h3>
             </div>
             <div className="pilih-product">
@@ -109,14 +133,14 @@ function DetailProduct() {
                 ))}
               </div>
             </div>
-            <div className="kuantitas">
+            <div className="kuantitas-detail">
               <h3>Kuantitas</h3>
               <div className="kuantitas-item">
                 <button>-</button>
                 <input type="text" value="1" />
                 <button>+</button>
               </div>
-              <p>Tersisa 7 buah </p>
+              <p>Tersisa {detail.length > 0 ? detail[0].quantity : ""} buah </p>
             </div>
             <div className="btn-cartBuy">
               <button className="btn-cart">
@@ -145,10 +169,10 @@ function DetailProduct() {
                   <h4>:</h4>
                 </div>
                 <div className="spesifikasi-item2">
-                  <h4>Kudus</h4>
-                  <h4>Cotton Combed 30s</h4>
+                  <h4>{detail.length > 0 ? detail[0].product_origin : ""}</h4>
+                  <h4>{detail.length > 0 ? detail[0].product_material : ""}</h4>
                   <h4>Polos</h4>
-                  <h4>200 kg</h4>
+                  <h4>{detail.length > 0 ? detail[0].weight : ""}</h4>
                   <h4>Penuh Makna</h4>
                 </div>
               </div>
@@ -157,14 +181,7 @@ function DetailProduct() {
         </div>
         <div className="deskripsi-produk">
           <h3>Deskripsi Produk</h3>
-          <p>
-            kaosproduk lokalbahan cotton combed 30sbahan lembut tidak
-            panasjahitan double stick dan rapihukuran L Lingkar dada 105
-            cmpanjang kaos 70 cmbarang sesuai dengan foto tanpa editbarang
-            selalu ready selama iklan masih tersedia#baju #kaos
-            #kaosdistro#bajudistro #bajumurah #grosir #kaospria#bajupria
-            #kaospolos # kaostrip
-          </p>
+          <p>{detail.length > 0 ? detail[0].description : ""}</p>
         </div>
         <div className="penilaian-produk">
           <h3>Penilaian Produk</h3>
