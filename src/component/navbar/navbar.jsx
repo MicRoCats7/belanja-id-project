@@ -74,7 +74,6 @@ function Navbar() {
       .catch((error) => console.error(error));
   }
 
-
   const LoadProduk = async () => {
     const response = await axios.get(apiurl() + "products");
     setProdukList(response.data.data.data);
@@ -103,7 +102,7 @@ function Navbar() {
     // Redirect to search page with the search text
     navigate(`/search?query=${text}`);
   };
-  
+
   return (
     <>
       <div className="navbar">
@@ -149,38 +148,6 @@ function Navbar() {
               <img src={iconChat} alt="icon chat" />
               <img src={iconKeranjang} alt="icon keranjang" />
               <img src={IconNotif} alt="icon notif" />
-                <div className="menu-dropdown">
-                  <div className="user-info">
-                    <img
-                      className="photo-profile"
-                      src={profile.user?.profile_photo_url}
-                      alt=""
-                    />
-                    <h3 className="nama-user">
-                      {profile.user && profile.user.name}
-                    </h3>
-                  </div>
-                  <hr />
-                  <Link to={"/profile"}>
-                    <button className="btn-menuju-profile">Profile</button>
-                  </Link>
-                  <Link to={"/Whislist"}>
-                    <button className="btn-menuju-whislist">Whislist</button>
-                  </Link>
-                  <button className="btn-logout" onClick={logout}>
-                    Logout
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="login-daftar">
-              <Link to="/login">
-                <button className="btn-login">Masuk</button>
-              </Link>
-              <Link to="/register">
-                <button className="daftar">Daftar</button>
-              </Link>
             </div>
             <div className="line"></div>
             {localStorage.getItem("token") ? (

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./filterSearch.css";
-import { MdKeyboardArrowDown } from "react-icons/md";
 
 function App() {
   const [accordionOpen, setAccordionOpen] = useState(false);
