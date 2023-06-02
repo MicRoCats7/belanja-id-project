@@ -137,7 +137,7 @@
 // export default Navbar;
 
 // export default Navbar;
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../style/navbar.css";
 import logoBelanjaID from "../../assets/logoIMG/logo belanjaid.svg";
 import iconKeranjang from "../../assets/icon/keranjang.svg";
@@ -151,6 +151,7 @@ import axios from "axios";
 function Navbar() {
   const [profile, setProfile] = useState({});
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -178,6 +179,7 @@ function Navbar() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
+        setLoading(true);
         await axios.post(
           apiurl() + "logout",
           {},
@@ -189,8 +191,10 @@ function Navbar() {
         );
         localStorage.removeItem("token");
         navigate("/login");
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
   };
@@ -203,8 +207,6 @@ function Navbar() {
       })
       .catch((error) => console.error(error));
   }
-
-  console.log(profile.user && profile.user.name);
 
   return (
     <div className="navbar">
@@ -252,7 +254,9 @@ function Navbar() {
                       src={profile.user?.profile_photo_url}
                       alt=""
                     />
-                    <h3 className="nama-user">{profile.user && profile.user.name}</h3>
+                    <h3 className="nama-user">
+                      {profile.user && profile.user.name}
+                    </h3>
                   </div>
                   <hr />
                   <Link to={"/profile"}>
@@ -270,10 +274,10 @@ function Navbar() {
           ) : (
             <div className="login-daftar">
               <Link to="/login">
-                <button class="btn-login">Masuk</button>
+                <button className="btn-login">Masuk</button>
               </Link>
               <Link to="/register">
-                <button class="daftar">Daftar</button>
+                <button className="daftar">Daftar</button>
               </Link>
             </div>
           )}
