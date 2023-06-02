@@ -26,6 +26,7 @@ import Footer from "../component/footer/footer";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
 
+
 function Home() {
   const [product, setProduct] = useState([]);
 

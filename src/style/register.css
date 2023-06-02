@@ -60,16 +60,29 @@
     max-width: 530px;
 }
 
-.Email{
+
+
+.cont-form-name h3{
     font-size: 14px;
+    font-weight: 600;
 }
 
-.con-form-email input{
+.con-form-email-regis input{
     width: 100%;
     padding: 0px 10px;
     font-size: 15px;
     border: none;
 }
+.con-form-email-regis h3{
+    font-size: 14px;
+    font-weight: 600;
+}
+.con-form-password-regis h3{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
 
 .con-form-name input{
     width: 100%;
@@ -128,7 +141,7 @@
     border-radius: 6px;
   }
 
-  .form-mail{
+  .form-mail-regis{
     padding: 10px 0px;
     width: 100%;
     border: 0.0px solid #000000;
@@ -138,11 +151,11 @@
     border-radius: 6px;
   }
 
-  .input-form-email:focus, .input-form-password:focus, .input-form-nama:focus{
+  .input-form-email-regis:focus, .input-form-password-regis:focus, .input-form-nama:focus{
     outline: none;
   }
 
-.daftar-selain{
+.register-selain{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -159,11 +172,12 @@
     width: 138px;
   }
 
-.daftar-selain p{
+.register-selain p{
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
+    width: 150px;
     color: #000000;
   }
 
@@ -189,15 +203,15 @@
     width: 30px;
 }
 
-.con-form-password{
+.con-form-password-regis{
     display: flex;
     flex-direction: column;
 }
 
-.form-password{
+.form-password-regis{
     display:flex;
     align-items: center;
-    padding: 0 14px;
+    padding: 8px 0;
     border: 0.0px solid #000000;
     box-sizing: border-box;
     background: #FFFFFF;
@@ -210,28 +224,126 @@
     align-items: center;
     background: none;
     border: none;
+    padding: 14px;
     cursor: pointer;
     float: right;
     /* right: 60px;
     top: 245px; */
 }
 
-.daftar-dengan{
+.register-dengan{
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 19px;
     margin-top: 15px;
 }
 
 .text-merah{
     color: #EF233C;
 }
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+
+  }
+  
+  .loading-icon {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #EF233C;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 4s linear infinite;
+  } 
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
 
 
 
+@media only screen and (max-width: 768px) {
+
+    .bg-regist {
+      display: none;
+    }
+
+    .kanan {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+      }
+    
+    .text-regis,
+    .form-regist {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .text-regis h1{
+     font-size: 18px;
+    }
+
+    .register-dengan{
+        font-size: 13px;
+      } 
+
+      .register-selain p {
+        font-size: 13px;
+      }
+  }
+  
+  @media only screen and (max-width: 480px) {
+   
+ .kanan{
+    display: block;
+  }
+    .kanan {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+      }
 
 
+      .text-regis,
+      .form-regist {
+        max-width: 320px;
+      }
+
+    .line-right,
+    .line-left {
+    border: 1px solid #000000;
+    width: 100px;
+  }
+  
+  .register-dengan{
+    font-size: 12px;
+  }
+
+  .register-selain p {
+    font-size: 12px;
+  }
+
+    .text-regis h1 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+  }
 
 
 

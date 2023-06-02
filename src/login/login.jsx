@@ -3,6 +3,8 @@ import icon from "../assets/Belanja.id.svg";
 import React, { useState } from "react";
 import "../style/login.css";
 import bglogin from "../assets/shipping.svg";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import main from "../assets/bgmain.svg";
 import { useForm } from "react-hook-form";
 import imggoogle from "../assets/google.svg";
@@ -14,34 +16,42 @@ import axios from "axios";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+
   const onSubmit = async (data) => {
-    // e.preventDefault()
+    // Proses login menggunakan API kustom
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
-    await axios({
-      method: "post",
-      url: apiurl() + "login",
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("token", response.data.data.access_token);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
+
+    try {
+      setLoading(true);
+      const response = await axios.post(apiurl() + "login", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+      console.log(response);
+      localStorage.setItem("token", response.data.data.access_token);
+      handleSuccessAlertOpen();
+      setLoading(false);
+      navigate("/");
+    } catch (error) {
+      handleErrorAlertOpen();
+      setLoading(false);
+      console.log(error);
+    }
   };
+
   const [passwordType, setPasswordType] = useState("password");
   const [passwordIcon, setPasswordIcon] = useState(<FaEyeSlash />);
 
@@ -56,8 +66,18 @@ function Login() {
     }
   };
 
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
+
+  console.log(successAlertOpen);
+
   return (
-    <div className="login">
+    <div className="loginn">
       <div className="bg-login">
         <div className="logo">
           <img src={icon} className="login-icon" alt="icon" />
@@ -88,9 +108,9 @@ function Login() {
                 )}
               </span>
             </div>
-            <div className="con-form-password">
+            <div className="con-form-password-login">
               <h3>Password</h3>
-              <div className="form-password">
+              <div className="form-password-login">
                 <input
                   type={passwordType}
                   id="password"
@@ -98,6 +118,7 @@ function Login() {
                   placeholder="Password"
                   {...register("password", { required: true })}
                   className="input-form-password"
+                  func={setPassword}
                 />
                 <button className="icon-span" onClick={handleToggle}>
                   {passwordIcon}
@@ -132,6 +153,37 @@ function Login() {
           </div>
         </div>
       </div>
+      {loading && (
+        <div className="loading-overlay">
+          <div className="loading-icon"></div>
+        </div>
+      )}
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Alhamdulillah login sukses
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Login gagal. Silakan periksa kembali email dan password Anda.
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }
