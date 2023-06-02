@@ -13,11 +13,11 @@
     background-color: #fff;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
     width: 100%;
-    /* position: sticky;
+    position: sticky;
     z-index: 200;
     top: 0;
     left: 0;
-    right: 0; */
+    right: 0;
 }
 
 .container-navbarToko {

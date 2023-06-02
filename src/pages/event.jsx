@@ -167,7 +167,7 @@ function Event() {
                   </div>
                   <p>{dataevent.nama}</p>
                 </div>
-                <div className= "info-event">
+                <div className="info-event">
                   <h3>{dataevent.judul}</h3>
                   <p className="asal-event">
                     oleh: {dataevent.pembuatEvent} Event

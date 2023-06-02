@@ -2,6 +2,17 @@
     display: flex;
     background-color: #ECECEC;
     height: 100%;
+    position: sticky;
+    top: 110px;
+    /* Tinggi navbar Anda (sesuaikan dengan navbar Anda) */
+    height: calc(100vh - 110px);
+    /* Tinggi viewport dikurangi tinggi navbar */
+    overflow-y: hidden;
+    /* Tambahkan styling lain yang Anda inginkan */
+    flex: 0 0 200px;
+    /* Atur lebar sidebar sesuai kebutuhan */
+    z-index: 999;
+    /* Tetapkan z-index dengan nilai tinggi */
 }
 
 .sidebar {
@@ -9,10 +20,12 @@
     color: #000;
     height: 100vh;
     width: 300px;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 100;
+    flex: 1;
+}
+
+.parent-sidebar {
+    display: flex;
+    align-items: flex-start;
 }
 
 .sidebar .top_section {
@@ -161,41 +174,38 @@
     color: #EF233C;
 }
 
+.subMenu_link:hover {
+    background-color: #f0828f70;
+    color: #EF233C;
+    border-radius: 10px 0 0 10px;
+    font-weight: 600;
+}
+
+.subMenu_link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 40px;
+}
+
+.link-submenu {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+}
+
+.link-submenu .icon {
+    margin-right: 10px;
+}
+
 .active {
     border-left: 4px solid #EF233C;
     color: #EF233C;
+    font-weight: 600;
 }
 
 .icon, .link_text {
     font-size: 16px;
 }
-
-/* .link-submenu {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    color: #000;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px 15px;
-    transition: all 0.3s ease;
-    gap: 15px;
-}
-
-.subMenu_link {
-    background-color: #f0828f70;
-    color: #EF233C;
-    height: 60px;
-    padding-left: 3rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.subMenu_link:hover {
-    background-color: #f0828f70;
-    color: #EF233C;
-} */

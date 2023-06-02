@@ -1,0 +1,77 @@
+.accordion-filter {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 295px;
+}
+
+.accordion-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    border-left: none;
+    border-right: none;
+    padding: 10px;
+    cursor: pointer;
+    text-align: start;
+}
+
+.accordion-toggle .arrow {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    /* Mengubah posisi menjadi sebelah kanan */
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-bottom: 3px solid #333;
+    border-left: 3px solid #333;
+    transition: transform 0.3s ease;
+}
+
+.accordion-toggle .accordion-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    margin-right: 50px;
+    /* Mengubah margin menjadi margin kanan */
+}
+
+.accordion-toggle p {
+    font-size: 14px;
+    font-weight: normal;
+    color: #989898;
+    margin-left: 5px;
+}
+
+.accordion-toggle .arrow.up {
+    transform: translateY(-25%) rotate(135deg);
+}
+
+.accordion-toggle .arrow.down {
+    transform: translateY(-70%) rotate(-45deg);
+}
+
+.accordion-content {
+    background-color: #f9f9f9;
+    padding: 0 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.accordion-content.open {
+    overflow-y: hidden;
+    max-height: 500px;
+    transition: max-height 0.3s ease;
+}
+
+.page-ulasan {
+    margin: 18px 20px 30px 5px;
+    display: flex;
+    align-items: start;
+    gap: 77px;
+}

@@ -4,12 +4,13 @@
     box-sizing: border-box;
 }
 
-.text-histori h1{
-   font-size: 25px;
-   margin: 50px 0px;
-   font-weight: 600;
+.text-histori h1 {
+    font-size: 25px;
+    margin: 50px 0px;
+    font-weight: 600;
 }
-.content{
+
+.content {
     margin-top: 50px;
 }
 
@@ -24,7 +25,7 @@
     width: 320px;
 }
 
-input[type="text"] {
+.search-riwayat input[type="text"] {
     width: 100%;
     border: none;
     background: #0000;
@@ -63,12 +64,12 @@ input[type="text"]:focus {
     outline-color: white;
 }
 
-.opsi{
+.opsi {
     display: flex;
     gap: 20px;
 }
 
-.box-riwayat{
+.box-riwayat {
     /* background: #FFFF;
     border-radius: 10px;
     box-sizing: border-box;
@@ -82,46 +83,46 @@ input[type="text"]:focus {
     margin: 16px 0px;
     padding: 16px;
     border-radius: 8px;
-    border-color: var(--NN200,#D6DFEB);
+    border-color: var(--NN200, #D6DFEB);
     box-shadow: rgba(141, 150, 170, 0.4) 0px 1px 4px;
-    background-color: var(--NN0,#FFFFFF);
+    background-color: var(--NN0, #FFFFFF);
     cursor: default;
 }
 
-.info-pesanan{
+.info-pesanan {
     padding: 5px;
     display: flex;
     gap: 10px;
 }
 
-.text-belanja{
+.text-belanja {
     color: black;
 }
 
-.toko-barang{
+.toko-barang {
     padding: 5px;
     display: flex;
     align-items: center;
 }
 
-.toko-barang img{
+.toko-barang img {
     width: 20px;
 }
 
-.info-detail-toko{
+.info-detail-toko {
     margin-left: 10px;
 }
 
-.images{
+.images {
     max-width: 70px;
 }
 
-.images img{
+.images img {
     width: 100%;
     height: auto;
 }
 
-.nama-toko{
+.nama-toko {
     font-weight: 600;
     font-size: 14px;
     line-height: 1.43;
@@ -130,7 +131,7 @@ input[type="text"]:focus {
     overflow: hidden;
 }
 
-.nama-barang{
+.nama-barang {
     font-weight: 600;
     font-size: 15px;
     line-height: 1.43;
@@ -139,53 +140,53 @@ input[type="text"]:focus {
     overflow: hidden;
 }
 
-.info-detail-total{
+.info-detail-total {
     display: flex;
     padding: 5px;
     align-items: center;
     justify-content: space-between;
 }
 
-.total-barang{
-    color: var(--N700,rgba(49,53,59,0.68));
+.total-barang {
+    color: var(--N700, rgba(49, 53, 59, 0.68));
     font-weight: 600;
     font-size: 13px;
 }
 
-.total-riwayat{
+.total-riwayat {
     width: 25%;
     padding-left: 16px;
-    border-left: 1.5px solid var(--N75,#d6d9dc);
+    border-left: 1.5px solid var(--N75, #d6d9dc);
     width: 20%;
 }
 
-.txt-belanja{
+.txt-belanja {
     font-size: 15px;
     line-height: 20px;
     color: black;
 }
 
-.harga-belanja{
+.harga-belanja {
     font-weight: bold;
     font-size: 15px;
     line-height: 20px;
-    color: var(--N700,rgba(49,53,59,0.96));
+    color: var(--N700, rgba(49, 53, 59, 0.96));
 }
 
-.wrap{
+.wrap {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     /* width: 100%; */
 }
 
-.opsi-belilagi-lihatdetail{
+.opsi-belilagi-lihatdetail {
     display: flex;
     justify-content: flex-end;
     gap: 20px;
 }
 
-.btn-detail-transaksi{
+.btn-detail-transaksi {
     color: #EF233C;
     font-size: 15px;
     font-weight: 500;
@@ -197,7 +198,7 @@ input[type="text"]:focus {
     transition: 0.2s ease-in;
 }
 
-.btn-belilagi{
+.btn-belilagi {
     color: #fff;
     font-size: 15px;
     font-weight: 500;
@@ -209,7 +210,7 @@ input[type="text"]:focus {
     transition: 0.2s ease-in;
 }
 
-.form-riwayat{
+.form-riwayat {
     width: 800px;
     padding: 16px;
     border-radius: 6px;
