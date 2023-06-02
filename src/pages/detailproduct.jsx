@@ -78,7 +78,10 @@ function DetailProduct() {
         <div className="detail-product">
           <div className="detail-product-img">
             <div className="main-img">
-              <img src={imgProduct} alt="" />
+              <img
+                src={detail.length > 0 ? detail[0].picturePath : ""}
+                alt=""
+              />
             </div>
             <h3>Foto Produk Lainnya</h3>
             <div className="more-img">
@@ -92,18 +95,21 @@ function DetailProduct() {
             <div className="info-desc">
               <div className="sold">
                 <img src={iconSold} alt="" />
-                <h4>Terjual : 3.457</h4>
+                <h4>
+                  Terjual : {detail.length > 0 ? detail[0].sold_quantity : ""}
+                </h4>
               </div>
               <div className="line-detail"></div>
               <div className="ratings">
                 <img src={iconRatings} alt="" />
                 <h4>
-                  {detail.length > 0 ? detail[0].rate : ""} (3.450 Ulasan)
+                  {detail.length > 0 ? detail[0].rate : ""} (
+                  {detail.length > 0 ? detail[0].review : ""} Ulasan)
                 </h4>
               </div>
               <div className="like">
                 <img src={iconLove} alt="" />
-                <h4>Suka (3.250)</h4>
+                <h4>Suka ({detail.length > 0 ? detail[0].like : ""})</h4>
               </div>
               <div className="line-detail"></div>
               <div className="toko-detail">
@@ -151,7 +157,7 @@ function DetailProduct() {
                 <button className="btn-buy">Beli Sekarang</button>
               </Link>
             </div>
-            <div className="spesifikasi">
+            {/* <div className="spesifikasi">
               <h3>Spesifikasi Produk</h3>
               <div className="spesifikasi-item">
                 <div className="spesifikasi-item1">
@@ -176,7 +182,7 @@ function DetailProduct() {
                   <h4>Penuh Makna</h4>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="deskripsi-produk">

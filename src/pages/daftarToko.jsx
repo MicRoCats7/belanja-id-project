@@ -98,10 +98,10 @@ function DaftarToko() {
                   </div>
                 </div>
                 <div className="btn-buatToko">
-                  <Link to={"/home"}>
+                  <Link to={"/"}>
                     <button className="btn-kembali">Kembali</button>
                   </Link>
-                  <Link to={"/toko"}>
+                  <Link to={"/toko/hometoko"}>
                     <button>Buat Sekarang</button>
                   </Link>
                 </div>

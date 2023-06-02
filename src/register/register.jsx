@@ -43,7 +43,7 @@ function Register() {
         "Content-Type": "multipart/form-data",
       },
     })
-      .then((response) => {
+      .then((response) => { 
         console.log(response);
         localStorage.setItem("token", response.data.data.acces_token);
         navigate("/");

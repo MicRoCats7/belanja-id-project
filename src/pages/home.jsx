@@ -169,11 +169,11 @@ function Home() {
               <Product
                 key={index}
                 name={item.name}
-                url={item.image}
+                url={item.picturePath}
                 location={item.product_origin}
                 price={item.price}
                 rating={item.rate}
-                ulasan={item.ulasan}
+                ulasan={item.review}
                 stok={item.stok}
                 id={item.id}
               />
@@ -196,11 +196,11 @@ function Home() {
               <Product
                 key={index}
                 name={item.name}
-                url={item.image}
+                url={item.picturePath}
                 location={item.product_origin}
                 price={item.price}
                 rating={item.rate}
-                ulasan={item.ulasan}
+                ulasan={item.review}
                 stok={item.stok}
                 id={item.id}
               />
@@ -223,11 +223,11 @@ function Home() {
               <Product
                 key={index}
                 name={item.name}
-                url={item.image}
+                url={item.picturePath}
                 location={item.product_origin}
                 price={item.price}
                 rating={item.rate}
-                ulasan={item.ulasan}
+                ulasan={item.review}
                 stok={item.stok}
                 id={item.id}
               />
@@ -250,11 +250,11 @@ function Home() {
               <Product
                 key={index}
                 name={item.name}
-                url={item.image}
+                url={item.picturePath}
                 location={item.product_origin}
                 price={item.price}
                 rating={item.rate}
-                ulasan={item.ulasan}
+                ulasan={item.review}
                 stok={item.stok}
                 id={item.id}
               />
@@ -273,11 +273,11 @@ function Home() {
                   <Product
                     key={index}
                     name={item.name}
-                    url={item.image}
+                    url={item.picturePath}
                     location={item.product_origin}
                     price={item.price}
                     rating={item.rate}
-                    ulasan={item.ulasan}
+                    ulasan={item.review}
                     stok={item.stok}
                     id={item.id}
                   />

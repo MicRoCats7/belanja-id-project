@@ -96,6 +96,29 @@ function Event() {
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
       tanggal: "2",
     },
+    {
+      id: 9,
+      imageEvent: imgEvent,
+      nama: "GREBEG UMKM DIY 2019",
+      judul:
+        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
+      pembuatEvent: "Belanja.id ",
+      deskripsi:
+        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
+      tanggal: "2",
+    },
+    {
+      id: 10,
+      imageEvent: imgEvent,
+      nama: "GREBEG UMKM DIY 2019",
+      judul:
+        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
+      pembuatEvent: "Belanja.id ",
+      deskripsi:
+        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
+      tanggal: "2",
+    },
+    
   ];
 
   const itemsPerPage = 6; // Jumlah item per halaman

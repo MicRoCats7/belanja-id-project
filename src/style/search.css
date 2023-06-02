@@ -1,0 +1,24 @@
+.search-page-container {
+    margin: 20px;
+}
+
+.search-page-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.search-page-container p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.container-resultSearch {
+    width: 1400px;
+    margin: 0 auto;
+}
+
+.result-search {
+    display: flex;
+    gap: 20px;
+}

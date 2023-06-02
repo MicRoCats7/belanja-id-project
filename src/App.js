@@ -14,6 +14,7 @@ import Riwayat from "./pages/riwayat";
 import Toko from "./pages/toko";
 import Event from "./pages/event";
 import Detailevent from "./pages/detailevent";
+import Search from "./pages/search.";
 function App() {
   return (
     <div>
@@ -21,7 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/whislist" element={<Whislist />} />
-        <Route path="/register" element={<Register />} /> 
+        <Route path="/register" element={<Register />} />
         <Route path="/tambahproduk" element={<TambahProduk />} />
         <Route path="/detailproduct/:id" element={<DetailProduct />} />
         <Route path="/detailpesanan" element={<Detailpesanan />} />
@@ -32,6 +33,7 @@ function App() {
         <Route path="/toko/*" element={<Toko />} />
         <Route path="/Event" element={<Event />} />
         <Route path="/detailevent" element={<Detailevent />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </div>
   );
