@@ -24,6 +24,7 @@ import { productData, responsive } from "../utils/data";
 import SimpleAccordion from "../component/accordion/accordion";
 import Footer from "../component/footer/footer";
 
+
 function Home() {
   const product = productData.map((item) => (
     <Product
