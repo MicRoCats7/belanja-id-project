@@ -112,38 +112,40 @@ function Navbar() {
               <img src={logoBelanjaID} alt="logo belanja.id" />
             </Link>
           </div>
+          <div className="kategori">
+            <button className="dropbtn">Kategori</button>
+            <div className="dropdown-content">
+              {categories?.map((category) => {
+                return (
+                  <a href="#" key={category.id}>
+                    {category.name}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+          <div className="container-search">
+            <div className="search">
+              <input
+                type="text"
+                placeholder="Cari Produk"
+                onChange={(e) => onChangeHandler(e.target.value)}
+                value={text}
+                onBlur={() => {
+                  setTimeout(() => {
+                    setSuggestions([]);
+                  }, 100);
+                }}
+              />
+              <button type="submit" onClick={handleSearch}>
+                Search
+              </button>
+            </div>
+          </div>
           <div className="listNavbar">
-            <div className="kategori">
-              <button className="dropbtn">Kategori</button>
-              <div className="dropdown-content">
-                {categories?.map((category) => {
-                  return (
-                    <a href="#" key={category.id}>
-                      {category.name}
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="container-search">
-              <div className="search">
-                <input
-                  type="text"
-                  placeholder="Cari Produk"
-                  onChange={(e) => onChangeHandler(e.target.value)}
-                  value={text}
-                  onBlur={() => {
-                    setTimeout(() => {
-                      setSuggestions([]);
-                    }, 100);
-                  }}
-                />
-                <button type="submit" onClick={handleSearch}>
-                  Search
-                </button>
-              </div>
-            </div>
-            <p>Event</p>
+            <Link to={"/event"}>
+              <p>Event</p>
+            </Link>
             <div className="icon-navbar">
               <img src={iconChat} alt="icon chat" />
               <img src={iconKeranjang} alt="icon keranjang" />
@@ -160,14 +162,14 @@ function Navbar() {
                 <div className="drop-profile">
                   <img
                     className="photo-profile"
-                    src={profile.user?.profile_photo_url}
+                    src={profile.user?.profile_photo_path}
                     alt=""
                   />
                   <div className="menu-dropdown">
                     <div className="user-info">
                       <img
                         className="photo-profile"
-                        src={profile.user?.profile_photo_url}
+                        src={profile.user?.profile_photo_path}
                         alt=""
                       />
                       <h3 className="nama-user">

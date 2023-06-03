@@ -20,12 +20,11 @@ import imgProdukFashion from "../assets/image/fashion.svg";
 import imgProdukKerajinan from "../assets/image/kerajinan tangan.svg";
 import "../style/home.css";
 import Product from "../component/product/product";
-import { productData, responsive } from "../utils/data";
+import { responsive } from "../utils/data";
 import SimpleAccordion from "../component/accordion/accordion";
 import Footer from "../component/footer/footer";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
-
 
 function Home() {
   const [product, setProduct] = useState([]);
