@@ -28,7 +28,7 @@ function Register() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const navigate = useNavigate();
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
-
+  
   const onSubmit = async (data) => {
     // e.preventDefault()
     console.log(data);
@@ -45,11 +45,13 @@ function Register() {
           "Content-Type": "multipart/form-data",
         },
       });
+      handleSuccessAlertOpen();
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
-      handleSuccessAlertOpen();
       setLoading(false);
-      navigate("/login");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000); 
     } catch (error) {
       handleErrorAlertOpen();
       setLoading(false);
@@ -184,27 +186,31 @@ function Register() {
       <Snackbar
         open={successAlertOpen}
         autoHideDuration={3000}
+        variant="filled"
         onClose={() => setSuccessAlertOpen(false)}
       >
         <MuiAlert
           onClose={() => setSuccessAlertOpen(false)}
           severity="success"
+          variant="filled"
           sx={{ width: "100%" }}
         >
-          Alhamdulillah login sukses
+          Alhamdulillah daftar sukses
         </MuiAlert>
       </Snackbar>
       <Snackbar
         open={errorAlertOpen}
         autoHideDuration={3000}
+        variant="filled"
         onClose={() => setErrorAlertOpen(false)}
       >
         <MuiAlert
           onClose={() => setErrorAlertOpen(false)}
           severity="error"
+          variant="filled"
           sx={{ width: "100%" }}
         >
-          Login gagal. Silakan periksa kembali email dan password Anda.
+          daftar gagal. Silakan periksa kembali nama, email, dan password Anda.
         </MuiAlert>
       </Snackbar>
     </div>

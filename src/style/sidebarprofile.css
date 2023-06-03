@@ -3,27 +3,29 @@
     display: flex;
     align-items: start ;  
 } */
-.container-profile{
-    background: #FFFFFF;
+.container-profile {
+    background: #ffffff;
     width: 200px;
-    height: 600px;  
-    box-shadow: var(--NN200,#D6DFEB) 0px 1px 6px 0px;
+    height: 600px;
+    box-shadow: var(--NN200, #d6dfeb) 0px 1px 6px 0px;
     border-radius: 12px;
     margin: 50px;
-}
-
-.user-prof {
+  }
+  
+  .user-prof {
     display: flex;
     align-items: center;
     margin: 20px 20px;
     gap: 13px;
-}
-
-.user-prof h3{
+  }
+  
+  .user-prof h3 {
     font-weight: 500;
-}
-
-.profil{
+  }
+  
+  .profil,
+  .riwayat,
+  .alamat {
     display: flex;
     align-items: center;
     gap: 13px;
@@ -31,90 +33,43 @@
     height: 100%;
     transition: all 0.3s ease;
     color: #000;
-}
-
-.profil h3{
+  }
+  
+  .profil h3,
+  .riwayat h3,
+  .alamat h3 {
     font-size: 16px;
-}
-
-
-.profil a{
+  }
+  
+  .profil a,
+  .riwayat a,
+  .alamat a {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-
-.riwayat{
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    padding: 10px 0;
-}
-
-.riwayat h3{
-    font-size: 16px;
-}
-
-.alamat h3{
-    font-size: 16px;
-}
-
-.riwayat a{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.alamat{
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    padding: 10px 0;
-}
-
-.alamat a{
-    display: flex;
-    align-items: center;
-    gap: 10px;
- }
-
-.riwayat:hover {
+  }
+  
+  .riwayat:hover,
+  .alamat:hover,
+  .profil:hover {
     background-color: #f0828f70;
-    color: #EF233C;
-}
-
-.riwayat svg{
+    color: #ef233c;
+  }
+  
+  .riwayat svg,
+  .alamat svg,
+  .profil svg {
     margin-left: 10px;
     font-size: 17px;
-}
-
-.alamat svg{
-    margin-left: 10px;
-    font-size: 17px;
-}
-
-.alamat:hover{
-    background-color: #f0828f70;
-    color: #EF233C;
-}
-
-.profil:hover {
-    background-color: #f0828f70;
-    color: #EF233C;
-}
-
-.profil svg{
-    margin-left: 10px;
-    font-size: 17px;
-}
-
-.active {
-    border-left: 4px solid #EF233C;
-    color: #EF233C;
-}
-
-.linkk{
+  }
+  
+  .active {
+    border-left: 4px solid #ef233c;
+    color: #ef233c;
+    font-weight: 600;
+  }
+  
+  .linkk {
     display: flex;
     align-items: center;
     color: #000;
@@ -123,6 +78,15 @@
     font-weight: 600;
     transition: all 0.3s ease;
     gap: 15px;
-}
+  }
+  
+  @media (max-width: 576px) {
+    .container-profile {
+      width: 100%;
+      height: auto;
+      margin: 20px;
+      padding: 20px;
+    }
+  }
 
 
