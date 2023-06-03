@@ -1,29 +1,54 @@
 .accordion-filter {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
     width: 295px;
+    background: #FFFFFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+    /* border-radius: 5px; */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
-.accordion-toggle {
+.accordion-filter-lokasi {
+    width: 295px;
+    background: #FFFFFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.accordion-filter-kondisi {
+    width: 295px;
+    background: #FFFFFF;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0 0 5px 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+
+.accordion-toggle-filter {
     display: flex;
     align-items: center;
     position: relative;
     background-color: #fff;
-    border-top: 1px solid #e2e2e2;
-    border-bottom: 1px solid #e2e2e2;
-    border-left: none;
-    border-right: none;
-    padding: 10px;
+    padding: 10px 12px;
+    border: none;
     cursor: pointer;
+    width: 100%;
     text-align: start;
+    border-radius: 5px;
 }
 
-.accordion-toggle .arrow {
+.accordion-toggle-filter .accordion-text-filter {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+    margin-right: 30px;
+    /* Tambahkan margin-right */
+}
+
+.accordion-toggle-filter .arrowFilter {
     position: absolute;
     top: 50%;
-    right: 30px;
-    /* Mengubah posisi menjadi sebelah kanan */
+    right: 10px;
+    /* Perbarui posisi ke right */
     transform: translateY(-50%);
     width: 10px;
     height: 10px;
@@ -32,46 +57,140 @@
     transition: transform 0.3s ease;
 }
 
-.accordion-toggle .accordion-text {
-    font-size: 14px;
-    font-weight: 700;
-    color: #000;
-    margin-right: 50px;
-    /* Mengubah margin menjadi margin kanan */
-}
-
-.accordion-toggle p {
-    font-size: 14px;
-    font-weight: normal;
-    color: #989898;
-    margin-left: 5px;
-}
-
-.accordion-toggle .arrow.up {
+.accordion-toggle-filter .arrowFilter.down {
     transform: translateY(-25%) rotate(135deg);
 }
 
-.accordion-toggle .arrow.down {
+.accordion-toggle-filter .arrowFilter.up {
     transform: translateY(-70%) rotate(-45deg);
 }
 
-.accordion-content {
-    background-color: #f9f9f9;
+
+.accordion-content-filter {
+    background-color: #FFFFFF;
     padding: 0 10px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
+    border-radius: 5px;
 }
 
-.accordion-content.open {
+.accordion-content-filter.open {
     overflow-y: hidden;
     max-height: 500px;
     transition: max-height 0.3s ease;
 }
 
-.page-ulasan {
-    margin: 18px 20px 30px 5px;
+.page-filter {
     display: flex;
+    flex-direction: column;
     align-items: start;
-    gap: 77px;
+}
+
+.page-filter .checkbox-filter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.page-filter .checkbox-filter:nth-child(6) {
+    margin-bottom: 10px;
+}
+
+.checkbox-filter label {
+    font-size: 12px;
+    font-weight: normal;
+    color: #727272;
+}
+
+.page-filter p {
+    width: 100%;
+    height: 40px;
+    background: none;
+    border: none;
+    font-size: 12px;
+    font-weight: normal;
+    color: #EF233C;
+    cursor: pointer;
+}
+
+.container-filter h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 11px;
+}
+
+.page-filter-harga {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.harga-satuan-filter {
+    display: flex;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    width: 100%;
+    height: 45px;
+    margin-bottom: 10px;
+}
+
+.box-harga-satuan-filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #F3F4F5;
+    border-radius: 5px 0 0 5px;
+    width: 29px;
+}
+
+.harga-satuan-filter input:focus {
+    outline: none;
+}
+
+.box-harga-satuan-filter h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #606060;
+}
+
+.box-harga-filter {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 10px 20px;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 0.2px solid #e2e2e2;
+    width: auto;
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: #727272;
+    margin-bottom: 10px;
+}
+
+.box-harga-filter h1 {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.box-harga-filter.active {
+    background-color: #fcd2d7;
+    border: 1px solid #EF233C;
+    color: #EF233C;
+}
+
+.page-filter-rate {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.page-filter-rate h1 {
+    font-size: 12px;
+    font-weight: 500;
+    color: #727272;
 }

@@ -1,0 +1,38 @@
+.pro-filter {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.tab-navigation-result {
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.tab-navigation-result button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.tab-navigation-result button.active {
+    background-color: #fff;
+}
+
+.tab-indicator-result {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #EF233C;
+    transition: transform 0.3s ease, width 0.3s ease;
+}

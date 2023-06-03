@@ -33,7 +33,7 @@ function TambahProduk() {
   useEffect(() => {
     getCategories();
   }, []);
-  
+
   function getCategories() {
     axios
       .get(apiurl() + "categories")
