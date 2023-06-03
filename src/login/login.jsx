@@ -1,6 +1,6 @@
 import bakcground from "../assets/bglogin.svg";
 import icon from "../assets/Belanja.id.svg";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../style/login.css";
 import bglogin from "../assets/shipping.svg";
 import Snackbar from "@mui/material/Snackbar";
@@ -12,6 +12,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import apiurl from "../utils/apiurl";
 import axios from "axios";
+// import { SessionContext } from "../utils/googlelogin";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -20,12 +21,31 @@ function Login() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
+  // const { login } = useContext(SessionContext);
+  const navigate = useNavigate();
+  // const handleLogin = async () => {
+  //   try {
+  //     // Panggil API login menggunakan Google OAuth
+  //     const response = await axios.get(
+  //       "https://belanja.penuhmakna.co.id/public/api/auth/google/redirect"
+  //     );
+
+  //     // Jika login sukses, terima data pengguna dari response
+  //     const userData = response.data.user;
+
+  //     // Panggil fungsi login dari SessionContext dengan data pengguna
+  //     login(userData);
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.log(error);
+  //     // Handle error saat login gagal
+  //   }
+  // };
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     // Proses login menggunakan API kustom
@@ -40,11 +60,13 @@ function Login() {
           "Content-Type": "multipart/form-data",
         },
       });
+      handleSuccessAlertOpen();
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
-      handleSuccessAlertOpen();
       setLoading(false);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
       handleErrorAlertOpen();
       setLoading(false);
@@ -166,6 +188,7 @@ function Login() {
         <MuiAlert
           onClose={() => setSuccessAlertOpen(false)}
           severity="success"
+          variant="filled"
           sx={{ width: "100%" }}
         >
           Alhamdulillah login sukses
@@ -179,6 +202,7 @@ function Login() {
         <MuiAlert
           onClose={() => setErrorAlertOpen(false)}
           severity="error"
+          variant="filled"
           sx={{ width: "100%" }}
         >
           Login gagal. Silakan periksa kembali email dan password Anda.

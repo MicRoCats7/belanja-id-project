@@ -7,6 +7,8 @@ import IconNotif from "../../assets/icon/notif.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Icontoko from "../../assets/icon/tokoo.svg";
 import apiurl from "../../utils/apiurl";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
 import { CiSearch } from "react-icons/ci";
 
@@ -18,6 +20,8 @@ function Navbar() {
   const [produkList, setProdukList] = useState([]);
   const [text, setText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   useEffect(() => {
     LoadProduk();
@@ -55,14 +59,25 @@ function Navbar() {
             },
           }
         );
+        handleSuccessAlertOpen();
         localStorage.removeItem("token");
-        navigate("/login");
         setLoading(false);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
       } catch (error) {
         console.error(error);
-        setLoading(false);
+        setLoading(false); 
       }
     }
+  };
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
   };
 
   function getCategories() {
@@ -172,20 +187,24 @@ function Navbar() {
                         src={profile.user?.profile_photo_path}
                         alt=""
                       />
-                      <h3 className="nama-user">
+                      <h3 className="nama-user-profile">
                         {profile.user && profile.user.name}
                       </h3>
                     </div>
                     <hr />
-                    <Link to={"/profile/biodata"}>
-                      <button className="btn-menuju-profile">Profile</button>
-                    </Link>
-                    <Link to={"/Whislist"}>
-                      <button className="btn-menuju-whislist">Whislist</button>
-                    </Link>
-                    <button className="btn-logout" onClick={logout}>
-                      Logout
-                    </button>
+                    <div className="opsi-menu-dropdwn">
+                      <Link to={"/profile/biodata"}>
+                        <button className="btn-menuju-profile">Profile</button>
+                      </Link>
+                      <Link to={"/Whislist"}>
+                        <button className="btn-menuju-whislist">
+                          Whislist
+                        </button>
+                      </Link>
+                      <button className="btn-logout" onClick={logout}>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -215,6 +234,34 @@ function Navbar() {
             </div>
           ))}
       </div>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Anda berhasil logout!
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Logout gagal!
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 }
