@@ -16,6 +16,7 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import Footer from "../component/footer/footer";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
+import { formatPrice } from "../utils/helpers";
 
 function DetailProduct() {
   const [value, setValue] = React.useState(5);
@@ -55,6 +56,7 @@ function DetailProduct() {
 
   useEffect(() => {
     getDetail(id);
+    window.scrollTo(0, 0);
   }, [id]);
 
   return (
@@ -120,7 +122,9 @@ function DetailProduct() {
               </div>
             </div>
             <div className="harga">
-              <h2>{detail.length > 0 ? detail[0].price : ""}</h2>
+              <h2>
+                Rp {formatPrice(detail.length > 0 ? detail[0].price : "")}
+              </h2>
               <h3>Dapatkan barang pesananmu atau uang kembali.</h3>
             </div>
             <div className="pilih-product">
@@ -157,7 +161,7 @@ function DetailProduct() {
                 <button className="btn-buy">Beli Sekarang</button>
               </Link>
             </div>
-            {/* <div className="spesifikasi">
+            <div className="spesifikasi">
               <h3>Spesifikasi Produk</h3>
               <div className="spesifikasi-item">
                 <div className="spesifikasi-item1">
@@ -182,7 +186,7 @@ function DetailProduct() {
                   <h4>Penuh Makna</h4>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
         <div className="deskripsi-produk">

@@ -75,14 +75,18 @@ function Navbar() {
   }
 
   const LoadProduk = async () => {
-    const response = await axios.get(apiurl() + "products");
-    setProdukList(response.data.data.data);
-    console.log(response.data.data.data);
+    try {
+      const response = await axios.get(apiurl() + "products");
+      setProdukList(response.data.data.data);
+      console.log(response.data.data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  const onSuggestHandler = (text) => {
-    setText(text);
+  const onSuggestHandler = (selectedSuggestion) => {
+    setText(selectedSuggestion);
     setSuggestions([]);
+    navigate(`/search?query=${selectedSuggestion}`);
   };
 
   const onChangeHandler = (text) => {
@@ -93,7 +97,6 @@ function Navbar() {
         return pro.name.match(regex);
       });
     }
-    console.log("matches", matches);
     setSuggestions(matches);
     setText(text);
   };
@@ -101,6 +104,12 @@ function Navbar() {
   const handleSearch = () => {
     // Redirect to search page with the search text
     navigate(`/search?query=${text}`);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
@@ -136,6 +145,7 @@ function Navbar() {
                     setSuggestions([]);
                   }, 100);
                 }}
+                onKeyPress={handleKeyPress} // Handle key press event
               />
               <button type="submit" onClick={handleSearch}>
                 Search
@@ -202,19 +212,20 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className="dropdown-result">
-        {suggestions &&
-          suggestions.map((suggestions, i) => (
+      {suggestions && suggestions.length > 0 && (
+        <div className="dropdown-result">
+          {suggestions.slice(0, 5).map((suggestion, i) => (
             <div
               key={i}
               className="suggestion"
-              onClick={() => onSuggestHandler(suggestions.name)}
+              onClick={() => onSuggestHandler(suggestion.name)}
             >
               <CiSearch fontSize={"20px"} />
-              <h3>{suggestions.name}</h3>
+              <h3>{suggestion.name}</h3>
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </>
   );
 }
