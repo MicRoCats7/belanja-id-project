@@ -12,11 +12,33 @@
     margin: 67px 0;
 }
 
-.container-produkPilihan {
+.prev-arrow,
+.next-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: center;
+    font-size: 24px;
+    color: #000000;
+    cursor: pointer;
+    z-index: 99;
 }
+
+.prev-arrow {
+    left: 10px;
+}
+
+.next-arrow {
+    right: 10px;
+}
+
 
 .title-produkPilihan {
     margin: 16px 0;
@@ -26,9 +48,17 @@
     font-size: 25px;
 }
 
+.swiper-wrapper {
+    margin-top: 20px;
+}
+
 .container-card-produkPilihan {
     margin-left: -32px;
     margin-right: 40px;
+}
+
+.slider-container {
+    margin-top: 20px;
 }
 
 .card-produkPilihan {
@@ -36,9 +66,8 @@
     height: 323px;
     border-radius: 10px;
     background-color: #ffff;
-    /* border: 1px solid #00000035; */
     box-shadow: 0px 0px 4px -1px rgba(0, 0, 0, 0.7);
-    margin: 0 10px;
+    margin-bottom: 20px;
 }
 
 .content-porduk {
@@ -47,8 +76,16 @@
     padding: 10px;
 }
 
-.card-produkPilihan img {
-    width: 192px;
+.img-pro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 192px;
+    width: 100%;
+}
+
+.img-pro img {
+    width: 100%;
     height: 192px;
     border-radius: 10px 10px 0 0;
     object-fit: cover;
@@ -61,6 +98,10 @@
 .nama-produk h3 {
     font-size: 12px;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .location {

@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../style/search.css";
 import Navbar from "../component/navbar/navbar";
 import ResultSearch from "../component/resultSearch/ResultSearch";
 
 function SearchPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Place your search page content and styling here
   return (
     <div>

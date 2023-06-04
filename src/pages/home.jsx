@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import Navbar from "../component/navbar/navbar";
 import bgHome from "../assets/image/img-homepage.svg";
 import iconKerajinanTangan from "../assets/icon/paper-crafts 1.svg";
@@ -20,14 +18,24 @@ import imgProdukFashion from "../assets/image/fashion.svg";
 import imgProdukKerajinan from "../assets/image/kerajinan tangan.svg";
 import "../style/home.css";
 import Product from "../component/product/product";
-import { responsive } from "../utils/data";
 import SimpleAccordion from "../component/accordion/accordion";
 import Footer from "../component/footer/footer";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
+import "swiper/swiper-bundle.min.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 function Home() {
   const [product, setProduct] = useState([]);
+  const [isPrevArrowVisible, setIsPrevArrowVisible] = useState(false);
+  const [isNextArrowVisible, setIsNextArrowVisible] = useState(true);
+
+  useEffect(() => {
+    getProduct();
+    window.scrollTo(0, 0);
+  }, []);
 
   function getProduct() {
     axios
@@ -37,10 +45,6 @@ function Home() {
       })
       .catch((error) => console.error(error));
   }
-
-  useEffect(() => {
-    getProduct();
-  }, []);
 
   return (
     <div>
@@ -157,110 +161,239 @@ function Home() {
           <div className="title-produkPilihan">
             <h1>Produk Pilihan Belanja.id Untuk Kamu</h1>
           </div>
-          <Carousel
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            className="container-produkPilihan"
-            responsive={responsive}
-          >
-            <div className="img-produk-pilihan">
-              <img src={imgProdukPilihan} alt="Produk pilihan " />
+          <div className="slider wrapper slick-slider">
+            <div className="slider-container">
+              <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={50}
+                slidesPerView={6}
+                navigation={{
+                  prevEl: ".prev-arrow-1",
+                  nextEl: ".next-arrow-1",
+                }}
+                onSlideChange={(swiper) => {
+                  // Set state variables for this specific slider
+                  setIsPrevArrowVisible(!swiper.isBeginning);
+                  setIsNextArrowVisible(!swiper.isEnd);
+                }}
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                <SwiperSlide>
+                  <div className="img-produk-pilihan">
+                    <img
+                      src={imgProdukPilihan}
+                      alt="Produk pilihan"
+                      loading="lazy"
+                    />
+                  </div>
+                </SwiperSlide>
+                {product?.map((item, index) => (
+                  <SwiperSlide>
+                    <Product
+                      key={index}
+                      name={item.name}
+                      url={item.picturePath}
+                      location={item.product_origin}
+                      price={item.price}
+                      rating={item.rate}
+                      ulasan={item.review}
+                      stok={item.stok}
+                      id={item.id}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-            {product?.map((item, index) => (
-              <Product
-                key={index}
-                name={item.name}
-                url={item.picturePath}
-                location={item.product_origin}
-                price={item.price}
-                rating={item.rate}
-                ulasan={item.review}
-                stok={item.stok}
-                id={item.id}
-              />
-            ))}
-            {/* {product} */}
-          </Carousel>
+            <div
+              className="prev-arrow prev-arrow-1"
+              style={{ display: isPrevArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowBack />
+            </div>
+            <div
+              className="next-arrow next-arrow-1"
+              style={{ display: isNextArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowForward />
+            </div>
+          </div>
           <div className="line-produk"></div>
           <div className="title-produkPilihan">
             <h1>Produk Olahan Makanan Pilihan Untuk Kamu</h1>
           </div>
-          <Carousel
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            className="container-produkPilihan"
-            responsive={responsive}
-          >
-            <div className="img-produk-pilihan">
-              <img src={imgProdukOlahan} alt="Produk pilihan " />
+          <div className="slider wrapper slick-slider">
+            <div className="slider-container">
+              <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={50}
+                slidesPerView={6}
+                navigation={{
+                  prevEl: ".prev-arrow-2",
+                  nextEl: ".next-arrow-2",
+                }}
+                onSlideChange={(swiper) => {
+                  setIsPrevArrowVisible(!swiper.isBeginning);
+                  setIsNextArrowVisible(!swiper.isEnd);
+                }}
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                <SwiperSlide>
+                  <div className="img-produk-pilihan">
+                    <img
+                      src={imgProdukOlahan}
+                      alt="Produk pilihan"
+                      loading="lazy"
+                    />
+                  </div>
+                </SwiperSlide>
+                {product?.map((item, index) => (
+                  <SwiperSlide>
+                    <Product
+                      key={index}
+                      name={item.name}
+                      url={item.picturePath}
+                      location={item.product_origin}
+                      price={item.price}
+                      rating={item.rate}
+                      ulasan={item.review}
+                      stok={item.stok}
+                      id={item.id}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-            {product?.map((item, index) => (
-              <Product
-                key={index}
-                name={item.name}
-                url={item.picturePath}
-                location={item.product_origin}
-                price={item.price}
-                rating={item.rate}
-                ulasan={item.review}
-                stok={item.stok}
-                id={item.id}
-              />
-            ))}
-            {/* {product} */}
-          </Carousel>
+            <div
+              className="prev-arrow prev-arrow-2"
+              style={{ display: isPrevArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowBack />
+            </div>
+            <div
+              className="next-arrow next-arrow-2"
+              style={{ display: isNextArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowForward />
+            </div>
+          </div>
           <div className="line-produk"></div>
           <div className="title-produkPilihan">
             <h1>Produk Fashion Terbaik Untuk Kamu</h1>
           </div>
-          <Carousel
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            className="container-produkPilihan"
-            responsive={responsive}
-          >
-            <div className="img-produk-pilihan">
-              <img src={imgProdukFashion} alt="Produk pilihan" />
+          <div className="slider wrapper slick-slider">
+            <div className="slider-container">
+              <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={50}
+                slidesPerView={6}
+                navigation={{
+                  prevEl: ".prev-arrow-3",
+                  nextEl: ".next-arrow-3",
+                }}
+                onSlideChange={(swiper) => {
+                  setIsPrevArrowVisible(!swiper.isBeginning);
+                  setIsNextArrowVisible(!swiper.isEnd);
+                }}
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                <SwiperSlide>
+                  <div className="img-produk-pilihan">
+                    <img
+                      src={imgProdukFashion}
+                      alt="Produk pilihan"
+                      loading="lazy"
+                    />
+                  </div>
+                </SwiperSlide>
+                {product?.map((item, index) => (
+                  <SwiperSlide>
+                    <Product
+                      key={index}
+                      name={item.name}
+                      url={item.picturePath}
+                      location={item.product_origin}
+                      price={item.price}
+                      rating={item.rate}
+                      ulasan={item.review}
+                      stok={item.stok}
+                      id={item.id}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-            {product?.map((item, index) => (
-              <Product
-                key={index}
-                name={item.name}
-                url={item.picturePath}
-                location={item.product_origin}
-                price={item.price}
-                rating={item.rate}
-                ulasan={item.review}
-                stok={item.stok}
-                id={item.id}
-              />
-            ))}
-            {/* {product} */}
-          </Carousel>
+            <div
+              className="prev-arrow prev-arrow-3"
+              style={{ display: isPrevArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowBack />
+            </div>
+            <div
+              className="next-arrow next-arrow-3"
+              style={{ display: isNextArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowForward />
+            </div>
+          </div>
           <div className="line-produk"></div>
           <div className="title-produkPilihan">
             <h1>Produk Kerajinan Terbaik Untuk Kamu</h1>
           </div>
-          <Carousel
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            className="container-produkPilihan"
-            responsive={responsive}
-          >
-            <div className="img-produk-pilihan">
-              <img src={imgProdukKerajinan} alt="Produk pilihan" />
+          <div className="slider wrapper slick-slider">
+            <div className="slider-container">
+              <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={50}
+                slidesPerView={6}
+                navigation={{
+                  prevEl: ".prev-arrow-4",
+                  nextEl: ".next-arrow-4",
+                }}
+                onSlideChange={(swiper) => {
+                  setIsPrevArrowVisible(!swiper.isBeginning);
+                  setIsNextArrowVisible(!swiper.isEnd);
+                }}
+                onSwiper={(swiper) => console.log(swiper)}
+              >
+                <SwiperSlide>
+                  <div className="img-produk-pilihan">
+                    <img
+                      src={imgProdukKerajinan}
+                      alt="Produk pilihan"
+                      loading="lazy"
+                    />
+                  </div>
+                </SwiperSlide>
+                {product?.map((item, index) => (
+                  <SwiperSlide>
+                    <Product
+                      key={index}
+                      name={item.name}
+                      url={item.picturePath}
+                      location={item.product_origin}
+                      price={item.price}
+                      rating={item.rate}
+                      ulasan={item.review}
+                      stok={item.stok}
+                      id={item.id}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-            {product?.map((item, index) => (
-              <Product
-                key={index}
-                name={item.name}
-                url={item.picturePath}
-                location={item.product_origin}
-                price={item.price}
-                rating={item.rate}
-                ulasan={item.review}
-                stok={item.stok}
-                id={item.id}
-              />
-            ))}
-            {/* {product} */}
-          </Carousel>
+            <div
+              className="prev-arrow prev-arrow-4"
+              style={{ display: isPrevArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowBack />
+            </div>
+            <div
+              className="next-arrow next-arrow-4"
+              style={{ display: isNextArrowVisible ? "flex" : "none" }}
+            >
+              <IoIosArrowForward />
+            </div>
+          </div>
           <div className="line-produk"></div>
           <div className="produk-lainnya">
             <div className="title-lainnya">

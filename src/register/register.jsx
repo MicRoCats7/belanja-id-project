@@ -72,7 +72,7 @@ function Register() {
       setPasswordIcon(FaEyeSlash);
     }
   };
-  
+
   const handleSuccessAlertOpen = () => {
     setSuccessAlertOpen(true);
   };
@@ -81,7 +81,7 @@ function Register() {
     setErrorAlertOpen(true);
   };
 
-  console.log(successAlertOpen)
+  console.log(successAlertOpen);
 
   return (
     <div className="register">

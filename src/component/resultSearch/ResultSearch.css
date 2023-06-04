@@ -4,10 +4,31 @@
     gap: 20px;
 }
 
+.resultSearch {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
 .tab-navigation-result {
     display: flex;
+    align-items: center;
     position: relative;
     border-bottom: 1px solid #E0E0E0;
+}
+
+.pengaturan-result {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.tab-content .query-key {
+    margin: 50px 0 25px 0;
+}
+
+.query-key h2 {
+    font-size: 13px;
+    font-weight: normal;
 }
 
 .tab-navigation-result button {
@@ -35,4 +56,41 @@
     height: 2px;
     background-color: #EF233C;
     transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.tab-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* .filter-tab-container {
+    display: flex;
+    align-items: flex-start;
+} */
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    /* Atur jarak dari tab */
+}
+
+/* .filter-sidebar {
+    flex: 0 0 auto;
+    padding-right: 20px;
+} */
+
+/* .tab-content-main {
+    flex: 1 1 auto;
+}
+
+/* Gaya tambahan sesuai kebutuhan Anda */
+
+.no-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
 }

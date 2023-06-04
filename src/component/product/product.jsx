@@ -1,24 +1,31 @@
 import React from "react";
-import star from "../../assets/icon/start.svg";
-import wishlist from "../../assets/icon/wishlist.svg";
 import "../../style/product.css";
 import { Link } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
 import { BsFillStarFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 
+function formatPrice(price) {
+  const numberFormat = new Intl.NumberFormat("id-ID");
+  return numberFormat.format(Number(price));
+}
+
 function Product(props) {
+  const formattedPrice = formatPrice(props.price);
+
   return (
     <div className="produk">
       <Link to={"/detailproduct/" + props.id}>
         <div className="card-produkPilihan">
-          <img src={props.url} alt="" />
+          <div className="img-pro">
+            <img src={props.url} alt="" />
+          </div>
           <div className="content-porduk">
             <div className="nama-produk">
               <h3>{props.name}</h3>
             </div>
             <div className="harga-produk">
-              <h3>Rp {props.price}</h3>
+              <h3>Rp {formattedPrice}</h3>
               <div className="location">
                 <MdLocationOn color="#00A99D" />
                 <p>{props.location}</p>
