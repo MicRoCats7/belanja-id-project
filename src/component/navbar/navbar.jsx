@@ -177,14 +177,14 @@ function Navbar() {
                 <div className="drop-profile">
                   <img
                     className="photo-profile"
-                    src={profile.user?.profile_photo_path}
+                    src={profile.user?.profile_photo_url}
                     alt=""
                   />
                   <div className="menu-dropdown">
                     <div className="user-info">
                       <img
                         className="photo-profile"
-                        src={profile.user?.profile_photo_path}
+                        src={profile.user?.profile_photo_url}
                         alt=""
                       />
                       <h3 className="nama-user-profile">

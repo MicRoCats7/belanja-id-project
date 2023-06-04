@@ -1,77 +1,152 @@
-.main{
+.main {
     width: 1400px;
     margin: 0 auto;
     position: relative;
-}
-
-.nav-whislist{
+  }
+  
+  .nav-whislist {
     display: flex;
     align-items: center;
     margin-top: 100px;
     gap: 14px;
-}
-
-.whisone{
+  }
+  
+  .whisone {
     color: dimgrey;
     font-weight: 500;
-}
-
-.all-whist{
+  }
+  
+  .all-whist {
     font-weight: 500;
     font-size: 18px;
-}
-
-.drpdwn-whislist{
+  }
+  
+  .drpdwn-whislist {
     display: flex;
-    align-items: center;    
+    align-items: center;
     margin-top: 10px;
     justify-content: space-between;
-}
-
-.drpdwn-urutkan{
+  }
+  
+  .drpdwn-urutkan {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.smuawhist-teks{
+  }
+  
+  .smuawhist-teks {
     font-size: 27px;
-}
+  }
 
-.urutkan-teks{
+  .name-filter{
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .urutkan-teks {
     font-size: 20px;
     font-weight: 500;
-}
-
-.custom-select{
+  }
+  
+  .card-barang h2{
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .custom-select {
     border-radius: 10px;
     padding: 8px 16px;
-}
-
-.filter{
+  }
+  
+  .filter {
     display: flex;
     gap: 100px;
     margin: 50px 0;
-}
-
-.produk{
+  }
+  
+  .produk {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
-}
-
-.name-filter{
-    font-weight: 500;
-}
-
-.barang{
-    font-weight: 500;
-}
-
-
-
-
-
-
-
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
   
+  .produk.fade {
+    opacity: 0;
+  }
+  
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    font-size: 20px;
+    color: #555;
+  }
+  
+  .loading:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .pagination-whislist button {
+    transition: background-color 0.3s ease;
+    background-color: #fff;
+    color: #EF233C;
+    border: 1px solid #EF233C;
+    padding: 8px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 18px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .pagination-whislist button:hover {
+    background-color: #ddd;
+  }
+  
+  .pagination-whislist button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .pagination-whislist{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
