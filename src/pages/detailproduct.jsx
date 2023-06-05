@@ -161,7 +161,7 @@ function DetailProduct() {
                 <button className="btn-buy">Beli Sekarang</button>
               </Link>
             </div>
-            <div className="spesifikasi">
+            {/* <div className="spesifikasi">
               <h3>Spesifikasi Produk</h3>
               <div className="spesifikasi-item">
                 <div className="spesifikasi-item1">
@@ -186,7 +186,7 @@ function DetailProduct() {
                   <h4>Penuh Makna</h4>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="deskripsi-produk">
@@ -205,8 +205,8 @@ function DetailProduct() {
                 <div className="rating">
                   <Rating name="read-only" value={value} readOnly />
                   <div className="like">
-                    <ThumbUpOffAltIcon />
-                    <p>1</p>
+                    {/* <ThumbUpOffAltIcon />
+                    <p>1</p> */}
                   </div>
                 </div>
                 <p>
@@ -232,8 +232,8 @@ function DetailProduct() {
                 <div className="rating">
                   <Rating name="read-only" value={value} readOnly />
                   <div className="like">
-                    <ThumbUpOffAltIcon />
-                    <p>1</p>
+                    {/* <ThumbUpOffAltIcon />
+                    <p>1</p> */}
                   </div>
                 </div>
                 <p>
@@ -259,8 +259,8 @@ function DetailProduct() {
                 <div className="rating">
                   <Rating name="read-only" value={value} readOnly />
                   <div className="like">
-                    <ThumbUpOffAltIcon />
-                    <p>1</p>
+                    {/* <ThumbUpOffAltIcon /> */}
+                    {/* <p>1</p> */}
                   </div>
                 </div>
                 <p>

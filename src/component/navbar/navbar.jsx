@@ -199,7 +199,7 @@ function Navbar() {
                         alt=""
                       />
                       <h3 className="nama-user-profile">
-                        {profile.user && profile.user.name}
+                        {profile.user && profile.user.name.split(" ")[0]}
                       </h3>
                     </div>
                     <hr />
@@ -253,7 +253,7 @@ function Navbar() {
       >
         <MuiAlert
           onClose={() => setSuccessAlertOpen(false)}
-          severity="success"
+          severity="error"
           variant="filled"
           sx={{ width: "100%" }}
         >

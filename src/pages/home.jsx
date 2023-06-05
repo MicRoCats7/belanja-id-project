@@ -82,13 +82,23 @@ function Home() {
             className="mySwiper"
           >
             <SwiperSlide>
-              <img src={imgIklan} alt="" className="img-iklan" />
+              <img src={imgIklan} alt="" className="img-iklan" loading="lazy" />
             </SwiperSlide>
             <SwiperSlide>
-              <img src={imgIklan2} alt="" className="img-iklan" />
+              <img
+                src={imgIklan2}
+                alt=""
+                className="img-iklan"
+                loading="lazy"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <img src={imgIklan3} alt="" className="img-iklan" />
+              <img
+                src={imgIklan3}
+                alt=""
+                className="img-iklan"
+                loading="lazy"
+              />
             </SwiperSlide>
           </Swiper>
         </div>

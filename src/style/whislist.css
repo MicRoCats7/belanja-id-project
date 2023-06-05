@@ -1,7 +1,3 @@
-.whislist {
-  overflow-x: hidden;
-}
-
 .main {
   width: 1400px;
   margin: 0 auto;
@@ -14,7 +10,7 @@
   margin-top: 100px;
   gap: 14px;
 }
-  
+
 .whisone {
   color: dimgrey;
   font-weight: 500;
@@ -70,10 +66,10 @@
   margin: 50px 0;
 }
 
-.produkwishlist {
+.produk {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
 }

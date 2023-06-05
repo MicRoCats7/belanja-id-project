@@ -5,12 +5,13 @@ function DropdownProduk() {
   return (
     <div>
       <select className="input-produk">
-        <option value="provinsi">Kategori</option>
-        <option value="provinsi">kategori</option>
-        <option value="provinsi">kategori</option>
+        <option value="provinsi">Status pesanan</option>
+        <option value="provinsi">Berhasil</option>
+        <option value="provinsi">Dalam Pengiriman</option>
+        <option value="provinsi">Gagal</option>
       </select>
     </div>
   );
 }
 
-export default DropdownProduk;  
+export default DropdownProduk;

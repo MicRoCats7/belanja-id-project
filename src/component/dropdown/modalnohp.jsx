@@ -18,19 +18,19 @@ function ModalHp() {
   return (
     <>
       <h3 onClick={toggleModal} className="ubah-email">
-        Ubah
+        Daftar
       </h3>
 
       {modal && (
         <div className="modal-nomer">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            <h3>Ubah Nomor</h3>
-            <p>Silahkan ubah nomor anda disini , Pastikan nomor hp yang anda masukkan Benar </p>
+            <h3>Daftar Nomor</h3>
+            <p>Silahkan Daftar nomor anda disini , Pastikan nomor hp yang anda masukkan Benar </p>
             <div className="nomer-kamu">
               <h3>Nomor hp</h3>
               <input type="text" placeholder="Nomer" className="input-nomer" />
-              <button className="btn-simpan-nomer">Ubah</button>
+              <button className="btn-simpan-nomer">Daftar</button>
               <button className="close-modal" onClick={toggleModal}>
               <MdOutlineClose/>
               </button>

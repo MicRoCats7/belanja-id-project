@@ -13,6 +13,12 @@
     width: 100%;
 }
 
+.swiper-button-next,
+.swiper-button-prev {
+    color: red;
+    /* Ganti dengan warna yang Anda inginkan */
+}
+
 /* Warna pagination */
 .swiper-pagination-bullet {
     background-color: gray !important;
