@@ -67,7 +67,7 @@ function Navbar() {
         }, 1500);
       } catch (error) {
         console.error(error);
-        setLoading(false); 
+        setLoading(false);
       }
     }
   };
@@ -102,6 +102,7 @@ function Navbar() {
     setText(selectedSuggestion);
     setSuggestions([]);
     navigate(`/search?query=${selectedSuggestion}`);
+    handleSearch(selectedSuggestion);
   };
 
   const onChangeHandler = (text) => {
@@ -187,18 +188,18 @@ function Navbar() {
                 <div className="drop-profile">
                   <img
                     className="photo-profile"
-                    src={profile.user?.profile_photo_url}
+                    src={profile.user?.profile_photo_path}
                     alt=""
                   />
                   <div className="menu-dropdown">
                     <div className="user-info">
                       <img
                         className="photo-profile"
-                        src={profile.user?.profile_photo_url}
+                        src={profile.user?.profile_photo_path}
                         alt=""
                       />
                       <h3 className="nama-user-profile">
-                        {profile.user && profile.user.name}
+                        {profile.user && profile.user.name.split(" ")[0]}
                       </h3>
                     </div>
                     <hr />
@@ -252,7 +253,7 @@ function Navbar() {
       >
         <MuiAlert
           onClose={() => setSuccessAlertOpen(false)}
-          severity="success"
+          severity="error"
           variant="filled"
           sx={{ width: "100%" }}
         >

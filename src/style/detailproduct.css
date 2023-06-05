@@ -5,12 +5,14 @@
 }
 
 .main-detail {
-    background: rgba(237, 237, 237, 0.859)
+    background: rgba(237, 237, 237, 0.859);
+    overflow-x: hidden;
 }
 
 .container-detail {
     width: 1400px;
     margin: 0 auto;
+
 }
 
 .navigation {

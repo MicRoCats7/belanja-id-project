@@ -4,44 +4,50 @@
     box-sizing: border-box;
 }
 
-.bapak-event{
+.event-main {
+    overflow-x: hidden;
+}
+
+.bapak-event {
     margin: 0 100px 0 100px;
 }
 
-.content-event{
+.content-event {
     margin-top: 100px;
     display: grid;
-    grid-template-columns: repeat(3,1fr) ;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     row-gap: 40px;
 }
 
-@media only screen and (min-width: 2000px){
-    .content-event{
-        grid-template-columns: repeat(4,1fr) ;
+@media only screen and (min-width: 2000px) {
+    .content-event {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-@media only screen and (max-width: 900px){
-    .content-event{
-        grid-template-columns: repeat(2,1fr) ;
+@media only screen and (max-width: 900px) {
+    .content-event {
+        grid-template-columns: repeat(2, 1fr);
     }
-    .bapak-event{
+
+    .bapak-event {
         margin: 0 50px 0 50px;
     }
-    
+
 }
 
-@media only screen and (max-width: 550px){
-    .content-event{
-        grid-template-columns: repeat(1,1fr) ;
+@media only screen and (max-width: 550px) {
+    .content-event {
+        grid-template-columns: repeat(1, 1fr);
     }
-    .bapak-event{
+
+    .bapak-event {
         margin: 0 20px 0 20px;
     }
 }
 
-.box-event{
+.box-event {
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.10);
@@ -53,35 +59,35 @@
     /* position: relative; */
 }
 
-.gambar-judul{
+.gambar-judul {
     display: flex;
     gap: 20px;
     align-items: center;
     margin: 40px 25px 10px 25px;
 }
 
-.gambar-judul p{
+.gambar-judul p {
     font-weight: 600;
     font-size: 15px;
     line-height: 22px;
     color: #EF233C;
 }
 
-.info-event{
+.info-event {
     padding: 10px 25px 10px 25px;
     display: flex;
     flex-direction: column;
     gap: 17px;
 }
 
-.info-event h3{
+.info-event h3 {
     font-weight: 600;
     font-size: 15px;
     line-height: 22px;
     color: #EF233C;
 }
 
-.deskripsi-event{
+.deskripsi-event {
     font-weight: 550;
     font-size: 13px;
     line-height: 17px;
@@ -90,7 +96,7 @@
     max-width: 320px;
 }
 
-.waktu-event{
+.waktu-event {
     background: #EF233C;
     border-radius: 0 0 10px 10px;
     padding: 18px;
@@ -99,7 +105,7 @@
     width: 100%;
 }
 
-.waktu-event p{
+.waktu-event p {
     display: flex;
     justify-content: end;
     color: #FFFFFF;
@@ -125,12 +131,12 @@
     font-weight: 600;
     font-size: 18px;
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
+}
+
 .pagination button.active {
     background-color: #EF233C;
     color: #fff;
-  }
+}
 
 .pagination .arrow {
     font-size: 18px;
@@ -139,17 +145,12 @@
 
 @keyframes fade-in {
     0% {
-      opacity: 0;
-      transform: translateY(15px);
+        opacity: 0;
+        transform: translateY(15px);
     }
+
     100% {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-
-
-
-
-
-
+}

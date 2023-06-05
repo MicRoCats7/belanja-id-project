@@ -53,74 +53,80 @@ function ResultSearch() {
   };
 
   return (
-    <div className="pro-filter">
-      <div className="filter-container">
-        <div className="filter-sidebar">
-          <div className="filter-pro">
-            {activeTab === "reviews" && <FilterSearch />}
-            {activeTab === "ratings" && <FilterToko />}
-          </div>
-        </div>
-      </div>
-      <div className="resultSearch">
-        <div className="tab-container">
-          <div className="tab-navigation-result" ref={tabRef}>
-            <button
-              className={activeTab === "reviews" ? "active" : ""}
-              onClick={() => handleTabClick("reviews")}
-              data-tab="reviews"
-            >
-              <BiBox fontSize={25} />
-              Produk
-            </button>
-            <button
-              className={activeTab === "ratings" ? "active" : ""}
-              onClick={() => handleTabClick("ratings")}
-              data-tab="ratings"
-            >
-              <BsShop fontSize={25} />
-              Toko
-            </button>
-            <div className="tab-indicator-result" style={underlineStyle}></div>
-          </div>
-          <div className="tab-content">
-            <div className="query-key">
-              <h2>
-                Menampilkan Barang untuk <strong>"{query}"</strong>
-              </h2>
+      <div className="pro-filter">
+        <div className="filter-container">
+          <div className="filter-sidebar">
+            <div className="filter-pro">
+              {activeTab === "reviews" && <FilterSearch />}
+              {activeTab === "ratings" && <FilterToko />}
             </div>
-            {activeTab === "reviews" && (
-              <div className="pengaturan-result">
-                {products.length > 0 ? (
-                  products.map((item, index) => (
-                    <Product
-                      key={index}
-                      name={item.name}
-                      url={item.picturePath}
-                      location={item.product_origin}
-                      price={item.price}
-                      rating={item.rate}
-                      ulasan={item.review}
-                      stok={item.stok}
-                      id={item.id}
-                    />
-                  ))
-                ) : (
-                  <div className="no-result">
-                    <p>Tidak ada produk yang cocok dengan pencarian Anda.</p>
-                  </div>
-                )}
-              </div>
-            )}
-            {activeTab === "ratings" && (
-              <div className="pengaturan-result">
-                <h1>Toko</h1>
-              </div>
-            )}
+          </div>
+        </div>
+        <div className="resultSearch">
+          <div className="tab-container">
+            <div className="tab-navigation-result" ref={tabRef}>
+              <button
+                className={activeTab === "reviews" ? "active" : ""}
+                onClick={() => handleTabClick("reviews")}
+                data-tab="reviews"
+              >
+                <BiBox fontSize={25} />
+                Produk
+              </button>
+              <button
+                className={activeTab === "ratings" ? "active" : ""}
+                onClick={() => handleTabClick("ratings")}
+                data-tab="ratings"
+              >
+                <BsShop fontSize={25} />
+                Toko
+              </button>
+              <div
+                className="tab-indicator-result"
+                style={underlineStyle}
+              ></div>
+            </div>
+            <div className="tab-content">
+              {products.length > 0 && (
+                <div className="query-key">
+                  <h2>
+                    Menampilkan Barang untuk <strong>"{query}"</strong>
+                  </h2>
+                </div>
+              )}
+
+              {activeTab === "reviews" && (
+                <div className="pengaturan-result">
+                  {products.length > 0 ? (
+                    products.map((item, index) => (
+                      <Product
+                        key={index}
+                        name={item.name}
+                        url={item.picturePath}
+                        location={item.product_origin}
+                        price={item.price}
+                        rating={item.rate}
+                        ulasan={item.review}
+                        stok={item.stok}
+                        id={item.id}
+                      />
+                    ))
+                  ) : (
+                    <div className="no-result">
+                      <p>Tidak ada produk yang cocok dengan pencarian Anda.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+              {activeTab === "ratings" && (
+                <div className="pengaturan-result">
+                  <h1>Toko</h1>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

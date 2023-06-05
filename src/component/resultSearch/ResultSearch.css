@@ -20,10 +20,19 @@
 .pengaturan-result {
     margin-top: 10px;
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .tab-content .query-key {
     margin: 50px 0 25px 0;
+}
+
+.tab-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .query-key h2 {
@@ -93,4 +102,5 @@
     align-items: center;
     justify-content: center;
     height: 300px;
+    width: 100%;
 }

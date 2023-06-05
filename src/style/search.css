@@ -1,3 +1,7 @@
+.search-page {
+    overflow-x: hidden;
+}
+
 .search-page-container {
     margin: 20px;
 }
@@ -18,7 +22,7 @@
     margin: 31px auto;
 }
 
-/* .result-search {
-    display: flex;
-    gap: 20px;
-} */
+.result-search {
+    display: grid;
+    grid-template-columns: 5, 1fr;
+}

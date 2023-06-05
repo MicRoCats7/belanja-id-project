@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "../style/search.css";
 import Navbar from "../component/navbar/navbar";
 import ResultSearch from "../component/resultSearch/ResultSearch";
+import Footer from "../component/footer/footer";
 
 function SearchPage() {
   useEffect(() => {
@@ -10,16 +11,17 @@ function SearchPage() {
 
   // Place your search page content and styling here
   return (
-    <div>
+    <>
       <Navbar />
-      <div className="container-resultSearch">
-        <div className="result-search">
-          <ResultSearch />
+      <div className="search-page">
+        <div className="container-resultSearch">
+          <div className="result-search">
+            <ResultSearch />
+          </div>
         </div>
+        <Footer />
       </div>
-      {/* <h1>Search Results</h1>
-      Add more components and styles as needed */}
-    </div>
+    </>
   );
 }
 

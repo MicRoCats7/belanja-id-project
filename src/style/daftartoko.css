@@ -1,3 +1,7 @@
+.daftar-main {
+    overflow-x: hidden;
+}
+
 .container-toko {
     display: flex;
     margin: 34px 48px 0 48px;

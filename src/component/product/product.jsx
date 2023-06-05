@@ -14,11 +14,11 @@ function Product(props) {
   const formattedPrice = formatPrice(props.price);
 
   return (
-    <div className="produk">
+    <div className="produk" loading="lazy">
       <Link to={"/detailproduct/" + props.id}>
         <div className="card-produkPilihan">
           <div className="img-pro">
-            <img src={props.url} alt="" />
+            <img src={props.url} alt="" loading="lazy" />
           </div>
           <div className="content-porduk">
             <div className="nama-produk">

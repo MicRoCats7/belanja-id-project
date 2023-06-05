@@ -36,11 +36,11 @@ function Sidebarprofile() {
         <div className="user-prof">
           <img
             className="photo-profile"
-            src={profile.user?.profile_photo_url}
+            src={profile.user?.profile_photo_path}
             alt=""
           />
           <h3 className="nama-user-profile">
-            {profile.user && profile.user.name}
+            {profile.user && profile.user.name.split(" ")[0]}
           </h3>
         </div>
         <hr />
