@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import apiurl from "../utils/apiurl";
 import "../style/biodata.css";
 import Modal from "../component/dropdown/modal";
 import {
@@ -14,6 +16,27 @@ import ModalHp from "../component/dropdown/modalnohp";
 import ImageUploader from "../component/dropdown/testing";
 
 function Biodata() {
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  const getProfile = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "user", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setProfile(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
   return (
     <div className="box-biodata">
       <div className="top-text">
@@ -26,7 +49,7 @@ function Biodata() {
               <ImageUploader />
               <div className="isibox">
                 <h3 className="text-ukuran">
-                  Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG
+                  Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG , dan ukuran minimum 300 x 300px.
                 </h3>
               </div>
             </div>
@@ -42,14 +65,16 @@ function Biodata() {
               <input type="name" name="" id="" placeholder="Nama" />
             </div> */}
             <span className="nama-text">Nama</span>
-            <span className="nama-user">Ilyas</span>
+            <span className="nama-user-biodata">
+              {profile.user && profile.user.name}
+            </span>
             <div>
               <Modal />
             </div>
           </div>
           <div className="edit-tanggal">
             <span className="nama-tgl">Tanggal Lahir</span>
-            <span className="tgl-lahir-user">15 Januari 2021</span>
+            {/* <span className="tgl-lahir-user">15 Januari 2021</span> */}
             <div>
               <Modaldate />
             </div>
@@ -78,7 +103,9 @@ function Biodata() {
           <h3 className="ubah-kontak">Ubah Kontak Anda</h3>
           <div className="edit-kontak">
             <span className="email-text">Email</span>
-            <span className="email-user">ilyas@gmail.com</span>
+            <span className="email-user-profile">
+              {profile.user && profile.user.email}
+            </span>
             <div className="data-verifikasi">Terverifikasi</div>
             <ModalEmail />
           </div>
@@ -91,8 +118,8 @@ function Biodata() {
             </div>
             <h3 className="ubah-nama">Ubah</h3> */}
             <span className="text-nohp">No Hp</span>
-            <span className="nohp-user">082436236</span>
-            <div className="data-verifikasi">Terverifikasi</div>
+            {/* <span className="nohp-user">082436236</span> */}
+            <div className="data-verifikasi-nohp">Belum Terverifikasi</div>
             <ModalHp />
           </div>
         </div>
