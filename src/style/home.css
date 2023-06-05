@@ -5,6 +5,19 @@
     overflow-x: hidden;
 }
 
+.heroPage {
+    width: 100%;
+}
+
+.heroPage img {
+    width: 100%;
+}
+
+/* Warna pagination */
+.swiper-pagination-bullet {
+    background-color: gray !important;
+}
+
 .text-ajakan {
     margin: 100px 0;
 }

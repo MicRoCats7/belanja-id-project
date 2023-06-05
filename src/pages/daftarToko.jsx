@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import Navbar from "../component/navbar/navbar";
 import imgToko from "../assets/image/imgToko.svg";
 import DropdownKotaKec from "../component/dropdown/dropdownKotaKec";
@@ -7,8 +7,11 @@ import Footer from "../component/footer/footer";
 import { Link } from "react-router-dom";
 
 function DaftarToko() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
-    <div>
+    <div className="daftar-main">
       <Navbar />
       <div className="container-toko">
         <div className="con-img">

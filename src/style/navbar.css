@@ -323,96 +323,97 @@ input[type="text"]:focus {
 
 
 .drop-profile {
-  position: relative;
+    position: relative;
 }
 
 .photo-profile {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .menu-dropdown {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  background-color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  min-width: 250px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 250px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: none;
 }
 
 .user-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  background-color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-}
-
-.user-info img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-
-.menu-dropdown hr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 10px 0;
-}
-
-.btn-menuju-profile,
-.btn-menuju-whislist,
-.btn-logout {
-  background-color: transparent;
-  border: none;
-  color: #333;
-  font-size: 16px;
-  padding: 5px 10px;
-  cursor: pointer;
-  display: flex;
-}
-
-.opsi-menu-dropdwn{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
     background-color: #fff;
     border: none;
     border-radius: 10px;
     padding: 10px;
     width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.user-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.menu-dropdown hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.btn-menuju-profile,
+.btn-menuju-whislist,
+.btn-logout {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+}
+
+.opsi-menu-dropdwn {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn-menuju-profile:hover,
 .btn-menuju-whislist:hover,
 .btn-logout:hover {
-  color: #ef233c;
+    color: #ef233c;
 }
 
 .drop-profile:hover .menu-dropdown {
-  display: block;
+    display: block;
 }
 
 .menu-dropdown {
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  
-  .drop-profile:hover .menu-dropdown {
+}
+
+.drop-profile:hover .menu-dropdown {
     opacity: 1;
     transform: translateY(0);
-  }
+}
+
 /* .alert-container {
     position: fixed;
     top: 20px;

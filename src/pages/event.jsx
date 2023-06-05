@@ -154,7 +154,7 @@ function Event() {
   };
 
   return (
-    <div>
+    <div className="event-main">
       <Navbar />
       <div className="bapak-event">
         <div className="content-event">

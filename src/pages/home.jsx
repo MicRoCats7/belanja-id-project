@@ -24,8 +24,22 @@ import axios from "axios";
 import apiurl from "../utils/apiurl";
 import "swiper/swiper-bundle.min.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+  Mousewheel,
+  Keyboard,
+} from "swiper";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import imgIklan from "../assets/image/iklan-top.svg";
+import imgIklan2 from "../assets/image/iklan-top2.svg";
+import imgIklan3 from "../assets/image/iklan-top3.svg";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 function Home() {
   const [product, setProduct] = useState([]);
@@ -51,16 +65,32 @@ function Home() {
       <Navbar />
       <div className="homepage">
         <div className="heroPage">
-          <div className="text-ajakan">
-            <h1>
-              Temukan produk-produk berkualitas dari <span>UMKM</span> lokal di
-              Belanja.id!
-            </h1>
-            <button className="btnBelanja">Belanja Sekarang</button>
-          </div>
-          <div className="img-homepage">
-            <img src={bgHome} alt="icon keranjang" loading="lazy" />
-          </div>
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay, Mousewheel, Keyboard]}
+            navigation
+            autoplay={{ delay: 2500 }}
+            cssMode={true}
+            mousewheel={true}
+            keyboard={true}
+            loop={true}
+            grabCursor={true}
+            pagination={{
+              clickable: true,
+              renderBullet: (index, className) =>
+                `<span class="${className}"></span>`,
+            }}
+            className="mySwiper"
+          >
+            <SwiperSlide>
+              <img src={imgIklan} alt="" className="img-iklan" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={imgIklan2} alt="" className="img-iklan" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={imgIklan3} alt="" className="img-iklan" />
+            </SwiperSlide>
+          </Swiper>
         </div>
         <div className="Kategori">
           <div className="title-kategori">
