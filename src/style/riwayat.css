@@ -6,7 +6,7 @@
 
 .text-histori h1 {
     font-size: 25px;
-    margin: 50px 0px;
+    margin: 5px 0 20px 0;
     font-weight: 600;
 }
 
@@ -70,14 +70,7 @@ input[type="text"]:focus {
 }
 
 .box-riwayat {
-    /* background: #FFFF;
-    border-radius: 10px;
-    box-sizing: border-box;
-    width: 80%;
-    height: 220px;
-    border: 1px solid rgba(0, 0, 0, 0.32);
-    margin: 16px 0px;
-    padding: 16px; */
+    width: 100%;
     display: block;
     position: relative;
     margin: 16px 0px;
@@ -211,9 +204,12 @@ input[type="text"]:focus {
 }
 
 .form-riwayat {
-    width: 800px;
+    width: 900px;
     padding: 16px;
     border-radius: 6px;
     border: 1px solid rgb(224, 224, 224);
     margin-top: 20px;
+    margin-bottom: 20px;
 }
+
+

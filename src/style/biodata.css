@@ -13,12 +13,13 @@
     width: 900px;
     height: 600px;  
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 .box-photo{
     background: #FFFFFF;
-    width: 210px;
-    height: 335px;
+    max-width: 210px;
+    height: 340px;
     padding: 10px;
     display: flex;
     border-radius: 8px;
@@ -89,6 +90,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 7px;
 }
 
 
@@ -132,6 +134,14 @@
     font-size: 15px;
     line-height: 21px;
     color: #EF233C;
+}
+
+.nama-user-biodata{
+    margin-right: 12px;
+}
+
+.email-user-profile{
+    margin-right: 12px;
 }
 
 .biodata-kanan{
@@ -217,6 +227,22 @@
     font-size: 0.714286rem;
     background-color: rgb(238, 243, 239);
     color: rgb(201, 36, 18);
+    justify-content: center;
+    transition: all 300ms ease-out 0s;
+}
+
+.data-verifikasi-nohp{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    border-radius: 3px;
+    line-height: 16px;
+    padding: 0px 8px;
+    height: 20px;
+    font-size: 0.714286rem;
+    background-color: rgb(238, 243, 239);
+    color: rgb(116, 110, 110);
     justify-content: center;
     transition: all 300ms ease-out 0s;
 }

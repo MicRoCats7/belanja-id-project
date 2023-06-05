@@ -22,7 +22,7 @@ import SimpleAccordion from "../component/accordion/accordion";
 import Footer from "../component/footer/footer";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
-import "swiper/swiper-bundle.min.css";
+import "swiper/swiper-bundle.min.css"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";

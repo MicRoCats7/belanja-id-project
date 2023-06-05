@@ -6,7 +6,7 @@
 .container-profile {
     background: #ffffff;
     width: 200px;
-    height: 600px;
+    height: 400px;
     box-shadow: var(--NN200, #d6dfeb) 0px 1px 6px 0px;
     border-radius: 12px;
     margin: 50px;
@@ -39,6 +39,7 @@
   .riwayat h3,
   .alamat h3 {
     font-size: 16px;
+    font-weight: 600;
   }
   
   .profil a,
