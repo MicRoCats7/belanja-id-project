@@ -5,6 +5,8 @@ import Navbar from "../component/navbar/navbar";
 import { useEffect } from "react";
 import Footer from "../component/footer/footer";
 import { Link } from "react-router-dom";
+import { MdOutlineDateRange, MdOutlineSchedule, } from "react-icons/md";
+import { IoIosArrowBack, IoIosArrowForward,  } from "react-icons/io";
 
 function Event() {
   const valueBoxEvent = [
@@ -17,7 +19,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "2 Novemberx 2023",
+      waktu: "10.00",
     },
     {
       id: 2,
@@ -28,7 +31,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "2 Januari 2023",
+      waktu: "10.00",
     },
     {
       id: 3,
@@ -39,7 +43,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "2 Agustus 2023",
+      waktu: "10.00",
     },
     {
       id: 4,
@@ -50,7 +55,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "2 Agustus 2023",
+      waktu: "10.00",
     },
     {
       id: 5,
@@ -61,7 +67,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "21 September 2023",
+      waktu: "10.00",
     },
     {
       id: 6,
@@ -72,7 +79,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "20 September 2023",
+      waktu: "10.00",
     },
     {
       id: 7,
@@ -83,7 +91,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "5 Desember 2023",
+      waktu: "10.00",
     },
     {
       id: 8,
@@ -94,7 +103,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "2 September 2023",
+      waktu: "10.00",
     },
     {
       id: 9,
@@ -105,7 +115,8 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "2 Agustus 2023",
+      waktu: "10.00",
     },
     {
       id: 10,
@@ -116,9 +127,9 @@ function Event() {
       pembuatEvent: "Belanja.id ",
       deskripsi:
         "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2",
+      tanggal: "2 Juli 2023",
+      waktu: "10.00",
     },
-    
   ];
 
   const itemsPerPage = 6; // Jumlah item per halaman
@@ -161,21 +172,32 @@ function Event() {
           {getCurrentPageItems().map((dataevent) => (
             <Link to="/detailevent">
               <div className="box-event" key={dataevent.id}>
-                <div className="gambar-judul">
+                <div className="wrap-content-event">
                   <div className="img-event">
-                    <img src={dataevent.imageEvent} alt="" />
+                    <img
+                      src={dataevent.imageEvent}
+                      alt=""
+                      className="img-photo-event"
+                    />
                   </div>
-                  <p>{dataevent.nama}</p>
-                </div>
-                <div className="info-event">
-                  <h3>{dataevent.judul}</h3>
-                  <p className="asal-event">
-                    oleh: {dataevent.pembuatEvent} Event
-                  </p>
-                  <p className="deskripsi-event">{dataevent.deskripsi}</p>
-                </div>
-                <div className="waktu-event">
-                  <p>{dataevent.tanggal} hari lagi</p>
+                  <div className="info">
+                    <p className="data-event-nama">{dataevent.nama}</p>
+                    <h3>{dataevent.judul}</h3>
+                    <p className="asal-event">
+                      oleh: {dataevent.pembuatEvent} Event
+                    </p>
+                    <p className="tanggal-event">
+                      <MdOutlineDateRange />
+                      Jumat, {dataevent.tanggal}
+                    </p>
+                    <p className="waktu-event">
+                      <MdOutlineSchedule />
+                      {dataevent.waktu} WIB - Selesai
+                    </p>
+                    <div className="button-event">
+                      <button className="btn-masuk-event">Detail Event</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -187,10 +209,10 @@ function Event() {
               onClick={() => changePage(getPreviousPage())}
               className={activeButton === getPreviousPage() ? "active" : ""}
             >
-              <span className="arrow">&#8249;</span> Previous
+              <span className="arrow-back"><IoIosArrowBack /></span>
             </button>
             {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-              (page) => (
+              (page) => ( 
                 <button
                   key={page}
                   className={currentPage === page ? "active" : ""}
@@ -206,7 +228,7 @@ function Event() {
                 onClick={() => changePage(getNextPage())}
                 className={activeButton === getNextPage() ? "active" : ""}
               >
-                Next <span className="arrow">&#8250;</span>
+                 <span className="arrow-next"> <IoIosArrowForward/> </span>
               </button>
             )}
           </div>

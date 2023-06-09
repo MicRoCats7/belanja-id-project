@@ -2,25 +2,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
 import "../style/biodata.css";
-import Modal from "../component/dropdown/modal";
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
-import ModalEmail from "../component/dropdown/modalemail";
-import Modaldate from "../component/dropdown/modaldate";
-import ModalHp from "../component/dropdown/modalnohp";
+import Modal from "../component/modal/modal";
+import ModalEmail from "../component/modal/modalemail";
+import Modaldate from "../component/modal/modaldate";
+import ModalHp from "../component/modal/modalnohp";
 import ImageUploader from "../component/dropdown/testing";
+import { useNavigate } from "react-router-dom";
 
 function Biodata() {
+  const [modal, setModal] = useState(false);
+  const [nama, setNama] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setNomor] = useState("");
   const [profile, setProfile] = useState({});
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [updatedEmail, setUpdatedEmail] = useState("");
+  const [isProfileUpdated, setIsProfileUpdated] = useState(false);
+  const [nomorTelepon, setNomorTelepon] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [isProfileUpdated]);
 
   const getProfile = async () => {
     const token = localStorage.getItem("token");
@@ -37,6 +43,62 @@ function Biodata() {
       }
     }
   };
+
+  const updateProfile = async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          apiurl() + "user",
+          {
+            name: nama,
+            email: email,
+            phone: phone,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        console.log(response.data);
+        handleSuccessAlertOpen();
+        setProfile(response.data.data);
+        setLoading(false);
+        setIsProfileUpdated(!isProfileUpdated);
+      } catch (error) {
+        handleErrorAlertOpen();
+        console.error(error);
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleNameChange = (event) => {
+    setNama(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+  const handlePhoneChange = (event) => {
+    setNomor(event.target.value);
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
+
   return (
     <div className="box-biodata">
       <div className="top-text">
@@ -49,7 +111,8 @@ function Biodata() {
               <ImageUploader />
               <div className="isibox">
                 <h3 className="text-ukuran">
-                  Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG , dan ukuran minimum 300 x 300px.
+                  Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG , dan
+                  ukuran minimum 300 x 300px.
                 </h3>
               </div>
             </div>
@@ -58,69 +121,42 @@ function Biodata() {
         <div className="biodata-kanan">
           <h3 className="edit-biodata">Ubah Biodata Anda</h3>
           <div className="edit-nama">
-            {/* <div className="txt-nama">
-            <h3 className="text-nama">Nama</h3>
-            </div>
-            <div className="inputnama">
-              <input type="name" name="" id="" placeholder="Nama" />
-            </div> */}
             <span className="nama-text">Nama</span>
             <span className="nama-user-biodata">
-              {profile.user && profile.user.name}
+              {nama || (profile.user && profile.user.name)}
             </span>
             <div>
-              <Modal />
+              <Modal
+                onProfileUpdated={() => setIsProfileUpdated(!isProfileUpdated)}
+              />
             </div>
           </div>
           <div className="edit-tanggal">
             <span className="nama-tgl">Tanggal Lahir</span>
-            {/* <span className="tgl-lahir-user">15 Januari 2021</span> */}
             <div>
               <Modaldate />
             </div>
           </div>
-          {/* <div className="jenis-kelamin">
-              <FormControl>
-                <p>Jenis Kelamin</p>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="Laki-laki"
-                    control={<Radio />}
-                    label="Laki-Laki"
-                  />
-                  <FormControlLabel
-                    value="Perempuan"
-                    control={<Radio />}
-                    label="Perempuan"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div> */}
           <h3 className="ubah-kontak">Ubah Kontak Anda</h3>
           <div className="edit-kontak">
             <span className="email-text">Email</span>
             <span className="email-user-profile">
-              {profile.user && profile.user.email}
+              {email || (profile.user && profile.user.email)}
             </span>
             <div className="data-verifikasi">Terverifikasi</div>
-            <ModalEmail />
+            <ModalEmail
+              handleProfileUpdate={() => setIsProfileUpdated(!isProfileUpdated)}
+            />
           </div>
           <div className="edit-nohp">
-            {/* <div className="text-tgl">
-              <h3>Nomer Hp</h3>
-            </div>
-            <div className="inputtgl">
-              <input type="name" name="" id="" placeholder="Nomer hp" />
-            </div>
-            <h3 className="ubah-nama">Ubah</h3> */}
             <span className="text-nohp">No Hp</span>
-            {/* <span className="nohp-user">082436236</span> */}
-            <div className="data-verifikasi-nohp">Belum Terverifikasi</div>
-            <ModalHp />
+            {/* <div className="data-verifikasi-nohp">Belum Terverifikasi</div> */}
+            <span className="email-user-profile">
+              {phone || (profile.user && profile.user.phone)}
+            </span>
+            <ModalHp
+              nomProfileUpdate={() => setIsProfileUpdated(!isProfileUpdated)}
+            />
           </div>
         </div>
       </div>

@@ -8,7 +8,8 @@ import Product from "../component/product/product";
 import { datawhislist, responsive } from "../utils/datawhislist";
 import imgProdukOlahan from "../assets/image/imgProdukOlahan.svg";
 import imgProdukFashion from "../assets/image/fashion.svg";
-import FilterWhislist from "../component/filter/filterwhislist";
+import FilterWhis from "../component/filter/filterwhislist";
+
 
 function Whislist() {
   const [filteredData, setFilteredData] = useState(datawhislist);
@@ -114,7 +115,7 @@ function Whislist() {
         <div className="filter">
           <div className="acc-filter">
             <h2 className="name-filter">Filter</h2>
-            <FilterWhislist onFilterChange={handleFilterChange} />
+            <FilterWhis onFilterChange={handleFilterChange} />
           </div>
           <div className="card-barang">
             <h2 className="barang">Barang</h2>

@@ -87,7 +87,7 @@ body.active-modal {
 
 .modal-content p{
     margin: 20px 0px 20px 0px;
-    font-size: 14px;
+    font-size: 14px;    
     font-weight: 500;
 }
 .nama-kamu p{
@@ -158,6 +158,24 @@ body.active-modal {
     border: 1px solid #EF233C;
 }
 
+.label-kamu input{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.34);
+    padding: 0 10px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+
+.label-kamu input[type=text]:focus {
+    border: 1px solid #EF233C;
+}
+
+
 .nama-kamu h3{
     color: var(--color-text-low,rgba(49,53,59,0.68));
     font-size: 13px;
@@ -216,8 +234,39 @@ input .input-email{
     width: 100%;
 }
 
+.btn-simpan-alamat{
+    margin: 10px 0 10px 0;
+    background-color: #EF233C;
+    border: none;
+    border-radius: 8px;
+    color: #ffff;
+    cursor: pointer;
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    height: 48px;
+    line-height: 22px;
+    outline: none;
+    position: relative;
+    padding: 0px 16px;
+    transition: background-color 300ms ease 0s;
+    width: 100%;
+}
+
 
 .email-kamu input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.34);
+    padding: 0 10px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.nomer-kamu input{
     width: 100%;
     height: 40px;
     border-radius: 5px;
@@ -268,7 +317,56 @@ input .input-nomer{
     width: 100%;
 }
 
+.modal-content {
+    max-height: 400px; /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
+    overflow: auto; /* Tampilkan scrollbar hanya jika kontennya melebihi tinggi maksimum */
+  }
   
+  .scrollable-content {
+    padding: 10px;
+  }
+
+  .alamat-kamu textarea {
+    width: 100%;
+    height: 80px; /* Sesuaikan tinggi textarea sesuai preferensi Anda */
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.34);
+    padding: 10px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+  }
+
+  .text-diatas-popup{
+    margin-left: 10px;
+  }
+
+  .kontak-nomer-input{
+    margin-top: 10px;
+  }
+ 
+  .jarak-input-nama{
+    margin-bottom: 10px;
+  }
+
+  .jarak-input-nomer{
+    margin-bottom: 10px;
+  }
+ 
+  .ubah-alamat{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 21px;
+    color: #EF233C;
+    cursor: pointer;
+}
+
+
+  
+  
+
+
   
 
 

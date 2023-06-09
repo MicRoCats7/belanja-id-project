@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../../style/modall.css";
+import Selectmoon from "../dropdown/selectdrpdwn";
 import { MdOutlineClose } from "react-icons/md";
 
-function ModalEmail() {
+function Modaldate() {
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
@@ -18,21 +19,24 @@ function ModalEmail() {
   return (
     <>
       <h3 onClick={toggleModal} className="ubah-email">
-        Ubah
+        Daftar
       </h3>
 
       {modal && (
-        <div className="modal-email">
+        <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            <h3>Ubah Email</h3>
-            <p>Silahkan ubah email anda disini , Pastikan email anda Benar </p>
-            <div className="email-kamu">
-              <h3>Email</h3>
-              <input type="text" placeholder="Email" className="input-email" />
-              <button className="btn-simpan-email">Ubah</button>
+            <h3>Ubah Alamat</h3>
+            <p>
+              Anda hanya dapat mengatur tanggal lahirmu sekali. Pastikan Tanggal
+              lahir anda sudah benar
+            </p>
+            <div className="nama-kamu">
+              <h3>Tanggal</h3>
+              <Selectmoon />
+              <button className="btn-simpan">Daftar</button>
               <button className="close-modal" onClick={toggleModal}>
-              <MdOutlineClose/>
+                <MdOutlineClose />
               </button>
             </div>
           </div>
@@ -42,4 +46,4 @@ function ModalEmail() {
   );
 }
 
-export default ModalEmail;
+export default Modaldate;
