@@ -4,6 +4,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.icon-navbar a {
+    height: 23px;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -202,10 +206,31 @@ input[type="text"]:focus {
     gap: 12px;
 }
 
+.icon-navbar svg {
+    font-size: 22px;
+    color: #000;
+}
+
 .icon-navbar img {
     width: 20px;
     height: 20px;
     cursor: pointer;
+}
+
+.cart-item-count {
+    position: absolute;
+    top: 1px;
+    right: 160px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .line {
