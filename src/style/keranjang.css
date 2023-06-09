@@ -1,0 +1,372 @@
+.cart {
+    overflow-x: hidden;
+}
+
+.container-keranjang {
+    width: 1200px;
+    margin: 63px auto;
+    display: flex;
+    gap: 82px;
+}
+
+.container-item-keranjang {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.container-item-keranjang h1 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 27px;
+}
+
+.line-keranjang {
+    width: 100%;
+    height: 3px;
+    background-color: rgba(0, 0, 0, 0.277);
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.item-cart {
+    margin-top: 20px;
+}
+
+.checkbox-keranjang {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.checkbox-keranjang .toko-keranjang {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.toko-keranjang .img-checkbox {
+    width: 40px;
+    height: 40px;
+}
+
+.img-checkbox img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.toko-keranjang .nama-toko-keranjang {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+}
+
+.toko-keranjang .nama-toko-keranjang h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+}
+
+.toko-keranjang .nama-toko-keranjang p {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.33);
+}
+
+.item-pro-detail {
+    display: flex;
+    align-items: center;
+    margin: 30px 0 0 30px;
+}
+
+.item-pro {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.item-pro .img-item-pro {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.item-pro .img-item-pro img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.item-pro .nama-item-pro {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.name-pro-cart {
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 7px;
+}
+
+.harga-pro-cart {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+}
+
+.item-pro-bottom {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.item-pro-bottom .pro-bottom-wish {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.pro-bottom-wish span {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+    cursor: pointer;
+}
+
+.pro-bottom-wish .line-bottom-wish {
+    width: 1.5px;
+    height: 26px;
+    background-color: rgba(0, 0, 0, 0.277);
+    border-radius: 10px;
+}
+
+.pro-bottom-wish .icon-trash-cart {
+    font-size: 19px;
+    color: #EF233C;
+}
+
+.kuantitas-keranjang {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wishlist-kamu {
+    margin-top: 36px;
+}
+
+.wishlist-pro-kamu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.wishlist-kamu h1 {
+    font-size: 17px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 35px;
+}
+
+.pro-wishlist-cart {
+    border: 1px solid #000;
+    padding: 19px 18px;
+    width: 45%;
+    border-radius: 10px;
+}
+
+.item-wishlist-cart {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-wishlist-cart .img-wishlist-cart {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.img-wishlist-cart img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nama-wishlist-cart {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nama-wishlist-cart h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.57);
+}
+
+.nama-wishlist-cart span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 13px;
+}
+
+.toko-wishlist-cart {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.toko-wishlist-cart .img-toko-wishlist-cart {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.img-toko-wishlist-cart img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.toko-wishlist-cart .nama-toko-wishlist-cart h4 {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.wishlist-bottom-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.wishlist-bottom-action .icon-bottom-action {
+    font-size: 25px;
+    color: rgba(17, 17, 17, 0.67);
+}
+
+.wishlist-bottom-action .btn-keranjang-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 90%;
+    height: 40px;
+    border: 1px solid rgba(255, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 10px 25px;
+}
+
+.container-subtotal {
+    width: 50%;
+    height: 100%;
+}
+
+.border-subtotal {
+    border: 1px solid rgba(0, 0, 0, 0.17);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 20px 20px;
+}
+
+.container-diskon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+    border: 1px solid rgba(0, 0, 0, 0.17);
+    padding: 13px;
+    border-radius: 10px;
+}
+
+.container-diskon h1 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6c727c;
+}
+
+.container-diskon .icon-container-diskon {
+    font-size: 25px;
+    color: #EF233C;
+}
+
+.container-diskon .icon-container-arrow {
+    font-size: 25px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.container-total-produk h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 26px;
+}
+
+.total-pro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.total-pro p {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.39);
+}
+
+.line-subtotal-pro {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.17);
+    margin: 17px 0;
+}
+
+.total-harga-cart {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.total-harga-cart h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.btn-bayar button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #EF233C;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    height: 40px;
+    border: none;
+    padding: 30px;
+}

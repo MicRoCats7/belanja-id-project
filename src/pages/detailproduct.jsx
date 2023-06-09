@@ -11,17 +11,21 @@ import imgProduct from "../assets/image/imgProduk.svg";
 import cart from "../assets/icon/cart.svg";
 import { useState, useEffect } from "react";
 import exampProfile from "../assets/image/profile.png";
-import { Rating } from "@mui/material";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import { Rating, Snackbar } from "@mui/material";
 import Footer from "../component/footer/footer";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
 import { formatPrice } from "../utils/helpers";
+import token from "../utils/token";
+import MuiAlert from "@mui/material/Alert";
 
 function DetailProduct() {
   const [value, setValue] = React.useState(5);
   const [detail, setDetail] = useState([]);
   const { id } = useParams();
+  const [quantity, setQuantity] = useState(1);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   const [appState, changeState] = useState({
     activeObject: null,
@@ -58,6 +62,60 @@ function DetailProduct() {
     getDetail(id);
     window.scrollTo(0, 0);
   }, [id]);
+
+  function addToCart(kuantitas) {
+    const product = detail && detail.length > 0 ? detail[0] : null;
+    const payload = {
+      products_id: product.id,
+      quantity: quantity,
+    };
+    // console.log(product.id);
+    axios
+      .post(apiurl() + "cart/add", payload, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        handleSuccessAlertOpen();
+        // console.log("Produk ditambahkan ke keranjang:", product);
+        setQuantity(1);
+      })
+      .catch((error) => {
+        handleErrorAlertOpen();
+        console.error("Gagal menambahkan produk ke keranjang:", error);
+      });
+  }
+
+  function handleQuantityChange(e) {
+    e.preventDefault();
+
+    const inputValue = e.target.value;
+    const numericValue = parseInt(inputValue);
+
+    if (inputValue.trim() === "" || isNaN(numericValue)) {
+      // Jika input kosong atau bukan angka, atur kuantitas ke 1
+      setQuantity(1);
+    } else {
+      setQuantity(numericValue);
+    }
+  }
+
+  function incrementQuantity() {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  }
+
+  function decrementQuantity() {
+    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+  }
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
 
   return (
     <div className="main-detail">
@@ -146,14 +204,22 @@ function DetailProduct() {
             <div className="kuantitas-detail">
               <h3>Kuantitas</h3>
               <div className="kuantitas-item">
-                <button>-</button>
-                <input type="text" value="1" />
-                <button>+</button>
+                <button onClick={decrementQuantity}>-</button>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(e) => handleQuantityChange(e)}
+                />
+                <button onClick={incrementQuantity}>+</button>
               </div>
               <p>Tersisa {detail.length > 0 ? detail[0].quantity : ""} buah </p>
             </div>
             <div className="btn-cartBuy">
-              <button className="btn-cart">
+              <button
+                className="btn-cart"
+                onClick={(event) => addToCart(quantity, event)}
+              >
                 <img src={cart} alt="" />
                 Tambahkan ke Keranjang
               </button>
@@ -280,6 +346,36 @@ function DetailProduct() {
           </div>
         </div>
       </div>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        variant="filled"
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Produk ditambahkan ke keranjang
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        variant="filled"
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Gagal menambahkan produk ke keranjang
+        </MuiAlert>
+      </Snackbar>
       <Footer />
     </div>
   );
