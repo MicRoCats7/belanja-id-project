@@ -8,7 +8,8 @@ import Product from "../component/product/product";
 import { datawhislist, responsive } from "../utils/datawhislist";
 import imgProdukOlahan from "../assets/image/imgProdukOlahan.svg";
 import imgProdukFashion from "../assets/image/fashion.svg";
-import FilterWhislist from "../component/filter/filterwhislist";
+import FilterWhis from "../component/filter/filterwhislist";
+
 
 function Whislist() {
   const [filteredData, setFilteredData] = useState(datawhislist);
@@ -87,8 +88,8 @@ function Whislist() {
   return (
     <div className="whislist">
       <Navbar />
-      <div className="main">
-        <div className="nav-whislist">
+      <div className="whis-page">
+        <div className="whis-arrow">
           <h3 className="whisone">Whislist</h3>
           <img src={arrowWhislist} alt="arrow" loading="lazy" />
           <h3 className="all-whist">Semua Whislist</h3>
@@ -114,7 +115,7 @@ function Whislist() {
         <div className="filter">
           <div className="acc-filter">
             <h2 className="name-filter">Filter</h2>
-            <FilterWhislist onFilterChange={handleFilterChange} />
+            <FilterWhis onFilterChange={handleFilterChange} />
           </div>
           <div className="card-barang">
             <h2 className="barang">Barang</h2>

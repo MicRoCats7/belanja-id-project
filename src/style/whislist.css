@@ -1,14 +1,17 @@
 .main {
   width: 1400px;
-  margin: 0 auto;
+  margin: 50px;
   position: relative;
 }
 
-.nav-whislist {
+.whis-page{
+  margin: 15px 50px;
+}
+
+.whis-arrow{
   display: flex;
-  align-items: center;
-  margin-top: 100px;
-  gap: 14px;
+  gap: 15px;
+  margin-top: 30px;
 }
 
 .whisone {

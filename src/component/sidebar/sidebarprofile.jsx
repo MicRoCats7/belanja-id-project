@@ -45,24 +45,24 @@ function Sidebarprofile() {
         </div>
         <hr />
         <div className="menu-profile">
-          <div className="profil">
-            <NavLink to={"biodata"} activeclassName="active" className="linkk">
+          <NavLink to={"biodata"} activeclassName="active" className="linkk">
+            <div className="profil">
               <BsPerson />
               <h3 className="text-profile">Profile saya</h3>
-            </NavLink>
-          </div>
-          <div className="riwayat" activeclassName="active">
-            <NavLink to={"riwayat"} activeclassName="active" className="linkk">
+            </div>
+          </NavLink>
+          <NavLink to={"riwayat"} activeclassName="active" className="linkk">
+            <div className="riwayat" activeclassName="active">
               <BiTask />
               <h3 className="text-profile">Riwayat Pesanan</h3>
-            </NavLink>
-          </div>
-          <div className="alamat" activeclassName="active">
-            <NavLink to={"alamat"} activeclassName="active" className="linkk">
+            </div>
+          </NavLink>
+          <NavLink to={"alamat"} activeclassName="active" className="linkk">
+            <div className="alamat" activeclassName="active">
               <TfiLocationPin />
               <h3 className="text-profile">Alamat</h3>
-            </NavLink>
-          </div>
+            </div>
+          </NavLink>
         </div>
       </div>
     </div>
