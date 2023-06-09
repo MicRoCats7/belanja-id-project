@@ -11,6 +11,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
 import { CiSearch } from "react-icons/ci";
+import { BsCart2 } from "react-icons/bs";
+import token from "../../utils/token";
 
 function Navbar() {
   const [profile, setProfile] = useState({});
@@ -22,10 +24,12 @@ function Navbar() {
   const [suggestions, setSuggestions] = useState([]);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [cartItemCount, setCartItemCount] = useState([]);
 
   useEffect(() => {
-    LoadProduk();
     getProfile();
+    getProduct();
+    LoadProduk();
     getCategories();
   }, []);
 
@@ -93,7 +97,7 @@ function Navbar() {
     try {
       const response = await axios.get(apiurl() + "products");
       setProdukList(response.data.data.data);
-      console.log(response.data.data.data);
+      // console.log(response.data.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -125,6 +129,20 @@ function Navbar() {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSearch();
+    }
+  };
+
+  const getProduct = async () => {
+    try {
+      const response = await axios.get(`${apiurl()}cart/items`, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      });
+      setCartItemCount(response.data.data.cartItems.length); // Menyimpan jumlah produk di keranjang
+      getProduct();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -174,7 +192,12 @@ function Navbar() {
             </Link>
             <div className="icon-navbar">
               <img src={iconChat} alt="icon chat" />
-              <img src={iconKeranjang} alt="icon keranjang" />
+              <Link to={"/cart"}>
+                <BsCart2 />
+                {cartItemCount > 0 && (
+                  <span className="cart-item-count">{cartItemCount}</span>
+                )}
+              </Link>
               <img src={IconNotif} alt="icon notif" />
             </div>
             <div className="line"></div>

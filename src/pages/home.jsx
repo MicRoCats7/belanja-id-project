@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../component/navbar/navbar";
-import bgHome from "../assets/image/img-homepage.svg";
 import iconKerajinanTangan from "../assets/icon/paper-crafts 1.svg";
 import iconProdukPertanian from "../assets/icon/icon pertanian 1.svg";
 import iconMakananMinuman from "../assets/icon/icon makanan minuman 1.svg";
