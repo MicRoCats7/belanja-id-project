@@ -6,7 +6,7 @@
 
 .container-profile {
     background: #ffffff;
-    width: 200px;
+    width: 220px;
     height: 500px;
     /* box-shadow: var(--NN200, #d6dfeb) 0px 1px 6px 0px; */
     /* border-radius: 12px; */
@@ -36,6 +36,7 @@
     gap: 13px;
     padding: 10px 0;
     height: 100%;
+    width: 100%;
     transition: all 0.3s ease;
     color: #000;
   }

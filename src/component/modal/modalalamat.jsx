@@ -33,7 +33,7 @@ function ModalAlamat() {
 
   return (
     <>
-      <h3 onClick={toggleModal} className="ubah-alamat">
+      <h3 onClick={toggleModal} className="edit-alamat">
         ubah alamat
       </h3>
 
@@ -42,9 +42,9 @@ function ModalAlamat() {
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
             <div className="text-diatas-popup">
-              <h3>Ubah Alamat</h3>
+              <h3 className="judul-ubah-alamat">Ubah Alamatmu</h3>
               <p>Silahkan ubah alamat anda disini, Pastikan alamat anda Benar </p>
-            </div>
+            </div>  
             <button className="close-modal" onClick={toggleModal}>
               <MdOutlineClose />
             </button>
@@ -56,12 +56,13 @@ function ModalAlamat() {
                   onChange={(e) => setAlamat(e.target.value)}
                   placeholder="Masukkan alamat lengkap"
                 />
-                 <p>Pastikan semua informasi seperti alamat lengkap dan titik lokasi sudah benar, ya.</p> 
+                 <p className="peringatan-alamat">Pastikan semua informasi seperti alamat lengkap dan titik lokasi sudah benar, ya.</p> 
               </div>
             
               <div className="label-kamu">
                 <h3>Label Alamat</h3>
                 <input type="text" placeholder="Label Alamat" />
+                <p>Contoh: Rumah, Kantor, dan lainnya.</p>
               </div>
               <div className="kontak-nomer-input">
                 <h3>Kontak</h3>

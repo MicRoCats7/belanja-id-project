@@ -75,6 +75,32 @@ body.active-modal {
     padding: 2rem 2.5rem;
     display: -webkit-box;
     display: -ms-flexbox;
+}
+
+.modal-content-nama {
+    /* position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    min-width: 300px; */
+    width: 500px;
+    height: 350px;
+    background-color: white;
+    border-radius: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 2rem 2.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
    
 }
 
@@ -86,6 +112,18 @@ body.active-modal {
 }
 
 .modal-content p{
+    margin: 20px 0px 20px 0px;
+    font-size: 14px;    
+    font-weight: 500;
+}
+.modal-content-nama h3{
+    font-weight: 650;
+    font-size: 20px;
+    letter-spacing: -0.1px;
+    color: var(--NN950,#212121);
+}
+
+.modal-content-nama p{
     margin: 20px 0px 20px 0px;
     font-size: 14px;    
     font-weight: 500;
@@ -321,6 +359,11 @@ input .input-nomer{
     max-height: 400px; /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
     overflow: auto; /* Tampilkan scrollbar hanya jika kontennya melebihi tinggi maksimum */
   }
+
+.modal-content-nama{
+    max-height: 400px; /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
+  }
+  
   
   .scrollable-content {
     padding: 10px;
@@ -342,6 +385,12 @@ input .input-nomer{
     margin-left: 10px;
   }
 
+  .text-diatas-popup .judul-ubah-alamat{
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+
   .kontak-nomer-input{
     margin-top: 10px;
   }
@@ -354,7 +403,7 @@ input .input-nomer{
     margin-bottom: 10px;
   }
  
-  .ubah-alamat{
+  .edit-alamat{
     font-weight: 700;
     font-size: 16px;
     line-height: 21px;
@@ -362,7 +411,14 @@ input .input-nomer{
     cursor: pointer;
 }
 
+.alamat-kamu .peringatan-alamat{
+    font-size: 13px;
+    margin-bottom: 10px;
+}
 
+.label-kamu p{
+    font-size: 13px;
+}
   
   
 

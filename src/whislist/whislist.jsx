@@ -88,8 +88,8 @@ function Whislist() {
   return (
     <div className="whislist">
       <Navbar />
-      <div className="main">
-        <div className="nav-whislist">
+      <div className="whis-page">
+        <div className="whis-arrow">
           <h3 className="whisone">Whislist</h3>
           <img src={arrowWhislist} alt="arrow" loading="lazy" />
           <h3 className="all-whist">Semua Whislist</h3>

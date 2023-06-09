@@ -81,7 +81,7 @@ function Modal({ onProfileUpdated }) {
       {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
+          <div className="modal-content-nama">
             <h3>Ubah Nama</h3>
             <p>Silahkan ubah nama anda disini , Pastikan Nama anda Benar </p>
             <div className="nama-kamu">
