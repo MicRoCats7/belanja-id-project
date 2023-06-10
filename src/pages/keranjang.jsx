@@ -18,6 +18,7 @@ import token from "../utils/token";
 import { formatPrice } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
+import imgbelanja from "../assets/image/shopping-bag-chat.svg";
 
 function Keranjang() {
   const navigate = useNavigate();
@@ -289,184 +290,216 @@ function Keranjang() {
     setErrorAlertOpen(true);
   };
 
+  function renderEmptyCart() {
+    return (
+      <div className="empty-cart">
+        <img src={imgbelanja} alt="" loading="lazy" />
+        <h2>Keranjang Anda Kosong</h2>
+        <p>Anda belum menambahkan produk apapun ke dalam keranjang.</p>
+        <button onClick={() => navigate("/")} className="btn-primary">
+          Lanjut Belanja
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="cart">
       <Navbar />
       <div className="container-keranjang">
         <div className="container-item-keranjang">
-          <h1>Keranjang</h1>
-          <div className="checkbox-keranjang">
-            <BpCheckbox
-              checked={selectAll} // Gunakan nilai selectAll untuk status checked
-              onChange={handleSelectAllCheckboxChange}
-            />
-            <label htmlFor="">Pilih Semua</label>
-          </div>
-          <div className="line-keranjang"></div>
-          <div className="item-cart">
-            {product.map((item, index) => (
-              <div key={item.id} className="keranjang-item">
-                <div className="checkbox-keranjang">
-                  <BpCheckbox
-                    checked={selectedItems.includes(item.id)} // Gunakan nilai selectedItems untuk status checked
-                    onChange={() => handleItemCheckboxChange(item.id)} // Tambahkan event handler untuk perubahan checkbox
-                  />
-                  <div className="toko-keranjang">
-                    <div className="img-checkbox">
-                      <img src={ImgCartToko} alt="" />
+          {product.length > 0 && (
+            <>
+              <h1>Keranjang</h1>
+              <div className="checkbox-keranjang">
+                <BpCheckbox
+                  checked={selectAll}
+                  onChange={handleSelectAllCheckboxChange}
+                />
+                <label htmlFor="">Pilih Semua</label>
+              </div>
+              <div className="line-keranjang"></div>
+            </>
+          )}
+          {product.length === 0 ? (
+            renderEmptyCart()
+          ) : (
+            <>
+              <div className="item-cart">
+                {product.map((item, index) => (
+                  <div key={item.id} className="keranjang-item">
+                    <div className="checkbox-keranjang">
+                      <BpCheckbox
+                        checked={selectedItems.includes(item.id)} // Gunakan nilai selectedItems untuk status checked
+                        onChange={() => handleItemCheckboxChange(item.id)} // Tambahkan event handler untuk perubahan checkbox
+                      />
+                      <div className="toko-keranjang">
+                        <div className="img-checkbox">
+                          <img src={ImgCartToko} alt="" />
+                        </div>
+                        <div className="nama-toko-keranjang">
+                          <h3>Nama Toko</h3>
+                          <p>Sumbawa Besar</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="nama-toko-keranjang">
-                      <h3>Nama Toko</h3>
-                      <p>Sumbawa Besar</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="item-pro-detail">
-                  <div className="item-pro">
-                    <div className="img-item-pro">
-                      <img src={item.product.picturePath} alt="gambar produk" />
-                    </div>
-                    <div className="nama-item-pro">
-                      <h3 className="name-pro-cart">{item.product.name}</h3>
-                      <h4 className="harga-pro-cart">
-                        Rp {formatPrice(item.product.price)}
-                      </h4>
-                      {item.ukuran && <p>{item.ukuran}</p>}
-                      {item.warna && <p>{item.warna}</p>}
-                    </div>
-                  </div>
-                </div>
-                <div className="item-pro-bottom">
-                  <div className="pro-bottom-wish">
-                    <span>Pindahkan ke Wishlist</span>
-                    <div className="line-bottom-wish"></div>
-                    <BsTrash3
-                      className="icon-trash-cart"
-                      onClick={() => deleteItem(item.id)}
-                    />
-                    <div className="kuantitas-keranjang">
-                      <div className="kuantitas-item">
-                        <button onClick={() => decrementQuantity(index)}>
-                          -
-                        </button>
-                        <input
-                          type="number"
-                          min="1"
-                          value={item.quantity}
-                          onChange={(e) => handleQuantityChange(e, index)}
+                    <div className="item-pro-detail">
+                      <div className="item-pro">
+                        <BpCheckbox
+                          checked={selectedItems.includes(item.id)} // Gunakan nilai selectedItems untuk status checked
+                          onChange={() => handleItemCheckboxChange(item.id)} // Tambahkan event handler untuk perubahan checkbox
                         />
-                        <button onClick={() => incrementQuantity(index)}>
-                          +
-                        </button>
+                        <div className="img-item-pro">
+                          <img
+                            src={item.product.picturePath}
+                            alt="gambar produk"
+                          />
+                        </div>
+                        <div className="nama-item-pro">
+                          <h3 className="name-pro-cart">{item.product.name}</h3>
+                          <h4 className="harga-pro-cart">
+                            Rp {formatPrice(item.product.price)}
+                          </h4>
+                          {item.ukuran && <p>{item.ukuran}</p>}
+                          {item.warna && <p>{item.warna}</p>}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="item-pro-bottom">
+                      <div className="pro-bottom-wish">
+                        <span>Pindahkan ke Wishlist</span>
+                        <div className="line-bottom-wish"></div>
+                        <BsTrash3
+                          className="icon-trash-cart"
+                          onClick={() => deleteItem(item.id)}
+                        />
+                        <div className="kuantitas-keranjang">
+                          <div className="kuantitas-item">
+                            <button onClick={() => decrementQuantity(index)}>
+                              -
+                            </button>
+                            <input
+                              type="number"
+                              min="1"
+                              value={item.quantity}
+                              onChange={(e) => handleQuantityChange(e, index)}
+                            />
+                            <button onClick={() => incrementQuantity(index)}>
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* ---------- LINE PEMISAH ---------*/}
+                    <div className="line-keranjang"></div>
+                    {/* ---------- LINE PEMISAH ---------*/}
+                  </div>
+                ))}
+              </div>
+              <div className="wishlist-kamu">
+                <h1>Wujudkan Whislist Anda!</h1>
+                <div className="wishlist-pro-kamu">
+                  <div className="pro-wishlist-cart">
+                    <div className="item-wishlist-cart">
+                      <div className="img-wishlist-cart">
+                        <img src={ImgProduk} alt="" />
+                      </div>
+                      <div className="nama-wishlist-cart">
+                        <h3>Jual Tablet Xiaomi Mi Pad 4 4/64Gb</h3>
+                        <span>Rp 6.000.000</span>
+                        <div className="toko-wishlist-cart">
+                          <div className="img-toko-wishlist-cart">
+                            <img src={ImgCartToko} alt="" />
+                          </div>
+                          <div className="nama-toko-wishlist-cart">
+                            <h4>Nama Toko</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="wishlist-bottom-action">
+                      <BsTrash3 className="icon-bottom-action" />
+                      <div className="btn-keranjang-action">
+                        <AiOutlinePlus className="icon-btn-keranjang-icon" />
+                        <span>Keranjang</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pro-wishlist-cart">
+                    <div className="item-wishlist-cart">
+                      <div className="img-wishlist-cart">
+                        <img src={ImgProduk} alt="" />
+                      </div>
+                      <div className="nama-wishlist-cart">
+                        <h3>Jual Tablet Xiaomi Mi Pad 4 4/64Gb</h3>
+                        <span>Rp 6.000.000</span>
+                        <div className="toko-wishlist-cart">
+                          <div className="img-toko-wishlist-cart">
+                            <img src={ImgCartToko} alt="" />
+                          </div>
+                          <div className="nama-toko-wishlist-cart">
+                            <h4>Nama Toko</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="wishlist-bottom-action">
+                      <BsTrash3 className="icon-bottom-action" />
+                      <div className="btn-keranjang-action">
+                        <AiOutlinePlus className="icon-btn-keranjang-icon" />
+                        <span>Keranjang</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* ---------- LINE PEMISAH ---------*/}
-                <div className="line-keranjang"></div>
-                {/* ---------- LINE PEMISAH ---------*/}
               </div>
-            ))}
-          </div>
-          <div className="wishlist-kamu">
-            <h1>Wujudkan Whislist Anda!</h1>
-            <div className="wishlist-pro-kamu">
-              <div className="pro-wishlist-cart">
-                <div className="item-wishlist-cart">
-                  <div className="img-wishlist-cart">
-                    <img src={ImgProduk} alt="" />
-                  </div>
-                  <div className="nama-wishlist-cart">
-                    <h3>Jual Tablet Xiaomi Mi Pad 4 4/64Gb</h3>
-                    <span>Rp 6.000.000</span>
-                    <div className="toko-wishlist-cart">
-                      <div className="img-toko-wishlist-cart">
-                        <img src={ImgCartToko} alt="" />
-                      </div>
-                      <div className="nama-toko-wishlist-cart">
-                        <h4>Nama Toko</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="wishlist-bottom-action">
-                  <BsTrash3 className="icon-bottom-action" />
-                  <div className="btn-keranjang-action">
-                    <AiOutlinePlus className="icon-btn-keranjang-icon" />
-                    <span>Keranjang</span>
-                  </div>
-                </div>
-              </div>
-              <div className="pro-wishlist-cart">
-                <div className="item-wishlist-cart">
-                  <div className="img-wishlist-cart">
-                    <img src={ImgProduk} alt="" />
-                  </div>
-                  <div className="nama-wishlist-cart">
-                    <h3>Jual Tablet Xiaomi Mi Pad 4 4/64Gb</h3>
-                    <span>Rp 6.000.000</span>
-                    <div className="toko-wishlist-cart">
-                      <div className="img-toko-wishlist-cart">
-                        <img src={ImgCartToko} alt="" />
-                      </div>
-                      <div className="nama-toko-wishlist-cart">
-                        <h4>Nama Toko</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="wishlist-bottom-action">
-                  <BsTrash3 className="icon-bottom-action" />
-                  <div className="btn-keranjang-action">
-                    <AiOutlinePlus className="icon-btn-keranjang-icon" />
-                    <span>Keranjang</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
-        <div className="container-subtotal">
-          <div className="border-subtotal">
-            <div className="container-diskon">
-              <TbDiscount2 className="icon-container-diskon" />
-              <h1>Makin Hemat Pakai Promo</h1>
-              <MdKeyboardArrowRight className="icon-container-arrow" />
-            </div>
-            <div className="container-total-produk">
-              <h2>Ringkasan Belanja</h2>
-              <div className="total-pro">
-                <div className="total-pro-left">
-                  <p>Total Harga ({selectedItems.length} Barang)</p>
-                  {discountApplied && <p>Total Diskon</p>}
-                </div>
-                <div className="total-pro-right">
-                  <p>Rp {formatPrice(calculateTotalPrice())}</p>
-                  {discountApplied && (
-                    <p>-{formatPrice(calculateTotalDiscount())}</p>
-                  )}
+        {product.length > 0 && (
+          <div className="container-subtotal">
+            <div className="border-subtotal">
+              <div className="container-diskon">
+                <TbDiscount2 className="icon-container-diskon" />
+                <h1>Makin Hemat Pakai Promo</h1>
+                <MdKeyboardArrowRight className="icon-container-arrow" />
+              </div>
+              <div className="container-total-produk">
+                <h2>Ringkasan Belanja</h2>
+                <div className="total-pro">
+                  <div className="total-pro-left">
+                    <p>Total Harga ({selectedItems.length} Barang)</p>
+                    {discountApplied && <p>Total Diskon</p>}
+                  </div>
+                  <div className="total-pro-right">
+                    <p>Rp {formatPrice(calculateTotalPrice())}</p>
+                    {discountApplied && (
+                      <p>-{formatPrice(calculateTotalDiscount())}</p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="line-subtotal-pro"></div>
-            <div className="total-harga-cart">
-              <h2>Total Harga</h2>
-              <h2>Rp {formatPrice(calculateTotalPrice())}</h2>
-            </div>
-            <div className="btn-bayar">
-              <button
-                disabled={!isProductSelected()} // Menonaktifkan tombol jika tidak ada produk yang dipilih
-                onClick={handleBeliClick} // Memanggil fungsi handleBeliClick saat tombol diklik
-                style={{
-                  backgroundColor: isProductSelected() ? "#EF233C" : "gray",
-                  cursor: isProductSelected() ? "pointer" : "not-allowed",
-                }} // Mengatur warna dan kursor tombol
-              >
-                Beli
-              </button>
+              <div className="line-subtotal-pro"></div>
+              <div className="total-harga-cart">
+                <h2>Total Harga</h2>
+                <h2>Rp {formatPrice(calculateTotalPrice())}</h2>
+              </div>
+              <div className="btn-bayar">
+                <button
+                  disabled={!isProductSelected()} // Menonaktifkan tombol jika tidak ada produk yang dipilih
+                  onClick={handleBeliClick} // Memanggil fungsi handleBeliClick saat tombol diklik
+                  style={{
+                    backgroundColor: isProductSelected() ? "#EF233C" : "gray",
+                    cursor: isProductSelected() ? "pointer" : "not-allowed",
+                  }} // Mengatur warna dan kursor tombol
+                >
+                  Beli({selectedItems.length})
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <Snackbar
         open={successAlertOpen}

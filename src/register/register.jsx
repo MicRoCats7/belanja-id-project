@@ -19,7 +19,7 @@ function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [name, setName] = useState("");
+  const [name, setName] = useState("");                                                                                                                
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -97,7 +97,7 @@ function Register() {
         <div className="text-regis">
           <h1>Ayo Buat Akun</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="form-regist">
-            <div className="cont-form-name">
+            <div className="cont-form-name">  
               <h3>Nama</h3>
               <div className="form-name">
                 <input

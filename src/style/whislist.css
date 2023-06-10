@@ -1,6 +1,10 @@
+.whislist {
+  overflow-x: hidden;
+}
+
 .main {
   width: 1400px;
-  margin: 0 auto;
+  margin: 10% auto 0 auto;
   position: relative;
 }
 

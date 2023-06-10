@@ -54,7 +54,7 @@ function Sidebar() {
     {
       path: "pengaturantoko",
       name: "Pengaturan",
-      icon: <BsGear />,
+      icon: <BsGear />
     },
   ];
 

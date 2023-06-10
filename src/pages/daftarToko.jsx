@@ -72,14 +72,6 @@ function DaftarToko() {
                         id=""
                         placeholder="Masukkan Nama Toko"
                       />
-                      <p>Nama Domain</p>
-                      <input
-                        className="namadomain"
-                        type="text"
-                        name=""
-                        id=""
-                        placeholder="Masukkan Nama Domain"
-                      />
                     </div>
                   </div>
                 </div>
