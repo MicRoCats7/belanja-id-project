@@ -16,7 +16,7 @@
 .content-event {
     margin-top: 100px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     row-gap: 40px;
 }
@@ -52,7 +52,7 @@
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.10);
-    border-radius: 10px;
+    border-radius: 25px;
     box-sizing: border-box;
     cursor: pointer;
     /* width: 400px; */
@@ -60,33 +60,74 @@
     /* position: relative; */
 }
 
-.gambar-judul {
+.info{
+    display: flex;
+    flex-direction: column;
+}
+.wrap-content-event {
     display: flex;
     gap: 20px;
-    align-items: center;
-    margin: 40px 25px 10px 25px;
+    align-items: center;        
 }
 
-.gambar-judul p {
+.info h3{
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     line-height: 22px;
-    color: #EF233C;
+    color: #000000;
+    max-width: 350px;
 }
 
+.img-event{
+    width: 300px;
+    height: 250px;
+}
+
+.img-event img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px 0 0 20px;
+}
+
+.data-event-nama{
+    font-weight: 550;
+    font-size: 13px;
+    line-height: 17px;
+    color: #EF233C;
+    max-width: 320px;
+}
+
+.asal-event {
+    font-weight: 550;
+    font-size: 13px;
+    line-height: 17px;
+    color: #000000;
+    max-width: 320px;
+    margin: 10px 0 10px 0;
+}
+.tanggal-event{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.waktu-event{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+/* 
 .info-event {
     padding: 10px 25px 10px 25px;
     display: flex;
     flex-direction: column;
     gap: 17px;
-}
+} */
 
-.info-event h3 {
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 22px;
-    color: #EF233C;
-}
 
 .deskripsi-event {
     font-weight: 550;
@@ -95,15 +136,6 @@
     color: #000000;
     margin-bottom: 40px;
     max-width: 320px;
-}
-
-.waktu-event {
-    background: #EF233C;
-    border-radius: 0 0 10px 10px;
-    padding: 18px;
-    /* position: absolute;
-    bottom: 0; */
-    width: 100%;
 }
 
 .waktu-event p {
@@ -139,10 +171,6 @@
     color: #fff;
 }
 
-.pagination .arrow {
-    font-size: 18px;
-    margin-right: 5px;
-}
 
 @keyframes fade-in {
     0% {
@@ -155,3 +183,37 @@
         transform: translateY(0);
     }
 }
+
+.btn-masuk-event {
+    cursor: pointer;
+    margin-top: 15px;
+    color: #EF233C;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    width:50%;
+    padding: 7px 7px;
+    border: 1px solid #ef233c;
+    background-color: #ffffff;
+    box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
+    transition: all 0.5s;
+  }
+  
+  .btn-masuk-event:hover {
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 255, 255);
+    background-color: #EF233C;
+  }
+
+.arrow-next svg{
+    font-size: 26px;
+    display: flex;
+    justify-content: center;
+}
+
+.arrow-back svg{
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+}
+

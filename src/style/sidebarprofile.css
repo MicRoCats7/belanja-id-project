@@ -3,13 +3,18 @@
     display: flex;
     align-items: start ;  
 } */
+
 .container-profile {
     background: #ffffff;
-    width: 200px;
-    height: 400px;
-    box-shadow: var(--NN200, #d6dfeb) 0px 1px 6px 0px;
-    border-radius: 12px;
+    width: 220px;
+    height: 500px;
+    /* box-shadow: var(--NN200, #d6dfeb) 0px 1px 6px 0px; */
+    /* border-radius: 12px; */
     margin: 50px;
+    background: #fff;
+    border-radius: 16px;
+    -webkit-box-shadow: 0 0 24px -4px rgba(0,0,0,.12);
+    box-shadow: 0 0 24px -4px rgba(0,0,0,.12);
   }
   
   .user-prof {
@@ -31,6 +36,7 @@
     gap: 13px;
     padding: 10px 0;
     height: 100%;
+    width: 100%;
     transition: all 0.3s ease;
     color: #000;
   }

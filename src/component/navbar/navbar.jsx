@@ -102,6 +102,7 @@ function Navbar() {
       console.error(error);
     }
   };
+  
   const onSuggestHandler = (selectedSuggestion) => {
     setText(selectedSuggestion);
     setSuggestions([]);

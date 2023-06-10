@@ -37,7 +37,8 @@ function Register() {
     formData.append("name", data.username);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("phone", Math.floor(Math.random() * 1000000000));
+    formData.append("phone", data.phone || "belum terdaftar"); 
+
     try {
       setLoading(true);
       const response = await axios.post(apiurl() + "register", formData, {
