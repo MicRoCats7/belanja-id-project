@@ -1,5 +1,6 @@
 .daftar-main {
     overflow-x: hidden;
+    margin-top: 5%;
 }
 
 .container-toko {
@@ -202,7 +203,7 @@
 }
 
 .timeline-toko-domain {
-    height: 159px;
+    height: 90px;
     width: 2px;
     background-color: #EF233C;
     margin: 7px 0;

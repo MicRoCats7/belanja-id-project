@@ -16,8 +16,8 @@
     height: 6rem;
     background-color: #fff;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
-    position: sticky;
-    z-index: 200;
+    position: fixed;
+    z-index: 999;
     top: 0;
     left: 0;
     right: 0;
