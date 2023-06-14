@@ -18,9 +18,9 @@ import Search from "./pages/search.";
 import { SessionProvider } from "./utils/googlelogin";
 import Keranjang from "./pages/keranjang";
 
+
 function App() {
   return (
-    // <SessionProvider>
     <div>
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -41,8 +41,7 @@ function App() {
         <Route path="/cart" element={<Keranjang />} />
       </Routes>
     </div>
-    // </SessionProvider>
-  );
+);
 }
 
 export default App;

@@ -11,6 +11,99 @@
     background-size: 0.65rem auto;
 }
 
+/* Dropdown Container */
+.search-dropdown-kecamatan-kota {
+    position: relative;
+    width: 100%;
+    border: 1px solid #EF233C;
+    border-radius: 4px;
+    padding: 6px;
+  }
+  
+  .search-input-province {
+    width: 100%;
+  }
+  
+  .text-kode {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .dropdown-item-provinsi:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  .dropdown-item-province {
+    padding: 6px;
+    cursor: pointer;
+  }
+  
+  .dropdown-province {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1px solid #fff;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin-top: 4px;
+  }
+
+  .search-dropdown-kecamatan-kota {
+    position: relative;
+    width: 100%;
+    border: 1px solid #EF233C;
+    border-radius: 4px;
+    padding: 6px;
+  }
+  
+  .search-input-regensi {
+    width: 100%;
+  }
+  
+  .text-kode {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .dropdown-item-regensi:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  .dropdown-item-regensi {
+    padding: 6px;
+    cursor: pointer;
+  }
+  
+  .dropdown-regensi {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1px solid #fff;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin-top: 4px;
+  }
+  
+  
+  /* Dropdown Option */
+
+
 .input-bulan{
     width: 120px;
     height: 40px;
