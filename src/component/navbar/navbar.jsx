@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../style/navbar.css";
 import logoBelanjaID from "../../assets/logoIMG/logo belanjaid.svg";
-import iconKeranjang from "../../assets/icon/keranjang.svg";
 import iconChat from "../../assets/icon/iconChat.svg";
 import IconNotif from "../../assets/icon/notif.svg";
 import { Link, useNavigate } from "react-router-dom";
@@ -88,7 +87,7 @@ function Navbar() {
     axios
       .get(apiurl() + "categories")
       .then((response) => {
-        setCategories(response.data.data.data);
+        setCategories(response.data.data);
       })
       .catch((error) => console.error(error));
   }
@@ -102,7 +101,7 @@ function Navbar() {
       console.error(error);
     }
   };
-  
+
   const onSuggestHandler = (selectedSuggestion) => {
     setText(selectedSuggestion);
     setSuggestions([]);

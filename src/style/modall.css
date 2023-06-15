@@ -46,22 +46,8 @@ body.active-modal {
 
 .overlay {
     background: rgba(49,49,49,0.8);
-    /* z-index: 999;
-    overflow: hidden;
-    will-change: opacity;
-    transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s; */
 }
 .modal-content {
-    /* position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    line-height: 1.4;
-    background: #f1f1f1;
-    padding: 14px 30px;
-    border-radius: 10px;
-    max-width: 600px;
-    min-width: 300px; */
     width: 500px;
     height: 350px;
     background-color: white;
