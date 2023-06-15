@@ -6,8 +6,7 @@ import arrowWhislist from "../assets/icon/Vector.svg";
 import "../style/whislist.css";
 import Product from "../component/product/product";
 import { datawhislist, responsive } from "../utils/datawhislist";
-import imgProdukOlahan from "../assets/image/imgProdukOlahan.svg";
-import imgProdukFashion from "../assets/image/fashion.svg";
+
 import FilterWhis from "../component/filter/filterwhislist";
 
 

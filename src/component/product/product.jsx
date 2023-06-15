@@ -18,7 +18,7 @@ function Product(props) {
       <Link to={"/detailproduct/" + props.id}>
         <div className="card-produkPilihan">
           <div className="img-pro">
-            <img src={props.url} alt="" loading="lazy" />
+            <img src={props.url} alt="produk" loading="lazy" />
           </div>
           <div className="content-porduk">
             <div className="nama-produk">
