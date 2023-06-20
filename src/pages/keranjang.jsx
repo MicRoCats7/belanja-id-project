@@ -174,7 +174,6 @@ function Keranjang() {
     const numericValue = parseInt(inputValue);
 
     if (inputValue.trim() === "" || isNaN(numericValue)) {
-      // Jika input kosong atau bukan angka, atur kuantitas ke 1
       const updatedProduct = [...product];
       updatedProduct[index] = {
         ...updatedProduct[index],
@@ -211,7 +210,6 @@ function Keranjang() {
     saveToLocalStorage(updatedProduct);
   }
 
-  // Fungsi untuk menghitung total harga
   function calculateTotalPrice() {
     let totalPrice = 0;
     product.forEach((item) => {
@@ -222,24 +220,20 @@ function Keranjang() {
     return totalPrice;
   }
 
-  // Fungsi untuk menghitung total diskon
   function calculateTotalDiscount() {
     let totalDiscount = 0;
     if (discountApplied) {
-      totalDiscount = 20000; // Ubah sesuai jumlah diskon yang diterapkan
+      totalDiscount = 20000; 
     }
     return totalDiscount;
   }
 
-  // Fungsi untuk mengecek apakah ada produk yang dipilih
   function isProductSelected() {
     return selectedItems.length > 0;
   }
 
-  // Fungsi untuk menangani klik tombol "Beli"
   const handleBeliClick = () => {
-    // Logika untuk memproses pembayaran atau ke halaman checkout
-    navigate("/detailpesanan"); // Mengarahkan pengguna ke halaman checkout
+    navigate("/detailpesanan"); 
   };
 
   function deleteItem(itemId) {

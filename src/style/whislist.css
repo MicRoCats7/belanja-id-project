@@ -1,5 +1,6 @@
 .whislist {
   overflow-x: hidden;
+  margin-top: 7%;
 }
 
 .main {
@@ -9,10 +10,11 @@
   position: relative;
 }
 
-.whis-page{
+.whis-page {
   margin: 15px 50px;
 }
-.whis-arrow{
+
+.whis-arrow {
   display: flex;
   gap: 15px;
   margin-top: 30px;
