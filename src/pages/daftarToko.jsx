@@ -1,21 +1,299 @@
-import { React, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../component/navbar/navbar";
 import imgToko from "../assets/image/imgToko.svg";
-import DropdownKotaKec from "../component/dropdown/dropdownKotaKec";
 import "../style/daftartoko.css";
 import Footer from "../component/footer/footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import apiurl from "../utils/apiurl";
+import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function DaftarToko() {
+  const navigate = useNavigate();
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [provinces, setProvinces] = useState([]);
+  const [storeName, setStoreName] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [profile, setProfile] = useState({});
+  const [phone, setNomor] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
+  const [submissionMessage, setSubmissionMessage] = useState("");
+  const [phoneVisible, setPhoneVisible] = useState(false);
+  const [selectedRegency, setSelectedRegency] = useState("");
+  const [regencies, setRegencies] = useState([]);
+  const [provinceName, setProvinceName] = useState("");
+  const [regencyName, setRegencyName] = useState("");
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [districts, setDistricts] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [searchResultsVisible, setSearchResultsVisible] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchProvinces();
+    fetchRegencies();
+    fetchDistricts();
+    checkPhoneNumber();
   }, []);
+
+  // const fetchProvinces = async () => {
+  //   try {
+  //     const response = await axios.get(apiurl() + "provinces");
+  //     const data = response.data;
+  //     const filteredProvinces = data.filter(
+  //       (province) => province.id === "52" || province.id === 52
+  //     );
+  //     setProvinces(filteredProvinces);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const fetchProvinces = async () => {
+    try {
+      const response = await axios.get(apiurl() + "provinces");
+      const data = response.data;
+      const filteredProvinces = data
+        .filter((province) => province.id === "52" || province.id === 52)
+        .map((province) => ({ ...province, value: province.name }));
+      setProvinces(filteredProvinces);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const fetchRegencies = async () => {
+  //   try {
+  //     const response = await axios.get(apiurl() + "regencies/52");
+  //     const data = response.data;
+  //     const filteredRegencies = data.filter(
+  //       (regency) => regency.id === "5207" || regency.id === 5207
+  //     );
+  //     setRegencies(filteredRegencies);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  
+  const fetchRegencies = async () => {
+    try {
+      const response = await axios.get(apiurl() + "regencies/52");
+      const data = response.data;
+      const filteredRegencies = data
+        .filter((regency) => regency.id === "5207" || regency.id === 5207)
+        .map((regency) => ({ ...regency, value: regency.name }));
+      setRegencies(filteredRegencies);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleProvinceChange = (e) => {
+    const selectedId = e.target.value;
+    setSelectedProvince(selectedId);
+    getProvinceName(selectedId);
+  };
+
+  const handleChangeRegency = (e) => {
+    const selectedId = e.target.value;
+    setSelectedRegency(selectedId);
+    getRegencyName(selectedId);
+  };
+
+  const getProvinceName = (id) => {
+    const selectedProvince = provinces.find((province) => province.id === id);
+    if (selectedProvince) {
+      setProvinceName(selectedProvince.name);
+    }
+  };
+
+  const getRegencyName = (id) => {
+    const selectedRegency = regencies.find((regency) => regency.id === id);
+    if (selectedRegency) {
+      setRegencyName(selectedRegency.name);
+    }
+  };
+
+  const fetchDistricts = async () => {
+    try {
+      const response = await axios.get(apiurl() + "districts");
+      const data = response.data;
+      setDistricts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearch = (e) => {
+    const keyword = e.target.value;
+    setSearchKeyword(keyword);
+
+    if (keyword === "") {
+      setSearchResults([]); // Clear the search results when the input is empty
+      setSearchResultsVisible(false); // Hide the search results
+    } else {
+      const filteredDistricts = districts.filter((district) =>
+        district.name.toLowerCase().includes(keyword.toLowerCase())
+      );
+      setSearchResults(filteredDistricts);
+      setSearchResultsVisible(true); // Show the search results
+    }
+
+    const selectedDistrictExists = searchResults.some(
+      (district) => district.name === selectedDistrict.name
+    );
+    if (!selectedDistrictExists) {
+      setSelectedDistrict(""); // Reset the selected district if it no longer exists in the search results
+    }
+  };
+
+  const handleSelectDistrict = (district) => {
+    setSelectedDistrict(district);
+    setSearchKeyword(district.name);
+    setSearchResultsVisible(false);
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", storeName);
+    formData.append("phone", phone);
+    formData.append("provinces", selectedProvince);
+    formData.append("regencies", selectedRegency);
+    formData.append("country", "Indonesia");
+    formData.append("zip_code", zipcode);
+
+    try {
+      setSubmitting(true);
+      setSubmissionError(null);
+      setSubmissionMessage("");
+
+      const token = localStorage.getItem("token");
+      const response = await axios.post(apiurl() + "stores", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + token,
+        },
+      });
+      handleSuccessAlertOpen();
+      const responseData = response.data;
+      const user = responseData.data?.user;
+      const store = responseData.data;
+
+      getProvinceName(store.provinces);
+      getRegencyName(store.regencies);
+
+      console.log("Nama Provinsi:", provinceName);
+      console.log("Nama Kabupaten:", regencyName);
+
+      if (user) {
+        console.log("Toko berhasil dibuat:", responseData);
+        setSubmissionMessage("Toko berhasil dibuat");
+        updateProfile();
+        setTimeout(() => {
+          navigate("/toko/hometoko");
+        }, 2000);
+      } else {
+        console.log("Gagal membuat toko: Data pengguna tidak tersedia");
+        setSubmissionError("Gagal membuat toko");
+      }
+    } catch (error) {
+      console.log("Gagal membuat toko:", error);
+      handleErrorAlertOpen();
+      setSubmissionError("Gagal membuat toko");
+    } finally {
+      setSubmitting(false);
+      setLoading(false);
+    }
+  };
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
+
+  const checkPhoneNumber = async () => {
+    const token = localStorage.getItem("token");
+    setLoading(true);
+    try {
+      const response = await axios.get(apiurl() + "user", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      const data = response.data;
+      setProfile(response.data.data);
+      console.log("Nomor telepon pengguna:", data);
+      setPhoneVisible(Boolean(data.phone)); // Perbarui state phoneVisible berdasarkan nomor telepon yang ada
+    } catch (error) {
+      console.log("Gagal mendapatkan nomor telepon pengguna:", error);
+    }
+  };
+
+  const updateProfile = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          apiurl() + "user",
+          {
+            phone: phone,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        handleSuccessAlertOpen();
+        setProfile(response.data.data);
+        console.log(response.data); // Panggil fungsi handleProfileUpdate dengan data pengguna yang diperbarui
+      } catch (error) {
+        handleErrorAlertOpen();
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const renderPhoneNumberInput = () => {
+    if (profile.user?.phone !== "belum terdaftar") {
+      return <h3 className="no-usser">{profile.user?.phone}</h3>;
+    } else {
+      return (
+        <>
+          <div className="inputNoHp">
+            <input
+              type="number"
+              value={phone}
+              onChange={handlePhoneChange}
+              placeholder="phone"
+            />
+          </div>
+        </>
+      );
+    }
+  };
+
+  const handlePhoneChange = (event) => {
+    setNomor(event.target.value);
+  };
+
   return (
     <div className="daftar-main">
       <Navbar />
       <div className="container-toko">
         <div className="con-img">
-          <h1>Buat Toko Kamu ! </h1>
+          <h1>Buat Toko Kamu!</h1>
           <p>
             Jadikan tokomu yang terbaik dan memiliki produk UMKM yang
             berkualitas
@@ -24,88 +302,197 @@ function DaftarToko() {
         </div>
         <div className="con-daftarToko">
           <h1>
-            Halo, <span>Amri Iqro</span> ayo isi detail tokomu!
+            Halo,
+            <span className="nama-user-daftartoko">
+              {profile.user && profile.user.name.split(" ")[0]}
+            </span>
+            ayo isi detail tokomu!
           </h1>
           <div className="con-input">
             <div className="timeline">
               <div className="step">
-                <div className="step__marker">
-                  <div className="step__number">
-                    <div className="number-timeline">
-                      <div className="circle-number">
-                        <span>1</span>
+                <form onSubmit={onSubmit}>
+                  <div className="step__marker">
+                    <div className="step__number">
+                      <div className="number-timeline">
+                        <div className="circle-number">
+                          <span>1</span>
+                        </div>
+                        <div className="timeline-toko"></div>
                       </div>
-                      <div className="timeline-toko"></div>
-                    </div>
-                    <div className="main-input">
-                      <div className="step__marker-text">
-                        <h2>Masukkan NO.HP-mu</h2>
-                      </div>
-                      <div className="inputNoHp">
-                        <input
-                          type="number"
-                          name=""
-                          id=""
-                          placeholder="Masukkan No.Hp"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="step__marker">
-                  <div className="step__number">
-                    <div className="number-timeline">
-                      <div className="circle-number">
-                        <span>2</span>
-                      </div>
-                      <div className="timeline-toko-domain"></div>
-                    </div>
-                    <div className="main-input">
-                      <div className="step__marker-text">
-                        <h2>Masukkan Nama Toko dan Domain </h2>
-                      </div>
-                      <p>Nama Toko</p>
-                      <input
-                        className="namatoko"
-                        type="text"
-                        name=""
-                        id=""
-                        placeholder="Masukkan Nama Toko"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="step__marker">
-                  <div className="step__number">
-                    <div className="number-timeline">
-                      <div className="circle-number">
-                        <span>3</span>
-                      </div>
-                    </div>
-                    <div className="main-input">
-                      <div className="step__marker-text">
-                        <h2>Masukkan Alamat Tokomu</h2>
-                      </div>
-                      <div className="dropdown">
-                        <DropdownKotaKec />
+                      <div className="main-input">
+                        <div className="step__marker-text">
+                          <h2>Masukkan NO.HP-mu</h2>
+                        </div>
+                        {renderPhoneNumberInput()}
+                        {/* <div className="inputNoHp">
+                          <input
+                            type="number"
+                            name="nomor"
+                            placeholder="Nomor Handphone"
+                            onChange={(e) => setNomor(e.target.value)}
+                            required
+                          />
+                        </div> */}
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="btn-buatToko">
-                  <Link to={"/"}>
-                    <button className="btn-kembali">Kembali</button>
-                  </Link>
-                  <Link to={"/toko/hometoko"}>
-                    <button>Buat Sekarang</button>
-                  </Link>
-                </div>
+                  <div className="step__marker">
+                    <div className="step__number">
+                      <div className="number-timeline">
+                        <div className="circle-number">
+                          <span>2</span>
+                        </div>
+                        <div className="timeline-toko-domain"></div>
+                      </div>
+                      <div className="main-input">
+                        <div className="step__marker-text">
+                          <h2>Masukkan Nama Toko </h2>
+                        </div>
+                        <p>Nama Toko</p>
+                        <div className="namatoko">
+                          <input
+                            type="text"
+                            name="storeName"
+                            id="storeName"
+                            placeholder="Masukkan Nama Toko"
+                            value={storeName}
+                            onChange={(e) => setStoreName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="step__marker">
+                      <div className="step__number">
+                        <div className="number-timeline">
+                          <div className="circle-number">
+                            <span>3</span>
+                          </div>
+                        </div>
+                        <div className="main-input">
+                          <div className="step__marker-text">
+                            <h2>Masukkan Alamat Tokomu</h2>
+                          </div>
+                          <div className="dropdown">
+                            <div>
+                              <p>Kota Atau Kecamatan</p>
+                              <select
+                                className="input-provinsi-kota"
+                                value={selectedProvince}
+                                onChange={handleProvinceChange}
+                              >
+                                <option value="">Pilih Provinsi</option>
+                                {provinces.length > 0 &&
+                                  provinces.map((province) => (
+                                    <option
+                                      key={province.id}
+                                      value={province.value}
+                                    >
+                                      {province.name}
+                                    </option>
+                                  ))}
+                              </select>
+                              <select
+                                className="input-provinsi-kota"
+                                value={selectedRegency}
+                                onChange={handleChangeRegency}
+                              >
+                                <option value="">Pilih Kabupaten</option>
+                                {regencies.length > 0 &&
+                                  regencies.map((regency) => (
+                                    <option
+                                      key={regency.id}
+                                      value={regency.value}
+                                    >
+                                      {regency.name}
+                                    </option>
+                                  ))}
+                              </select>
+                              <div className="input-district">
+                                <input
+                                  type="text"
+                                  value={searchKeyword}
+                                  onChange={handleSearch}
+                                  placeholder="Pilih Kecamatan"
+                                />
+                                <ul
+                                  style={{
+                                    display: searchResultsVisible
+                                      ? "block"
+                                      : "none",
+                                  }}
+                                >
+                                  {searchResults.map((district) => (
+                                    <li
+                                      key={district.id}
+                                      onClick={() =>
+                                        handleSelectDistrict(district)
+                                      }
+                                    >
+                                      {district.name}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                              <p className="text-kode">Kode Pos</p>
+                              <div className="kodepos">
+                                <input
+                                  type="text"
+                                  name="zipcode"
+                                  className="form-input"
+                                  placeholder="Kode Pos"
+                                  value={zipcode}
+                                  onChange={(e) => setZipcode(e.target.value)}
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="btn-buatToko">
+                      <Link to={"/"}>
+                        <button className="btn-kembali">Kembali</button>
+                      </Link>
+                      <button className="btn-create-shop">Buat Toko</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
       <Footer />
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Alhamdulillah login sukses
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Login gagal. Silakan periksa kembali email dan password Anda.
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }
