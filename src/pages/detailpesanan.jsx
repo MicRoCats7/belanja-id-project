@@ -1,159 +1,166 @@
-import React from "react";
+import React, { useState } from "react";
 import "../style/detailpesanan.css";
-import Navbar from "../component/navbar/navbar";
-import { UilTrashAlt } from "@iconscout/react-unicons";
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
-import imgProduct from "../assets/image/imgProduk.svg";
-import DropdownProv from "../component/dropdown/dropdownProv";
-import DropdownKota from "../component/dropdown/dropdownKota";
-import { useState } from "react";
+import NavbarCheckout from "../component/navbar/navbarCheckout";
+import { MdKeyboardArrowRight, MdLocationOn } from "react-icons/md";
+import iconToko from "../assets/logoIMG/logo belanjaid.svg";
+import imgproduk from "../assets/image/imgProduk.svg";
+import { TbDiscount2, TbTruckDelivery } from "react-icons/tb";
+import { RiErrorWarningFill } from "react-icons/ri";
+import { formatPrice } from "../utils/helpers";
+import { Navigate } from "react-router-dom";
 
 function Detailpesanan() {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [product, setCart] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [discountApplied, setDiscountApplied] = useState(false); // Ganti nilai awal sesuai kebutuhan
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(URL.createObjectURL(file));
+  // Fungsi untuk menghitung total harga
+  function calculateTotalPrice() {
+    let totalPrice = 0;
+    product.forEach((item) => {
+      if (selectedItems.includes(item.id)) {
+        totalPrice += item.product.price * item.quantity;
+      }
+    });
+    return totalPrice;
+  }
+
+  // Fungsi untuk menghitung total diskon
+  function calculateTotalDiscount() {
+    let totalDiscount = 0;
+    if (discountApplied) {
+      totalDiscount = 20000; // Ubah sesuai jumlah diskon yang diterapkan
+    }
+    return totalDiscount;
+  }
+
+  const handleBeliClick = () => {
+    // Logika untuk memproses pembayaran atau ke halaman checkout
+    Navigate("/detailpesanan"); // Mengarahkan pengguna ke halaman checkout
   };
+
+  function isProductSelected() {
+    return selectedItems.length > 0;
+  }
+
   return (
     <div>
-      <Navbar />
-      <div className="container-detailpesanan">
-        <div className="detailpesanan">
-          <div className="detailpesanan-title">
-            <h1>Detail Pesanan</h1>
-          </div>
-          <div className="detailpesanan-content">
-            <div className="produkpesanan">
-              <div className="produkpesananimage">
-                <img src={imgProduct} alt="produk1" border="0" />
+      <NavbarCheckout />
+      <div className="container-checkout">
+        <h1 className="title-checkout">Checkout</h1>
+        <div className="container-detailpesanan">
+          <div className="container-info-pesanan">
+            <div className="container-info-alamat">
+              <div className="container-alamat">
+                <h1>Alamat pengiriman</h1>
+                <div className="top-alamat">
+                  <div className="top-left-alamat">
+                    <MdLocationOn color="#969696" />
+                    <h4>Rumah</h4>
+                    <div className="role-alamat">
+                      <h3>Utama</h3>
+                    </div>
+                  </div>
+                  <div className="top-right-alamat">
+                    <h3>Ubah</h3>
+                  </div>
+                </div>
+                <div className="content-address">
+                  <div className="name-user">
+                    <h3>Andi</h3>
+                    <div className="line-address"></div>
+                    <p>082128066795</p>
+                  </div>
+                  <div className="full-address">
+                    <p>
+                      7VXR+CCF, Kajar Selatan, Kajar, Kec. Dawe, Kabupaten
+                      Kudus, Jawa Tengah 59353, Indonesia Kajar - Dawe - Kab.
+                      Kudus - Jawa Tengah - 59353
+                    </p>
+                  </div>
+                  <h2>Catatan Alamat</h2>
+                </div>
               </div>
-              <div className="detailproduk">
-                <h4>Baju Polo, Pria lengan pendek polos original Ukuran L</h4>
-                <h3>Rp 35.000</h3>
-                <div className="detailproduk-bottom">
-                  <h4>
-                    Kuantitas : <span>1</span>
-                  </h4>
-                  <div className="btn-delete">
-                    <button>
-                      <UilTrashAlt color="#fff" />
-                      Hapus
-                    </button>
+            </div>
+            <div className="container-info-produk">
+              <img src={iconToko} alt="" />
+              <div className="city-address">
+                <MdLocationOn color="#969696" />
+                <h1>Kota Kudus</h1>
+              </div>
+              <div className="shipping-produk">
+                <div className="pro-shipping">
+                  <div className="img-pro-ship">
+                    <img src={imgproduk} alt="" />
+                  </div>
+                  <div className="info-pro-ship">
+                    <h1>Nama Produk</h1>
+                    <h2>Harga Produk</h2>
+                    <h3>Kuantitas : 1</h3>
+                  </div>
+                </div>
+                <div className="line-shipping"></div>
+                <div className="shipping">
+                  <div className="top-shipping">
+                    <div className="icon-top-shipping">
+                      <TbTruckDelivery color="EF233C" />
+                      <p>Regular</p>
+                    </div>
+                    <div className="btn-pilih-shipping">
+                      <h2>Pilih Metode Lain</h2>
+                    </div>
+                  </div>
+                  <div className="info-shipping">
+                    <h2>Rp25.000</h2>
+                    <h3>Estimasi pesanan sampai 2 - 4 hari.</h3>
+                    <div className="warning-icon">
+                      <RiErrorWarningFill />
+                      <h3>Biaya sudah termasuk asuransi pengiriman.</h3>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="line-detailpesanan"></div>
-            <div className="total">
-              <div className="hargatotal">
-                <h4>Harga</h4>
-                <h4>Ongkos Kirim</h4>
-                <h4>Total Harga</h4>
-              </div>
-              <div className="totalharga">
-                <h4>:Rp. 35.000</h4>
-                <h4>:Rp. 0</h4>
-                <h4>:Rp. 0</h4>
-              </div>
-            </div>
           </div>
-        </div>
-        <div className="detail-pelanggan">
-          <div className="detail-pelanggan-title">
-            <h1>Detail Pelanggan</h1>
-          </div>
-          <div className="detail-pelanggan-content">
-            <div className="form-pelanggan">
-              <div className="form-top">
-                <div className="nama-lengkap">
-                  <h4>Nama Lengkap</h4>
-                  <input
-                    type="text"
-                    placeholder="Nama Lengkap"
-                    className="input-nama"
-                  />
-                </div>
-                <div className="nomor-handphone">
-                  <h4>No. HP / WhatsApp</h4>
-                  <input
-                    type="text"
-                    placeholder="No. HP / WhatsApp"
-                    className="input-nomorHp"
-                  />
+          <div className="container-payment-detail">
+            <div className="border-subtotal">
+              <div className="container-diskon">
+                <TbDiscount2 className="icon-container-diskon" />
+                <h1>Makin Hemat Pakai Promo</h1>
+                <MdKeyboardArrowRight className="icon-container-arrow" />
+              </div>
+              <div className="container-total-produk">
+                <h2>Ringkasan Belanja</h2>
+                <div className="total-pro">
+                  <div className="total-pro-left">
+                    <p>Total Harga ({selectedItems.length} Barang)</p>
+                    {discountApplied && <p>Total Diskon</p>}
+                  </div>
+                  <div className="total-pro-right">
+                    <p>Rp {formatPrice(calculateTotalPrice())}</p>
+                    {discountApplied && (
+                      <p>-{formatPrice(calculateTotalDiscount())}</p>
+                    )}
+                  </div>
                 </div>
               </div>
-              <h4>Provinsi</h4>
-              <DropdownProv />
-              <h4>Kota/Kabupaten</h4>
-              <DropdownKota />
-            </div>
-            <div className="kurir-pengiriman">
-              <FormControl>
-                <p>Kurir Pengiriman</p>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
+              <div className="line-subtotal-pro"></div>
+              <div className="total-harga-cart">
+                <h2>Total Harga</h2>
+                <h2>Rp {formatPrice(calculateTotalPrice())}</h2>
+              </div>
+              <div className="btn-bayar">
+                <button
+                  disabled={!isProductSelected()} // Menonaktifkan tombol jika tidak ada produk yang dipilih
+                  onClick={handleBeliClick} // Memanggil fungsi handleBeliClick saat tombol diklik
+                  style={{
+                    backgroundColor: isProductSelected() ? "#EF233C" : "gray",
+                    cursor: isProductSelected() ? "pointer" : "not-allowed",
+                  }} // Mengatur warna dan kursor tombol
                 >
-                  <FormControlLabel
-                    value="jne"
-                    control={<Radio />}
-                    label="JNE"
-                  />
-                  <FormControlLabel
-                    value="tiki"
-                    control={<Radio />}
-                    label="TIKI"
-                  />
-                  <FormControlLabel
-                    value="pos"
-                    control={<Radio />}
-                    label="POS"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
-            <div className="line-detail-pelanggan"></div>
-            <div className="layanan-kurir">
-              <FormControl>
-                <p>Layanan Kurir</p>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="oke"
-                    control={<Radio />}
-                    label="OKE - RP 48.000"
-                  />
-                  <FormControlLabel
-                    value="regular"
-                    control={<Radio />}
-                    label="REGULAR - RP 56.000"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
-            <div className="alamat-pengiriman">
-              <h4>Alamat Pengiriman</h4>
-              <textarea
-                id="w3review"
-                name="w3review"
-                rows="4"
-                cols="50"
-                placeholder="Tulis Alamat Lengkap kamu.."
-              ></textarea>
-            </div>
-            <div className="btn-belanja">
-              <button>Belanja Sekarang</button>
+                  Pilih Pembayaran
+                </button>
+              </div>
             </div>
           </div>
         </div>

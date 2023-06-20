@@ -1,15 +1,3 @@
-.input-provinsi-kota {
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
-    border: 1px solid #EF233C;
-    padding: 0 10px;
-    appearance: none;
-    background-image: url(../assets/icon/dropdown\ arrow.svg);
-    background-repeat: no-repeat;
-    background-position: right 0.7rem top 50%;
-    background-size: 0.65rem auto;
-}
 
 /* Dropdown Container */
 .search-dropdown-kecamatan-kota {
@@ -142,14 +130,6 @@
     font-weight: normal;
     background-color: #ffffff;
     color: #000000;
-}
-
-
-.input-provinsi-kota option {
-    font-size: 14px;
-    font-weight: normal;
-    background-color: #EF233C;
-    color: #fff;
 }
 
 .input-tanggal{
