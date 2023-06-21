@@ -4,7 +4,7 @@ import Home from "./pages/home";
 import Login from "./login/login";
 import DetailProduct from "./pages/detailproduct";
 import Detailpesanan from "./pages/detailpesanan";
-import Whislist from "./whislist/whislist";
+import Whislist from "./pages/whislist";
 import { Route, Routes } from "react-router";
 import DaftarToko from "./pages/daftarToko";
 import TambahProduk from "./pages/tambahProduk";

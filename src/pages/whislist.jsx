@@ -6,7 +6,6 @@ import arrowWhislist from "../assets/icon/Vector.svg";
 import "../style/whislist.css";
 import Product from "../component/product/product";
 import { datawhislist, responsive } from "../utils/datawhislist";
-
 import FilterWhis from "../component/filter/filterwhislist";
 
 
