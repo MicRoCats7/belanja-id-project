@@ -150,7 +150,7 @@ function Biodata() {
           </div>
           <div className="edit-nohp">
             <span className="text-nohp">No Hp</span>
-            {/* <div className="data-verifikasi-nohp">Belum Terverifikasi</div> */}
+            {/* <div className="data-verifikasi-nohp">Bel um Terverifikasi</div> */}
             <span className="email-user-profile">
               {phone || (profile.user && profile.user.phone)}
             </span>

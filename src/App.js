@@ -20,9 +20,9 @@ import Keranjang from "./pages/keranjang";
 import { SkeletonTheme } from "react-loading-skeleton";
 import Detailtoko from "./pages/detailtoko";
 
+
 function App() {
   return (
-    // <SessionProvider>
     <div>
       <SkeletonTheme baseColor="#E9E9E9" highlightColor="#E0E0E0">
         <Routes>
@@ -46,8 +46,7 @@ function App() {
         </Routes>
       </SkeletonTheme>
     </div>
-    // </SessionProvider>
-  );
+);
 }
 
 export default App;
