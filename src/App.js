@@ -18,6 +18,7 @@ import Search from "./pages/search.";
 import { SessionProvider } from "./utils/googlelogin";
 import Keranjang from "./pages/keranjang";
 import { SkeletonTheme } from "react-loading-skeleton";
+import Detailtoko from "./pages/detailtoko";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/detailevent" element={<Detailevent />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Keranjang />} />
+          <Route path="/detailtoko" element={<Detailtoko />} />
         </Routes>
       </SkeletonTheme>
     </div>

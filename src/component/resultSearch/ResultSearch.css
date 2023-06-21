@@ -24,6 +24,13 @@
     grid-template-columns: repeat(5, 1fr);
 }
 
+.pengaturan-result-toko {
+    width: 100%;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .tab-content .query-key {
     margin: 50px 0 25px 0;
 }
