@@ -19,6 +19,7 @@ import { formatPrice } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 import imgbelanja from "../assets/image/shopping-bag-chat.svg";
+import LoadingKeranjang from "../component/loader/LoadingKeranjanjg";
 
 function Keranjang() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function Keranjang() {
   const [discountApplied, setDiscountApplied] = useState(false); // Ganti nilai awal sesuai kebutuhan
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getCart();
@@ -126,6 +128,7 @@ function Keranjang() {
         },
       })
       .then((response) => {
+        setIsLoading(false);
         if (response.data.data && response.data.data.cartItems.length > 0) {
           const cartItems = response.data.data.cartItems;
           const storedCartItems = JSON.parse(localStorage.getItem("cartItems"));
@@ -223,7 +226,7 @@ function Keranjang() {
   function calculateTotalDiscount() {
     let totalDiscount = 0;
     if (discountApplied) {
-      totalDiscount = 20000; 
+      totalDiscount = 20000;
     }
     return totalDiscount;
   }
@@ -233,7 +236,7 @@ function Keranjang() {
   }
 
   const handleBeliClick = () => {
-    navigate("/detailpesanan"); 
+    navigate("/detailpesanan");
   };
 
   function deleteItem(itemId) {
@@ -316,7 +319,11 @@ function Keranjang() {
             </>
           )}
           {product.length === 0 ? (
-            renderEmptyCart()
+            isLoading ? (
+              <LoadingKeranjang />
+            ) : (
+              renderEmptyCart()
+            )
           ) : (
             <>
               <div className="item-cart">

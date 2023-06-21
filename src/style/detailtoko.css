@@ -1,0 +1,207 @@
+.container-detail-toko {
+    width: 1400px;
+    margin: 10% auto 0 auto;
+}
+
+.container-info-detail-toko {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    border: 1px solid #D1D1D1;
+    padding: 30px 20px;
+    border-radius: 10px;
+}
+
+.pengaturan-result-search {
+    margin: 10px 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.container-img-detail-toko {
+    width: 14%;
+    border-radius: 50%;
+}
+
+.container-img-detail-toko img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container-btn-detail-toko {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.container-btn-detail-toko button {
+    width: 100%;
+    padding: 16px 45px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease-out;
+}
+
+.container-btn-detail-toko .btn-follow-toko {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #EF233C;
+    color: #fff;
+}
+
+.container-btn-detail-toko .btn-chat-toko {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #fff;
+    color: #EF233C;
+    border: 1px solid #EF233C;
+}
+
+.container-information-detail-toko {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    font-size: 30px;
+    color: #727272;
+}
+
+.container-information-detail-toko span {
+    color: #EF233C;
+}
+
+.total-produk-detail-toko {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.total-follow-detail-toko {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.total-followers-detail-toko {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.total-review-detail-toko {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.container-pesanan-jam-infolokasi {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.container-proses-pesanan {
+    border-left: 1px solid #EF233C;
+    padding-left: 10px;
+}
+
+.container-proses-pesanan h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #EF233C;
+}
+
+.container-proses-pesanan h4 {
+    font-size: 14px;
+    font-weight: normal;
+    color: #EF233C;
+}
+
+.container-jam {
+    border-left: 1px solid #EF233C;
+    padding-left: 10px;
+}
+
+.container-jam h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #EF233C;
+}
+
+.container-jam h4 {
+    font-size: 14px;
+    font-weight: normal;
+    color: #EF233C;
+}
+
+.container-info-lokasi {
+    border-left: 1px solid #EF233C;
+    padding-left: 10px;
+}
+
+.container-info-lokasi h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #EF233C;
+}
+
+.container-info-lokasi h4 {
+    font-size: 14px;
+    font-weight: normal;
+    color: #EF233C;
+}
+
+.container-deskripsi-detail-toko {
+    border: 1px solid #D1D1D1;
+    padding: 21px 44px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.container-deskripsi-detail-toko .title-deskripsi-detail-toko {
+    background-color: #EF233C;
+    padding: 9px 58px;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    width: 20%;
+    margin-bottom: 15px;
+}
+
+.title-deskripsi-detail-toko h3 {
+    font-size: 14px;
+    color: #fff;
+    font-weight: normal;
+}
+
+.container-deskripsi-detail-toko p {
+    font-size: 17px;
+    color: rgba(0, 0, 0, 0.69);
+    font-weight: normal;
+}
+
+.container-produk-terbaru-detail-toko {
+    margin-top: 59px;
+}
+
+.title-produk-terbaru-detail-toko {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.produk-terbaru-toko {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}

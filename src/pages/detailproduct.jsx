@@ -217,16 +217,6 @@ function DetailProduct() {
           <>
             <div className="detail-product">
               <div className="detail-product-img">
-                <div className="main-img">
-                  <img
-                    src={
-                      mainImage ||
-                      (detail.length > 0 ? detail[0].picturePath : "")
-                    }
-                    alt="foto produk"
-                  />
-                </div>
-                {gallery && gallery.length > 0 && <h3>Foto Produk Lainnya</h3>}
                 <div className="more-img">
                   {gallery && gallery.length > 0
                     ? gallery.map((image, index) => (
@@ -240,6 +230,15 @@ function DetailProduct() {
                         />
                       ))
                     : null}
+                </div>
+                <div className="main-img">
+                  <img
+                    src={
+                      mainImage ||
+                      (detail.length > 0 ? detail[0].picturePath : "")
+                    }
+                    alt="foto produk"
+                  />
                 </div>
               </div>
               <div className="detail-product-desc">
