@@ -8,7 +8,6 @@ import Product from "../component/product/product";
 import { datawhislist, responsive } from "../utils/datawhislist";
 import FilterWhis from "../component/filter/filterwhislist";
 
-
 function Whislist() {
   const [filteredData, setFilteredData] = useState(datawhislist);
   const [currentPage, setCurrentPage] = useState(1);
@@ -120,7 +119,9 @@ function Whislist() {
             {isLoading ? (
               <div className="loading">Loading...</div>
             ) : (
-              <div className={`produkwishlist ${selectedCategory ? "fade" : ""}`}>
+              <div
+                className={`produkwishlist ${selectedCategory ? "fade" : ""}`}
+              >
                 {productList}
               </div>
             )}
@@ -147,7 +148,7 @@ function Whislist() {
           </div>
         </div>
       </div>
-        <Footer />
+      <Footer />
     </div>
   );
 }

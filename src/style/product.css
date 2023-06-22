@@ -107,10 +107,38 @@
     font-weight: 500;
 }
 
-.wishlist {
+.wishlist-produk {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.wishlist-produk svg:hover {
+    background-color: #dadada;
+    border-radius: 50%;
+}
+
+.wishlist-div {
+    position: relative;
+    left: 100%;
+    top: -10%;
+    z-index: 99;
+}
+
+.wishlist-div button {
+    background-color: #EF233C;
+    color: #ffffff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.wishlist-div button:hover {
+    background-color: #dadada;
+    color: #000;
 }
 
 .line-produk {
