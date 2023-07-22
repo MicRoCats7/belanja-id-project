@@ -32,7 +32,7 @@ function Keranjang() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getCart();
+    // getCart();
     window.scrollTo(0, 0);
   }, []);
 
@@ -289,7 +289,7 @@ function Keranjang() {
 
   function renderEmptyCart() {
     return (
-      <div className="empty-cart">
+      <div className="epty-cart">
         <img src={imgbelanja} alt="" loading="lazy" />
         <h2>Keranjang Anda Kosong</h2>
         <p>Anda belum menambahkan produk apapun ke dalam keranjang.</p>

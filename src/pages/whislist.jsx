@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../component/navbar/navbar";
 import Footer from "../component/footer/footer";
 import { Link } from "react-router-dom";
@@ -7,12 +7,24 @@ import "../style/whislist.css";
 import Product from "../component/product/product";
 import { datawhislist, responsive } from "../utils/datawhislist";
 import FilterWhis from "../component/filter/filterwhislist";
+import apiurl from "../utils/apiurl";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import token from "../utils/token";
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import imgbelanja from "../assets/image/shopping-bag-chat.svg";
 
 function Whislist() {
-  const [filteredData, setFilteredData] = useState(datawhislist);
+  const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [whislistData, setDataWhislist] = useState([]);
+  const navigate = useNavigate();
+  const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const itemsPerPage = 6;
 
   // Menghandle perubahan pada dropdown "Urutkan"
@@ -23,36 +35,41 @@ function Whislist() {
     if (sortBy === "terbaru") {
       sortedData.sort((a, b) => b.id - a.id);
     } else if (sortBy === "harga-tinggi") {
-      sortedData.sort((a, b) => b.price - a.price);
+      sortedData.sort((a, b) => b.product.price - a.product.price);
     } else if (sortBy === "harga-rendah") {
-      sortedData.sort((a, b) => a.price - b.price);
+      sortedData.sort((a, b) => a.product.price - b.product.price);
     }
 
     setFilteredData(sortedData);
-  };
+  }
 
   // Menghandle perubahan pada filter
   const handleFilterChange = (filters) => {
     setIsLoading(true);
-    setSelectedCategory(filters.category); // Menyimpan kategori yang dipilih
+    setSelectedCategory(filters.category);
     setCurrentPage(1);
+    setSelectedPriceRange(filters.priceRange);
 
-    // Lakukan penyaringan berdasarkan filters yang diterima
-    let filteredData = datawhislist.filter((item) => {
-      // Contoh: Jika Anda memiliki properti "category" pada data produk
-      if (filters.category && item.category !== filters.category) {
+    // Menyaring data wishlist berdasarkan kategori
+    let filteredData = whislistData.filter((item) => {
+      if (filters.category && item.product.category !== filters.category) {
         return false;
       }
-
-      // Tambahkan kondisi lain sesuai dengan kebutuhan
-
       return true;
     });
 
-    // Delay sementara untuk simulasi loading
+    // Menyaring data wishlist berdasarkan range harga
+    if (filters.priceRange) {
+      const [minPrice, maxPrice] = filters.priceRange.split("-");
+      filteredData = filteredData.filter(
+        (item) => item.product.price >= Number(minPrice) && item.product.price <= Number(maxPrice)
+      );
+    }
+
+    // Menyimpan data wishlist yang sudah disaring ke dalam state
+    setFilteredData(filteredData);
     setTimeout(() => {
       setIsLoading(false);
-      setFilteredData(filteredData);
     }, 1000);
   };
 
@@ -70,17 +87,106 @@ function Whislist() {
     setCurrentPage(newPage);
   };
 
-  // Daftar produk yang akan ditampilkan
-  const productList = currentItems.map((item) => (
-    <Product
-      key={item.id}
-      name={item.name}
-      url={item.image}
-      price={item.price}
-      rating={item.rating}
-      ulasan={item.ulasan}
-    />
-  ));
+  const getWishlist = async () => {
+    try {
+      const response = await axios.get(apiurl() + "wishlist/all", {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      });
+
+      if (response.status === 200) {
+        handleSuccessAlertOpen();
+        setDataWhislist(response.data.data);
+        setFilteredData(response.data.data);
+      } else {
+        handleErrorAlertOpen();
+      }
+    } catch (error) {
+      console.error("Gagal menambahkan produk ke wishlist:", error);
+      handleErrorAlertOpen();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
+
+  function renderEmptywishlist() {
+    return (
+      <div className="empty-wishlist">
+        <img src={imgbelanja} alt="" loading="lazy" />
+        <h2>wishlist Anda Kosong</h2>
+        <p>Anda belum menambahkan produk apapun ke dalam wishlist.</p>
+        <button onClick={() => navigate("/")} className="btn-primary">
+          Lanjut Belanja
+        </button>
+      </div>
+    );
+  }
+
+  const handleDeleteItem = async (wishlistId) => {
+    try {
+      const response = await axios.delete(
+        apiurl() + "wishlist/delete/" + wishlistId,
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        handleSuccessAlertOpen();
+        console.log("Item berhasil dihapus dari API");
+        // Memperbarui wishlistData dan filteredData setelah penghapusan item
+        const updatedWishlist = whislistData.filter(
+          (item) => item.id !== wishlistId
+        );
+        setDataWhislist(updatedWishlist);
+        setFilteredData(updatedWishlist);
+        getWishlist();
+      } else {
+        handleErrorAlertOpen();
+      }
+    } catch (error) {
+      handleErrorAlertOpen();
+      console.log("Gagal menghapus item dari API:", error);
+    }
+  };
+
+  useEffect(() => {
+    getWishlist();
+  }, []);
+
+  const productList = whislistData.map((item) => {
+    const isProductInWishlist = checkIfProductInWishlist(item.product.id); // Implement your logic to check if product is in the wishlist
+    return (
+      <Product
+        key={item.product.id}
+        name={item.product.name}
+        url={item.product.picturePath}
+        location={item.product.product_origin}
+        price={item.product.price}
+        rating={item.product.rate}
+        ulasan={item.product.review}
+        stok={item.product.stok}
+        id={item.product.id}
+        product={item.product}
+        wishlistAdded={isProductInWishlist}
+        onDelete={() => handleDeleteItem(item.id)}
+      />
+    );
+  });
+  function checkIfProductInWishlist(productId) {
+    return whislistData?.some((item) => item.product.id === productId);
+  }
 
   return (
     <div className="whislist">
@@ -117,12 +223,12 @@ function Whislist() {
           <div className="card-barang">
             <h2 className="barang">Barang</h2>
             {isLoading ? (
-              <div className="loading">Loading...</div>
+              <div className="loading">Tunggu sebentar...</div>
             ) : (
               <div
-                className={`produkwishlist ${selectedCategory ? "fade" : ""}`}
+                className={`produkwishlist ${selectedCategory || selectedPriceRange ? "fade" : ""}`}
               >
-                {productList}
+                {productList.length > 0 ? productList : renderEmptywishlist()}
               </div>
             )}
             {totalPages > 1 && (
@@ -131,7 +237,7 @@ function Whislist() {
                   className={`prev-btn ${currentPage === 1 ? "disabled" : ""}`}
                   disabled={currentPage === 1}
                   onClick={() => handlePageChange(currentPage - 1)}
-                >
+                > 
                   Previous
                 </button>
                 <button
@@ -149,6 +255,34 @@ function Whislist() {
         </div>
       </div>
       <Footer />
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Berhasil Di hapus dari wishlist
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Gagal menghapus dari wishlist
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }
