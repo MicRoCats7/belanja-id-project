@@ -1,9 +1,14 @@
-import { React, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../../style/product.css";
 import { Link } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
 import { BsFillStarFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
+import apiurl from "../../utils/apiurl";
+import axios from "axios";
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import token from "../../utils/token";
 
 function formatPrice(price) {
   const numberFormat = new Intl.NumberFormat("id-ID");
@@ -13,10 +18,18 @@ function formatPrice(price) {
 function Product(props) {
   const [showWishlist, setShowWishlist] = useState(false);
   const formattedPrice = formatPrice(props.price);
+  const [product, setData] = useState([]);
+  const [detail, setDetail] = useState([]);
   const wishlistRef = useRef(null);
+  const [filteredData, setFilteredData] = useState([]);
+  const [whislistData, setDataWhislist] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [wishlistAdded, setWishlistAdded] = useState(false);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   useEffect(() => {
-    // Event listener saat mengklik di luar wishlist-div
+    setWishlistAdded(false);
     const handleClickOutside = (event) => {
       if (wishlistRef.current && !wishlistRef.current.contains(event.target)) {
         setShowWishlist(false);
@@ -28,11 +41,43 @@ function Product(props) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [props.id]);
+
+  const addToWishlist = async () => {
+    const payload = {
+      product_id: props.id,
+    };
+    try {
+      const response = await axios.post(apiurl() + "wishlist/add", payload, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setWishlistAdded(true);
+        handleSuccessAlertOpen();
+      } else {
+        handleErrorAlertOpen();
+      }
+    } catch (error) {
+      console.error("Gagal menambahkan produk ke wishlist:", error);
+      handleErrorAlertOpen();
+    }
+  };
+
 
   const handleClickWishlist = (event) => {
     event.stopPropagation();
     setShowWishlist(!showWishlist);
+  };
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
   };
 
   return (
@@ -71,10 +116,49 @@ function Product(props) {
         </div>
         {showWishlist && (
           <div className="wishlist-div" ref={wishlistRef}>
-            <button>Simpan Ke Wishlist</button>
+            {props.wishlistAdded ? (
+              <button
+                className="btn-secondary"
+                onClick={() => props.onDelete(props.id)}
+              >
+                Hapus
+              </button>
+            ) : (
+              <button onClick={addToWishlist}>Simpan ke Wishlist</button>
+            )}
           </div>
         )}
       </div>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        variant="filled"
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Produk ditambahkan ke wishlist
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        variant="filled"
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Gagal menambahkan produk ke keranjang
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

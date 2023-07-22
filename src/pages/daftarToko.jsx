@@ -13,148 +13,124 @@ function DaftarToko() {
   const navigate = useNavigate();
   const [selectedProvince, setSelectedProvince] = useState("");
   const [provinces, setProvinces] = useState([]);
+  const [provinceSelected, setProvinceSelected] = useState(false);
   const [storeName, setStoreName] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [profile, setProfile] = useState({});
   const [phone, setNomor] = useState("");
+  const [selectedProvinceName, setSelectedProvinceName] = useState("");
+  const [selectedCityName, setSelectedCityName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState("");
   const [phoneVisible, setPhoneVisible] = useState(false);
   const [selectedRegency, setSelectedRegency] = useState("");
   const [regencies, setRegencies] = useState([]);
-  const [provinceName, setProvinceName] = useState("");
-  const [regencyName, setRegencyName] = useState("");
+  const [cities, setCities] = useState([]);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [districts, setDistricts] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [searchKeywordCity, setSearchKeywordCity] = useState("");
+  const [searchResultsCity, setSearchResultsCity] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [searchResultsVisibleCity, setSearchResultsVisibleCity] =
+    useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [searchResultsVisible, setSearchResultsVisible] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchProvinces();
-    fetchRegencies();
-    fetchDistricts();
+    // fetchDistricts();
+    fetchCitiesByProvince();
     checkPhoneNumber();
   }, []);
-
-  // const fetchProvinces = async () => {
-  //   try {
-  //     const response = await axios.get(apiurl() + "provinces");
-  //     const data = response.data;
-  //     const filteredProvinces = data.filter(
-  //       (province) => province.id === "52" || province.id === 52
-  //     );
-  //     setProvinces(filteredProvinces);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const fetchProvinces = async () => {
     try {
       const response = await axios.get(apiurl() + "provinces");
-      const data = response.data;
-      const filteredProvinces = data
-        .filter((province) => province.id === "52" || province.id === 52)
-        .map((province) => ({ ...province, value: province.name }));
-      setProvinces(filteredProvinces);
+      const responseData = response.data;
+  
+      if (responseData.meta && responseData.meta.code === 200) {
+        const provincesData = responseData.data;
+        // Tambahkan property 'province_name' pada setiap objek provinsi
+        const provincesWithNames = provincesData.map((province) => ({
+          ...province,
+          province_name: province.province,
+        }));
+        setProvinces(provincesWithNames);
+      } else {
+        console.log("Failed to fetch provinces:", responseData.meta.message);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("Failed to fetch provinces:", error);
     }
   };
 
-  // const fetchRegencies = async () => {
+  // const fetchDistricts = async () => {
   //   try {
-  //     const response = await axios.get(apiurl() + "regencies/52");
+  //     const response = await axios.get(apiurl() + "districts");
   //     const data = response.data;
-  //     const filteredRegencies = data.filter(
-  //       (regency) => regency.id === "5207" || regency.id === 5207
-  //     );
-  //     setRegencies(filteredRegencies);
+  //     setDistricts(data);
   //   } catch (error) {
   //     console.log(error);
   //   }
   // };
   
-  const fetchRegencies = async () => {
-    try {
-      const response = await axios.get(apiurl() + "regencies/52");
-      const data = response.data;
-      const filteredRegencies = data
-        .filter((regency) => regency.id === "5207" || regency.id === 5207)
-        .map((regency) => ({ ...regency, value: regency.name }));
-      setRegencies(filteredRegencies);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleProvinceChange = (e) => {
-    const selectedId = e.target.value;
-    setSelectedProvince(selectedId);
-    getProvinceName(selectedId);
-  };
 
-  const handleChangeRegency = (e) => {
-    const selectedId = e.target.value;
-    setSelectedRegency(selectedId);
-    getRegencyName(selectedId);
-  };
+  // const handleSearch = (e) => {
+  //   const keyword = e.target.value;
+  //   setSearchKeyword(keyword);
 
-  const getProvinceName = (id) => {
-    const selectedProvince = provinces.find((province) => province.id === id);
-    if (selectedProvince) {
-      setProvinceName(selectedProvince.name);
-    }
-  };
+  //   if (keyword === "") {
+  //     setSearchResults([]); // Clear the search results when the input is empty
+  //     setSearchResultsVisible(false); // Hide the search results
+  //   } else {
+  //     const filteredDistricts = districts.filter((district) =>
+  //       district.name.toLowerCase().includes(keyword.toLowerCase())
+  //     );
+  //     setSearchResults(filteredDistricts);
+  //     setSearchResultsVisible(true); // Show the search results
+  //   }
 
-  const getRegencyName = (id) => {
-    const selectedRegency = regencies.find((regency) => regency.id === id);
-    if (selectedRegency) {
-      setRegencyName(selectedRegency.name);
-    }
-  };
+  //   const selectedDistrictExists = searchResults.some(
+  //     (district) => district.name === selectedDistrict.name
+  //   );
+  //   if (!selectedDistrictExists) {
+  //     setSelectedDistrict(""); // Reset the selected district if it no longer exists in the search results
+  //   }
+  // };
 
-  const fetchDistricts = async () => {
-    try {
-      const response = await axios.get(apiurl() + "districts");
-      const data = response.data;
-      setDistricts(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSelectDistrict = (district) => {
+  //   setSelectedDistrict(district);
+  //   setSearchKeyword(district.name);
+  //   setSearchResultsVisible(false);
+  // };
 
-  const handleSearch = (e) => {
+  const handleSearchCity = (e) => {
     const keyword = e.target.value;
-    setSearchKeyword(keyword);
+    setSearchKeywordCity(keyword);
 
     if (keyword === "") {
-      setSearchResults([]); // Clear the search results when the input is empty
-      setSearchResultsVisible(false); // Hide the search results
+      setSearchResultsCity([]);
+      setSearchResultsVisibleCity(false);
     } else {
-      const filteredDistricts = districts.filter((district) =>
-        district.name.toLowerCase().includes(keyword.toLowerCase())
+      const filteredCities = cities.filter((city) =>
+        city.city_name.toLowerCase().includes(keyword.toLowerCase())
       );
-      setSearchResults(filteredDistricts);
-      setSearchResultsVisible(true); // Show the search results
+      setSearchResultsCity(filteredCities);
+      setSearchResultsVisibleCity(true);
     }
 
-    const selectedDistrictExists = searchResults.some(
-      (district) => district.name === selectedDistrict.name
+    const selectedCityExists = searchResultsCity.some(
+      (city) => city.city_name === selectedCity.city_name
     );
-    if (!selectedDistrictExists) {
-      setSelectedDistrict(""); // Reset the selected district if it no longer exists in the search results
+    if (!selectedCityExists) {
+      setSelectedCity("");
     }
-  };
-
-  const handleSelectDistrict = (district) => {
-    setSelectedDistrict(district);
-    setSearchKeyword(district.name);
-    setSearchResultsVisible(false);
   };
 
   const onSubmit = async (e) => {
@@ -162,10 +138,10 @@ function DaftarToko() {
     const formData = new FormData();
     formData.append("name", storeName);
     formData.append("phone", phone);
-    formData.append("provinces", selectedProvince);
-    formData.append("regencies", selectedRegency);
+    formData.append("provinces", selectedProvinceName);
+    formData.append("regencies", selectedCity.city_name);
     formData.append("country", "Indonesia");
-    formData.append("zip_code", zipcode);
+    // formData.append("zip_code", zipcode);
 
     try {
       setSubmitting(true);
@@ -177,20 +153,14 @@ function DaftarToko() {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + token,
-        },
+        }
       });
-      handleSuccessAlertOpen();
+      handleSuccessAlertToko();
       const responseData = response.data;
       const user = responseData.data?.user;
       const store = responseData.data;
 
-      getProvinceName(store.provinces);
-      getRegencyName(store.regencies);
-
-      console.log("Nama Provinsi:", provinceName);
-      console.log("Nama Kabupaten:", regencyName);
-
-      if (user) {
+      if (store) {
         console.log("Toko berhasil dibuat:", responseData);
         setSubmissionMessage("Toko berhasil dibuat");
         updateProfile();
@@ -203,7 +173,7 @@ function DaftarToko() {
       }
     } catch (error) {
       console.log("Gagal membuat toko:", error);
-      handleErrorAlertOpen();
+      handleErrorAlertToko();
       setSubmissionError("Gagal membuat toko");
     } finally {
       setSubmitting(false);
@@ -211,11 +181,11 @@ function DaftarToko() {
     }
   };
 
-  const handleSuccessAlertOpen = () => {
+  const handleSuccessAlertToko = () => {
     setSuccessAlertOpen(true);
   };
 
-  const handleErrorAlertOpen = () => {
+  const handleErrorAlertToko = () => {
     setErrorAlertOpen(true);
   };
 
@@ -253,11 +223,9 @@ function DaftarToko() {
             },
           }
         );
-        handleSuccessAlertOpen();
         setProfile(response.data.data);
-        console.log(response.data); // Panggil fungsi handleProfileUpdate dengan data pengguna yang diperbarui
+        console.log(response.data);
       } catch (error) {
-        handleErrorAlertOpen();
         console.error(error);
       } finally {
         setLoading(false);
@@ -284,10 +252,79 @@ function DaftarToko() {
     }
   };
 
+  const fetchCitiesByProvince = async (provinceId) => {
+    try {
+      const response = await axios.get(
+        apiurl() + `cities?province_id=${provinceId}`
+      );
+      const data = response.data;
+      setCities(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearchCities = (e) => {
+    const keyword = e.target.value;
+    setSearchKeywordCity(keyword);
+
+    if (keyword === "") {
+      setSearchResultsCity([]);
+      setSearchResultsVisibleCity(false);
+    } else {
+      const filteredCities = cities.filter((city) =>
+        city.city_name.toLowerCase().includes(keyword.toLowerCase())
+      );
+      setSearchResultsCity(filteredCities);
+      setSearchResultsVisibleCity(true);
+    }
+
+    const selectedCityExists = searchResultsCity.some(
+      (city) => city.city_name === selectedCity.city_name
+    );
+    if (!selectedCityExists) {
+      setSelectedCity("");
+    }
+  };
+
   const handlePhoneChange = (event) => {
     setNomor(event.target.value);
   };
 
+  
+  const handleProvinceChange = (e) => {
+    const selectedId = e.target.value;
+    setSelectedProvince(selectedId);
+  
+    // Cari nama provinsi berdasarkan ID provinsi yang dipilih
+    const selectedProvinceData = provinces.find(
+      (province) => province.province_id === selectedId
+    );
+    setSelectedProvinceName(selectedProvinceData.province_name);
+  
+    setSelectedCity(""); // Reset kota saat mengganti provinsi
+    fetchCitiesByProvince(selectedId);
+    setProvinceSelected(true);
+    setSearchResultsVisibleCity(false);
+  };;
+
+  const handleSelectCity = (city) => {
+    setSelectedCity(city);
+    setSearchKeywordCity(city.city_name);
+    setSearchResultsVisibleCity(false);
+  };
+
+  const handleChangeCity = (e) => {
+    const selectedCityId = e.target.value;
+    setSelectedCity(selectedCityId);
+
+    const selectedCityData = cities.find(
+      (city) => city.city_id === selectedCityId
+    );
+    setSelectedCityName(selectedCityData.city_name); // Simpan nama kota yang dipilih ke state
+  };
+
+  
   return (
     <div className="daftar-main">
       <Navbar />
@@ -325,15 +362,6 @@ function DaftarToko() {
                           <h2>Masukkan NO.HP-mu</h2>
                         </div>
                         {renderPhoneNumberInput()}
-                        {/* <div className="inputNoHp">
-                          <input
-                            type="number"
-                            name="nomor"
-                            placeholder="Nomor Handphone"
-                            onChange={(e) => setNomor(e.target.value)}
-                            required
-                          />
-                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -375,7 +403,7 @@ function DaftarToko() {
                           </div>
                           <div className="dropdown">
                             <div>
-                              <p>Kota Atau Kecamatan</p>
+                              <p>Provinsi dan kota</p>
                               <select
                                 className="input-provinsi-kota"
                                 value={selectedProvince}
@@ -385,29 +413,48 @@ function DaftarToko() {
                                 {provinces.length > 0 &&
                                   provinces.map((province) => (
                                     <option
-                                      key={province.id}
-                                      value={province.value}
+                                      key={province.province_id}
+                                      value={province.province_id}
                                     >
-                                      {province.name}
+                                      {province.province}
                                     </option>
                                   ))}
                               </select>
-                              <select
-                                className="input-provinsi-kota"
-                                value={selectedRegency}
-                                onChange={handleChangeRegency}
-                              >
-                                <option value="">Pilih Kabupaten</option>
-                                {regencies.length > 0 &&
-                                  regencies.map((regency) => (
-                                    <option
-                                      key={regency.id}
-                                      value={regency.value}
-                                    >
-                                      {regency.name}
-                                    </option>
-                                  ))}
-                              </select>
+                              {provinceSelected && (
+                                <div
+                                  className={`input-cities ${
+                                    searchResultsVisibleCity ? "active" : ""
+                                  }`}
+                                >
+                                  <input
+                                    type="text"
+                                    value={searchKeywordCity}
+                                    onChange={handleSearchCity}
+                                    placeholder={
+                                      selectedCityName
+                                        ? selectedCityName
+                                        : "Cari Kota/Kabupaten"
+                                    }
+                                  />
+                                  <ul
+                                    style={{
+                                      display: searchResultsVisibleCity
+                                        ? "block"
+                                        : "none",
+                                    }}
+                                  >
+                                    {searchResultsCity.map((city) => (
+                                      <li
+                                        key={city.city_id}
+                                        onClick={() => handleSelectCity(city)}
+                                      >
+                                        {city.city_name}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              {/* <p>Kecamatan</p>
                               <div className="input-district">
                                 <input
                                   type="text"
@@ -445,7 +492,7 @@ function DaftarToko() {
                                   onChange={(e) => setZipcode(e.target.value)}
                                   required
                                 />
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </div>
@@ -476,7 +523,7 @@ function DaftarToko() {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Alhamdulillah login sukses
+          Alhamdulillah daftar sukses
         </MuiAlert>
       </Snackbar>
       <Snackbar
@@ -490,7 +537,7 @@ function DaftarToko() {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Login gagal. Silakan periksa kembali email dan password Anda.
+          daftar gagal. Silakan periksa kembali Dan isi data secara lengkap.
         </MuiAlert>
       </Snackbar>
     </div>

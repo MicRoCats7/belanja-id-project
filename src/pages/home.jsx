@@ -35,6 +35,7 @@ import Skeleton from "react-loading-skeleton";
 
 function Home() {
   const [product, setProduct] = useState([]);
+  const [banner, setBanners] = useState([]);
   const [isPrevArrowVisible, setIsPrevArrowVisible] = useState(false);
   const [isNextArrowVisible, setIsNextArrowVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,7 @@ function Home() {
   useEffect(() => {
     getProduct();
     getCategories();
+    getBanner();
     window.scrollTo(0, 0);
   }, []);
 
@@ -54,6 +56,16 @@ function Home() {
       .then((response) => {
         setProduct(response.data.data.data);
         setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function getBanner() {
+    axios
+      .get(apiurl() + "banners")
+      .then((response) => {
+        setBanners(response.data);
+        console.log("Berhasil mengambil data banner:", response.data);
       })
       .catch((error) => console.error(error));
   }
@@ -74,42 +86,35 @@ function Home() {
       <Navbar />
       <div className="homepage">
         <div className="heroPage">
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay, Mousewheel, Keyboard]}
-            navigation
-            autoplay={{ delay: 2500 }}
-            cssMode={true}
-            mousewheel={true}
-            keyboard={true}
-            loop={true}
-            grabCursor={true}
-            pagination={{
-              clickable: true,
-              renderBullet: (index, className) =>
-                `<span class="${className}"></span>`,
-            }}
-            className="mySwiper"
-          >
-            <SwiperSlide>
-              <img src={imgIklan} alt="" className="img-iklan" loading="lazy" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={imgIklan2}
-                alt=""
-                className="img-iklan"
-                loading="lazy"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={imgIklan3}
-                alt=""
-                className="img-iklan"
-                loading="lazy"
-              />
-            </SwiperSlide>
-          </Swiper>
+          {Array.isArray(banner) &&  (
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay, Mousewheel, Keyboard]}
+              navigation
+              autoplay={{ delay: 2500 }}
+              cssMode={true}
+              mousewheel={true}
+              keyboard={true}
+              loop={true}
+              grabCursor={true}
+              pagination={{
+                clickable: true,
+                renderBullet: (index, className) =>
+                  `<span class="${className}"></span>`,
+              }}
+              className="mySwiper"
+            >
+              {banner.map((bannerItem) => (
+                <SwiperSlide key={bannerItem.id}>
+                  <img
+                    src={bannerItem.image}
+                    alt={`Banner ${bannerItem.id}`}
+                    className="img-iklan"
+                    loading="lazy"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </div>
         <div className="Kategori">
           <div className="title-kategori">
