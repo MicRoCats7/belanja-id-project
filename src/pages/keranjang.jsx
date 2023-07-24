@@ -34,6 +34,9 @@ function Keranjang() {
   useEffect(() => {
     // getCart();
     window.scrollTo(0, 0);
+    return () => {
+      localStorage.removeItem("selectedItems");
+    };
   }, []);
 
   const BpIcon = styled("span")(({ theme }) => ({
@@ -118,6 +121,8 @@ function Keranjang() {
       setSelectedItems([...selectedItems, itemId]); // Tambahkan ID produk ke selectedItems jika belum terpilih
     }
     setSelectAll(false); // Set selectAll menjadi false ketika checkbox produk diklik
+
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
   }
 
   function getCart() {
@@ -236,29 +241,25 @@ function Keranjang() {
   }
 
   const handleBeliClick = () => {
-    navigate("/detailpesanan");
+    if (isProductSelected()) {
+      const selectedProducts = product.filter((item) =>
+        selectedItems.includes(item.id)
+      );
+
+      // Simpan produk yang dipilih ke dalam localStorage
+      localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+      localStorage.setItem(
+        "selectedProducts",
+        JSON.stringify(selectedProducts)
+      );
+
+      // Arahkan pengguna ke halaman "detailpesanan"
+      navigate("/detailpesanan");
+    }
   };
 
   function deleteItem(itemId) {
     deleteItemFromAPI(itemId);
-    removeFromCart(itemId);
-  }
-
-  // Hapus item dari keranjang
-  function removeFromCart(itemId) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    const itemIndex = cart.findIndex((item) => item.id === itemId);
-
-    if (itemIndex !== -1) {
-      cart.splice(itemIndex, 1);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      handleErrorAlertOpen();
-      console.log("Item berhasil dihapus dari keranjang");
-    } else {
-      handleErrorAlertOpen();
-      console.log("Item tidak ditemukan di keranjang");
-    }
   }
 
   // Hapus item dari API
@@ -488,12 +489,12 @@ function Keranjang() {
               </div>
               <div className="btn-bayar">
                 <button
-                  disabled={!isProductSelected()} // Menonaktifkan tombol jika tidak ada produk yang dipilih
-                  onClick={handleBeliClick} // Memanggil fungsi handleBeliClick saat tombol diklik
+                  disabled={!isProductSelected()}
+                  onClick={handleBeliClick}
                   style={{
                     backgroundColor: isProductSelected() ? "#EF233C" : "gray",
                     cursor: isProductSelected() ? "pointer" : "not-allowed",
-                  }} // Mengatur warna dan kursor tombol
+                  }}
                 >
                   Beli({selectedItems.length})
                 </button>

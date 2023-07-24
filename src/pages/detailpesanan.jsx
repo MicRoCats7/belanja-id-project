@@ -1,47 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/detailpesanan.css";
 import NavbarCheckout from "../component/navbar/navbarCheckout";
 import { MdKeyboardArrowRight, MdLocationOn } from "react-icons/md";
-import iconToko from "../assets/logoIMG/logo belanjaid.svg";
-import imgproduk from "../assets/image/imgProduk.svg";
 import { TbDiscount2, TbTruckDelivery } from "react-icons/tb";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { formatPrice } from "../utils/helpers";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 function Detailpesanan() {
-  const [product, setCart] = useState([]);
+  const [product, setProduct] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [discountApplied, setDiscountApplied] = useState(false); // Ganti nilai awal sesuai kebutuhan
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const selectedIds = queryParams.get("selectedIds");
 
-  // Fungsi untuk menghitung total harga
+  useEffect(() => {
+    const fetchProducts = () => {
+      const storedProducts = localStorage.getItem("products");
+      if (storedProducts) {
+        setProduct(JSON.parse(storedProducts));
+      }
+    };
+    fetchProducts();
+
+    const storedSelectedItems = localStorage.getItem("selectedProducts");
+    if (storedSelectedItems) {
+      setSelectedItems(JSON.parse(storedSelectedItems));
+    } else {
+      setSelectedItems([]);
+    }
+    console.log(localStorage.getItem("selectedProducts"));
+  }, []);
+
   function calculateTotalPrice() {
     let totalPrice = 0;
-    product.forEach((item) => {
-      if (selectedItems.includes(item.id)) {
-        totalPrice += item.product.price * item.quantity;
+
+    const storedProducts = localStorage.getItem("products");
+    const products = storedProducts ? JSON.parse(storedProducts) : [];
+
+    selectedItems.forEach((itemId) => {
+      const selectedItem = products.find((item) => item.id === itemId);
+      if (selectedItem) {
+        totalPrice += selectedItem.product.price * selectedItem.quantity;
       }
     });
+
     return totalPrice;
   }
 
-  // Fungsi untuk menghitung total diskon
   function calculateTotalDiscount() {
     let totalDiscount = 0;
     if (discountApplied) {
-      totalDiscount = 20000; // Ubah sesuai jumlah diskon yang diterapkan
+      totalDiscount = 20000;
     }
     return totalDiscount;
   }
 
   const handleBeliClick = () => {
-    // Logika untuk memproses pembayaran atau ke halaman checkout
-    Navigate("/detailpesanan"); // Mengarahkan pengguna ke halaman checkout
+    Navigate("/detailpesanan");
   };
 
   function isProductSelected() {
     return selectedItems.length > 0;
   }
+  console.log(selectedItems);
 
   return (
     <div>
@@ -82,45 +105,46 @@ function Detailpesanan() {
                 </div>
               </div>
             </div>
-            <div className="container-info-produk">
-              <img src={iconToko} alt="" />
-              <div className="city-address">
-                <MdLocationOn color="#969696" />
-                <h1>Kota Kudus</h1>
-              </div>
-              <div className="shipping-produk">
-                <div className="pro-shipping">
-                  <div className="img-pro-ship">
-                    <img src={imgproduk} alt="" />
+            {selectedItems.map((item, idx) => (
+              <div key={idx} className="container-info-produk">
+                <div className="city-address">
+                  <MdLocationOn color="#969696" />
+                  <h1>Kota Kudus</h1>
+                </div>
+                <div className="shipping-produk">
+                  <div className="pro-shipping">
+                    <div className="img-pro-ship">
+                      <img src={item.product.picturePath} alt="" />
+                    </div>
+                    <div className="info-pro-ship">
+                      <h1>{item.product.name}</h1>
+                      <h2>Rp {formatPrice(item.product.price)}</h2>
+                      <h3>Kuantitas : {item.product.quantity}</h3>
+                    </div>
                   </div>
-                  <div className="info-pro-ship">
-                    <h1>Nama Produk</h1>
-                    <h2>Harga Produk</h2>
-                    <h3>Kuantitas : 1</h3>
+                  <div className="line-shipping"></div>
+                  <div className="shipping">
+                    <div className="top-shipping">
+                      <div className="icon-top-shipping">
+                        <TbTruckDelivery color="EF233C" />
+                        <p>Regular</p>
+                      </div>
+                      <div className="btn-pilih-shipping">
+                        <h2>Pilih Metode Lain</h2>
+                      </div>
+                    </div>
+                    <div className="info-shipping">
+                      <h2>Rp25.000</h2>
+                      <h3>Estimasi pesanan sampai 2 - 4 hari.</h3>
+                      <div className="warning-icon">
+                        <RiErrorWarningFill />
+                        <h3>Biaya sudah termasuk asuransi pengiriman.</h3>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="line-shipping"></div>
-                <div className="shipping">
-                  <div className="top-shipping">
-                    <div className="icon-top-shipping">
-                      <TbTruckDelivery color="EF233C" />
-                      <p>Regular</p>
-                    </div>
-                    <div className="btn-pilih-shipping">
-                      <h2>Pilih Metode Lain</h2>
-                    </div>
-                  </div>
-                  <div className="info-shipping">
-                    <h2>Rp25.000</h2>
-                    <h3>Estimasi pesanan sampai 2 - 4 hari.</h3>
-                    <div className="warning-icon">
-                      <RiErrorWarningFill />
-                      <h3>Biaya sudah termasuk asuransi pengiriman.</h3>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </div>
+            ))}
           </div>
           <div className="container-payment-detail">
             <div className="border-subtotal">
@@ -151,12 +175,12 @@ function Detailpesanan() {
               </div>
               <div className="btn-bayar">
                 <button
-                  disabled={!isProductSelected()} // Menonaktifkan tombol jika tidak ada produk yang dipilih
-                  onClick={handleBeliClick} // Memanggil fungsi handleBeliClick saat tombol diklik
+                  disabled={!isProductSelected()}
+                  onClick={handleBeliClick}
                   style={{
                     backgroundColor: isProductSelected() ? "#EF233C" : "gray",
                     cursor: isProductSelected() ? "pointer" : "not-allowed",
-                  }} // Mengatur warna dan kursor tombol
+                  }}
                 >
                   Pilih Pembayaran
                 </button>
