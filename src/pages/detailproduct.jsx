@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import "../style/detailproduct.css";
 import Navbar from "../component/navbar/navbar";
 import iconHome from "../assets/icon/icon home.svg";
@@ -68,6 +68,7 @@ function DetailProduct() {
         if (filteredData.length > 0) {
           setDetail(filteredData);
         }
+        setIsLoading(false);
       })
       .catch((error) => console.error(error));
   }
@@ -80,7 +81,6 @@ function DetailProduct() {
         },
       })
       .then((response) => {
-        setIsLoading(false);
         let filteredData = response.data.data.data.filter(
           (item) => item.products_id == id
         );
@@ -88,6 +88,7 @@ function DetailProduct() {
         if (filteredData.length > 0) {
           setGalleryImg(filteredData);
         }
+        setIsLoading(false);
       })
       .catch((error) => console.error(error));
   }
@@ -103,7 +104,7 @@ function DetailProduct() {
     const product = detail && detail.length > 0 ? detail[0] : null;
     const payload = {
       products_id: product.id,
-      quantity: quantity,
+      quantity: kuantitas,
     };
     // console.log(product.id);
     axios
@@ -115,6 +116,7 @@ function DetailProduct() {
       .then((response) => {
         handleSuccessAlertOpen();
         setQuantity(1);
+        setIsLoading(false);
       })
       .catch((error) => {
         handleErrorAlertOpen();
@@ -220,14 +222,16 @@ function DetailProduct() {
                 <div className="more-img">
                   {gallery && gallery.length > 0
                     ? gallery.map((image, index) => (
-                        <img
-                          key={image.id}
-                          src={image.url}
-                          alt="foto produk"
-                          loading="lazy"
-                          className={index === activeIndex ? "active" : ""}
-                          onClick={() => changeMainImage(image.url, index)}
-                        />
+                        <div className="small-img-col">
+                          <img
+                            key={image.id}
+                            src={image.url}
+                            alt="foto produk"
+                            loading="lazy"
+                            className={index === activeIndex ? "active" : ""}
+                            onClick={() => changeMainImage(image.url, index)}
+                          />
+                        </div>
                       ))
                     : null}
                 </div>
@@ -314,7 +318,7 @@ function DetailProduct() {
                 <div className="btn-cartBuy">
                   <button
                     className="btn-cart"
-                    onClick={(event) => addToCart(quantity, event)}
+                    onClick={() => addToCart(quantity)}
                   >
                     <img src={cart} alt="" />
                     Tambahkan ke Keranjang
