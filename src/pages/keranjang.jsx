@@ -32,7 +32,7 @@ function Keranjang() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // getCart();
+    getCart();
     window.scrollTo(0, 0);
   }, []);
 
