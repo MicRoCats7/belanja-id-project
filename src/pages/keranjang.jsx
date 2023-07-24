@@ -32,7 +32,7 @@ function Keranjang() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // getCart();
+    getCart();
     window.scrollTo(0, 0);
     return () => {
       localStorage.removeItem("selectedItems");
@@ -246,14 +246,12 @@ function Keranjang() {
         selectedItems.includes(item.id)
       );
 
-      // Simpan produk yang dipilih ke dalam localStorage
       localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
       localStorage.setItem(
         "selectedProducts",
         JSON.stringify(selectedProducts)
       );
 
-      // Arahkan pengguna ke halaman "detailpesanan"
       navigate("/detailpesanan");
     }
   };
