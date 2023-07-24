@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../style/navbar.css";
 import logoBelanjaID from "../../assets/logoIMG/logo belanjaid.svg";
 import iconChat from "../../assets/icon/iconChat.svg";
+import DeafultPhoto from "../../assets/icon/anonimprofile.jpg";
 import IconNotif from "../../assets/icon/notif.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Icontoko from "../../assets/icon/tokoo.svg";
@@ -209,16 +210,19 @@ function Navbar() {
                   </Link>
                 </div>
                 <div className="drop-profile">
+                  <div className="circle-photo">
                   <img
-                    className="photo-profile"
-                    src={profile.user?.profile_photo_path}
+                    className="photo-profiles"
+                    src={profile.user?.profile_photo_path || DeafultPhoto}
                     alt=""
                   />
+                  </div>
+                 
                   <div className="menu-dropdown">
                     <div className="user-info">
                       <img
-                        className="photo-profile"
-                        src={profile.user?.profile_photo_path}
+                        className="photo-profiles"
+                        src={profile.user?.profile_photo_path || DeafultPhoto}
                         alt=""
                       />
                       <h3 className="nama-user-profile">

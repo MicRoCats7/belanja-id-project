@@ -23,55 +23,10 @@ function Whislist() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [whislistData, setDataWhislist] = useState([]);
+  const [selectedSortOption, setSelectedSortOption] = useState("terbaru");
   const navigate = useNavigate();
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const itemsPerPage = 6;
-
-  // Menghandle perubahan pada dropdown "Urutkan"
-  const handleSortChange = (e) => {
-    const sortBy = e.target.value;
-    let sortedData = [...filteredData];
-
-    if (sortBy === "terbaru") {
-      sortedData.sort((a, b) => b.id - a.id);
-    } else if (sortBy === "harga-tinggi") {
-      sortedData.sort((a, b) => b.product.price - a.product.price);
-    } else if (sortBy === "harga-rendah") {
-      sortedData.sort((a, b) => a.product.price - b.product.price);
-    }
-
-    setFilteredData(sortedData);
-  }
-
-  // Menghandle perubahan pada filter
-  const handleFilterChange = (filters) => {
-    setIsLoading(true);
-    setSelectedCategory(filters.category);
-    setCurrentPage(1);
-    setSelectedPriceRange(filters.priceRange);
-
-    // Menyaring data wishlist berdasarkan kategori
-    let filteredData = whislistData.filter((item) => {
-      if (filters.category && item.product.category !== filters.category) {
-        return false;
-      }
-      return true;
-    });
-
-    // Menyaring data wishlist berdasarkan range harga
-    if (filters.priceRange) {
-      const [minPrice, maxPrice] = filters.priceRange.split("-");
-      filteredData = filteredData.filter(
-        (item) => item.product.price >= Number(minPrice) && item.product.price <= Number(maxPrice)
-      );
-    }
-
-    // Menyimpan data wishlist yang sudah disaring ke dalam state
-    setFilteredData(filteredData);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  };
 
   // Menghitung total halaman
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -81,6 +36,40 @@ function Whislist() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const sortingOptions = {
+    terbaru: (a, b) => b.product.id - a.product.id,
+    "harga-tinggi": (a, b) => b.product.price - a.product.price,
+    "harga-rendah": (a, b) => a.product.price - b.product.price,
+  };
+
+  const handleSortChange = (event) => {
+    const sortBy = event.target.value;
+    console.log("Selected Sort Option:", sortBy); 
+    let sortedData = [...filteredData];
+  
+    if (sortBy in sortingOptions) {
+      sortedData.sort(sortingOptions[sortBy]);
+      setSelectedSortOption(sortBy);
+    }
+    setFilteredData(sortedData);
+  };
+  
+  const handleCategoryFilterChange = (event) => {
+    const category = event.target.value;
+    console.log("Selected Category:", category); 
+    setSelectedCategory(category);
+
+    // Filter the data based on the selected category
+    if (category === "all") {
+      setFilteredData(whislistData); // Display all data if "all" category is selected
+    } else {
+      const filteredByCategory = whislistData.filter(
+        (item) => item.product.category === category
+      );
+      setFilteredData(filteredByCategory);
+    }
+  };
 
   // Mengubah halaman saat tombol "Previous" atau "Next" diklik
   const handlePageChange = (newPage) => {
@@ -94,11 +83,11 @@ function Whislist() {
           Authorization: `Bearer ${token()}`,
         },
       });
-
       if (response.status === 200) {
         handleSuccessAlertOpen();
         setDataWhislist(response.data.data);
         setFilteredData(response.data.data);
+        handleSortChange({ target: { value: "terbaru" } });
       } else {
         handleErrorAlertOpen();
       }
@@ -120,13 +109,15 @@ function Whislist() {
 
   function renderEmptywishlist() {
     return (
-      <div className="empty-wishlist">
-        <img src={imgbelanja} alt="" loading="lazy" />
-        <h2>wishlist Anda Kosong</h2>
-        <p>Anda belum menambahkan produk apapun ke dalam wishlist.</p>
-        <button onClick={() => navigate("/")} className="btn-primary">
-          Lanjut Belanja
-        </button>
+      <div className="empty-wishlist-container">
+        <div className="empty-wishlist">
+          <img src={imgbelanja} alt="" loading="lazy" />
+          <h2>wishlist Anda Kosong</h2>
+          <p>Anda belum menambahkan produk apapun ke dalam wishlist.</p>
+          <button onClick={() => navigate("/")} className="btn-primary">
+            Lanjut Belanja
+          </button>
+        </div>
       </div>
     );
   }
@@ -203,11 +194,12 @@ function Whislist() {
             <h3 className="urutkan-teks">Urutkan</h3>
             <div className="center">
               <select
-                name="sortBy"
-                id="sortBy"
-                className="custom-select sources"
-                onChange={handleSortChange}
-              >
+               name="sortBy"
+               id="sortBy"
+               className="custom-select sources"
+               value={selectedSortOption}
+               onChange={handleSortChange}
+              > 
                 <option value="terbaru">Terbaru</option>
                 <option value="harga-tinggi">Harga Tertinggi</option>
                 <option value="harga-rendah">Harga Terendah</option>
@@ -218,7 +210,9 @@ function Whislist() {
         <div className="filter">
           <div className="acc-filter">
             <h2 className="name-filter">Filter</h2>
-            <FilterWhis onFilterChange={handleFilterChange} />
+            <FilterWhis selectedCategory={selectedCategory}
+              onCategoryChange={handleCategoryFilterChange}
+             />
           </div>
           <div className="card-barang">
             <h2 className="barang">Barang</h2>
@@ -226,7 +220,9 @@ function Whislist() {
               <div className="loading">Tunggu sebentar...</div>
             ) : (
               <div
-                className={`produkwishlist ${selectedCategory || selectedPriceRange ? "fade" : ""}`}
+                className={`produkwishlist ${
+                  selectedSortOption || selectedPriceRange ? "fade" : ""
+                }`}
               >
                 {productList.length > 0 ? productList : renderEmptywishlist()}
               </div>
@@ -237,7 +233,7 @@ function Whislist() {
                   className={`prev-btn ${currentPage === 1 ? "disabled" : ""}`}
                   disabled={currentPage === 1}
                   onClick={() => handlePageChange(currentPage - 1)}
-                > 
+                >
                   Previous
                 </button>
                 <button
