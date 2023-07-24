@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BannerToko from "../assets/image/banner-toko.svg";
 import "../style/hometoko.css";
 import { BsArchive, BsChatSquareText, BsClipboard2Check } from "react-icons/bs";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { Tooltip } from "@mui/material";
 import { TbTruckDelivery } from "react-icons/tb";
+import axios from "axios";
+import apiurl from "../utils/apiurl";
 import { AiFillStar } from "react-icons/ai";
 
 function HomeToko() {
+  const [store, setStore] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {;
+    getToko();
+    window.scrollTo(0, 0);
+  }, [])
+  
+  function getToko() {
+    axios
+      .get(apiurl() + "stores")
+      .then((response) => {
+        setStore(response.data.data);
+        setIsLoading(false);
+        console.log("Data successfully fetched:", response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setIsLoading(false); // Set loading state to false even on error
+      });
+  }
+  
   return (
     <div className="container-hometoko">
       <div className="banner-hero">

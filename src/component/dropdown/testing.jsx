@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import defaultImage from  "../../assets/icon/anonimprofile.jpg"; // Ganti dengan path yang benar ke file gambar default
 
 function ImageUploader() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -31,15 +32,14 @@ function ImageUploader() {
 
   return (
     <div>
-      {selectedImage && (
-        <div className="image-bapak">
-          <img
-            src={selectedImage}
-            alt="Selected"
-            className="img-besar-kecil"
-          />
-        </div>
-      )}
+      <div
+        className="image-bapak"
+        style={{
+          backgroundImage: `url(${selectedImage ? selectedImage : defaultImage})`,
+        }}
+      >
+        {!selectedImage && <img src={defaultImage} className="img-profile" alt="Default" />}
+      </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="fileInput" className="input-image">
           Pilih Foto

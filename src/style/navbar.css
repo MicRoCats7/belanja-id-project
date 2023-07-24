@@ -306,13 +306,26 @@ input[type="text"]:focus {
     font-style: poppins;
 }
 
-.photo-profile {
-    width: 40px;
-    height: 40px;
+.photo-profiles {
+    width: 33px;
+    height: 33px;
     border-radius: 100%;
     object-fit: cover;
     display: flex;
+    cursor: pointer;
 }
+
+.circle-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 
 .btn-logout {
     color: #000000;

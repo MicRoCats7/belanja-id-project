@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../../style/sidebarprofile.css";
-import Photoprofile from "../../assets/icon/photo profile.svg";
 import { Link, NavLink } from "react-router-dom";
 import { BsPerson } from "react-icons/bs";
 import { BiTask } from "react-icons/bi";
 import { TfiLocationPin } from "react-icons/tfi";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
+import DeafultPhoto from "../../assets/icon/anonimprofile.jpg";
+
 
 function Sidebarprofile() {
   const [profile, setProfile] = useState({});
@@ -36,7 +37,7 @@ function Sidebarprofile() {
         <div className="user-prof">
           <img
             className="photo-profile"
-            src={profile.user?.profile_photo_path}
+            src={profile.user?.profile_photo_path || DeafultPhoto}
             alt=""
           />
           <h3 className="nama-user-profile">
