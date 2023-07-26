@@ -8,37 +8,43 @@ import { TbTruckDelivery } from "react-icons/tb";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
 import { AiFillStar } from "react-icons/ai";
+import token from "../utils/token";
 
 function HomeToko() {
-  const [store, setStore] = useState([]);
+  const [toko, setToko] = useState([]); // Initialize as an empty array
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {;
+  useEffect(() => {
     getToko();
     window.scrollTo(0, 0);
-  }, [])
-  
-  function getToko() {
-    axios
-      .get(apiurl() + "stores")
-      .then((response) => {
-        setStore(response.data.data);
-        setIsLoading(false);
+  }, []);
+
+  const getToko = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "user/store", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setToko(response.data.data);
         console.log("Data successfully fetched:", response.data.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-        setIsLoading(false); // Set loading state to false even on error
-      });
-  }
-  
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <div className="container-hometoko">
       <div className="banner-hero">
         <div className="text-banner">
-          <h2>
-            Selamat datang seller <span>Microsport</span>
-          </h2>
+        {toko && (
+            <h2>
+              Selamat datang seller <span>{toko.name}</span>
+            </h2>
+          )}
           <p>
             Anda dapat dengan mudah mengatur dan mengelola Toko Anda melalui
             dashboard seller Belanja.id. Fitur yang tersedia memungkinkan Anda
@@ -67,7 +73,7 @@ function HomeToko() {
                 </Tooltip>
               </div>
               <div className="jumlah-hari-ini">
-                <h3>10</h3>
+                <h3>0</h3>
               </div>
             </div>
           </div>
@@ -83,7 +89,7 @@ function HomeToko() {
                 </Tooltip>
               </div>
               <div className="jumlah-hari-ini">
-                <h3>4</h3>
+                <h3>0</h3>
               </div>
             </div>
           </div>
@@ -99,7 +105,7 @@ function HomeToko() {
                 </Tooltip>
               </div>
               <div className="jumlah-hari-ini">
-                <h3>20</h3>
+                <h3>0</h3>
               </div>
             </div>
           </div>
@@ -115,7 +121,7 @@ function HomeToko() {
                 </Tooltip>
               </div>
               <div className="jumlah-hari-ini">
-                <h3>50</h3>
+                <h3>0</h3>
               </div>
             </div>
           </div>
@@ -188,7 +194,7 @@ function HomeToko() {
                 </Tooltip>
               </div>
               <div className="jumlah-hari-ini">
-                <h3>4.7</h3>
+                <h3>{toko.rate}</h3>
               </div>
             </div>
           </div>
