@@ -1,4 +1,4 @@
-import React from "react";
+
 import "../../style/sidebar.css";
 import logoTokoSeller from "../../assets/image/imgToko.svg";
 import { BiHome, BiMessageDetail } from "react-icons/bi";
@@ -10,7 +10,11 @@ import {
 } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { Switch } from "@mui/material";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import token from "../../utils/token";
+import axios from "axios";
+import apiurl from "../../utils/apiurl";
+
 
 function Sidebar() {
   const menuItem = [
@@ -59,6 +63,32 @@ function Sidebar() {
   ];
 
   const [checked, setChecked] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [toko, setToko] = useState([]);
+  
+  const getToko = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "user/store", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setToko(response.data.data);
+        console.log("Data berhasil diambil", response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    getToko();
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -74,8 +104,8 @@ function Sidebar() {
         <div className="sidebar">
           <div className="top_section">
             <div className="logo-toko">
-              <img src={logoTokoSeller} alt="logo" />
-              <h3>MicroSport</h3>
+            {toko && <img src={toko.logo} alt="Logo Toko" />}
+             <h3>{toko.name}</h3>
             </div>
             <div className="line-top_section"></div>
             <div className="saldo_info">
@@ -104,7 +134,7 @@ function Sidebar() {
               </div>
               <div className="followers">
                 <h3 className="jadwal">Followers</h3>
-                <span className="jam">100k</span>
+                <span className="jam">{toko.followers}</span>
               </div>
             </div>
             <div className="line-top_section"></div>

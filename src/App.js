@@ -39,7 +39,7 @@ function App() {
           <Route path="/profile/*" element={<Profile />} />
           <Route path="/toko/*" element={<Toko />} />
           <Route path="/Event" element={<Event />} />
-          <Route path="/detailevent" element={<Detailevent />} />
+          <Route path="/detailevent/:id" element={<Detailevent />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Keranjang />} />
           <Route path="/detailtoko" element={<Detailtoko />} />
