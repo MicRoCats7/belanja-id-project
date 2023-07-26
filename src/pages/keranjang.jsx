@@ -23,6 +23,7 @@ import LoadingKeranjang from "../component/loader/LoadingKeranjanjg";
 
 function Keranjang() {
   const navigate = useNavigate();
+  const [cartId, setCartId] = useState(null);
   const [product, setCart] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -94,8 +95,8 @@ function Keranjang() {
         }}
         disableRipple
         color="default"
-        checked={props.checked || selectAll} // Tambahkan selectAll ke prop checked
-        onChange={handleCheckboxChange} // Tambahkan event handler untuk perubahan checkbox
+        checked={props.checked || selectAll}
+        onChange={handleCheckboxChange}
         checkedIcon={<BpCheckedIcon />}
         icon={<BpIcon />}
         inputProps={{ "aria-label": "Checkbox demo" }}
@@ -106,21 +107,21 @@ function Keranjang() {
 
   function handleSelectAllCheckboxChange() {
     if (selectAll) {
-      setSelectedItems([]); // Jika selectAll true, kosongkan selectedItems
+      setSelectedItems([]);
     } else {
-      const allProductIds = product.map((item) => item.id); // Ambil ID semua produk
-      setSelectedItems(allProductIds); // Tambahkan ID semua produk ke selectedItems
+      const allProductIds = product.map((item) => item.id);
+      setSelectedItems(allProductIds);
     }
-    setSelectAll(!selectAll); // Ubah status selectAll
+    setSelectAll(!selectAll);
   }
 
   function handleItemCheckboxChange(itemId) {
     if (selectedItems.includes(itemId)) {
-      setSelectedItems(selectedItems.filter((id) => id !== itemId)); // Hapus ID produk dari selectedItems jika sudah terpilih
+      setSelectedItems(selectedItems.filter((id) => id !== itemId));
     } else {
-      setSelectedItems([...selectedItems, itemId]); // Tambahkan ID produk ke selectedItems jika belum terpilih
+      setSelectedItems([...selectedItems, itemId]);
     }
-    setSelectAll(false); // Set selectAll menjadi false ketika checkbox produk diklik
+    setSelectAll(false);
 
     localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
   }
@@ -151,8 +152,8 @@ function Keranjang() {
             }
           });
           setCart(updatedProduct);
+          setCartId(response.data.data.id);
           saveToLocalStorage(updatedProduct);
-          console.log(updatedProduct);
         } else {
           storedCart();
         }
@@ -164,16 +165,16 @@ function Keranjang() {
     const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
       setCart(JSON.parse(storedCartItems));
-      console.log("Data berhasil dimuat dari localStorage");
+      // console.log("Data berhasil dimuat dari localStorage");
     }
   }
 
   function saveToLocalStorage(updatedProduct) {
     try {
       localStorage.setItem("cartItems", JSON.stringify(updatedProduct));
-      console.log("Data berhasil disimpan di localStorage");
+      // console.log("Data berhasil disimpan di localStorage");
     } catch (error) {
-      console.error("Gagal menyimpan data di localStorage:", error);
+      console.error(error);
     }
   }
 
@@ -256,11 +257,24 @@ function Keranjang() {
     }
   };
 
+  useEffect(() => {
+    if (isProductSelected()) {
+      const selectedProducts = product.filter((item) =>
+        selectedItems.includes(item.id)
+      );
+
+      localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+      localStorage.setItem(
+        "selectedProducts",
+        JSON.stringify(selectedProducts)
+      );
+    }
+  }, [product, isProductSelected, selectedItems]);
+
   function deleteItem(itemId) {
     deleteItemFromAPI(itemId);
   }
 
-  // Hapus item dari API
   function deleteItemFromAPI(id) {
     axios
       .delete(apiurl() + "cart/delete/" + id, {
@@ -269,12 +283,12 @@ function Keranjang() {
         },
       })
       .then((response) => {
+        setCart((prevProduct) => prevProduct.filter((item) => item.id !== id));
         handleSuccessAlertOpen();
-        console.log("Item berhasil dihapus dari API");
       })
       .catch((error) => {
         handleErrorAlertOpen();
-        console.log("Gagal menghapus item dari API:", error);
+        console.log(error);
       });
   }
 
@@ -330,8 +344,8 @@ function Keranjang() {
                   <div key={item.id} className="keranjang-item">
                     <div className="checkbox-keranjang">
                       <BpCheckbox
-                        checked={selectedItems.includes(item.id)} // Gunakan nilai selectedItems untuk status checked
-                        onChange={() => handleItemCheckboxChange(item.id)} // Tambahkan event handler untuk perubahan checkbox
+                        checked={selectedItems.includes(item.id)}
+                        onChange={() => handleItemCheckboxChange(item.id)}
                       />
                       <div className="toko-keranjang">
                         <div className="img-checkbox">
@@ -346,8 +360,8 @@ function Keranjang() {
                     <div className="item-pro-detail">
                       <div className="item-pro">
                         <BpCheckbox
-                          checked={selectedItems.includes(item.id)} // Gunakan nilai selectedItems untuk status checked
-                          onChange={() => handleItemCheckboxChange(item.id)} // Tambahkan event handler untuk perubahan checkbox
+                          checked={selectedItems.includes(item.id)}
+                          onChange={() => handleItemCheckboxChange(item.id)}
                         />
                         <div className="img-item-pro">
                           <img

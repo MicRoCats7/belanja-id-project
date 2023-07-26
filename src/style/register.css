@@ -1,337 +1,347 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 
-.register{
-    /* max-width: 1200px; */
-    width: 100vw;
-    display: flex;
+.register {
+  /* max-width: 1200px; */
+  width: 100vw;
+  display: flex;
 }
 
-.bg-regist{
-    background-color: #EFEFE4;
-    height: 100vh;
-    border-radius: 0px 100px 0px 0px;
-    padding: 0 90px;
-    display: flex;
-    flex-direction: column;
+.bg-regist {
+  background-color: #EFEFE4;
+  height: 100vh;
+  border-radius: 0px 100px 0px 0px;
+  padding: 0 90px;
+  display: flex;
+  flex-direction: column;
 }
 
-.logo img{
-    width: 135px;
-    height: 66px;
-    margin-top: 28px;
+.logo img {
+  width: 135px;
+  height: 66px;
+  margin-top: 28px;
 }
 
-.background-icon{
-    display: flex;
-    justify-content: center;
-    align-items: center;    
+.background-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* .background-icon img{
     width: px;
 } */
 
-.kanan{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    /* margin-right: 120px; */
+.kanan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* margin-right: 120px; */
 }
 
-.text-regis{
-    width: 100%;
+.text-regis {
+  width: 100%;
 }
 
-.form-regist{
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
+.form-regist {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
-.text-regis h1{
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: 10px;
+.text-regis h1 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.text-regis, form{
-    max-width: 530px;
-}
-
-
-
-.cont-form-name h3{
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.con-form-email-regis input{
-    width: 100%;
-    padding: 0px 10px;
-    font-size: 15px;
-    border: none;
-}
-.con-form-email-regis h3{
-    font-size: 14px;
-    font-weight: 600;
-}
-.con-form-password-regis h3{
-    font-size: 14px;
-    font-weight: 600;
+.text-regis, form {
+  max-width: 530px;
 }
 
 
 
-.con-form-name input{
-    width: 100%;
-    padding: 0px 10px;
-    font-size: 15px;
-    border: none;
+.cont-form-name h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.con-form-email-regis input {
+  width: 100%;
+  padding: 0px 10px;
+  font-size: 15px;
+  border: none;
+}
+
+.con-form-email-regis h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.con-form-password-regis h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+
+.con-form-name input {
+  width: 100%;
+  padding: 0px 10px;
+  font-size: 15px;
+  border: none;
 }
 
 ::placeholder {
-    color: rgb(178, 168, 168);
-    font-size: 14px;
+  color: rgb(178, 168, 168);
+  font-size: 14px;
 }
 
-.btn-masukk{ 
-    cursor: pointer;
+.btn-masukk {
+  cursor: pointer;
 
-    color: #FFFFFF;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 16px;
-    width: 100%;
-    padding: 14px 14px;
-    border: 1px solid #EF233C;
-    background-color: #EF233C;
-    box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
-    transition: all 0.5s;
+  color: #FFFFFF;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  padding: 14px 14px;
+  border: 1px solid #EF233C;
+  background-color: #EF233C;
+  box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
+  transition: all 0.5s;
 }
 
 .btn-masukk:hover {
-    color: #EF233C;
-    /* width:; */
-    box-shadow: 0 0 20px rgba(255, 255, 255,);
-    background-color: rgb(255, 255, 255);
-  }
-
-.validate{
-    color: #EF233C;
-    font-size: 13px;
-    /* margin-left: 40px; */
-    display: flex;
-    /* margin-top: -11px; */
-    /* margin-bottom: -15px; */
-    /* transform: translateY(-22px); */
-  }
-
-  .validate p{
-    margin: 0;
-  }
-  .form-name{
-    padding: 10px 0px;
-    width: 100%;
-    border: 0.0px solid #000000;
-    box-sizing: border-box;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
-  }
-
-  .form-mail-regis{
-    padding: 10px 0px;
-    width: 100%;
-    border: 0.0px solid #000000;
-    box-sizing: border-box;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
-  }
-
-  .input-form-email-regis:focus, .input-form-password-regis:focus, .input-form-nama:focus{
-    outline: none;
-  }
-
-.register-selain{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    /* width: 80%; */
-    /* max-width: 521px; */
-    /* margin-left: 40px; */
-  }
-
-.line-right, .line-left{
-    border: 1px solid #000000;
-    /* transform: rotate(90deg); */
-    width: 138px;
-  }
-
-.register-selain p{
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    width: 150px;
-    color: #000000;
-  }
-
-.regis-google button{
-    cursor: pointer;
-    margin-top: 19px;
-    border-radius: 6px;
-    font-size: 16px;
-    width: 100%;
-    padding: 10px 10px;
-    border: 1px solid #EF233C;
-    background-color: #FFFFFF;
-    box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
-    font-style: normal;
-    font-weight: 400;
-  }
-
-.regis-google img{
-    width: 30px;
+  color: #EF233C;
+  /* width:; */
+  box-shadow: 0 0 20px rgba(255, 255, 255, );
+  background-color: rgb(255, 255, 255);
 }
 
-.con-form-password-regis{
-    display: flex;
-    flex-direction: column;
+.validate {
+  color: #EF233C;
+  font-size: 13px;
+  /* margin-left: 40px; */
+  display: flex;
+  /* margin-top: -11px; */
+  /* margin-bottom: -15px; */
+  /* transform: translateY(-22px); */
 }
 
-.form-password-regis{
-    display:flex;
-    align-items: center;
-    padding: 8px 0;
-    border: 0.0px solid #000000;
-    box-sizing: border-box;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
+.validate p {
+  margin: 0;
 }
 
-.icon-span{
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    padding: 14px;
-    cursor: pointer;
-    float: right;
-    /* right: 60px;
+.form-name {
+  padding: 10px 0px;
+  width: 100%;
+  border: 0.0px solid #000000;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+}
+
+.form-mail-regis {
+  padding: 10px 0px;
+  width: 100%;
+  border: 0.0px solid #000000;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+}
+
+.input-form-email-regis:focus, .input-form-password-regis:focus, .input-form-nama:focus {
+  outline: none;
+}
+
+.register-selain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  /* width: 80%; */
+  /* max-width: 521px; */
+  /* margin-left: 40px; */
+}
+
+.line-right, .line-left {
+  border: 1px solid #000000;
+  /* transform: rotate(90deg); */
+  width: 138px;
+}
+
+.register-selain p {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  width: 150px;
+  color: #000000;
+}
+
+.regis-google button {
+  cursor: pointer;
+  margin-top: 19px;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  padding: 10px 10px;
+  border: 1px solid #EF233C;
+  background-color: #FFFFFF;
+  box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.regis-google img {
+  width: 30px;
+}
+
+.con-form-password-regis {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-password-regis {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border: 0.0px solid #000000;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+}
+
+.icon-span {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 14px;
+  cursor: pointer;
+  float: right;
+  /* right: 60px;
     top: 245px; */
 }
 
-.register-dengan{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 15px;
+.register-dengan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 3px;
 }
 
-.text-merah{
-    color: #EF233C;
+.text-merah {
+  color: #EF233C;
 }
+
 .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
 
+}
+
+.loading-icon {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #EF233C;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .loading-icon {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #EF233C;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 4s linear infinite;
-  } 
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  } 
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 
 
 @media only screen and (max-width: 768px) {
 
-    .bg-regist {
-      display: none;
-    }
-
-    .kanan {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        height: 100vh;
-      }
-    
-    .text-regis,
-    .form-regist {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .text-regis h1{
-     font-size: 18px;
-    }
-
-    .register-dengan{
-        font-size: 13px;
-      } 
-
-      .register-selain p {
-        font-size: 13px;
-      }
+  .bg-regist {
+    display: none;
   }
-  
-  @media only screen and (max-width: 480px) {
-   
- .kanan{
+
+  .kanan {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .text-regis,
+  .form-regist {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .text-regis h1 {
+    font-size: 18px;
+  }
+
+  .register-dengan {
+    font-size: 13px;
+  }
+
+  .register-selain p {
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+
+  .kanan {
     display: block;
   }
-    .kanan {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100vh;
-      }
+
+  .kanan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+  }
 
 
-      .text-regis,
-      .form-regist {
-        max-width: 320px;
-      }
+  .text-regis,
+  .form-regist {
+    max-width: 320px;
+  }
 
-    .line-right,
-    .line-left {
+  .line-right,
+  .line-left {
     border: 1px solid #000000;
     width: 100px;
   }
-  
-  .register-dengan{
+
+  .register-dengan {
     font-size: 12px;
   }
 
@@ -339,17 +349,8 @@
     font-size: 12px;
   }
 
-    .text-regis h1 {
-      font-size: 16px;
-      margin-bottom: 8px;
-    }
+  .text-regis h1 {
+    font-size: 16px;
+    margin-bottom: 8px;
   }
-
-
-
-
-
-
-
-
-
+}

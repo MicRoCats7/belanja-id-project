@@ -8,6 +8,7 @@ import Modaldate from "../component/modal/modaldate";
 import ModalHp from "../component/modal/modalnohp";
 import ImageUploader from "../component/dropdown/testing";
 import { useNavigate } from "react-router-dom";
+import LoadingSkeletonBiodata from "../component/loader/LoadingSkeletonBiodata";
 
 function Biodata() {
   const [modal, setModal] = useState(false);
@@ -21,6 +22,7 @@ function Biodata() {
   const [updatedEmail, setUpdatedEmail] = useState("");
   const [isProfileUpdated, setIsProfileUpdated] = useState(false);
   const [nomorTelepon, setNomorTelepon] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -29,6 +31,7 @@ function Biodata() {
   }, [isProfileUpdated]);
 
   const getProfile = async () => {
+    setIsLoading(true);
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -38,8 +41,10 @@ function Biodata() {
           },
         });
         setProfile(response.data.data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     }
   };
@@ -100,67 +105,79 @@ function Biodata() {
   };
 
   return (
-    <div className="box-biodata">
-      <div className="top-text">
-        <p className="text-judul">Biodata Diri</p>
-      </div>
-      <div className="container">
-        <div className="biodata-kiri">
-          <div className="box-photo">
-            <div>
-              <ImageUploader />
-              <div className="isibox">
-                <h3 className="text-ukuran">
-                  Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG , dan
-                  ukuran minimum 300 x 300px.
-                </h3>
+    <>
+      {isLoading ? (
+        <LoadingSkeletonBiodata />
+      ) : (
+        <div className="box-biodata">
+          <div className="top-text">
+            <p className="text-judul">Biodata Diri</p>
+          </div>
+          <div className="container">
+            <div className="biodata-kiri">
+              <div className="box-photo">
+                <div>
+                  <ImageUploader />
+                  <div className="isibox">
+                    <h3 className="text-ukuran">
+                      Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG , dan
+                      ukuran minimum 300 x 300px.
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="biodata-kanan">
+              <h3 className="edit-biodata">Ubah Biodata Anda</h3>
+              <div className="edit-nama">
+                <span className="nama-text">Nama</span>
+                <span className="nama-user-biodata">
+                  {nama || (profile.user && profile.user.name)}
+                </span>
+                <div>
+                  <Modal
+                    onProfileUpdated={() =>
+                      setIsProfileUpdated(!isProfileUpdated)
+                    }
+                  />
+                </div>
+              </div>
+              <div className="edit-tanggal">
+                <span className="nama-tgl">Tanggal Lahir</span>
+                <div>
+                  <Modaldate />
+                </div>
+              </div>
+              <h3 className="ubah-kontak">Ubah Kontak Anda</h3>
+              <div className="edit-kontak">
+                <span className="email-text">Email</span>
+                <span className="email-user-profile">
+                  {email || (profile.user && profile.user.email)}
+                </span>
+                <div className="data-verifikasi">Terverifikasi</div>
+                <ModalEmail
+                  handleProfileUpdate={() =>
+                    setIsProfileUpdated(!isProfileUpdated)
+                  }
+                />
+              </div>
+              <div className="edit-nohp">
+                <span className="text-nohp">No Hp</span>
+                {/* <div className="data-verifikasi-nohp">Bel um Terverifikasi</div> */}
+                <span className="email-user-profile">
+                  {phone || (profile.user && profile.user.phone)}
+                </span>
+                <ModalHp
+                  nomProfileUpdate={() =>
+                    setIsProfileUpdated(!isProfileUpdated)
+                  }
+                />
               </div>
             </div>
           </div>
         </div>
-        <div className="biodata-kanan">
-          <h3 className="edit-biodata">Ubah Biodata Anda</h3>
-          <div className="edit-nama">
-            <span className="nama-text">Nama</span>
-            <span className="nama-user-biodata">
-              {nama || (profile.user && profile.user.name)}
-            </span>
-            <div>
-              <Modal
-                onProfileUpdated={() => setIsProfileUpdated(!isProfileUpdated)}
-              />
-            </div>
-          </div>
-          <div className="edit-tanggal">
-            <span className="nama-tgl">Tanggal Lahir</span>
-            <div>
-              <Modaldate />
-            </div>
-          </div>
-          <h3 className="ubah-kontak">Ubah Kontak Anda</h3>
-          <div className="edit-kontak">
-            <span className="email-text">Email</span>
-            <span className="email-user-profile">
-              {email || (profile.user && profile.user.email)}
-            </span>
-            <div className="data-verifikasi">Terverifikasi</div>
-            <ModalEmail
-              handleProfileUpdate={() => setIsProfileUpdated(!isProfileUpdated)}
-            />
-          </div>
-          <div className="edit-nohp">
-            <span className="text-nohp">No Hp</span>
-            {/* <div className="data-verifikasi-nohp">Bel um Terverifikasi</div> */}
-            <span className="email-user-profile">
-              {phone || (profile.user && profile.user.phone)}
-            </span>
-            <ModalHp
-              nomProfileUpdate={() => setIsProfileUpdated(!isProfileUpdated)}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
