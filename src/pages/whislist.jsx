@@ -84,12 +84,10 @@ function Whislist() {
         },
       });
       if (response.status === 200) {
-        handleSuccessAlertOpen();
         setDataWhislist(response.data.data);
         setFilteredData(response.data.data);
         handleSortChange({ target: { value: "terbaru" } });
       } else {
-        handleErrorAlertOpen();
       }
     } catch (error) {
       console.error("Gagal menambahkan produk ke wishlist:", error);

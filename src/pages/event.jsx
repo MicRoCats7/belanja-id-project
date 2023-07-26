@@ -5,159 +5,62 @@ import Navbar from "../component/navbar/navbar";
 import { useEffect } from "react";
 import Footer from "../component/footer/footer";
 import { Link } from "react-router-dom";
-import { MdOutlineDateRange, MdOutlineSchedule, } from "react-icons/md";
-import { IoIosArrowBack, IoIosArrowForward,  } from "react-icons/io";
+import { MdOutlineDateRange, MdOutlineSchedule } from "react-icons/md";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import axios from "axios";
+import apiurl from "../utils/apiurl";
 
 function Event() {
-  const valueBoxEvent = [
-    {
-      id: 1,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2 Novemberx 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 2,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2 Januari 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 3,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2 Agustus 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 4,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2 Agustus 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 5,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "21 September 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 6,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "20 September 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 7,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "5 Desember 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 8,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2 September 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 9,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2 Agustus 2023",
-      waktu: "10.00",
-    },
-    {
-      id: 10,
-      imageEvent: imgEvent,
-      nama: "GREBEG UMKM DIY 2019",
-      judul:
-        "BANK INDONESIA BANK SENTRAL REPUBLIK INDONEISA GREBEG UMKM DIY 2019",
-      pembuatEvent: "Belanja.id ",
-      deskripsi:
-        "Acara ini sepenuhnya Gratis dan akan diselenggarakan hari selasa, 14-18 november 2019 pukul 11.00-12.00 WIB  Live di YouTube",
-      tanggal: "2 Juli 2023",
-      waktu: "10.00",
-    },
-  ];
 
   const itemsPerPage = 6; // Jumlah item per halaman
-  const totalPages = Math.ceil(valueBoxEvent.length / itemsPerPage); // Total halaman
+  const [event, setEvents] = useState([]);
+  const totalPages = Math.ceil(event.data?.length / itemsPerPage); // Total halaman
   const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
   const [currentItems, setCurrentItems] = useState([]);
+  const [imageEvents, setImg] = useState([]);
   const [activeButton, setActiveButton] = useState(1);
-  const getPreviousPage = () => {
-    return currentPage > 1 ? currentPage - 1 : currentPage;
-  };
-  const getNextPage = () => {
-    return currentPage < totalPages ? currentPage + 1 : currentPage;
-  };
-
-  const getCurrentPageItems = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return valueBoxEvent.slice(startIndex, endIndex);
-  };
-  // Data event untuk halaman saat ini
+  const hasNextPage = currentPage < totalPages;
 
   useEffect(() => {
-    // Mendapatkan data event untuk halaman saat ini
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    setCurrentItems(valueBoxEvent.slice(startIndex, endIndex));
-  }, [currentPage]);
+    getEvent();
+    getImg();
+  }, []); 
+  
+  useEffect(() => {
+    if (event.data) {
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      setCurrentItems(event.data.slice(startIndex, endIndex));
+    }
+  }, [currentPage, event.data]);
+  
+  function getEvent() {
+    axios
+      .get(apiurl() + "events")
+      .then((response) => {
+        setEvents(response.data);
+        console.log("Berhasil mengambil data event:", response.data.data);
+      })
+      .catch((error) => console.error(error));
+  }
 
+
+  const getImg = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "event/img", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }); 
+        setImg(response.data.data);
+        console.log("Data successfully fetched:", response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  }
   // Mengubah halaman
   const changePage = (page) => {
     setCurrentPage(page);
@@ -169,71 +72,97 @@ function Event() {
       <Navbar />
       <div className="bapak-event">
         <div className="content-event">
-          {getCurrentPageItems().map((dataevent) => (
-            <Link to="/detailevent">
-              <div className="box-event" key={dataevent.id}>
-                <div className="wrap-content-event">
-                  <div className="img-event">
-                    <img
-                      src={dataevent.imageEvent}
-                      alt=""
-                      className="img-photo-event"
-                    />
-                  </div>
-                  <div className="info">
-                    <p className="data-event-nama">{dataevent.nama}</p>
-                    <h3>{dataevent.judul}</h3>
-                    <p className="asal-event">
-                      oleh: {dataevent.pembuatEvent} Event
-                    </p>
-                    <p className="tanggal-event">
-                      <MdOutlineDateRange />
-                      Jumat, {dataevent.tanggal}
-                    </p>
-                    <p className="waktu-event">
-                      <MdOutlineSchedule />
-                      {dataevent.waktu} WIB - Selesai
-                    </p>
-                    <div className="button-event">
-                      <button className="btn-masuk-event">Detail Event</button>
+          {currentItems.length > 0 ? (
+            currentItems.map((dataevent) => (
+              <Link to={`/detailevent/${dataevent.id}`} key={dataevent.id}>
+                <div className="box-event">
+                  <div className="wrap-content-event">
+                    <div className="img-event">
+                    {/* {imageEvents.map((img) =>
+                        img.events_id === dataevent.id ? (
+                          <img
+                            key={img.id}
+                            src={img.url}
+                            alt=""
+                            className="img-photo-event"
+                          />
+                        ) : (
+                          <img
+                            key={dataevent.id}
+                            src={imgEvent}
+                            alt=""
+                            className="img-photo-event"
+                          />
+                        )
+                      )} */}
+                       <img
+                        src={dataevent.url || imgEvent}
+                        alt=""
+                        className="img-photo-event"
+                      />
+                    </div>
+                    <div className="info">
+                      <p className="data-event-nama">{dataevent.name}</p>
+                      <h3>{dataevent.title}</h3>
+                      <p className="asal-event">
+                        Kota: {dataevent.location} 
+                      </p>
+                      <p className="tanggal-event">
+                        <MdOutlineDateRange />
+                        {dataevent.date}
+                      </p>
+                      <p className="waktu-event">
+                        <MdOutlineSchedule />
+                        {dataevent.time}
+                      </p>
+                      <div className="button-event">
+                        <button className="btn-masuk-event">
+                          Detail Event
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
         {totalPages > 1 && (
-          <div className="pagination">
-            <button
-              onClick={() => changePage(getPreviousPage())}
-              className={activeButton === getPreviousPage() ? "active" : ""}
-            >
-              <span className="arrow-back"><IoIosArrowBack /></span>
-            </button>
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-              (page) => ( 
-                <button
-                  key={page}
-                  className={currentPage === page ? "active" : ""}
-                  onClick={() => changePage(page)}
-                >
-                  {page}
-                </button>
-              )
-            )}
-            {/* Button untuk halaman selanjutnya */}
-            {currentPage < totalPages && (
+        <div className="pagination">
+          <button
+            onClick={() => changePage(currentPage - 1)}
+            className={currentPage === 1 ? "disabled" : ""}
+          >
+            <span className="arrow-back">
+              <IoIosArrowBack />
+            </span>
+          </button>
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            (page) => (
               <button
-                onClick={() => changePage(getNextPage())}
-                className={activeButton === getNextPage() ? "active" : ""}
+                key={page}
+                className={currentPage === page ? "active" : ""}
+                onClick={() => changePage(page)}
               >
-                 <span className="arrow-next"> <IoIosArrowForward/> </span>
+                {page}
               </button>
-            )}
-          </div>
-        )}
-      </div>
+            )
+          )}
+          {hasNextPage && (
+            <button
+              onClick={() => changePage(currentPage + 1)}
+              className={currentPage === totalPages ? "disabled" : ""}
+            >
+              <span className="arrow-next">
+                <IoIosArrowForward />
+              </span>
+            </button>
+          )}
+        </div>
+      )}
+    </div>
       <Footer />
     </div>
   );
