@@ -68,15 +68,16 @@
 }
 
 .main-img {
-    width: 700px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
+    aspect-ratio: 1;
 }
 
 .main-img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
     border-radius: 10px;
+    flex-basis: 24%;
 }
 
 .more-img {
@@ -84,8 +85,12 @@
     align-items: center;
     flex-direction: column;
     gap: 25px;
-    width: 25%;
-    height: 20%;
+}
+
+.small-img-col {
+    width: 130px;
+    height: 130px;
+    flex-basis: 24%;
 }
 
 .more-img img {

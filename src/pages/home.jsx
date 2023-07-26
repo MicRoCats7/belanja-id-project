@@ -86,35 +86,42 @@ function Home() {
       <Navbar />
       <div className="homepage">
         <div className="heroPage">
-          {Array.isArray(banner) &&  (
-            <Swiper
-              modules={[Navigation, Pagination, Autoplay, Mousewheel, Keyboard]}
-              navigation
-              autoplay={{ delay: 2500 }}
-              cssMode={true}
-              mousewheel={true}
-              keyboard={true}
-              loop={true}
-              grabCursor={true}
-              pagination={{
-                clickable: true,
-                renderBullet: (index, className) =>
-                  `<span class="${className}"></span>`,
-              }}
-              className="mySwiper"
-            >
-              {banner.map((bannerItem) => (
-                <SwiperSlide key={bannerItem.id}>
-                  <img
-                    src={bannerItem.image}
-                    alt={`Banner ${bannerItem.id}`}
-                    className="img-iklan"
-                    loading="lazy"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay, Mousewheel, Keyboard]}
+            navigation
+            autoplay={{ delay: 2500 }}
+            cssMode={true}
+            mousewheel={true}
+            keyboard={true}
+            loop={true}
+            grabCursor={true}
+            pagination={{
+              clickable: true,
+              renderBullet: (index, className) =>
+                `<span class="${className}"></span>`,
+            }}
+            className="mySwiper"
+          >
+            <SwiperSlide>
+              <img src={imgIklan} alt="" className="img-iklan" loading="lazy" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src={imgIklan2}
+                alt=""
+                className="img-iklan"
+                loading="lazy"
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src={imgIklan3}
+                alt=""
+                className="img-iklan"
+                loading="lazy"
+              />
+            </SwiperSlide>
+          </Swiper>
         </div>
         <div className="Kategori">
           <div className="title-kategori">
