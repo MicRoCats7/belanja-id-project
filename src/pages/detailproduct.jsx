@@ -2,7 +2,7 @@ import React from "react";
 import "../style/detailproduct.css";
 import Navbar from "../component/navbar/navbar";
 import iconHome from "../assets/icon/icon home.svg";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import iconSold from "../assets/icon/icon sold.svg";
 import iconLove from "../assets/icon/icon love.svg";
 import iconRatings from "../assets/icon/icon star.svg";
@@ -23,6 +23,7 @@ import Modal from "react-modal";
 import { MdClose } from "react-icons/md";
 import Skeleton from "react-loading-skeleton";
 import ProductDetailSkeleton from "../component/loader/ProductDetailSkeleton";
+import { useNavigate } from "react-router-dom";
 
 function DetailProduct() {
   const [value, setValue] = React.useState(5);
@@ -39,6 +40,7 @@ function DetailProduct() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const [appState, changeState] = useState({
     activeObject: null,
@@ -120,7 +122,30 @@ function DetailProduct() {
       })
       .catch((error) => {
         handleErrorAlertOpen();
-        console.error("Gagal menambahkan produk ke keranjang:", error);
+        console.error(error);
+      });
+  }
+
+  function addToCartAndNavigateToCartPage(kuantitas) {
+    const product = detail && detail.length > 0 ? detail[0] : null;
+    const payload = {
+      products_id: product.id,
+      quantity: kuantitas,
+    };
+    // ... (fungsi lainnya tetap sama)
+    axios
+      .post(apiurl() + "cart/add", payload, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        handleSuccessAlertOpen();
+        navigate("/cart");
+      })
+      .catch((error) => {
+        handleErrorAlertOpen();
+        console.log(error);
       });
   }
 
@@ -323,9 +348,12 @@ function DetailProduct() {
                     <img src={cart} alt="" />
                     Tambahkan ke Keranjang
                   </button>
-                  <Link to={"/detailpesanan"}>
-                    <button className="btn-buy">Beli Sekarang</button>
-                  </Link>
+                  <button
+                    className="btn-buy"
+                    onClick={() => addToCartAndNavigateToCartPage(quantity)}
+                  >
+                    Beli Sekarang
+                  </button>
                 </div>
               </div>
             </div>
@@ -508,7 +536,7 @@ function DetailProduct() {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Gagal menambahkan produk ke keranjang
+          Periksa Jaringan Anda
         </MuiAlert>
       </Snackbar>
       <Footer />

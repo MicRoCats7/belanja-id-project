@@ -141,7 +141,7 @@ function Navbar() {
         },
       });
       setCartItemCount(response.data.data.cartItems.length); // Menyimpan jumlah produk di keranjang
-      getProduct();
+      // getProduct();
     } catch (error) {
       console.log(error);
     }
@@ -211,13 +211,13 @@ function Navbar() {
                 </div>
                 <div className="drop-profile">
                   <div className="circle-photo">
-                  <img
-                    className="photo-profiles"
-                    src={profile.user?.profile_photo_path || DeafultPhoto}
-                    alt=""
-                  />
+                    <img
+                      className="photo-profiles"
+                      src={profile.user?.profile_photo_path || DeafultPhoto}
+                      alt=""
+                    />
                   </div>
-                 
+
                   <div className="menu-dropdown">
                     <div className="user-info">
                       <img

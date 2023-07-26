@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../style/detailpesanan.css";
 import NavbarCheckout from "../component/navbar/navbarCheckout";
 import { MdKeyboardArrowRight, MdLocationOn } from "react-icons/md";
 import { TbDiscount2, TbTruckDelivery } from "react-icons/tb";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { formatPrice } from "../utils/helpers";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import token from "../utils/token";
+import apiurl from "../utils/apiurl";
+import { Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 function Detailpesanan() {
   const [product, setProduct] = useState([]);
@@ -14,6 +19,12 @@ function Detailpesanan() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const selectedIds = queryParams.get("selectedIds");
+  const [snapToken, setSnapToken] = useState("");
+  const snapTokenRef = useRef("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = () => {
@@ -33,19 +44,45 @@ function Detailpesanan() {
     console.log(localStorage.getItem("selectedProducts"));
   }, []);
 
+  useEffect(() => {
+    const scriptSnap = document.createElement("script");
+
+    scriptSnap.type = "text/javascript";
+    scriptSnap.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+    scriptSnap.setAttribute(
+      "data-client-key",
+      "SB-Mid-client-q5egH5AqzMeOGbOi"
+    );
+
+    document.body.appendChild(scriptSnap);
+
+    return () => {
+      document.body.removeChild(scriptSnap);
+    };
+  }, []);
+
+  useEffect(() => {
+    const scriptFunctionSnap = document.createElement("script");
+    console.log(snapToken);
+    scriptFunctionSnap.type = "text/javascript";
+    scriptFunctionSnap.innerHTML = `
+              var payButton = document.getElementById('pay-button');
+              payButton.addEventListener('click', function () {
+                snap.pay('${snapTokenRef.current}');
+              });    
+          `;
+    document.body.appendChild(scriptFunctionSnap);
+
+    return () => {
+      document.body.removeChild(scriptFunctionSnap);
+    };
+  }, [snapToken]);
+
   function calculateTotalPrice() {
     let totalPrice = 0;
-
-    const storedProducts = localStorage.getItem("products");
-    const products = storedProducts ? JSON.parse(storedProducts) : [];
-
-    selectedItems.forEach((itemId) => {
-      const selectedItem = products.find((item) => item.id === itemId);
-      if (selectedItem) {
-        totalPrice += selectedItem.product.price * selectedItem.quantity;
-      }
+    selectedItems.forEach((item) => {
+      totalPrice += item.product.price * item.quantity;
     });
-
     return totalPrice;
   }
 
@@ -58,13 +95,70 @@ function Detailpesanan() {
   }
 
   const handleBeliClick = () => {
-    Navigate("/detailpesanan");
+    if (isProductSelected()) {
+      setIsLoading(true);
+      const selectedProducts = JSON.parse(
+        localStorage.getItem("selectedProducts")
+      );
+      const formData = new FormData();
+
+      selectedProducts.forEach((item, index) => {
+        formData.append("product_id[]", item.product.id);
+        formData.append("quantity[]", item.quantity);
+        formData.append("total", calculateTotalPrice());
+        formData.append("status", "PENDING");
+        formData.append("origin_city_id", 1);
+        formData.append("destination_city_id", 2);
+        const weights = selectedProducts.map(
+          (item) => item.product.weight * item.quantity
+        );
+        const couriers = selectedProducts.map((item) => item.product.courier);
+        weights.forEach((weight, index) => {
+          formData.append("weight[]", weight);
+          formData.append("courier[]", "jne");
+        });
+      });
+
+      console.log(selectedProducts);
+
+      formData.append("cart_id", 9);
+
+      axios
+        .post(apiurl() + "checkout", formData, {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        })
+        .then((response) => {
+          console.log("Respon dari server:", response.data);
+          setSnapToken(response.data.data.snap_token);
+          snapTokenRef.current = response.data.data.snap_token;
+          setShowConfirmation(true);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat mengirim pesanan:", error);
+          setIsLoading(false);
+          handleErrorAlertOpen();
+        });
+    }
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
   };
 
   function isProductSelected() {
     return selectedItems.length > 0;
   }
-  console.log(selectedItems);
+
+  const handleCancel = () => {
+    setShowConfirmation(false);
+  };
+
+  const handleConfirm = () => {
+    setShowConfirmation(false);
+  };
 
   return (
     <div>
@@ -174,21 +268,71 @@ function Detailpesanan() {
                 <h2>Rp {formatPrice(calculateTotalPrice())}</h2>
               </div>
               <div className="btn-bayar">
-                <button
-                  disabled={!isProductSelected()}
-                  onClick={handleBeliClick}
-                  style={{
-                    backgroundColor: isProductSelected() ? "#EF233C" : "gray",
-                    cursor: isProductSelected() ? "pointer" : "not-allowed",
-                  }}
-                >
-                  Pilih Pembayaran
-                </button>
+                <div className="button-wrapper">
+                  <button
+                    className="pay-button"
+                    disabled={!isProductSelected() || isLoading}
+                    onClick={handleBeliClick}
+                    style={{
+                      backgroundColor: isProductSelected() ? "#EF233C" : "gray",
+                      cursor: isProductSelected() ? "pointer" : "not-allowed",
+                    }}
+                  >
+                    {isLoading ? (
+                      <div className="loading-spinner-container">
+                        <div className="loading-spinner"></div>
+                      </div>
+                    ) : (
+                      "Pilih Pembayaran"
+                    )}
+                  </button>
+                </div>
+                {showConfirmation && (
+                  <div className="modal-container">
+                    <div className="modal-content">
+                      <h2>Apakah Pesananmu sudah benar?</h2>
+                      <div className="modal-buttons">
+                        <button id="pay-button" onClick={handleConfirm}>
+                          Lanjut Bayar
+                        </button>
+                        <button onClick={handleCancel}>Cek Lagi</button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Anda berhasil logout!
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Terjadi kesalahan saat mengirim pesanan, Coba lagi nanti!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

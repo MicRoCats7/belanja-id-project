@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../style/profile.css";
 import Navbar from "../component/navbar/navbar";
 import Sidebarprofile from "../component/sidebar/sidebarprofile";
@@ -7,20 +7,23 @@ import Biodata from "./biodata";
 import Alamat from "./alamat";
 import Riwayat from "./riwayat";
 import { Route, Routes } from "react-router-dom";
-   
+import { useState } from "react";
 
 function Profile() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="nav-profil">
       <Navbar />
-        <div className="parent">
+      <div className="parent">
         <Sidebarprofile />
-          <Routes>
-            <Route path="/biodata" element={<Biodata />} />
-            <Route path="/riwayat" element={<Riwayat />} />
-            <Route path="/alamat" element={<Alamat />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/biodata" element={<Biodata />} />
+          <Route path="/riwayat" element={<Riwayat />} />
+          <Route path="/alamat" element={<Alamat />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

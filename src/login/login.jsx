@@ -96,6 +96,12 @@ function Login() {
     setErrorAlertOpen(true);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(onSubmit)();
+    }
+  };
+
   console.log(successAlertOpen);
 
   return (
@@ -122,6 +128,7 @@ function Login() {
                   placeholder="Email"
                   {...register("email", { required: true })}
                   className="input-form-email"
+                  onKeyPress={handleKeyPress}
                 />
               </div>
               <span className="validate">
@@ -141,6 +148,7 @@ function Login() {
                   {...register("password", { required: true })}
                   className="input-form-password"
                   func={setPassword}
+                  onKeyPress={handleKeyPress}
                 />
                 <button className="icon-span" onClick={handleToggle}>
                   {passwordIcon}
@@ -168,7 +176,7 @@ function Login() {
             </button>
           </div>
           <div className="daftar-dengan">
-            <p className="text-hitam">belum punya akun?</p>
+            <p className="text-hitam">Belum punya akun?</p>
             <Link to="/register">
               <p className="text-merah">Daftar</p>
             </Link>

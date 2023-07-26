@@ -19,7 +19,7 @@ function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [name, setName] = useState("");                                                                                                                
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ function Register() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const navigate = useNavigate();
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
-  
+
   const onSubmit = async (data) => {
     // e.preventDefault()
     console.log(data);
@@ -37,7 +37,7 @@ function Register() {
     formData.append("name", data.username);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("phone", data.phone || "belum terdaftar"); 
+    formData.append("phone", data.phone || "belum terdaftar");
 
     try {
       setLoading(true);
@@ -52,7 +52,7 @@ function Register() {
       setLoading(false);
       setTimeout(() => {
         navigate("/login");
-      }, 2000); 
+      }, 2000);
     } catch (error) {
       handleErrorAlertOpen();
       setLoading(false);
@@ -82,6 +82,12 @@ function Register() {
     setErrorAlertOpen(true);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(onSubmit)();
+    }
+  };
+
   console.log(successAlertOpen);
 
   return (
@@ -98,7 +104,7 @@ function Register() {
         <div className="text-regis">
           <h1>Ayo Buat Akun</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="form-regist">
-            <div className="cont-form-name">  
+            <div className="cont-form-name">
               <h3>Nama</h3>
               <div className="form-name">
                 <input
@@ -108,6 +114,7 @@ function Register() {
                   placeholder="Username"
                   {...register("username", { required: true })}
                   className="input-form-nama"
+                  onKeyPress={handleKeyPress}
                 />
               </div>
               <span className="validate">
@@ -126,6 +133,7 @@ function Register() {
                   placeholder="email"
                   {...register("email", { required: true })}
                   className="input-form-email-regis"
+                  onKeyPress={handleKeyPress}
                 />
               </div>
               <span className="validate">
@@ -145,6 +153,7 @@ function Register() {
                   {...register("password", { required: true })}
                   className="input-form-password-regis"
                   func={setPassword}
+                  onKeyPress={handleKeyPress}
                 />
                 <button className="icon-span" onClick={handleToggle}>
                   {passwordIcon}
@@ -172,7 +181,7 @@ function Register() {
             </button>
           </div>
           <div className="register-dengan">
-            <p className="text-hitam">sudah punya akun?</p>
+            <p className="text-hitam">Sudah punya akun?</p>
             <Link to="/Login">
               <p className="text-merah">Masuk</p>
             </Link>

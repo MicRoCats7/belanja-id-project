@@ -70,46 +70,6 @@ function DaftarToko() {
     }
   };
 
-  // const fetchDistricts = async () => {
-  //   try {
-  //     const response = await axios.get(apiurl() + "districts");
-  //     const data = response.data;
-  //     setDistricts(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  
-
-  // const handleSearch = (e) => {
-  //   const keyword = e.target.value;
-  //   setSearchKeyword(keyword);
-
-  //   if (keyword === "") {
-  //     setSearchResults([]); // Clear the search results when the input is empty
-  //     setSearchResultsVisible(false); // Hide the search results
-  //   } else {
-  //     const filteredDistricts = districts.filter((district) =>
-  //       district.name.toLowerCase().includes(keyword.toLowerCase())
-  //     );
-  //     setSearchResults(filteredDistricts);
-  //     setSearchResultsVisible(true); // Show the search results
-  //   }
-
-  //   const selectedDistrictExists = searchResults.some(
-  //     (district) => district.name === selectedDistrict.name
-  //   );
-  //   if (!selectedDistrictExists) {
-  //     setSelectedDistrict(""); // Reset the selected district if it no longer exists in the search results
-  //   }
-  // };
-
-  // const handleSelectDistrict = (district) => {
-  //   setSelectedDistrict(district);
-  //   setSearchKeyword(district.name);
-  //   setSearchResultsVisible(false);
-  // };
-
   const handleSearchCity = (e) => {
     const keyword = e.target.value;
     setSearchKeywordCity(keyword);
