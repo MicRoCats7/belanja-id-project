@@ -45,9 +45,10 @@ body.active-modal {
 
 
 .overlay {
-    background: rgba(49,49,49,0.8);
+    background: rgba(49, 49, 49, 0.8);
 }
-.modal-content {
+
+.modal-contents {
     width: 500px;
     height: 350px;
     background-color: white;
@@ -87,39 +88,41 @@ body.active-modal {
     padding: 2rem 2.5rem;
     display: -webkit-box;
     display: -ms-flexbox;
-   
+
 }
 
-.modal-content h3{
+.modal-content h3 {
     font-weight: 650;
     font-size: 20px;
     letter-spacing: -0.1px;
-    color: var(--NN950,#212121);
+    color: var(--NN950, #212121);
 }
 
-.modal-content p{
+.modal-content p {
     margin: 20px 0px 20px 0px;
-    font-size: 14px;    
-    font-weight: 500;
-}
-.modal-content-nama h3{
-    font-weight: 650;
-    font-size: 20px;
-    letter-spacing: -0.1px;
-    color: var(--NN950,#212121);
-}
-
-.modal-content-nama p{
-    margin: 20px 0px 20px 0px;
-    font-size: 14px;    
-    font-weight: 500;
-}
-.nama-kamu p{
     font-size: 14px;
     font-weight: 500;
 }
 
-.btn-simpan{
+.modal-content-nama h3 {
+    font-weight: 650;
+    font-size: 20px;
+    letter-spacing: -0.1px;
+    color: var(--NN950, #212121);
+}
+
+.modal-content-nama p {
+    margin: 20px 0px 20px 0px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nama-kamu p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-simpan {
     background-color: #EF233C;
     border: none;
     border-radius: 8px;
@@ -139,23 +142,24 @@ body.active-modal {
     width: 100%;
 }
 
-.modal{
+.modal {
     z-index: 999;
     will-change: opacity;
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
 
-.modal-email{
+.modal-email {
     z-index: 999;
     will-change: opacity;
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
 
-.modal-nomer{
+.modal-nomer {
     z-index: 999;
     will-change: opacity;
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
+
 .close-modal {
     position: absolute;
     top: 20px;
@@ -182,7 +186,7 @@ body.active-modal {
     border: 1px solid #EF233C;
 }
 
-.label-kamu input{
+.label-kamu input {
     width: 100%;
     height: 40px;
     border-radius: 5px;
@@ -200,8 +204,8 @@ body.active-modal {
 }
 
 
-.nama-kamu h3{
-    color: var(--color-text-low,rgba(49,53,59,0.68));
+.nama-kamu h3 {
+    color: var(--color-text-low, rgba(49, 53, 59, 0.68));
     font-size: 13px;
     font-weight: 700;
     line-height: 16px;
@@ -225,19 +229,19 @@ body.active-modal {
     border: 1px solid #EF233C;
 }
 
-input .input-email{
+input .input-email {
     margin-bottom: 15px;
 }
 
-.email-kamu h3{
-    color: var(--color-text-low,rgba(49,53,59,0.68));
+.email-kamu h3 {
+    color: var(--color-text-low, rgba(49, 53, 59, 0.68));
     font-size: 13px;
     font-weight: 700;
     line-height: 16px;
     margin-bottom: 10px;
 }
 
-.btn-simpan-email{
+.btn-simpan-email {
     margin: 30px 0 30px 0;
     background-color: #EF233C;
     border: none;
@@ -258,7 +262,7 @@ input .input-email{
     width: 100%;
 }
 
-.btn-simpan-alamat{
+.btn-simpan-alamat {
     margin: 10px 0 10px 0;
     background-color: #EF233C;
     border: none;
@@ -290,7 +294,7 @@ input .input-email{
     outline: none;
 }
 
-.nomer-kamu input{
+.nomer-kamu input {
     width: 100%;
     height: 40px;
     border-radius: 5px;
@@ -307,12 +311,12 @@ input .input-email{
     border: 1px solid #EF233C;
 }
 
-input .input-nomer{
+input .input-nomer {
     margin-bottom: 15px;
 }
 
-.nomer-kamu h3{
-    color: var(--color-text-low,rgba(49,53,59,0.68));
+.nomer-kamu h3 {
+    color: var(--color-text-low, rgba(49, 53, 59, 0.68));
     font-size: 13px;
     font-weight: 700;
     line-height: 16px;
@@ -320,7 +324,7 @@ input .input-nomer{
 }
 
 
-.btn-simpan-nomer{
+.btn-simpan-nomer {
     margin: 30px 0 30px 0;
     background-color: #EF233C;
     border: none;
@@ -342,22 +346,26 @@ input .input-nomer{
 }
 
 .modal-content {
-    max-height: 400px; /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
-    overflow: auto; /* Tampilkan scrollbar hanya jika kontennya melebihi tinggi maksimum */
-  }
+    max-height: 400px;
+    /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
+    overflow: auto;
+    /* Tampilkan scrollbar hanya jika kontennya melebihi tinggi maksimum */
+}
 
-.modal-content-nama{
-    max-height: 400px; /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
-  }
-  
-  
-  .scrollable-content {
+.modal-content-nama {
+    max-height: 400px;
+    /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
+}
+
+
+.scrollable-content {
     padding: 10px;
-  }
+}
 
-  .alamat-kamu textarea {
+.alamat-kamu textarea {
     width: 100%;
-    height: 80px; /* Sesuaikan tinggi textarea sesuai preferensi Anda */
+    height: 80px;
+    /* Sesuaikan tinggi textarea sesuai preferensi Anda */
     border-radius: 5px;
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0.34);
@@ -365,31 +373,31 @@ input .input-nomer{
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
-  }
+}
 
-  .text-diatas-popup{
+.text-diatas-popup {
     margin-left: 10px;
-  }
+}
 
-  .text-diatas-popup .judul-ubah-alamat{
+.text-diatas-popup .judul-ubah-alamat {
     font-size: 15px;
     font-weight: 600;
-  }
-  
+}
 
-  .kontak-nomer-input{
+
+.kontak-nomer-input {
     margin-top: 10px;
-  }
- 
-  .jarak-input-nama{
-    margin-bottom: 10px;
-  }
+}
 
-  .jarak-input-nomer{
+.jarak-input-nama {
     margin-bottom: 10px;
-  }
- 
-  .edit-alamat{
+}
+
+.jarak-input-nomer {
+    margin-bottom: 10px;
+}
+
+.edit-alamat {
     font-weight: 700;
     font-size: 16px;
     line-height: 21px;
@@ -397,18 +405,11 @@ input .input-nomer{
     cursor: pointer;
 }
 
-.alamat-kamu .peringatan-alamat{
+.alamat-kamu .peringatan-alamat {
     font-size: 13px;
     margin-bottom: 10px;
 }
 
-.label-kamu p{
+.label-kamu p {
     font-size: 13px;
 }
-  
-  
-
-
-  
-
-

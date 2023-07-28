@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../style/detailpesanan.css";
 import NavbarCheckout from "../component/navbar/navbarCheckout";
-import { MdKeyboardArrowRight, MdLocationOn } from "react-icons/md";
+import {
+  MdKeyboardArrowRight,
+  MdLocationOn,
+  MdOutlineClose,
+} from "react-icons/md";
 import { TbDiscount2, TbTruckDelivery } from "react-icons/tb";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { formatPrice } from "../utils/helpers";
@@ -11,6 +15,7 @@ import token from "../utils/token";
 import apiurl from "../utils/apiurl";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
+import Skeleton from "react-loading-skeleton";
 
 function Detailpesanan() {
   const [product, setProduct] = useState([]);
@@ -25,6 +30,11 @@ function Detailpesanan() {
   const [isLoading, setIsLoading] = useState(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [showShippingPopup, setShowShippingPopup] = useState(false);
+  const [couriers, setCouriers] = useState([]);
+  const [selectedCourier, setSelectedCourier] = useState(null);
+  const [shippingCost, setShippingCost] = useState(0);
+  const [productShippingCosts, setProductShippingCosts] = useState({});
 
   useEffect(() => {
     const fetchProducts = () => {
@@ -37,11 +47,16 @@ function Detailpesanan() {
 
     const storedSelectedItems = localStorage.getItem("selectedProducts");
     if (storedSelectedItems) {
-      setSelectedItems(JSON.parse(storedSelectedItems));
+      const selectedItemsParsed = JSON.parse(storedSelectedItems);
+      // Tambahkan harga produk ke setiap item yang diseleksi
+      const selectedItemsWithPrice = selectedItemsParsed.map((item) => ({
+        ...item,
+        productPrice: item.product.price * item.quantity,
+      }));
+      setSelectedItems(selectedItemsWithPrice);
     } else {
       setSelectedItems([]);
     }
-    console.log(localStorage.getItem("selectedProducts"));
   }, []);
 
   useEffect(() => {
@@ -63,14 +78,17 @@ function Detailpesanan() {
 
   useEffect(() => {
     const scriptFunctionSnap = document.createElement("script");
-    console.log(snapToken);
+
     scriptFunctionSnap.type = "text/javascript";
     scriptFunctionSnap.innerHTML = `
-              var payButton = document.getElementById('pay-button');
-              payButton.addEventListener('click', function () {
-                snap.pay('${snapTokenRef.current}');
-              });    
-          `;
+    var payButton = document.getElementById('pay-button');
+    if (payButton) {
+      payButton.addEventListener('click', function () {
+        snap.pay('${snapTokenRef.current}');
+      });
+    }
+  `;
+
     document.body.appendChild(scriptFunctionSnap);
 
     return () => {
@@ -78,12 +96,50 @@ function Detailpesanan() {
     };
   }, [snapToken]);
 
+  useEffect(() => {
+    axios
+      .get(
+        apiurl() +
+          "shipping/cost?origin_city_id=209&destination_city_id=209&weight=500",
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      )
+      .then((response) => {
+        setCouriers(response.data.data.delivery_courier);
+      })
+      .catch((error) => {
+        console.error("Error fetching courier data:", error);
+      });
+  }, []);
+
   function calculateTotalPrice() {
     let totalPrice = 0;
     selectedItems.forEach((item) => {
       totalPrice += item.product.price * item.quantity;
     });
-    return totalPrice;
+    return totalPrice + shippingCost;
+  }
+
+  function calculateTotalOriginalPrice() {
+    let totalOriginalPrice = 0;
+    selectedItems.forEach((item) => {
+      totalOriginalPrice += item.product.price * item.quantity;
+    });
+    return totalOriginalPrice;
+  }
+
+  function calculateGrandTotal() {
+    return calculateTotalOriginalPrice() + calculateShippingCost();
+  }
+
+  function calculateShippingCost() {
+    if (selectedCourier) {
+      return shippingCost;
+    }
+    return 0;
   }
 
   function calculateTotalDiscount() {
@@ -119,7 +175,7 @@ function Detailpesanan() {
         });
       });
 
-      console.log(selectedProducts);
+      // console.log(selectedProducts);
 
       formData.append("cart_id", 9);
 
@@ -130,7 +186,7 @@ function Detailpesanan() {
           },
         })
         .then((response) => {
-          console.log("Respon dari server:", response.data);
+          // console.log("Respon dari server:", response.data);
           setSnapToken(response.data.data.snap_token);
           snapTokenRef.current = response.data.data.snap_token;
           setShowConfirmation(true);
@@ -158,6 +214,20 @@ function Detailpesanan() {
 
   const handleConfirm = () => {
     setShowConfirmation(false);
+  };
+
+  const handlePilihMetodeLain = () => {
+    setShowShippingPopup(true);
+  };
+
+  const handleCloseShippingPopup = () => {
+    setShowShippingPopup(false);
+  };
+
+  const handleSelectCourier = (courier) => {
+    setSelectedCourier(courier);
+    setShippingCost(courier.cost);
+    setShowShippingPopup(false);
   };
 
   return (
@@ -218,23 +288,38 @@ function Detailpesanan() {
                   </div>
                   <div className="line-shipping"></div>
                   <div className="shipping">
-                    <div className="top-shipping">
-                      <div className="icon-top-shipping">
-                        <TbTruckDelivery color="EF233C" />
-                        <p>Regular</p>
-                      </div>
-                      <div className="btn-pilih-shipping">
-                        <h2>Pilih Metode Lain</h2>
-                      </div>
-                    </div>
-                    <div className="info-shipping">
-                      <h2>Rp25.000</h2>
-                      <h3>Estimasi pesanan sampai 2 - 4 hari.</h3>
-                      <div className="warning-icon">
-                        <RiErrorWarningFill />
-                        <h3>Biaya sudah termasuk asuransi pengiriman.</h3>
-                      </div>
-                    </div>
+                    {selectedCourier ? (
+                      <>
+                        <div className="top-shipping">
+                          <div className="icon-top-shipping">
+                            <TbTruckDelivery color="EF233C" />
+                            <p>{selectedCourier.courier}</p>
+                          </div>
+                          <div className="btn-pilih-shipping">
+                            <h2 onClick={handlePilihMetodeLain}>
+                              Pilih Metode Lain
+                            </h2>
+                          </div>
+                        </div>
+                        <div className="info-shipping">
+                          <h2>Rp {formatPrice(selectedCourier.cost)}</h2>
+                          <h3>Estimasi pesanan sampai {selectedCourier.etd}</h3>
+                          <div className="warning-icon">
+                            <RiErrorWarningFill />
+                            <h3>Biaya sudah termasuk asuransi pengiriman.</h3>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p>Pilih kurir untuk melihat detail pengiriman.</p>
+                        <div className="btn-pilih-shipping">
+                          <h2 onClick={handlePilihMetodeLain}>
+                            Pilih Metode Lain
+                          </h2>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -253,19 +338,21 @@ function Detailpesanan() {
                   <div className="total-pro-left">
                     <p>Total Harga ({selectedItems.length} Barang)</p>
                     {discountApplied && <p>Total Diskon</p>}
+                    {selectedCourier && <p>Biaya Pengiriman</p>}
                   </div>
                   <div className="total-pro-right">
-                    <p>Rp {formatPrice(calculateTotalPrice())}</p>
+                    <p>Rp {formatPrice(calculateTotalOriginalPrice())}</p>
                     {discountApplied && (
                       <p>-{formatPrice(calculateTotalDiscount())}</p>
                     )}
+                    {selectedCourier && <p>Rp {formatPrice(shippingCost)}</p>}
                   </div>
                 </div>
               </div>
               <div className="line-subtotal-pro"></div>
               <div className="total-harga-cart">
                 <h2>Total Harga</h2>
-                <h2>Rp {formatPrice(calculateTotalPrice())}</h2>
+                <h2>Rp {formatPrice(calculateGrandTotal())}</h2>
               </div>
               <div className="btn-bayar">
                 <div className="button-wrapper">
@@ -305,6 +392,42 @@ function Detailpesanan() {
           </div>
         </div>
       </div>
+      {showShippingPopup && (
+        <div className="shipping-popup-container">
+          <div className="shipping-popup">
+            <div className="top-shipping-popup">
+              <h2>Metode pengiriman</h2>
+              <MdOutlineClose onClick={handleCloseShippingPopup} />
+            </div>
+            {couriers.length > 0 ? (
+              couriers.map((courier, index) => (
+                <div
+                  className="list-shipping-popup"
+                  key={index}
+                  onClick={() => handleSelectCourier(courier)}
+                >
+                  <h1>
+                    <TbTruckDelivery style={{ fontSize: "20px" }} />{" "}
+                    {courier.courier}
+                  </h1>
+                  <h1 style={{ color: "#f37021" }}>
+                    Rp {formatPrice(courier.cost)}
+                  </h1>
+                  <h1>Estimasi pesanan sampai {courier.etd}</h1>
+                </div>
+              ))
+            ) : (
+              <div style={{ marginTop: "15px" }}>
+                <Skeleton
+                  height={80}
+                  count={3}
+                  style={{ marginBottom: "7px" }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       <Snackbar
         open={successAlertOpen}
         autoHideDuration={3000}
