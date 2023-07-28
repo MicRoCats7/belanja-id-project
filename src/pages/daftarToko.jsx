@@ -30,16 +30,11 @@ function DaftarToko() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [districts, setDistricts] = useState([]);
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [searchKeywordCity, setSearchKeywordCity] = useState("");
   const [searchResultsCity, setSearchResultsCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   const [searchResultsVisibleCity, setSearchResultsVisibleCity] =
     useState(false);
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [searchResultsVisible, setSearchResultsVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,7 +48,7 @@ function DaftarToko() {
     try {
       const response = await axios.get(apiurl() + "provinces");
       const responseData = response.data;
-  
+
       if (responseData.meta && responseData.meta.code === 200) {
         const provincesData = responseData.data;
         // Tambahkan property 'province_name' pada setiap objek provinsi
@@ -113,7 +108,7 @@ function DaftarToko() {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + token,
-        }
+        },
       });
       handleSuccessAlertToko();
       const responseData = response.data;
@@ -251,22 +246,21 @@ function DaftarToko() {
     setNomor(event.target.value);
   };
 
-  
   const handleProvinceChange = (e) => {
     const selectedId = e.target.value;
     setSelectedProvince(selectedId);
-  
+
     // Cari nama provinsi berdasarkan ID provinsi yang dipilih
     const selectedProvinceData = provinces.find(
       (province) => province.province_id === selectedId
     );
     setSelectedProvinceName(selectedProvinceData.province_name);
-  
+
     setSelectedCity(""); // Reset kota saat mengganti provinsi
     fetchCitiesByProvince(selectedId);
     setProvinceSelected(true);
     setSearchResultsVisibleCity(false);
-  };;
+  };
 
   const handleSelectCity = (city) => {
     setSelectedCity(city);
@@ -284,7 +278,6 @@ function DaftarToko() {
     setSelectedCityName(selectedCityData.city_name); // Simpan nama kota yang dipilih ke state
   };
 
-  
   return (
     <div className="daftar-main">
       <Navbar />
@@ -414,45 +407,6 @@ function DaftarToko() {
                                   </ul>
                                 </div>
                               )}
-                              {/* <p>Kecamatan</p>
-                              <div className="input-district">
-                                <input
-                                  type="text"
-                                  value={searchKeyword}
-                                  onChange={handleSearch}
-                                  placeholder="Pilih Kecamatan"
-                                />
-                                <ul
-                                  style={{
-                                    display: searchResultsVisible
-                                      ? "block"
-                                      : "none",
-                                  }}
-                                >
-                                  {searchResults.map((district) => (
-                                    <li
-                                      key={district.id}
-                                      onClick={() =>
-                                        handleSelectDistrict(district)
-                                      }
-                                    >
-                                      {district.name}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                              <p className="text-kode">Kode Pos</p>
-                              <div className="kodepos">
-                                <input
-                                  type="text"
-                                  name="zipcode"
-                                  className="form-input"
-                                  placeholder="Kode Pos"
-                                  value={zipcode}
-                                  onChange={(e) => setZipcode(e.target.value)}
-                                  required
-                                />
-                              </div> */}
                             </div>
                           </div>
                         </div>

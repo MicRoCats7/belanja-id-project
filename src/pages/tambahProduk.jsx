@@ -13,7 +13,23 @@ import { Link } from "react-router-dom";
 function TambahProduk() {
   const [categories, setCategories] = useState([]);
   const [inputText, setInputText] = useState("");
+  const [storeName, setProductName] = useState("");
   const [characterLimit] = useState(70);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [kondisiProduk, setKondisiProduk] = useState("");
+  const [deskripsiProduk, setDeskripsiProduk] = useState("");
+  const [sku, setSKU] = useState("");
+  const [selectedImagePath, setSelectedImagePath] = useState('');
+
+  const handleSKUChange = (event) => {
+    // Mengonversi nilai input menjadi huruf besar semua sebelum menyimpannya ke dalam state
+    const uppercaseSKU = event.target.value.toUpperCase();
+    setSKU(uppercaseSKU);
+  };
+  const handleKondisiChange = (event) => {
+    // Mengubah nilai kondisiProduk ke huruf kecil sebelum disimpan di state
+    setKondisiProduk(event.target.value.toLowerCase());
+  };
 
   const [image1, setImage1] = useState(null);
   const [fileName1, setFileName1] = useState("No Selected file");
@@ -38,15 +54,55 @@ function TambahProduk() {
     axios
       .get(apiurl() + "categories")
       .then((response) => {
-        setCategories(response.data.data.data);
+        setCategories(response.data.data);
+        console.log("Categories data:", response.data.data);
       })
       .catch((error) => console.error(error));
   }
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append("name", inputText);
+      formData.append("price", value2);
+      formData.append("description", deskripsiProduk);
+      formData.append("weight", value4);
+      formData.append("quantity", value3);
+      formData.append("sku", sku);
+      formData.append("category_id", selectedCategory);
+      formData.append("kondisi_produk", kondisiProduk);
+      formData.append("picturePath",  selectedImagePath.toString());
+      
+
+      const token = localStorage.getItem("token"); // Ganti dengan token akses yang valid
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + token,
+        },
+      };
+      const response = await axios.post(
+        apiurl() + "products/post",
+        formData,
+        config
+      );
+      const newProductData = response.data.data;
+      console.log("Produk berhasil ditambahkan:", newProductData);
+    } catch (error) {
+      console.error("Error saat menambahkan produk:", error);
+    }
+  };
 
   const [selectedValue, setSelectedValue] = React.useState("a");
 
   const handleChange2 = (event) => {
     setSelectedValue(event.target.value);
+  };
+
+  const handleDeskripsiChange = (event) => {
+    setDeskripsiProduk(event.target.value);
   };
 
   const controlProps = (item) => ({
@@ -57,12 +113,17 @@ function TambahProduk() {
     inputProps: { "aria-label": item },
   });
 
-  const handleImageChange1 = (event) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      setFileName1(files[0].name);
-      setImage1(URL.createObjectURL(files[0]));
-    }
+  // const handleImageChange1 = (event) => {
+  //   const files = event.target.files;
+  //   if (files && files[0]) {
+  //     setFileName1(files[0].name);
+  //     setImage1(URL.createObjectURL(files[0]));
+  //   }
+  // };
+  
+  const handleImageChange1 = (e) => {
+    const file = e.target.files[0];
+    setSelectedImagePath(URL.createObjectURL(file));
   };
 
   const handleImageChange2 = (event) => {
@@ -86,6 +147,7 @@ function TambahProduk() {
       setImage4(URL.createObjectURL(files[0]));
     }
   };
+
   const handleImageChange5 = (event) => {
     const files = event.target.files;
     if (files && files[0]) {
@@ -166,557 +228,564 @@ function TambahProduk() {
       <NavbarToko />
       <div className="container-tambahproduk">
         <h1>Tambah Produk</h1>
-        <div className="container-infoProduk">
-          <h2>Informasi Produk</h2>
-          <div className="container-inputProduk">
-            <div className="container-namaProduk">
-              <div className="namapro">
-                <div className="namapro-top">
-                  <h1>Nama Produk</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
+        <form onSubmit={onSubmit}>
+          <div className="container-infoProduk">
+            <h2>Informasi Produk</h2>
+            <div className="container-inputProduk">
+              <div className="container-namaProduk">
+                <div className="namapro">
+                  <div className="namapro-top">
+                    <h1>Nama Produk</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
                   </div>
-                </div>
-                <p>
-                  Nama produk min. 40 karakter dengan memasukkan merek, jenis
-                  produk, warna, bahan, atau tipe.
-                </p>
-              </div>
-              <div className="inputNamaProduk">
-                <input
-                  type="text"
-                  placeholder="Contoh : Sepatu pria (Jenis/Kategori Produk)"
-                  value={inputText}
-                  onChange={handleChange}
-                  isInvalid={inputText.length > characterLimit}
-                  maxLength={70}
-                />
-                <div className="bottom-input">
-                  <p>Tips : Jenis Produk + Keterangan Tambahan</p>
                   <p>
-                    {inputText.length}/{characterLimit}
+                    Nama produk min. 40 karakter dengan memasukkan merek, jenis
+                    produk, warna, bahan, atau tipe.
                   </p>
                 </div>
-              </div>
-            </div>
-            <div className="container-namaProduk">
-              <div className="namapro">
-                <div className="namapro-top">
-                  <h1>Kategori</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-                <p>Pilih Kategori sesuai dengan produk yang ingin kamu jual</p>
-              </div>
-              <div className="dropdown-kategoripro">
-                <select name="kategori" id="kategori">
-                  <option value="kategori">Kategori</option>
-                  {categories?.map((categories) => {
-                    return <option href="#">{categories.name}</option>;
-                  })}
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container-infoProduk">
-          <h2>Detail Produk</h2>
-          <div className="container-inputProduk">
-            <div className="container-namaProduk">
-              <div className="fotopro">
-                <div className="namapro-top">
-                  <h1>Foto Produk</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-                <p>
-                  Format gambar .jpg .jpeg .png dan ukuran minimum 300 x 300px
-                  (Untuk gambar optimal gunakan ukuran minimum 700 x 700 px).
-                  <br />
-                  <br />
-                  Pilih foto produk atau tarik dan letakkan hingga 5 foto
-                  sekaligus di sini. Upload min. 3 foto yang menarik dan berbeda
-                  satu sama lain untuk menarik perhatian pembeli.
-                </p>
-              </div>
-              <div className="inputFotoProduk">
-                <div className="addImg">
-                  <label
-                    htmlFor="input-file"
-                    className={`file-label ${!image1 ? "no-border" : ""}`}
-                  >
-                    {image1 ? (
-                      <img
-                        src={image1}
-                        width={150}
-                        height={150}
-                        alt={fileName1}
-                        className="uploaded-image"
-                      />
-                    ) : (
-                      <>
-                        <BiImageAdd color="#606060" size={60} />
-                        <p>Foto Utama</p>
-                      </>
-                    )}
-                  </label>
-                  <input
-                    id="input-file"
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    className="input-field"
-                    onChange={handleImageChange1}
-                    hidden
-                  />
-                  {image1 && (
-                    <div className="upload-row">
-                      <span className="upload-content">
-                        <FiTrash2 onClick={handleImageRemove1} />
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="addImg">
-                  <label
-                    htmlFor="input-file2"
-                    className={`file-label ${!image2 ? "no-border" : ""}`}
-                  >
-                    {image2 ? (
-                      <img
-                        src={image2}
-                        width={150}
-                        height={150}
-                        alt={fileName2}
-                        className="uploaded-image"
-                      />
-                    ) : (
-                      <>
-                        <BiImageAdd color="#606060" size={60} />
-                        <p>Foto 2</p>
-                      </>
-                    )}
-                  </label>
-                  <input
-                    id="input-file2"
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    className="input-field"
-                    onChange={handleImageChange2}
-                    hidden
-                  />
-                  {image2 && (
-                    <div className="upload-row">
-                      <span className="upload-content">
-                        <FiTrash2 onClick={handleImageRemove2} />
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="addImg">
-                  <label
-                    htmlFor="input-file3"
-                    className={`file-label ${!image3 ? "no-border" : ""}`}
-                  >
-                    {image3 ? (
-                      <img
-                        src={image3}
-                        width={150}
-                        height={150}
-                        alt={fileName3}
-                        className="uploaded-image"
-                      />
-                    ) : (
-                      <>
-                        <BiImageAdd color="#606060" size={60} />
-                        <p>Foto 3</p>
-                      </>
-                    )}
-                  </label>
-                  <input
-                    id="input-file3"
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    className="input-field"
-                    onChange={handleImageChange3}
-                    hidden
-                  />
-                  {image3 && (
-                    <div className="upload-row">
-                      <span className="upload-content">
-                        <FiTrash2 onClick={handleImageRemove3} />
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="addImg">
-                  <label
-                    htmlFor="input-file4"
-                    className={`file-label ${!image4 ? "no-border" : ""}`}
-                  >
-                    {image4 ? (
-                      <img
-                        src={image4}
-                        width={150}
-                        height={150}
-                        alt={fileName4}
-                        className="uploaded-image"
-                      />
-                    ) : (
-                      <>
-                        <BiImageAdd color="#606060" size={60} />
-                        <p>Foto 4</p>
-                      </>
-                    )}
-                  </label>
-                  <input
-                    id="input-file4"
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    className="input-field"
-                    onChange={handleImageChange4}
-                    hidden
-                  />
-                  {image4 && (
-                    <div className="upload-row">
-                      <span className="upload-content">
-                        <FiTrash2 onClick={handleImageRemove4} />
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="addImg">
-                  <label
-                    htmlFor="input-file5"
-                    className={`file-label ${!image5 ? "no-border" : ""}`}
-                  >
-                    {image5 ? (
-                      <img
-                        src={image5}
-                        width={150}
-                        height={150}
-                        alt={fileName5}
-                        className="uploaded-image"
-                      />
-                    ) : (
-                      <>
-                        <BiImageAdd color="#606060" size={60} />
-                        <p>Foto 5</p>
-                      </>
-                    )}
-                  </label>
-                  <input
-                    id="input-file5"
-                    type="file"
-                    accept=".jpg, .jpeg, .png"
-                    className="input-field"
-                    onChange={handleImageChange5}
-                    hidden
-                  />
-                  {image5 && (
-                    <div className="upload-row">
-                      <span className="upload-content">
-                        <FiTrash2 onClick={handleImageRemove5} />
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="kondisi">
-              <div className="kondisipro">
-                <div className="namapro-top">
-                  <h1>Kondisi</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-                <div className="radion-button">
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="female"
-                      control={
-                        <Radio
-                          {...controlProps("a")}
-                          sx={{
-                            color: red[800],
-                            "&.Mui-checked": {
-                              color: red[600],
-                            },
-                          }}
-                        />
-                      }
-                      label="Baru"
-                    />
-                    <FormControlLabel
-                      value="male"
-                      control={
-                        <Radio
-                          {...controlProps("b")}
-                          sx={{
-                            color: red[800],
-                            "&.Mui-checked": {
-                              color: red[600],
-                            },
-                          }}
-                        />
-                      }
-                      label="Bekas"
-                    />
-                  </RadioGroup>
-                </div>
-              </div>
-            </div>
-            <div className="container-namaProduk">
-              <div className="deskripsipro">
-                <div className="namapro-top">
-                  <h1>Deskripsi Produk</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-                <p>
-                  Pastikan deskripsi produk memuat penjelasan detail terkait
-                  produkmu agar pembeli mudah mengerti dan menemukan produkmu.
-                  <br />
-                  <br />
-                  Disarankan untuk tidak memasukkan info nomor HP, e-mail, dsb.
-                  ke dalam deskripsi produk untuk melindungi data pribadimu.
-                </p>
-              </div>
-              <div className="inputNamaProduk">
-                <textarea
-                  name=""
-                  id=""
-                  placeholder="Tulis Deskripsi yang unik untuk produk kamu untuk menarik pembeli"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container-infoProduk">
-          <h2>Harga</h2>
-          <div className="container-inputProduk">
-            <div className="container-namaProduk">
-              <div className="minimumPro">
-                <div className="namapro-top">
-                  <h1>Minimum Pemesanan</h1>
-                </div>
-                <p>Atur jumlah minimum yang harus dibeli untuk produk ini.</p>
-              </div>
-              <div className="inputHargaProduk">
-                <input
-                  type="text"
-                  value={value}
-                  onChange={handleChangeNumber}
-                  maxLength={5}
-                />
-              </div>
-            </div>
-            <div className="container-namaProduk">
-              <div className="hargapro">
-                <div className="namapro-top">
-                  <h1>Harga Satuan</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-                <p>Masukkan Harga untuk Produk anda.</p>
-              </div>
-              <div className="harga-satuan">
-                <div className="box-harga-satuan">
-                  <h4>Rp</h4>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Masukkan Harga"
-                  value={value2}
-                  onChange={handleChangeNumber2}
-                  maxLength={100}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container-infoProduk">
-          <h2>Pengelolaan Produk</h2>
-          <div className="container-inputProduk">
-            <div className="container-namaProduk">
-              <div className="minimumPro">
-                <div className="namapro-top">
-                  <h1>Stok Produk</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-              </div>
-              <div className="inputHargaProduk">
-                <input
-                  type="text"
-                  value={value3}
-                  onChange={handleChangeStok}
-                  maxLength={100}
-                  placeholder="Masukkan Jumlah Stok"
-                />
-              </div>
-            </div>
-            <div className="container-namaProduk">
-              <div className="hargapro">
-                <div className="namapro-top">
-                  <h1>SKU (Stock Keeping Unit)</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-                <p>Gunakan kode unik SKU jika kamu ingin menandai produkmu.</p>
-              </div>
-              <div className="harga-satuan">
-                <input type="text" placeholder="Masukkan SKU" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container-infoProduk">
-          <h2>Berat dan Pengiriman</h2>
-          <div className="container-inputProduk">
-            <div className="container-namaProduk">
-              <div className="beratPro">
-                <div className="namapro-top">
-                  <h1>Berat Produk</h1>
-                  <div className="box-wajib">
-                    <p>Wajib</p>
-                  </div>
-                </div>
-                <p>Masukkan berat dengan menimbang produk setelah dikemas.</p>
-              </div>
-              <div className="gram">
-                <input
-                  type="text"
-                  placeholder="Berat Produk"
-                  value={value4}
-                  onChange={handleChangeBerat}
-                  maxLength={100}
-                />
-                <div className="box-gram">
-                  <h4>gram</h4>
-                </div>
-              </div>
-            </div>
-            <div className="container-namaProduk">
-              <div className="ukuranpro">
-                <div className="namapro-top">
-                  <h1>Ukuran Produk</h1>
-                </div>
-                <p>
-                  Masukkan ukuran produk setelah dikemas untuk menghitung berat
-                  volume
-                </p>
-              </div>
-              <div className="input-ukuranpro">
-                <div className="gram">
+                <div className="inputNamaProduk">
                   <input
                     type="text"
-                    placeholder="Panjang"
-                    value={value5}
-                    onChange={handleChangePanjang}
-                    maxLength={100}
+                    placeholder="Contoh : Sepatu pria (Jenis/Kategori Produk)"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    isInvalid={inputText.length > characterLimit}
+                    maxLength={70}
                   />
-                  <div className="box-gram">
-                    <h4>cm</h4>
-                  </div>
-                </div>
-                <div className="gram">
-                  <input
-                    type="text"
-                    placeholder="Lebar"
-                    value={value6}
-                    onChange={handleChangeLebar}
-                    maxLength={100}
-                  />
-                  <div className="box-gram">
-                    <h4>cm</h4>
-                  </div>
-                </div>
-                <div className="gram">
-                  <input
-                    type="text"
-                    placeholder="Tinggi"
-                    value={value7}
-                    onChange={handleChangeTinggi}
-                    maxLength={100}
-                  />
-                  <div className="box-gram">
-                    <h4>cm</h4>
+                  <div className="bottom-input">
+                    <p>Tips : Jenis Produk + Keterangan Tambahan</p>
+                    <p>
+                      {inputText.length}/{characterLimit}
+                    </p>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="container-namaProduk">
-              <div className="pengiriman">
-                <div className="namapro-top">
-                  <h1>Layanan Pengiriman</h1>
-                </div>
-                <p>Atur layanan pengiriman sesuai jenis produkmu.</p>
-              </div>
-              <div className="input-pengiriman">
-                <div className="radion-button">
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="female"
-                      control={
-                        <Radio
-                          {...controlProps("a")}
-                          sx={{
-                            color: red[800],
-                            "&.Mui-checked": {
-                              color: red[600],
-                            },
-                          }}
-                        />
-                      }
-                      label="Standar"
-                    />
-                    <FormControlLabel
-                      value="male"
-                      control={
-                        <Radio
-                          {...controlProps("b")}
-                          sx={{
-                            color: red[800],
-                            "&.Mui-checked": {
-                              color: red[600],
-                            },
-                          }}
-                        />
-                      }
-                      label="Custom"
-                    />
-                  </RadioGroup>
-                </div>
-                <div className="info-pengiriman">
+              <div className="container-namaProduk">
+                <div className="namapro">
+                  <div className="namapro-top">
+                    <h1>Kategori</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
                   <p>
-                    Layanan pengiriman untuk produk ini akan sama dengan yang
-                    ada di
-                    <Link to={"/pengaturantoko"}> Pengaturan Pengiriman.</Link>
+                    Pilih Kategori sesuai dengan produk yang ingin kamu jual
                   </p>
                 </div>
+                <div className="dropdown-kategoripro">
+                  <select
+                    name="kategori"
+                    id="kategori"
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="">Kategori</option>
+                    {categories?.map((category) => {
+                      return (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="btn-eksekusi">
-          <button className="btn-btl">Batal</button>
-          <button className="btn-baru">Tambah Baru</button>
-        </div>
+          <div className="container-infoProduk">
+            <h2>Detail Produk</h2>
+            <div className="container-inputProduk">
+              <div className="container-namaProduk">
+                <div className="fotopro">
+                  <div className="namapro-top">
+                    <h1>Foto Produk</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
+                  <p>
+                    Format gambar .jpg .jpeg .png dan ukuran minimum 300 x 300px
+                    (Untuk gambar optimal gunakan ukuran minimum 700 x 700 px).
+                    <br />
+                    <br />
+                    Pilih foto produk atau tarik dan letakkan hingga 5 foto
+                    sekaligus di sini. Upload min. 3 foto yang menarik dan
+                    berbeda satu sama lain untuk menarik perhatian pembeli.
+                  </p>
+                </div>
+                <div className="inputFotoProduk">
+                  <div className="addImg">
+                    <label
+                      htmlFor="input-file"
+                      className={`file-label ${
+                        !selectedImagePath ? "no-border" : ""
+                      }`}
+                    >
+                      {selectedImagePath ? (
+                        <img
+                          src={selectedImagePath}
+                          width={150}
+                          height={150}
+                          alt="Uploaded"
+                          className="uploaded-image"
+                        />
+                      ) : (
+                        <>
+                          <BiImageAdd color="#606060" size={60} />
+                          <p>Foto Utama</p>
+                        </>
+                      )}
+                    </label>
+                    <input
+                      id="input-file"
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      className="input-field"
+                      onChange={handleImageChange1}
+                      hidden
+                    />
+                    {selectedImagePath && (
+                      <div className="upload-row">
+                        <span className="upload-content">
+                          <FiTrash2 onClick={() => setSelectedImagePath("")} />
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="addImg">
+                    <label
+                      htmlFor="input-file2"
+                      className={`file-label ${!image2 ? "no-border" : ""}`}
+                    >
+                      {image2 ? (
+                        <img
+                          src={image2}
+                          width={150}
+                          height={150}
+                          alt={fileName2}
+                          className="uploaded-image"
+                        />
+                      ) : (
+                        <>
+                          <BiImageAdd color="#606060" size={60} />
+                          <p>Foto 2</p>
+                        </>
+                      )}
+                    </label>
+                    <input
+                      id="input-file2"
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      className="input-field"
+                      onChange={handleImageChange2}
+                      hidden
+                    />
+                    {image2 && (
+                      <div className="upload-row">
+                        <span className="upload-content">
+                          <FiTrash2 onClick={handleImageRemove2} />
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="addImg">
+                    <label
+                      htmlFor="input-file3"
+                      className={`file-label ${!image3 ? "no-border" : ""}`}
+                    >
+                      {image3 ? (
+                        <img
+                          src={image3}
+                          width={150}
+                          height={150}
+                          alt={fileName3}
+                          className="uploaded-image"
+                        />
+                      ) : (
+                        <>
+                          <BiImageAdd color="#606060" size={60} />
+                          <p>Foto 3</p>
+                        </>
+                      )}
+                    </label>
+                    <input
+                      id="input-file3"
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      className="input-field"
+                      onChange={handleImageChange3}
+                      hidden
+                    />
+                    {image3 && (
+                      <div className="upload-row">
+                        <span className="upload-content">
+                          <FiTrash2 onClick={handleImageRemove3} />
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="addImg">
+                    <label
+                      htmlFor="input-file4"
+                      className={`file-label ${!image4 ? "no-border" : ""}`}
+                    >
+                      {image4 ? (
+                        <img
+                          src={image4}
+                          width={150}
+                          height={150}
+                          alt={fileName4}
+                          className="uploaded-image"
+                        />
+                      ) : (
+                        <>
+                          <BiImageAdd color="#606060" size={60} />
+                          <p>Foto 4</p>
+                        </>
+                      )}
+                    </label>
+                    <input
+                      id="input-file4"
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      className="input-field"
+                      onChange={handleImageChange4}
+                      hidden
+                    />
+                    {image4 && (
+                      <div className="upload-row">
+                        <span className="upload-content">
+                          <FiTrash2 onClick={handleImageRemove4} />
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="addImg">
+                    <label
+                      htmlFor="input-file5"
+                      className={`file-label ${!image5 ? "no-border" : ""}`}
+                    >
+                      {image5 ? (
+                        <img
+                          src={image5}
+                          width={150}
+                          height={150}
+                          alt={fileName5}
+                          className="uploaded-image"
+                        />
+                      ) : (
+                        <>
+                          <BiImageAdd color="#606060" size={60} />
+                          <p>Foto 5</p>
+                        </>
+                      )}
+                    </label>
+                    <input
+                      id="input-file5"
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      className="input-field"
+                      onChange={handleImageChange5}
+                      hidden
+                    />
+                    {image5 && (
+                      <div className="upload-row">
+                        <span className="upload-content">
+                          <FiTrash2 onClick={handleImageRemove5} />
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="kondisi">
+                <div className="kondisipro">
+                  <div className="namapro-top">
+                    <h1>Kondisi</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
+                  <div className="radion-button">
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      value={kondisiProduk}
+                      onChange={handleKondisiChange}
+                    >
+                      <FormControlLabel
+                        value="baru"
+                        control={<Radio />}
+                        label="baru"
+                      />
+                      <FormControlLabel
+                        value="bekas"
+                        control={<Radio />}
+                        label="bekas"
+                      />
+                    </RadioGroup>
+                  </div>
+                </div>
+              </div>
+              <div className="container-namaProduk">
+                <div className="deskripsipro">
+                  <div className="namapro-top">
+                    <h1>Deskripsi Produk</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
+                  <p>
+                    Pastikan deskripsi produk memuat penjelasan detail terkait
+                    produkmu agar pembeli mudah mengerti dan menemukan produkmu.
+                    <br />
+                    <br />
+                    Disarankan untuk tidak memasukkan info nomor HP, e-mail,
+                    dsb. ke dalam deskripsi produk untuk melindungi data
+                    pribadimu.
+                  </p>
+                </div>
+                <div className="inputNamaProduk">
+                  <textarea
+                    placeholder="Tulis Deskripsi yang unik untuk produk kamu untuk menarik pembeli"
+                    value={deskripsiProduk}
+                    onChange={handleDeskripsiChange}
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="container-infoProduk">
+            <h2>Harga</h2>
+            <div className="container-inputProduk">
+              <div className="container-namaProduk">
+                <div className="minimumPro">
+                  <div className="namapro-top">
+                    <h1>Minimum Pemesanan</h1>
+                  </div>
+                  <p>Atur jumlah minimum yang harus dibeli untuk produk ini.</p>
+                </div>
+                <div className="inputHargaProduk">
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={handleChangeNumber}
+                    maxLength={5}
+                  />
+                </div>
+              </div>
+              <div className="container-namaProduk">
+                <div className="hargapro">
+                  <div className="namapro-top">
+                    <h1>Harga Satuan</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
+                  <p>Masukkan Harga untuk Produk anda.</p>
+                </div>
+                <div className="harga-satuan">
+                  <div className="box-harga-satuan">
+                    <h4>Rp</h4>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Masukkan Harga"
+                    value={value2}
+                    onChange={handleChangeNumber2}
+                    maxLength={100}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="container-infoProduk">
+            <h2>Pengelolaan Produk</h2>
+            <div className="container-inputProduk">
+              <div className="container-namaProduk">
+                <div className="minimumPro">
+                  <div className="namapro-top">
+                    <h1>Stok Produk</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="inputHargaProduk">
+                  <input
+                    type="text"
+                    value={value3}
+                    onChange={handleChangeStok}
+                    maxLength={100}
+                    placeholder="Masukkan Jumlah Stok"
+                  />
+                </div>
+              </div>
+              <div className="container-namaProduk">
+                <div className="hargapro">
+                  <div className="namapro-top">
+                    <h1>SKU (Stock Keeping Unit)</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
+                  <p>
+                    Gunakan kode unik SKU jika kamu ingin menandai produkmu.
+                  </p>
+                </div>
+                <div className="harga-satuan">
+                  <input
+                    type="text"
+                    value={sku}
+                    onChange={handleSKUChange}
+                    placeholder="Masukkan SKU"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="container-infoProduk">
+            <h2>Berat dan Pengiriman</h2>
+            <div className="container-inputProduk">
+              <div className="container-namaProduk">
+                <div className="beratPro">
+                  <div className="namapro-top">
+                    <h1>Berat Produk</h1>
+                    <div className="box-wajib">
+                      <p>Wajib</p>
+                    </div>
+                  </div>
+                  <p>Masukkan berat dengan menimbang produk setelah dikemas.</p>
+                </div>
+                <div className="gram">
+                  <input
+                    type="text"
+                    placeholder="Berat Produk"
+                    value={value4}
+                    onChange={handleChangeBerat}
+                    maxLength={100}
+                  />
+                  <div className="box-gram">
+                    <h4>gram</h4>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="container-namaProduk">
+                <div className="ukuranpro">
+                  <div className="namapro-top">
+                    <h1>Ukuran Produk</h1>
+                  </div>
+                  <p>
+                    Masukkan ukuran produk setelah dikemas untuk menghitung
+                    berat volume
+                  </p>
+                </div>
+                <div className="input-ukuranpro">
+                  <div className="gram">
+                    <input
+                      type="text"
+                      placeholder="Panjang"
+                      value={value5}
+                      onChange={handleChangePanjang}
+                      maxLength={100}
+                    />
+                    <div className="box-gram">
+                      <h4>cm</h4>
+                    </div>
+                  </div>
+                  <div className="gram">
+                    <input
+                      type="text"
+                      placeholder="Lebar"
+                      value={value6}
+                      onChange={handleChangeLebar}
+                      maxLength={100}
+                    />
+                    <div className="box-gram">
+                      <h4>cm</h4>
+                    </div>
+                  </div>
+                  <div className="gram">
+                    <input
+                      type="text"
+                      placeholder="Tinggi"
+                      value={value7}
+                      onChange={handleChangeTinggi}
+                      maxLength={100}
+                    />
+                    <div className="box-gram">
+                      <h4>cm</h4>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+              <div className="container-namaProduk">
+                <div className="pengiriman">
+                  <div className="namapro-top">
+                    <h1>Layanan Pengiriman</h1>
+                  </div>
+                  <p>Atur layanan pengiriman sesuai jenis produkmu.</p>
+                </div>
+                <div className="input-pengiriman">
+                  <div className="radion-button">
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                    >
+                      <FormControlLabel
+                        value="female"
+                        control={
+                          <Radio
+                            {...controlProps("a")}
+                            sx={{
+                              color: red[800],
+                              "&.Mui-checked": {
+                                color: red[600],
+                              },
+                            }}
+                          />
+                        }
+                        label="Standar"
+                      />
+                      <FormControlLabel
+                        value="male"
+                        control={
+                          <Radio
+                            {...controlProps("b")}
+                            sx={{
+                              color: red[800],
+                              "&.Mui-checked": {
+                                color: red[600],
+                              },
+                            }}
+                          />
+                        }
+                        label="Custom"
+                      />
+                    </RadioGroup>
+                  </div>
+                  <div className="info-pengiriman">
+                    <p>
+                      Layanan pengiriman untuk produk ini akan sama dengan yang
+                      ada di
+                      <Link to={"/pengaturantoko"}>
+                        {" "}
+                        Pengaturan Pengiriman.
+                      </Link>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="btn-eksekusi">
+            <button className="btn-btl">Batal</button>
+            <button className="btn-baru">Tambah Baru</button>
+          </div>
+        </form>
       </div>
     </div>
   );
