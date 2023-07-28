@@ -30,6 +30,10 @@ function Whislist() {
 
   // Menghitung total halaman
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  
+  useEffect(() => {
+    getWishlist();
+  }, []);
 
   // Mengambil data produk sesuai dengan halaman saat ini
   const currentItems = filteredData.slice(
@@ -45,19 +49,19 @@ function Whislist() {
 
   const handleSortChange = (event) => {
     const sortBy = event.target.value;
-    console.log("Selected Sort Option:", sortBy); 
+    console.log("Selected Sort Option:", sortBy);
     let sortedData = [...filteredData];
-  
+
     if (sortBy in sortingOptions) {
       sortedData.sort(sortingOptions[sortBy]);
       setSelectedSortOption(sortBy);
     }
     setFilteredData(sortedData);
   };
-  
+
   const handleCategoryFilterChange = (event) => {
     const category = event.target.value;
-    console.log("Selected Category:", category); 
+    console.log("Selected Category:", category);
     setSelectedCategory(category);
 
     // Filter the data based on the selected category
@@ -150,10 +154,6 @@ function Whislist() {
     }
   };
 
-  useEffect(() => {
-    getWishlist();
-  }, []);
-
   const productList = whislistData.map((item) => {
     const isProductInWishlist = checkIfProductInWishlist(item.product.id); // Implement your logic to check if product is in the wishlist
     return (
@@ -192,12 +192,12 @@ function Whislist() {
             <h3 className="urutkan-teks">Urutkan</h3>
             <div className="center">
               <select
-               name="sortBy"
-               id="sortBy"
-               className="custom-select sources"
-               value={selectedSortOption}
-               onChange={handleSortChange}
-              > 
+                name="sortBy"
+                id="sortBy"
+                className="custom-select sources"
+                value={selectedSortOption}
+                onChange={handleSortChange}
+              >
                 <option value="terbaru">Terbaru</option>
                 <option value="harga-tinggi">Harga Tertinggi</option>
                 <option value="harga-rendah">Harga Terendah</option>
@@ -208,9 +208,10 @@ function Whislist() {
         <div className="filter">
           <div className="acc-filter">
             <h2 className="name-filter">Filter</h2>
-            <FilterWhis selectedCategory={selectedCategory}
+            <FilterWhis
+              selectedCategory={selectedCategory}
               onCategoryChange={handleCategoryFilterChange}
-             />
+            />
           </div>
           <div className="card-barang">
             <h2 className="barang">Barang</h2>

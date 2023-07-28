@@ -31,9 +31,13 @@ function Keranjang() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState([]);
+  const [whislistData, setDataWhislist] = useState([]);
+  const firstThreeWishlistItems = whislistData.slice(0, 2);
 
   useEffect(() => {
     getCart();
+    getWishlist();
     window.scrollTo(0, 0);
     return () => {
       localStorage.removeItem("selectedItems");
@@ -257,6 +261,26 @@ function Keranjang() {
     }
   };
 
+  const getWishlist = async () => {
+    try {
+      const response = await axios.get(apiurl() + "wishlist/all", {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      });
+      if (response.status === 200) {
+        setDataWhislist(response.data.data);
+        setFilteredData(response.data.data);
+      } else {
+      }
+    } catch (error) {
+      console.error("Gagal menambahkan produk ke wishlist:", error);
+      handleErrorAlertOpen();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (isProductSelected()) {
       const selectedProducts = product.filter((item) =>
@@ -302,7 +326,7 @@ function Keranjang() {
 
   function renderEmptyCart() {
     return (
-      <div className="epty-cart">
+      <div className="empty-cart">
         <img src={imgbelanja} alt="" loading="lazy" />
         <h2>Keranjang Anda Kosong</h2>
         <p>Anda belum menambahkan produk apapun ke dalam keranjang.</p>
@@ -414,58 +438,34 @@ function Keranjang() {
               <div className="wishlist-kamu">
                 <h1>Wujudkan Whislist Anda!</h1>
                 <div className="wishlist-pro-kamu">
-                  <div className="pro-wishlist-cart">
-                    <div className="item-wishlist-cart">
-                      <div className="img-wishlist-cart">
-                        <img src={ImgProduk} alt="" />
-                      </div>
-                      <div className="nama-wishlist-cart">
-                        <h3>Jual Tablet Xiaomi Mi Pad 4 4/64Gb</h3>
-                        <span>Rp 6.000.000</span>
-                        <div className="toko-wishlist-cart">
-                          <div className="img-toko-wishlist-cart">
-                            <img src={ImgCartToko} alt="" />
-                          </div>
-                          <div className="nama-toko-wishlist-cart">
-                            <h4>Nama Toko</h4>
+                  {firstThreeWishlistItems.map((item) => (
+                    <div key={item.id} className="pro-wishlist-cart">
+                      <div className="item-wishlist-cart">
+                        <div className="img-wishlist-cart">
+                          <img src={item.product.picturePath} alt="" />
+                        </div>
+                        <div className="nama-wishlist-cart">
+                          <h3>{item.product.name}</h3>
+                          <span>{formatPrice(item.product.price)}</span>
+                          <div className="toko-wishlist-cart">
+                            <div className="img-toko-wishlist-cart">
+                              <img src={ImgCartToko} alt="" />
+                            </div>
+                            <div className="nama-toko-wishlist-cart">
+                              <h4>Nama Toko</h4>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="wishlist-bottom-action">
-                      <BsTrash3 className="icon-bottom-action" />
-                      <div className="btn-keranjang-action">
-                        <AiOutlinePlus className="icon-btn-keranjang-icon" />
-                        <span>Keranjang</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="pro-wishlist-cart">
-                    <div className="item-wishlist-cart">
-                      <div className="img-wishlist-cart">
-                        <img src={ImgProduk} alt="" />
-                      </div>
-                      <div className="nama-wishlist-cart">
-                        <h3>Jual Tablet Xiaomi Mi Pad 4 4/64Gb</h3>
-                        <span>Rp 6.000.000</span>
-                        <div className="toko-wishlist-cart">
-                          <div className="img-toko-wishlist-cart">
-                            <img src={ImgCartToko} alt="" />
-                          </div>
-                          <div className="nama-toko-wishlist-cart">
-                            <h4>Nama Toko</h4>
-                          </div>
+                      <div className="wishlist-bottom-action">
+                        <BsTrash3 className="icon-bottom-action" />
+                        <div className="btn-keranjang-action">
+                          <AiOutlinePlus className="icon-btn-keranjang-icon" />
+                          <span>Keranjang</span>
                         </div>
                       </div>
                     </div>
-                    <div className="wishlist-bottom-action">
-                      <BsTrash3 className="icon-bottom-action" />
-                      <div className="btn-keranjang-action">
-                        <AiOutlinePlus className="icon-btn-keranjang-icon" />
-                        <span>Keranjang</span>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </>

@@ -11,7 +11,7 @@
 }
 
 .content {
-   margin: 50px 10px 50px 10px;
+    margin: 50px 10px 50px 10px;
 }
 
 .search-riwayat {
@@ -212,4 +212,263 @@ input[type="text"]:focus {
     margin-bottom: 20px;
 }
 
+.modal-content-detail-transaksi {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    overflow-y: scroll;
+    max-width: 900px;
+    height: 800px;
+}
 
+.top-modal-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    background-color: #fff;
+}
+
+.top-modal-content h1 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+}
+
+.top-modal-content svg {
+    font-size: 40px;
+    cursor: pointer;
+    color: #0000008a;
+}
+
+.top-modal-content svg:hover {
+    background-color: #fb67674d;
+    border-radius: 5px;
+}
+
+.line-top-modal-content {
+    width: 100%;
+    height: 1px;
+    background-color: #0000008a;
+}
+
+.modal-content-detail-transaksi .title-status h1 {
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    margin: 15px 0;
+}
+
+.content-info-pesanan-invoice {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 15px;
+    background: #FFF;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
+    gap: 11px;
+}
+
+.content-info-pesanan-invoice .no-invoice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.no-invoice h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #727272;
+}
+
+.no-invoice span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #EF233C;
+}
+
+.content-info-pesanan-invoice .info-pengiriman-user {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.info-pengiriman-user h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #727272;
+}
+
+.info-pengiriman-user span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #EF233C;
+}
+
+.content-info-pesanan-invoice .tanggal-pembelian {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    margin: 10px 0;
+}
+
+.tanggal-pembelian h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #727272;
+}
+
+.tanggal-pembelian span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #EF233C;
+}
+
+.content-info-pesanan-invoice .tanggal-pembelian-user {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    gap: 20px;
+}
+
+.tanggal-pembelian-user h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #727272;
+}
+
+.tanggal-pembelian-user span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #EF233C;
+}
+
+.tanggal-pembelian-user .alamat-user-pembelian {
+    font-size: 14px;
+    font-weight: 500;
+    color: #EF233C;
+}
+
+.title-detail-riwayat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-content-detail-transaksi .title-detail-riwayat h1 {
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    margin: 15px 0;
+}
+
+.title-detail-riwayat .btn-riawayat-toko {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.btn-riawayat-toko svg {
+    font-size: 19px;
+    color: #EF233C;
+}
+
+.btn-riawayat-toko h2 {
+    font-size: 14px;
+    color: #EF233C;
+    font-weight: 500;
+}
+
+.content-info-pesanan-produk {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 15px;
+    background: #FFF;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
+    gap: 72px;
+}
+
+.produk-pesanan-info {
+    display: flex;
+    align-items: start;
+    gap: 15px;
+}
+
+.produk-pesanan-info .img-produk img {
+    width: 50px;
+    height: 50px;
+}
+
+.produk-pesanan-info .info-produk {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.produk-pesanan-info .info-produk h2 {
+    color: #000;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.line-content-info-pesanan-produk {
+    background-color: #000;
+    width: 1px;
+    height: 120px;
+
+}
+
+.produk-pesanan-info-total {
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    width: 50%;
+    gap: 15px;
+}
+
+.total-produk-pesanan-info h1 {
+    color: #727272;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: right;
+}
+
+.btn-beli-lagi-info {
+    width: 150px;
+    height: 30px;
+    flex-shrink: 0;
+    background-color: #ffff;
+    border-radius: 5px;
+    border: 1px solid #EF233C;
+    color: #EF233C;
+    font-weight: 500;
+}
+
+.info-pengiriman-rincian-biaya {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.info-pengiriman-rincian-biaya .info-pengiriman-riwayat {
+    width: 50%;
+}
+
+.info-pengiriman-rincian-biaya .rincian-biaya-riwayat {
+    width: 50%;
+}
