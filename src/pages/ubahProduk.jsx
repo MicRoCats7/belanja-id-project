@@ -10,11 +10,13 @@ import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { red } from "@mui/material/colors";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { Link } from "react-router-dom";
+import token from "../utils/token";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-function TambahProduk() {
+function UbahProduk() {
+  const [productToEdit, setProductToEdit] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [inputText, setInputText] = useState("");
+  const [name, setInputText] = useState("");
   const [storeName, setProductName] = useState("");
   const [characterLimit] = useState(70);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -24,12 +26,18 @@ function TambahProduk() {
   const [selectedImagePath, setSelectedImagePath] = useState("");
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const { id } = useParams();
+  const [products, setProducts] = useState([]); 
+  const navigate = useNavigate();
+  const [file, setFile] = useState(null);
+
 
   const handleSKUChange = (event) => {
     // Mengonversi nilai input menjadi huruf besar semua sebelum menyimpannya ke dalam state
     const uppercaseSKU = event.target.value.toUpperCase();
     setSKU(uppercaseSKU);
   };
+
   const handleKondisiChange = (event) => {
     // Mengubah nilai kondisiProduk ke huruf kecil sebelum disimpan di state
     setKondisiProduk(event.target.value.toLowerCase());
@@ -46,11 +54,15 @@ function TambahProduk() {
   const [image5, setImage5] = useState(null);
   const [fileName5, setFileName5] = useState("No Selected file");
   // event handler
-  const handleChange = (event) => {
+
+
+
+const handleChangeName = (event) => {
     setInputText(event.target.value);
-  };
+};
 
   useEffect(() => {
+    getProductByUserId();
     getCategories();
   }, []);
 
@@ -64,42 +76,105 @@ function TambahProduk() {
       .catch((error) => console.error(error));
   }
 
+  function getProductByUserId() {
+    axios
+      .get(apiurl() + "products", {
+        params: {
+          id: id,
+        },
+      })
+      .then((response) => {
+        const productData = response.data.data;
+        setProductToEdit(productData);
+        setInputText(productData.name);
+        setSelectedCategory(productData.category_id);
+        setKondisiProduk(productData.kondisi_produk);
+        setDeskripsiProduk(productData.description);
+        setSKU(productData.sku);
+        setSelectedImagePath(productData.picturePath);
+        setValue3(productData.quantity);
+        setValue2(productData.price);
+        setValue4(productData.weight);
+        console.log("Data produk dari server:", response.data.data);
+      })
+      .catch((error) => console.error(error));
+  }
+
   const onSubmit = async (event) => {
+    event.preventDefault();
+
+    const updatedProduct = {
+        name: name, 
+        category_id: selectedCategory,
+        kondisi_produk: kondisiProduk,
+        description: deskripsiProduk,
+        quantity: value3,
+        price: value2,
+        sku: sku,
+        weight: value4,
+        slug: "pakaian",
+        // picturePath: selectedImagePath,
+      };
+
+    const headers = {
+      Authorization: `Bearer ${token()}`,
+    };
+
+    axios
+      .put(apiurl() + "products/edit/" + id, updatedProduct, { headers })
+      .then((response) => {
+        console.log("Product updated successfully:", response.data);
+        setSuccessAlertOpen(true);
+        const updatedProductIndex = products.findIndex((p) => p.id === id);
+        if (updatedProductIndex !== -1) {
+          const updatedProducts = [...products];
+          updatedProducts[updatedProductIndex] = {
+            ...updatedProducts[updatedProductIndex],
+            name: name,
+            category_id: selectedCategory,
+            kondisi_produk: kondisiProduk,
+            description: deskripsiProduk,
+            quantity: value3,
+            price: value2,
+            sku: sku,
+            slug: "pakaian",
+            weight: value4,
+            // picturePath: selectedImagePath,
+          };
+          setProducts(updatedProducts);
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating product:", error);
+        setErrorAlertOpen(true);
+      });
+  };
+
+
+  const updatePhoto = async (event) => {
     event.preventDefault();
 
     try {
       const formData = new FormData();
-      formData.append("name", inputText);
-      formData.append("price", value2);
-      formData.append("description", deskripsiProduk);
-      formData.append("weight", value4);
-      formData.append("quantity", value3);
-      formData.append("sku", sku);
-      formData.append("category_id", selectedCategory);
-      formData.append("kondisi_produk", kondisiProduk);
-      formData.append("picturePath", selectedImagePath);
-      formData.append("slug", "pakaian");
+      formData.append("picturePath  ", selectedImagePath);
 
-      const token = localStorage.getItem("token"); // Ganti dengan token akses yang valid
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: "Bearer " + token,
-        },
-      };
       const response = await axios.post(
-        apiurl() + "products/post",
+        `apiurl() + "products/${id}/updatePhoto`,
         formData,
-        config
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token()}`,
+          },
+        }
       );
-      handleSuccessAlertToko();
-      const newProductData = response.data.data;
-      console.log("Produk berhasil ditambahkan:", newProductData);
+      console.log("Photo updated successfully:", response.data);
+      setFile(null);
     } catch (error) {
-      handleErrorAlertToko();
-      console.error("Error saat menambahkan produk:", error);
+      console.error("Failed to update photo:", error);
     }
   };
+
 
   const [selectedValue, setSelectedValue] = React.useState("a");
 
@@ -118,7 +193,6 @@ function TambahProduk() {
     name: "color-radio-button-demo",
     inputProps: { "aria-label": item },
   });
-
 
   const handleImageChange1 = (e) => {
     const file = e.target.files[0];
@@ -260,15 +334,15 @@ function TambahProduk() {
                   <input
                     type="text"
                     placeholder="Contoh : Sepatu pria (Jenis/Kategori Produk)"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    isInvalid={inputText.length > characterLimit}
+                    value={name}
+                    onChange={handleChangeName} 
+                    isInvalid={name.length > characterLimit}
                     maxLength={70}
                   />
                   <div className="bottom-input">
                     <p>Tips : Jenis Produk + Keterangan Tambahan</p>
                     <p>
-                      {inputText.length}/{characterLimit}
+                      {name.length}/{characterLimit}
                     </p>
                   </div>
                 </div>
@@ -658,7 +732,7 @@ function TambahProduk() {
             </div>
           </div>
           <div className="container-infoProduk">
-            <h2>Berat dan Pengiriman</h2>
+            <h2>Berat Produk</h2>
             <div className="container-inputProduk">
               <div className="container-namaProduk">
                 <div className="beratPro">
@@ -683,69 +757,11 @@ function TambahProduk() {
                   </div>
                 </div>
               </div>
-              <div className="container-namaProduk">
-                <div className="pengiriman">
-                  <div className="namapro-top">
-                    <h1>Layanan Pengiriman</h1>
-                  </div>
-                  <p>Atur layanan pengiriman sesuai jenis produkmu.</p>
-                </div>
-                <div className="input-pengiriman">
-                  <div className="radion-button">
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                    >
-                      <FormControlLabel
-                        value="female"
-                        control={
-                          <Radio
-                            {...controlProps("a")}
-                            sx={{
-                              color: red[800],
-                              "&.Mui-checked": {
-                                color: red[600],
-                              },
-                            }}
-                          />
-                        }
-                        label="Standar"
-                      />
-                      <FormControlLabel
-                        value="male"
-                        control={
-                          <Radio
-                            {...controlProps("b")}
-                            sx={{
-                              color: red[800],
-                              "&.Mui-checked": {
-                                color: red[600],
-                              },
-                            }}
-                          />
-                        }
-                        label="Custom"
-                      />
-                    </RadioGroup>
-                  </div>
-                  <div className="info-pengiriman">
-                    <p>
-                      Layanan pengiriman untuk produk ini akan sama dengan yang
-                      ada di
-                      <Link to={"/pengaturantoko"}>
-                        {" "}
-                        Pengaturan Pengiriman.
-                      </Link>
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div className="btn-eksekusi">
             <button className="btn-btl">Batal</button>
-            <button className="btn-baru">Tambah Baru</button>
+            <button className="btn-baru">Update Produk</button>
           </div>
         </form>
       </div>
@@ -760,7 +776,7 @@ function TambahProduk() {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Berhasil Menambahkan Product
+          Berhasil Mengubah Data Product
         </MuiAlert>
       </Snackbar>
       <Snackbar
@@ -774,11 +790,11 @@ function TambahProduk() {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Gagal Menambahkan product
+          Gagal Mengubah Data product
         </MuiAlert>
       </Snackbar>
     </div>
   );
 }
 
-export default TambahProduk;
+export default UbahProduk;

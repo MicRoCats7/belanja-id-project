@@ -20,6 +20,7 @@ import Keranjang from "./pages/keranjang";
 import { SkeletonTheme } from "react-loading-skeleton";
 import Detailtoko from "./pages/detailtoko";
 import Notifikasi from "./pages/notifikasi";
+import UbahProduk from "./pages/ubahProduk";
 
 function App() {
   return (
@@ -40,10 +41,11 @@ function App() {
           <Route path="/toko/*" element={<Toko />} />
           <Route path="/Event" element={<Event />} />
           <Route path="/detailevent/:id" element={<Detailevent />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search" element={<Search />} /> 
           <Route path="/cart" element={<Keranjang />} />
           <Route path="/detailtoko" element={<Detailtoko />} />
           <Route path="/notifikasi" element={<Notifikasi />} />
+          <Route path="/ubahProduk/:id" element={<UbahProduk />} />
         </Routes>
       </SkeletonTheme>
     </div>
