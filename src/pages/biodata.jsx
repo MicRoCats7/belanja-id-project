@@ -42,6 +42,7 @@ function Biodata() {
         });
         setProfile(response.data.data);
         setIsLoading(false);
+        console.log(response.data.data);
       } catch (error) {
         console.error(error);
         setIsLoading(false);

@@ -14,15 +14,17 @@ function Profile() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="nav-profil">
-      <Navbar />
-      <div className="parent">
-        <Sidebarprofile />
-        <Routes>
-          <Route path="/biodata" element={<Biodata />} />
-          <Route path="/riwayat" element={<Riwayat />} />
-          <Route path="/alamat" element={<Alamat />} />
-        </Routes>
+    <div className="main-profile-info">
+      <div className="nav-profil">
+        <Navbar />
+        <div className="parent">
+          <Sidebarprofile />
+          <Routes>
+            <Route path="/biodata" element={<Biodata />} />
+            <Route path="/riwayat" element={<Riwayat />} />
+            <Route path="/alamat/:id" element={<Alamat />} />
+          </Routes>
+        </div>
       </div>
       <Footer />
     </div>

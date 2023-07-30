@@ -113,23 +113,24 @@
 
 
 .input-district {
-  display: flex;
-  align-items: center;
-  width: 90%;
-  height: 40px;
-  border-radius: 5px;
-  background-color: #fff;
-  border: 1px solid #EF233C;
-  position: relative; /* Tambahkan properti position */
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #EF233C;
+    position: relative;
+    /* Tambahkan properti position */
 }
 
 .input-district input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  font-weight: normal;
-  padding: 0 10px;
-  background-color: #fff;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 10px;
+    background-color: #fff;
 }
 
 
@@ -147,72 +148,73 @@
     border: 1px solid #ced4da;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+}
 
 
 .input-district ul li {
     padding: 10px;
     font-size: 14px;
     cursor: pointer;
-  }
-  
-  .input-district ul li:hover {
-    background-color: #f5f5f5;
-  }
+}
 
-  .input-cities {
+.input-district ul li:hover {
+    background-color: #f5f5f5;
+}
+
+.input-cities {
     display: flex;
     align-items: center;
-    width: 90%;
+    width: 100%;
     height: 40px;
     margin-bottom: 15px;
     border-radius: 5px;
     background-color: #fff;
-    border: 1px solid #EF233C;
-    position: relative; /* Tambahkan properti position */
-  }
-  
-  .input-cities input {
+    border: 1px solid #e7a2aa;
+    position: relative;
+    /* Tambahkan properti position */
+}
+
+.input-cities input {
     border: none;
     outline: none;
     font-size: 14px;
     font-weight: normal;
     padding: 0 10px;
     background-color: #fff;
-  }
-  
-  
-  .input-cities ul {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      max-height: 200px;
-      overflow-y: auto;
-      margin-top: 7px;
-      padding: 0;
-      list-style: none;
-      background-color: #ffffff;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 2;
-    }
-  
-  
-  .input-cities ul li {
-      padding: 10px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    
-    .input-cities ul li:hover {
-      background-color: #f5f5f5;
-    }
+}
+
+
+.input-cities ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 7px;
+    padding: 0;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+
+.input-cities ul li {
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.input-cities ul li:hover {
+    background-color: #f5f5f5;
+}
 
 
 
-.kodepos{
+.kodepos {
     display: flex;
     align-items: center;
     width: 90%;
@@ -240,23 +242,23 @@
 .namatoko {
     display: flex;
     align-items: center;
-    width: 90%;
+    width: 100%;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid #EF233C;
+    border: 1px solid #e7a2aa;
     margin: 10px 0;
     background-color: #ffff;
-} 
+}
 
 
-.namatoko input{
+.namatoko input {
     border: none;
     outline: none;
     font-size: 14px;
     font-weight: normal;
     padding: 0 10px;
     background-color: #fff;
-} 
+}
 
 
 .namatoko input::placeholder {
@@ -295,12 +297,12 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    margin-top: 20px ;
+    margin-top: 20px;
     width: 100%;
     gap: 10px;
 }
 
-.btn-create-shop{
+.btn-create-shop {
     width: 30%;
     height: 40px;
     border-radius: 5px;
@@ -366,6 +368,7 @@
     margin-bottom: 5px;
     color: rgba(0, 0, 0, 0.5);
 }
+
 .input-provinsi-kota option {
     font-size: 14px;
     font-weight: normal;
@@ -374,10 +377,10 @@
 }
 
 .input-provinsi-kota {
-    width: 90%;
+    width: 100%;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid #EF233C;
+    border: 1px solid #e7a2aa;
     padding: 0 10px;
     appearance: none;
     background-image: url(../assets/icon/dropdown\ arrow.svg);
@@ -388,7 +391,7 @@
 }
 
 
-.message-container{
+.message-container {
     /* color: var(--NN950,#212121); */
     text-decoration: initial;
     font-weight: 400;
@@ -397,14 +400,14 @@
 }
 
 
-.no-usser{
-    color: var(--NN950,#212121);
+.no-usser {
+    color: var(--NN950, #212121);
     text-decoration: initial;
     font-weight: 400;
     font-size: 17 px;
 }
 
-.con-daftarToko .nama-user-daftartoko{
+.con-daftarToko .nama-user-daftartoko {
     margin-right: 6px;
     margin-left: 6px;
 }
