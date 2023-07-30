@@ -8,7 +8,6 @@ import axios from "axios";
 import apiurl from "../../utils/apiurl";
 import DeafultPhoto from "../../assets/icon/anonimprofile.jpg";
 
-
 function Sidebarprofile() {
   const [profile, setProfile] = useState({});
 
@@ -31,6 +30,8 @@ function Sidebarprofile() {
       }
     }
   };
+  // console.log(profile.user.id);
+  const userId = profile.user ? profile.user.id : null;
   return (
     <div className="parent">
       <div className="container-profile">
@@ -58,7 +59,11 @@ function Sidebarprofile() {
               <h3 className="text-profile">Riwayat Pesanan</h3>
             </div>
           </NavLink>
-          <NavLink to={"alamat"} activeclassName="active" className="linkk">
+          <NavLink
+            to={"alamat/" + userId}
+            activeclassName="active"
+            className="linkk"
+          >
             <div className="alamat" activeclassName="active">
               <TfiLocationPin />
               <h3 className="text-profile">Alamat</h3>

@@ -1,123 +1,149 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .box-alamat {
-    box-sizing: border-box;
-    height: 180px;
-    width: 80%;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 1px 6px 0 rgba(0,0,0,.12);
-    position: relative;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .contain{
-    width: 100%;
-  }
+.box-alamat {
+  box-sizing: border-box;
+  height: 180px;
+  width: 80%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.222);
+  margin-bottom: 20px;
+}
 
-  .nama-nomer-alamat {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-  }
+.contain {
+  width: 100%;
+  height: 100%;
+  margin-top: 50px;
+}
 
-  .nama-nomer-alamat h3 {
-    font-size: 13px;
-    font-weight: 500;
-  }
-  
-  .isi-alamat {
-    padding: 10px;
-    width: 100%;
-    margin-bottom: -8px;
-  }
+.nama-nomer-alamat {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
 
+.nama-nomer-alamat h3 {
+  font-size: 13px;
+  font-weight: 500;
+}
 
-  .text-alamat h3 {
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 20px;
-    color: #000000;
-    margin-bottom: 10px;
-  }
-  
-  .icon-checklist {
-    float: right;
-    margin-right: 20px;
-    color: #000000;
-  }
+.isi-alamat {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: -8px;
+}
 
-  .deskripsi-alamat{
-    font-size: 13px;
-    font-weight: 600;
-  }
-  
-  .opsi-alamat {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .opsi-alamat h3 {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-  }
+.text-alamat h3 {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 20px;
+  color: #000000;
+}
 
-  .line-atas{
-    position: relative;
-    left: 0;
-    height: 1px;
-    width: 100%;
-    background-color: #eaeff3;
-    margin: 12px 0;
-  }
+.icon-checklist {
+  float: right;
+  margin-right: 20px;
+  color: #000000;
+}
 
-  .line-bawah{
-    position: relative;
-    left: 0;
-    height: 1px;
-    width: 100%;
-    background-color: #eaeff3;
-    margin: 12px 0;
-  }
+.deskripsi-alamat {
+  font-size: 13px;
+  font-weight: 600;
+}
 
-  .desa-kecamatan{
-    color: rgba(0,0,0,.38);
-    font-size: 12px;
-    font-weight: 500;
-  }
+.opsi-alamat {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
-  .detail-alamat {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    color: #000000;
-  }
+.opsi-alamat h3 {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  margin-bottom: 5px;
+}
 
-  .edit-alamat{
-    font-size: 15px;
-    font-weight: 600;
-    color: #ef233c;
-  }
+.line-atas {
+  position: relative;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: #c6cacd;
+  margin: 12px 0;
+}
 
-  .btn-tambah {
-    color: #ef233c;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 7px 10px;
-    border: 1px solid #ef233c;
-    background-color: #ffffff;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s ease-in;
-    align-self: center;
-    margin: 50px 0 50px 0;
-  }
+.line-bawah {
+  position: relative;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: #c6cacd;
+  margin: 12px 0;
+}
 
-  
+.desa-kecamatan {
+  color: rgba(0, 0, 0, .38);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.deskripsi-alamat .detail-alamat {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.edit-alamat {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ef233c;
+}
+
+.btn-tambah {
+  color: #ef233c;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 7px 10px;
+  border: 1px solid #ef233c;
+  background-color: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+  align-self: center;
+  margin: 10px 0 50px 0;
+}
+
+.item-alamat {}
+
+.item-alamat-kosong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.text-alamat-kosong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-alamat-kosong img {
+  width: 300px;
+  height: 300px;
+}
+
+.text-alamat-kosong h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+}

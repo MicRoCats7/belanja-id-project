@@ -30,7 +30,7 @@ function Whislist() {
 
   // Menghitung total halaman
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  
+
   useEffect(() => {
     getWishlist();
   }, []);
@@ -155,6 +155,9 @@ function Whislist() {
   };
 
   const productList = whislistData.map((item) => {
+    if (!item.product || !item.product.id) {
+      return null; // Handle cases where item.product or item.product.id is null or undefined
+    }
     const isProductInWishlist = checkIfProductInWishlist(item.product.id); // Implement your logic to check if product is in the wishlist
     return (
       <Product
@@ -174,7 +177,13 @@ function Whislist() {
     );
   });
   function checkIfProductInWishlist(productId) {
-    return whislistData?.some((item) => item.product.id === productId);
+    if (!whislistData || whislistData.length === 0) {
+      return false; // Return false if wishlist data is null or empty
+    }
+
+    return whislistData.some(
+      (item) => item.product && item.product.id === productId
+    );
   }
 
   return (

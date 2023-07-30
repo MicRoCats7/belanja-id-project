@@ -1,6 +1,10 @@
 .nav-profil {
     overflow-x: hidden;
-    margin-top: 5%; 
+    margin-top: 5%;
+}
+
+.main-profile-info {
+    overflow-x: hidden;
 }
 
 .parent {

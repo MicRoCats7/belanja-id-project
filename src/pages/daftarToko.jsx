@@ -53,7 +53,7 @@ function DaftarToko() {
     try {
       const response = await axios.get(apiurl() + "provinces");
       const responseData = response.data;
-  
+
       if (responseData.meta && responseData.meta.code === 200) {
         const provincesData = responseData.data;
         // Tambahkan property 'province_name' pada setiap objek provinsi
@@ -113,7 +113,7 @@ function DaftarToko() {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + token,
-        }
+        },
       });
       handleSuccessAlertToko();
       const responseData = response.data;
@@ -224,49 +224,25 @@ function DaftarToko() {
     }
   };
 
-  const handleSearchCities = (e) => {
-    const keyword = e.target.value;
-    setSearchKeywordCity(keyword);
-
-    if (keyword === "") {
-      setSearchResultsCity([]);
-      setSearchResultsVisibleCity(false);
-    } else {
-      const filteredCities = cities.filter((city) =>
-        city.city_name.toLowerCase().includes(keyword.toLowerCase())
-      );
-      setSearchResultsCity(filteredCities);
-      setSearchResultsVisibleCity(true);
-    }
-
-    const selectedCityExists = searchResultsCity.some(
-      (city) => city.city_name === selectedCity.city_name
-    );
-    if (!selectedCityExists) {
-      setSelectedCity("");
-    }
-  };
-
   const handlePhoneChange = (event) => {
     setNomor(event.target.value);
   };
 
-  
   const handleProvinceChange = (e) => {
     const selectedId = e.target.value;
     setSelectedProvince(selectedId);
-  
+
     // Cari nama provinsi berdasarkan ID provinsi yang dipilih
     const selectedProvinceData = provinces.find(
       (province) => province.province_id === selectedId
     );
     setSelectedProvinceName(selectedProvinceData.province_name);
-  
+
     setSelectedCity(""); // Reset kota saat mengganti provinsi
     fetchCitiesByProvince(selectedId);
     setProvinceSelected(true);
     setSearchResultsVisibleCity(false);
-  };;
+  };
 
   const handleSelectCity = (city) => {
     setSelectedCity(city);
@@ -284,7 +260,6 @@ function DaftarToko() {
     setSelectedCityName(selectedCityData.city_name); // Simpan nama kota yang dipilih ke state
   };
 
-  
   return (
     <div className="daftar-main">
       <Navbar />

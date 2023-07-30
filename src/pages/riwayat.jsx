@@ -50,6 +50,19 @@ function Riwayat() {
       setIsLoading(false);
     }
   }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    // Return the formatted date string
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  }
+
   return (
     <div className="content">
       <div className="text-histori">
@@ -73,8 +86,8 @@ function Riwayat() {
                 <img src={BagIcon} alt="" />
                 <p className="text-belanja">Belanja</p>
                 <div className="data-verifikasi">{transaksi.status}</div>
-                <p>{transaksi.created_at}</p>
-                <p>{transaksi.id}</p>
+                <p>{formatDate(transaksi.created_at)}</p>
+                <p style={{ color: "red" }}>ID ORDER : {transaksi.id}</p>
               </div>
               <div className="toko-barang">
                 <img src={icontoko} alt="" />
@@ -82,13 +95,13 @@ function Riwayat() {
                   <div className="nama-toko">Sumbawa Official</div>
                 </div>
               </div>
-              <div className="info-detail-total" key={transaksi.product.id}>
+              <div className="info-detail-total" key={transaksi.product?.id}>
                 <div className="wrap">
                   <div className="images">
-                    <img src={transaksi.product.picturePath} alt="" />
+                    <img src={transaksi.product?.picturePath} alt="" />
                   </div>
                   <div className="info-detail-toko">
-                    <div className="nama-barang">{transaksi.product.name}</div>
+                    <div className="nama-barang">{transaksi.product?.name}</div>
                     <div className="total-barang">
                       {transaksi.quantity} barang
                     </div>

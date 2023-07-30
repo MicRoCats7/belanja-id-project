@@ -178,7 +178,7 @@ function Home() {
             <div className="slider-container">
               <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
-                spaceBetween={50}
+                spaceBetween={10}
                 slidesPerView={6}
                 navigation={{
                   prevEl: ".prev-arrow-1",
@@ -256,7 +256,7 @@ function Home() {
             <div className="slider-container">
               <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
-                spaceBetween={50}
+                spaceBetween={10}
                 slidesPerView={6}
                 navigation={{
                   prevEl: ".prev-arrow-2",
@@ -334,7 +334,7 @@ function Home() {
             <div className="slider-container">
               <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
-                spaceBetween={50}
+                spaceBetween={10}
                 slidesPerView={6}
                 navigation={{
                   prevEl: ".prev-arrow-3",
@@ -411,7 +411,7 @@ function Home() {
             <div className="slider-container">
               <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
-                spaceBetween={50}
+                spaceBetween={10}
                 slidesPerView={6}
                 navigation={{
                   prevEl: ".prev-arrow-4",
