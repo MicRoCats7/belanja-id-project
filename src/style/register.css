@@ -56,7 +56,7 @@
   margin-bottom: 10px;
 }
 
-.text-regis, form {
+.text-regis, .form-regist {
   max-width: 530px;
 }
 
@@ -103,7 +103,6 @@
 
 .btn-masukk {
   cursor: pointer;
-
   color: #FFFFFF;
   border-radius: 6px;
   font-weight: 600;

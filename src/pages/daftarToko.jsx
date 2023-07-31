@@ -30,16 +30,11 @@ function DaftarToko() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [districts, setDistricts] = useState([]);
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [searchKeywordCity, setSearchKeywordCity] = useState("");
   const [searchResultsCity, setSearchResultsCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   const [searchResultsVisibleCity, setSearchResultsVisibleCity] =
     useState(false);
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [searchResultsVisible, setSearchResultsVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -389,45 +384,6 @@ function DaftarToko() {
                                   </ul>
                                 </div>
                               )}
-                              {/* <p>Kecamatan</p>
-                              <div className="input-district">
-                                <input
-                                  type="text"
-                                  value={searchKeyword}
-                                  onChange={handleSearch}
-                                  placeholder="Pilih Kecamatan"
-                                />
-                                <ul
-                                  style={{
-                                    display: searchResultsVisible
-                                      ? "block"
-                                      : "none",
-                                  }}
-                                >
-                                  {searchResults.map((district) => (
-                                    <li
-                                      key={district.id}
-                                      onClick={() =>
-                                        handleSelectDistrict(district)
-                                      }
-                                    >
-                                      {district.name}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                              <p className="text-kode">Kode Pos</p>
-                              <div className="kodepos">
-                                <input
-                                  type="text"
-                                  name="zipcode"
-                                  className="form-input"
-                                  placeholder="Kode Pos"
-                                  value={zipcode}
-                                  onChange={(e) => setZipcode(e.target.value)}
-                                  required
-                                />
-                              </div> */}
                             </div>
                           </div>
                         </div>
