@@ -239,7 +239,7 @@ function TambahProduk() {
       <NavbarToko />
       <div className="container-tambahproduk">
         <h1>Tambah Produk</h1>
-        <form onSubmit={onSubmit}>
+        <form className="con-add-produk" onSubmit={onSubmit}>
           <div className="container-infoProduk">
             <h2>Informasi Produk</h2>
             <div className="container-inputProduk">
@@ -571,7 +571,7 @@ function TambahProduk() {
           <div className="container-infoProduk">
             <h2>Harga</h2>
             <div className="container-inputProduk">
-              <div className="container-namaProduk">
+              {/* <div className="container-namaProduk">
                 <div className="minimumPro">
                   <div className="namapro-top">
                     <h1>Minimum Pemesanan</h1>
@@ -586,7 +586,7 @@ function TambahProduk() {
                     maxLength={5}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="container-namaProduk">
                 <div className="hargapro">
                   <div className="namapro-top">
@@ -658,7 +658,7 @@ function TambahProduk() {
             </div>
           </div>
           <div className="container-infoProduk">
-            <h2>Berat dan Pengiriman</h2>
+            <h2>Berat</h2>
             <div className="container-inputProduk">
               <div className="container-namaProduk">
                 <div className="beratPro">
@@ -680,64 +680,6 @@ function TambahProduk() {
                   />
                   <div className="box-gram">
                     <h4>gram</h4>
-                  </div>
-                </div>
-              </div>
-              <div className="container-namaProduk">
-                <div className="pengiriman">
-                  <div className="namapro-top">
-                    <h1>Layanan Pengiriman</h1>
-                  </div>
-                  <p>Atur layanan pengiriman sesuai jenis produkmu.</p>
-                </div>
-                <div className="input-pengiriman">
-                  <div className="radion-button">
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                    >
-                      <FormControlLabel
-                        value="female"
-                        control={
-                          <Radio
-                            {...controlProps("a")}
-                            sx={{
-                              color: red[800],
-                              "&.Mui-checked": {
-                                color: red[600],
-                              },
-                            }}
-                          />
-                        }
-                        label="Standar"
-                      />
-                      <FormControlLabel
-                        value="male"
-                        control={
-                          <Radio
-                            {...controlProps("b")}
-                            sx={{
-                              color: red[800],
-                              "&.Mui-checked": {
-                                color: red[600],
-                              },
-                            }}
-                          />
-                        }
-                        label="Custom"
-                      />
-                    </RadioGroup>
-                  </div>
-                  <div className="info-pengiriman">
-                    <p>
-                      Layanan pengiriman untuk produk ini akan sama dengan yang
-                      ada di
-                      <Link to={"/pengaturantoko"}>
-                        {" "}
-                        Pengaturan Pengiriman.
-                      </Link>
-                    </p>
                   </div>
                 </div>
               </div>

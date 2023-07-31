@@ -645,7 +645,7 @@ const handleChangeName = (event) => {
           <div className="container-infoProduk">
             <h2>Harga</h2>
             <div className="container-inputProduk">
-              <div className="container-namaProduk">
+              {/* <div className="container-namaProduk">
                 <div className="minimumPro">
                   <div className="namapro-top">
                     <h1>Minimum Pemesanan</h1>
@@ -660,7 +660,7 @@ const handleChangeName = (event) => {
                     maxLength={5}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="container-namaProduk">
                 <div className="hargapro">
                   <div className="namapro-top">
