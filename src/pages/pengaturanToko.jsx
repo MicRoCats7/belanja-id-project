@@ -301,7 +301,9 @@ function PengaturanToko() {
           )}
           {activeTab === "pengiriman" && (
             <div className="pengaturan-tab">
-              <h1>Pengiriman</h1>
+              <div className="main-pengiriman">
+                <div className="container-asal-pengiriman"></div>
+              </div>
             </div>
           )}
         </div>
