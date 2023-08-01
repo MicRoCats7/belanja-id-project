@@ -119,7 +119,6 @@ function TambahProduk() {
     inputProps: { "aria-label": item },
   });
 
-
   const handleImageChange1 = (e) => {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {

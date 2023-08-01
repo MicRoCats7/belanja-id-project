@@ -54,8 +54,8 @@ function DaftarProduk() {
         },
       })
       .then((response) => {
-        console.log("Data produk dari server:", response.data.data.data);
-        setProduct(response.data.data.data);
+        console.log("Data produk dari server:", response.data.data);
+        setProduct(response.data.data);
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
@@ -81,22 +81,22 @@ function DaftarProduk() {
     } catch (error) {
       handleErrorAlertOpen();
       console.log("Gagal menghapus item dari API:", error);
-    }
+    }   
   };
 
-  useEffect(() => {
-    // Fetch the product list from the server
-    axios
-      .get(apiurl() + "products", {
-        headers: {
-          Authorization: `Bearer ${token()}`,
-        },
-      })
-      .then((response) => {
-        setProducts(response.data.data.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   // Fetch the product list from the server
+  //   axios
+  //     .get(apiurl() + "products", {
+  //       headers: {
+  //         Authorization: `Bearer ${token()}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setProducts(response.data.data.data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
 
   function getCategories() {
     axios

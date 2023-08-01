@@ -32,9 +32,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loading from "../component/loader/Loading";
 import LoadingCategories from "../component/loader/LoadingCategories";
 import Skeleton from "react-loading-skeleton";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [product, setProduct] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [banner, setBanners] = useState([]);
   const [isPrevArrowVisible, setIsPrevArrowVisible] = useState(false);
   const [isNextArrowVisible, setIsNextArrowVisible] = useState(true);
@@ -42,6 +44,9 @@ function Home() {
   const [isImgLoading, setIsImgLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [productsToShow, setProductsToShow] = useState(12);
+  const additionalProducts = 12;
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProduct();
@@ -54,7 +59,7 @@ function Home() {
     axios
       .get(apiurl() + "products")
       .then((response) => {
-        setProduct(response.data.data.data);
+        setProduct(response.data.data);
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
@@ -80,6 +85,26 @@ function Home() {
       })
       .catch((error) => console.error(error));
   }
+
+  const getProductsByCategory = async (categoryId) => {
+    try {
+      const response = await axios.get(apiurl() + `categories/${categoryId}`);
+      setProduct(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleLoadMore = () => {
+    setProductsToShow((prevCount) => prevCount + additionalProducts);
+  };
+
+  const handleCategorySelection = (categoryId) => {
+    setSelectedCategoryId(categoryId);
+    getProductsByCategory(categoryId);
+
+    navigate(`/categories/${categoryId}`);
+  };
 
   return (
     <div>
@@ -145,7 +170,10 @@ function Home() {
             ) : (
               categories.map((item) => {
                 return (
-                  <div className="kategori-produk">
+                  <div
+                    className="kategori-produk"
+                    onClick={() => handleCategorySelection(item.id)}
+                  >
                     <img
                       src={item.photo}
                       alt="icon kerajinan tangan"
@@ -492,24 +520,28 @@ function Home() {
                     <Loading cards={7} />
                   </div>
                 ) : (
-                  product?.map((item) => (
-                    <Product
-                      name={item.name}
-                      url={item.picturePath}
-                      location={item.product_origin}
-                      price={item.price}
-                      rating={item.rate}
-                      ulasan={item.review}
-                      stok={item.stok}
-                      id={item.id}
-                    />
-                  ))
+                  product
+                    .slice(0, productsToShow)
+                    .map((item) => (
+                      <Product
+                        name={item.name}
+                        url={item.picturePath}
+                        location={item.product_origin}
+                        price={item.price}
+                        rating={item.rate}
+                        ulasan={item.review}
+                        stok={item.stok}
+                        id={item.id}
+                      />
+                    ))
                 )}
               </div>
             </div>
-            <div className="container-btnSeemore">
-              <button>Muat Lebih Banyak</button>
-            </div>
+            {product.length > productsToShow && (
+              <div className="container-btnSeemore">
+                <button onClick={handleLoadMore}>Muat Lebih Banyak</button>
+              </div>
+            )}
           </div>
           <SimpleAccordion />
         </div>

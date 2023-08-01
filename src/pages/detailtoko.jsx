@@ -26,7 +26,7 @@ function Detailtoko() {
     axios
       .get(apiurl() + "products")
       .then((response) => {
-        setProduct(response.data.data.data);
+        setProduct(response.data.data);
         setIsLoading(false);
       })
       .catch((error) => console.error(error));

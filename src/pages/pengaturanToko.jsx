@@ -9,6 +9,8 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { HiOutlinePencil } from "react-icons/hi";
 import { Tooltip } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import axios from "axios";
+import apiurl from "../utils/apiurl";
 
 function PengaturanToko() {
   const [activeTab, setActiveTab] = useState("reviews");
@@ -26,9 +28,11 @@ function PengaturanToko() {
   ]);
   const [editingOpeningHours, setEditingOpeningHours] = useState([]);
   const tabRef = useRef(null);
+  const [cities, setCities] = useState([]);
 
   useEffect(
     () => {
+      fetchCitiesByProvince(22);
       calculateUnderlineStyle();
       if (editMode) {
         setEditingOpeningHours([...openingHours]);
@@ -37,6 +41,19 @@ function PengaturanToko() {
     [activeTab],
     [editMode]
   );
+
+  const fetchCitiesByProvince = async (provinceId) => {
+    try {
+      const response = await axios.get(
+        apiurl() + `cities?province_id=${provinceId}`
+      );
+      const data = response.data;
+      setCities(data.data);
+      console.log(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const calculateUnderlineStyle = () => {
     const activeTabElement = tabRef.current.querySelector(
@@ -301,7 +318,24 @@ function PengaturanToko() {
           )}
           {activeTab === "pengiriman" && (
             <div className="pengaturan-tab">
-              <h1>Pengiriman</h1>
+              <div className="main-pengiriman">
+                <div className="container-asal-pengiriman">
+                  <h1>Asal Pengiriman</h1>
+                  <div className="box-pilih-kota">
+                    <p>Kota atau Kecamatan</p>
+                    <div className="pilih-kota">
+                      <select name="" id="">
+                        <option value="">Pilih Kota</option>
+                        {/* Map the 'cities' state to generate options in the dropdown */}
+                        {cities.map((city) => (
+                          <option key={city.city_id}>{city.city_name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="container-pilih-pengiriman"></div>
+              </div>
             </div>
           )}
         </div>

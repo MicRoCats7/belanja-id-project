@@ -25,11 +25,12 @@ function Navbar() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [cartItemCount, setCartItemCount] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    getProfile();
-    getProduct();
     LoadProduk();
+    getProduct();
+    getProfile();
     getCategories();
   }, []);
 
@@ -96,18 +97,17 @@ function Navbar() {
   const LoadProduk = async () => {
     try {
       const response = await axios.get(apiurl() + "products");
-      setProdukList(response.data.data.data);
-      // console.log(response.data.data.data);
+      setProdukList(response.data.data);
+      // console.log(response.data.data);
     } catch (error) {
       console.error(error);
     }
   };
 
   const onSuggestHandler = (selectedSuggestion) => {
-    setText(selectedSuggestion);
-    setSuggestions([]);
-    navigate(`/search?query=${selectedSuggestion}`);
-    handleSearch(selectedSuggestion);
+    setText(selectedSuggestion); // Setel state "text" dengan teks yang dipilih dari saran
+    setSuggestions([]); // Kosongkan daftar saran setelah pencarian dilakukan
+    handleSearch(selectedSuggestion); // Panggil fungsi "handleSearch" dengan teks yang dipilih dari saran
   };
 
   const onChangeHandler = (text) => {
@@ -122,14 +122,21 @@ function Navbar() {
     setText(text);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (query) => {
     // Redirect to search page with the search text
-    navigate(`/search?query=${text}`);
+    navigate(`/search?query=${query}`);
+    const filteredProducts = produkList.filter((pro) => {
+      const regex = new RegExp(`${query}`, "gi");
+      return pro.name.match(regex);
+    });
+
+    setFilteredProducts(filteredProducts);
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      handleSearch(text);
+      setSuggestions([]);
     }
   };
 

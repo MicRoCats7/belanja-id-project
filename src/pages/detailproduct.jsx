@@ -64,9 +64,7 @@ function DetailProduct() {
       .get(apiurl() + "products")
       .then((response) => {
         setIsLoading(false);
-        let filteredData = response.data.data.data.filter(
-          (item) => item.id == id
-        );
+        let filteredData = response.data.data.filter((item) => item.id == id);
         if (filteredData.length > 0) {
           setDetail(filteredData);
         }
