@@ -27,6 +27,7 @@ function Navbar() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [cartItemCount, setCartItemCount] = useState([]);
+  const [searchClicked, setSearchClicked] = useState(false);
   const [shopName, setShopName] = useState(""); 
 
   useEffect(() => {
@@ -176,6 +177,15 @@ function Navbar() {
     }
   };
 
+  const handleInputBlur = () => {
+    setSearchClicked(false); // Sembunyikan dropdown ketika kehilangan fokus
+    // Hapus setTimeout dan setSuggestions([]) dari handleInputBlur
+  };
+
+  const handleInputClick = () => {
+    setSearchClicked(true); // Menampilkan dropdown ketika tombol pencarian diklik
+  };
+
   return (
     <>
       <div className="navbar">
@@ -204,12 +214,9 @@ function Navbar() {
                 placeholder="Cari Produk"
                 onChange={(e) => onChangeHandler(e.target.value)}
                 value={text}
-                onBlur={() => {
-                  setTimeout(() => {
-                    setSuggestions([]);
-                  }, 100);
-                }}
-                onKeyPress={handleKeyPress} // Handle key press event
+                onClick={handleInputClick} // Tambahkan event handler ketika input diklik
+                onBlur={handleInputBlur} // Tambahkan event handler ketika input kehilangan fokus (blur)
+                onKeyPress={handleKeyPress}
               />
               <button type="submit" onClick={handleSearch}>
                 Search
@@ -306,7 +313,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-      {suggestions && suggestions.length > 0 && (
+      {searchClicked && suggestions && suggestions.length > 0 && (
         <div className="dropdown-result">
           {suggestions.slice(0, 5).map((suggestion, i) => (
             <div
