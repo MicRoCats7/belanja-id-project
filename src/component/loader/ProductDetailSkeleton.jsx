@@ -11,7 +11,7 @@ const ProductDetailSkeleton = () => {
               <Skeleton key={index} height={100} width={100} />
             ))}
           </div>
-            <Skeleton height={400} width={500} />
+            <Skeleton height= {400} width={500} />
         </div>
         <div className="detail-product-desc">
           <h1>

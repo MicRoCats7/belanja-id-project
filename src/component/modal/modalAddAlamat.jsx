@@ -233,9 +233,9 @@ function ModalAlamat({ addNewAlamat }) {
       <>
         <form onSubmit={addAlamat}>
           {modal && (
-            <div className="modal-emails">
-              <div onClick={toggleModal} className="overlays"></div>
-              <div className="modals-contents">
+            <div className="modal-alamat">
+              <div onClick={toggleModal} className="overlay"></div>
+              <div className="modals-content-add-alamat">
                 <div className="text-diatas-popup">
                   <h3 className="judul-ubah-alamat">Tambah Alamat</h3>
                 </div>

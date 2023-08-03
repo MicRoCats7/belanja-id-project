@@ -60,7 +60,7 @@ function Sidebar() {
       icon: <BsPersonCheck fontSize={20} />,
     },
     {
-      path: "pengaturantoko",
+      path: "pengaturantoko/" + toko.id ,
       name: "Pengaturan",
       icon: <BsGear />
     },
