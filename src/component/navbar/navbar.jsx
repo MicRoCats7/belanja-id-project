@@ -19,18 +19,22 @@ function Navbar() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [toko, setToko] = useState([]); 
+  const [hasShop, setHasShop] = useState(false);
   const [produkList, setProdukList] = useState([]);
   const [text, setText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [cartItemCount, setCartItemCount] = useState([]);
+  const [shopName, setShopName] = useState(""); 
 
   useEffect(() => {
     getProfile();
     getProduct();
     LoadProduk();
     getCategories();
+    getToko();
   }, []);
 
   const getProfile = async () => {
@@ -72,6 +76,31 @@ function Navbar() {
       } catch (error) {
         console.error(error);
         setLoading(false);
+      }
+    }
+  };
+
+  const getToko = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "user/store", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setToko(response.data.data);
+        if (response.data.data) {
+          // Jika data toko ada (pengguna sudah memiliki toko), set nama toko di state shopName
+          setHasShop(true);
+          setShopName(response.data.data.name); // Simpan nama toko
+        } else {
+          setHasShop(false);
+        }
+        console.log("Data successfully fetched:", response.data.data);
+      } catch (error) {
+        setHasShop(false);
+        console.error("Error fetching data:", error);
       }
     }
   };
@@ -204,11 +233,29 @@ function Navbar() {
             <div className="line"></div>
             {localStorage.getItem("token") ? (
               <div className="myshop">
-                <div className="circle">
-                  <Link to={"/daftartoko"}>
-                    <img src={Icontoko} alt="icon keranjang" />
-                  </Link>
-                </div>
+                  {hasShop ? (
+                  // Tampilkan nama toko jika pengguna sudah memiliki toko
+                  <div className="circle">
+                    <Link to={"toko/hometoko"}>
+                      <img src={Icontoko} alt="icon keranjang" />
+                    </Link>
+                  </div>
+                ) : (
+                  // Tampilkan tombol daftar toko jika pengguna belum memiliki toko
+                  <div className="circle">
+                    <Link to={"/daftartoko"}>
+                      <img src={Icontoko} alt="icon keranjang" />
+                    </Link>
+                  </div>
+                )}
+                 {hasShop && (
+                  // Tampilkan nama toko di samping ikon toko jika pengguna sudah memiliki toko
+                  <div className="shop-name">
+                    <Link to={"toko/hometoko"}>
+                      <span>{shopName}</span>
+                    </Link>
+                  </div>
+                )}
                 <div className="drop-profile">
                   <div className="circle-photo">
                     <img

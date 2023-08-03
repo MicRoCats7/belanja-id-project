@@ -18,14 +18,14 @@ function Modaldate() {
 
   return (
     <>
-      <h3 onClick={toggleModal} className="ubah-email">
+      <h4 onClick={toggleModal} className="ubah-tanggal-user">
         Daftar
-      </h3>
+      </h4>
 
       {modal && (
-        <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
+        <div className="modal-date">
+          <div onClick={toggleModal} className="overlay-date"></div>
+          <div className="modal-content-date">
             <h3>Ubah Alamat</h3>
             <p>
               Anda hanya dapat mengatur tanggal lahirmu sekali. Pastikan Tanggal
