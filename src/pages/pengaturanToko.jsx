@@ -4,39 +4,44 @@ import { BsShop } from "react-icons/bs";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import gambartoko from "../assets/image/imgToko.svg";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import axios from "axios";
+import apiurl from "../utils/apiurl";
 import { HiOutlinePencil } from "react-icons/hi";
 import { Tooltip } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import ModalAddJadwal from "../component/modal/modalAddJadwal";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function PengaturanToko() {
   const [activeTab, setActiveTab] = useState("reviews");
   const [underlineStyle, setUnderlineStyle] = useState({});
+  const [jadwal, setJadwal] = useState([]); // Ensure the initial state is an empty array
+  const { id } = useParams();
   const [editMode, setEditMode] = useState(false);
   const mergedOpeningHours = [];
-  const [openingHours, setOpeningHours] = useState([
-    { days: [1], openingHour: "08:00", closingHour: "17:00" },
-    { days: [2], openingHour: "09:00", closingHour: "18:00" },
-    { days: [3], openingHour: "10:00", closingHour: "15:00" },
-    { days: [4], openingHour: "10:00", closingHour: "15:00" },
-    { days: [5], openingHour: "10:00", closingHour: "15:00" },
-    { days: [6], openingHour: "10:00", closingHour: "15:00" },
-    { days: [7], openingHour: "10:00", closingHour: "15:00" },
-  ]);
-  const [editingOpeningHours, setEditingOpeningHours] = useState([]);
+  const [editingOpeningHours, setEditingOpeningHours] = useState([...jadwal]);
   const tabRef = useRef(null);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
-  useEffect(
-    () => {
-      calculateUnderlineStyle();
-      if (editMode) {
-        setEditingOpeningHours([...openingHours]);
-      }
-    },
-    [activeTab],
-    [editMode]
-  );
+  useEffect(() => {
+    calculateUnderlineStyle();
+  }, [activeTab]); // Hanya gunakan activeTab sebagai dependency
+
+  useEffect(() => {
+    if (editMode) {
+      setEditingOpeningHours([...jadwal]); // Gunakan data jadwal saat editMode aktif
+    }
+  }, [editMode]);
+
+  useEffect(() => {
+    // When the jadwal state changes, update the editingOpeningHours state
+    setEditingOpeningHours([...jadwal]);
+  }, [jadwal]);
 
   const calculateUnderlineStyle = () => {
     const activeTabElement = tabRef.current.querySelector(
@@ -56,7 +61,7 @@ function PengaturanToko() {
   };
 
   const handleEditModeToggle = () => {
-    setEditingOpeningHours([...openingHours]);
+    setEditingOpeningHours([...jadwal]);
     setEditMode(true);
   };
 
@@ -66,45 +71,121 @@ function PengaturanToko() {
 
   // Mencetak hasil gabungan jam operasional
   mergedOpeningHours.forEach((entry) => {
-    const days = entry.days.join("-");
-    console.log(`${days}: ${entry.openingHour} - ${entry.closingHour}`);
+    const day = entry.day.join("-");
+    console.log(`${day}: ${entry.open_time} - ${entry.close_time}`);
   });
 
-  const handleOpeningHourChange = (event, entryIndex) => {
-    const value = event.target.value;
-    setEditingOpeningHours((prevHours) => {
-      const updatedHours = [...prevHours];
-      updatedHours[entryIndex].openingHour = value;
-      return updatedHours;
-    });
-  };
-  const handleSaveHours = () => {
-    setOpeningHours([...editingOpeningHours]);
-    setEditMode(false);
+  const dayIdMap = {
+    Senin: 1,
+    Selasa: 2,
+    Rabu: 3,
+    Kamis: 4,
+    Jumat: 5,
+    Sabtu: 6,
+    Minggu: 7,
   };
 
-  const formatDays = (days) => {
-    const dayNames = [
-      "Senin",
-      "Selasa",
-      "Rabu",
-      "Kamis",
-      "Jumat",
-      "Sabtu",
-      "Minggu",
-    ];
-    const formattedDays = days.map((day) => dayNames[day - 1]);
-    return formattedDays.join("-");
+  // const handleOpeningHourChange = (event, entryIndex) => {
+  //   const value = event.target.value;
+  //   setEditingOpeningHours((prevHours) => {
+  //     const updatedHours = [...prevHours];
+  //     updatedHours[entryIndex].openingHour = value;
+  //     return updatedHours;
+  //   });
+  // };
+
+  const handleOpeningHourChange = (event, entryIndex) => {
+    const { name, value } = event.target;
+    setEditingOpeningHours((prevHours) => {
+      const updatedHours = [...prevHours];
+      updatedHours[entryIndex][name] = value;
+      return updatedHours;
+    });
   };
 
   const handleClosingHourChange = (event, entryIndex) => {
-    const value = event.target.value;
+    const { name, value } = event.target;
     setEditingOpeningHours((prevHours) => {
       const updatedHours = [...prevHours];
-      updatedHours[entryIndex].closingHour = value;
+      updatedHours[entryIndex][name] = value;
       return updatedHours;
     });
   };
+
+  const handleSaveHours = () => {
+    setEditMode(false);
+    setJadwal([...editingOpeningHours]);
+    updateJadwalOperasional();
+  };
+
+  function getJadwalOperasional() {
+    axios
+      .get(apiurl() + "store/all-operating-hours", {
+        params: {
+          store_id: id,
+        },
+      })
+      .then((response) => {
+        console.log("Data Jadwal dari server:", response.data.data[0]);
+        const data = response.data.data[0].operating_hours;
+        if (data && data.length > 0) {
+          setJadwal(data);
+          setEditingOpeningHours(data); // Perbarui juga editingOpeningHours
+        } else {
+          setJadwal([]); // Set to empty array if there's no data
+          setEditingOpeningHours([]); // Perbarui juga editingOpeningHours jika tidak ada data
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function updateJadwalOperasional() {
+    editingOpeningHours.forEach((entry) => {
+      const dayName = entry.day;
+      const dayId = dayIdMap[dayName];
+
+      if (!dayId) {
+        console.error(`Invalid day name: ${dayName}`);
+        return; // Skip the current entry if the day name is invalid
+      }
+
+      const dataToUpdate = {
+        store_id: id,
+        day_id: dayId,
+        open_time: entry.open_time,
+        close_time: entry.close_time,
+      };
+
+      axios
+        .put(
+          apiurl() + `store/${id}/update-operating-hours/${dayId}`,
+          dataToUpdate,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          handleSuccessAlertOpen();
+          console.log("Update response:", response.data);
+          getJadwalOperasional();
+        })
+        .catch((error) => console.error(error));
+    });
+  }
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
+  useEffect(() => {
+    getJadwalOperasional();
+  }, []);
+
+  console.log(jadwal);
 
   return (
     <div className="pengaturan-toko">
@@ -195,106 +276,121 @@ function PengaturanToko() {
                   memproses pesanan dan memberikan layanan terbaik ke pembeli.
                 </p>
                 <div className="jadwal-hari">
-                  <div className="title-jadwal">
-                    <div className="icon-jam">
-                      <AiOutlineClockCircle />
-                    </div>
-                    <div className="text-jam">
-                      <h3>Atur Jam Operasional Toko</h3>
-                      <p>
-                        Di sini kamu bisa mengatur jadwal tokomu beroperasi
-                        secara rutin setiap minggunya.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="underline-jadwal"></div>
-                  {editMode ? null : (
-                    <div className="btn-ubah">
-                      <button
-                        className="btn-ubah-toko"
-                        onClick={handleEditModeToggle}
-                      >
-                        Ubah
-                        <HiOutlinePencil />
-                      </button>
-                    </div>
-                  )}
-                  {editMode ? (
-                    <div className="container-hari">
-                      {openingHours.map((entry, entryIndex) => (
-                        <div key={entryIndex} className="hari-operasional">
-                          <div className="hari">
-                            <span>{formatDays(entry.days)}</span>
-                            <Tooltip
-                              title="Saat ingin mengganti jam operasional tolong klik icon jam"
-                              placement="right"
-                              color="warning"
-                            >
-                              <InfoOutlinedIcon fontSize="13px" />
-                            </Tooltip>
-                          </div>
-                          <div className="jam-operasional-edit">
-                            <label>
-                              Buka:
-                              <input
-                                type="time"
-                                value={
-                                  editingOpeningHours[entryIndex].openingHour
-                                }
-                                onChange={(event) =>
-                                  handleOpeningHourChange(event, entryIndex)
-                                }
-                                name="time"
-                              />
-                            </label>
-                            <label>
-                              Tutup:
-                              <input
-                                type="time"
-                                value={
-                                  editingOpeningHours[entryIndex].closingHour
-                                }
-                                onChange={(event) =>
-                                  handleClosingHourChange(event, entryIndex)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-                      ))}
+                  {jadwal.length === 0 ? (
+                    <div>
+                      <p>Jadwal Anda Kosong</p>
+                      <ModalAddJadwal />
                     </div>
                   ) : (
-                    <div className="container-hari">
-                      {openingHours.map((entry, entryIndex) => (
-                        <div key={entryIndex} className="hari-operasional">
-                          <div className="hari">
-                            <span>{formatDays(entry.days)}</span>
-                          </div>
-                          <div className="jam-operasional">
-                            <span>
-                              {entry.openingHour} - {entry.closingHour}
-                            </span>
-                          </div>
+                    <>
+                      <div className="title-jadwal">
+                        <div className="icon-jam">
+                          <AiOutlineClockCircle />
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-jam">
+                          <h3>Atur Jam Operasional Toko</h3>
+                          <p>
+                            Di sini kamu bisa mengatur jadwal tokomu beroperasi
+                            secara rutin setiap minggunya.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="underline-jadwal"></div>
+                      {editMode ? null : (
+                        <div className="btn-ubah">
+                          <button
+                            className="btn-ubah-toko"
+                            onClick={handleEditModeToggle}
+                          >
+                            Ubah
+                            <HiOutlinePencil />
+                          </button>
+                          <ModalAddJadwal />
+                        </div>
+                      )}
+                      {editMode ? (
+                        <div className="container-hari">
+                          {editingOpeningHours.map((entry, entryIndex) => (
+                            <div key={entryIndex} className="hari-operasional">
+                              <div className="hari">
+                                <span>{entry.day}</span>
+                                <Tooltip
+                                  title="Saat ingin mengganti jam operasional tolong klik icon jam"
+                                  placement="right"
+                                  color="warning"
+                                >
+                                  <InfoOutlinedIcon fontSize="13px" />
+                                </Tooltip>
+                              </div>
+                              <div className="jam-operasional-edit">
+                                <label>
+                                  Buka:
+                                  <input
+                                    type="time"
+                                    value={entry.open_time}
+                                    onChange={(event) =>
+                                      handleOpeningHourChange(event, entryIndex)
+                                    }
+                                    name="open_time"
+                                  />
+                                </label>
+                                <label>
+                                  Tutup:
+                                  <input
+                                    type="time"
+                                    value={entry.close_time}
+                                    onChange={(event) =>
+                                      handleClosingHourChange(event, entryIndex)
+                                    }
+                                    name="close_time"
+                                  />
+                                </label>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="container-hari">
+                          {jadwal.map((entry, entryIndex) => (
+                            <div key={entryIndex} className="hari-operasional">
+                              <div className="hari">
+                                <span>{entry.day}</span>
+                                <Tooltip
+                                  title="Saat ingin mengganti jam operasional tolong klik icon jam"
+                                  placement="right"
+                                  color="warning"
+                                >
+                                  <InfoOutlinedIcon fontSize="13px" />
+                                </Tooltip>
+                              </div>
+                              <div className="jam-operasional">
+                                <span>
+                                  {entry.open_time.substring(0, 5)} -{" "}
+                                  {entry.close_time.substring(0, 5)}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {editMode ? (
+                        <div className="edit-mode-actions">
+                          <button
+                            className="btn-simpan-toko"
+                            onClick={handleSaveHours}
+                          >
+                            Simpan
+                          </button>
+                          <button
+                            className="btn-batal-toko"
+                            onClick={handleCancelEdit}
+                          >
+                            Batal
+                          </button>
+                        </div>
+                      ) : null}
+                    </>
                   )}
-                  {editMode ? (
-                    <div className="edit-mode-actions">
-                      <button
-                        className="btn-simpan-toko"
-                        onClick={handleSaveHours}
-                      >
-                        Simpan
-                      </button>
-                      <button
-                        className="btn-batal-toko"
-                        onClick={handleCancelEdit}
-                      >
-                        Batal
-                      </button>
-                    </div>
-                  ) : null}
                 </div>
               </div>
             </div>
@@ -308,6 +404,34 @@ function PengaturanToko() {
           )}
         </div>
       </div>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Alhamdulillah Jadwal Berhasil Diubah
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Maaf, terjadi kesalahan. Gagal Mengubah Jadwal.
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

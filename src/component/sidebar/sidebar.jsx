@@ -17,6 +17,10 @@ import apiurl from "../../utils/apiurl";
 
 
 function Sidebar() {
+  const [toko, setToko] = useState([]);
+  const [checked, setChecked] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
   const menuItem = [
     {
       path: "hometoko",
@@ -40,7 +44,7 @@ function Sidebar() {
           name: "Tambah Produk",
         },
         {
-          path: "daftarproduk",
+          path: "daftarproduk/" + toko.id ,
           name: "Daftar Produk",
         },
       ],
@@ -56,15 +60,14 @@ function Sidebar() {
       icon: <BsPersonCheck fontSize={20} />,
     },
     {
-      path: "pengaturantoko",
+      path: "pengaturantoko/" + toko.id ,
       name: "Pengaturan",
       icon: <BsGear />
     },
   ];
 
-  const [checked, setChecked] = React.useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-  const [toko, setToko] = useState([]);
+  
+ 
   
   const getToko = async () => {
     const token = localStorage.getItem("token");
@@ -76,7 +79,7 @@ function Sidebar() {
           },
         });
         setToko(response.data.data);
-        console.log("Data berhasil diambil", response.data.data);
+        console.log("Data berhasil diambil", response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         setIsLoading(false);
@@ -84,6 +87,7 @@ function Sidebar() {
     }
   };
 
+  
 
   useEffect(() => {
     getToko();
