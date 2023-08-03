@@ -388,10 +388,12 @@ function Keranjang() {
                           onChange={() => handleItemCheckboxChange(item.id)}
                         />
                         <div className="img-item-pro">
-                          <img
-                            src={item.product.picturePath}
-                            alt="gambar produk"
-                          />
+                          {item.product && (
+                            <img
+                              src={item.product.picturePath}
+                              alt="gambar produk"
+                            />
+                          )}
                         </div>
                         <div className="nama-item-pro">
                           <h3 className="name-pro-cart">{item.product.name}</h3>
@@ -442,11 +444,16 @@ function Keranjang() {
                     <div key={item.id} className="pro-wishlist-cart">
                       <div className="item-wishlist-cart">
                         <div className="img-wishlist-cart">
-                          <img src={item.product.picturePath} alt="" />
+                          {item.product && (
+                            <img
+                              src={item.product.picturePath}
+                              alt="gambar produk"
+                            />
+                          )}
                         </div>
                         <div className="nama-wishlist-cart">
-                          <h3>{item.product.name}</h3>
-                          <span>{formatPrice(item.product.price)}</span>
+                          <h3>{item.product?.name}</h3>
+                          <span>{formatPrice(item.product?.price)}</span>
                           <div className="toko-wishlist-cart">
                             <div className="img-toko-wishlist-cart">
                               <img src={ImgCartToko} alt="" />

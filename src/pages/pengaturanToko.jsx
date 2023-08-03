@@ -322,13 +322,23 @@ function PengaturanToko() {
                 <div className="container-asal-pengiriman">
                   <h1>Asal Pengiriman</h1>
                   <div className="box-pilih-kota">
-                    <p>Kota atau Kecamatan</p>
                     <div className="pilih-kota">
+                      <p>Kota atau Kecamatan</p>
                       <select name="" id="">
                         <option value="">Pilih Kota</option>
                         {/* Map the 'cities' state to generate options in the dropdown */}
                         {cities.map((city) => (
                           <option key={city.city_id}>{city.city_name}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="pilih-kode-pos">
+                      <p>Kota atau Kecamatan</p>
+                      <select name="" id="">
+                        <option value="">Pilih Kota</option>
+                        {/* Map the 'cities' state to generate options in the dropdown */}
+                        {cities.map((city) => (
+                          <option key={city.city_id}>{city.postal_code}</option>
                         ))}
                       </select>
                     </div>
