@@ -220,7 +220,7 @@ input[type="text"]:focus {
 .cart-item-count {
     position: absolute;
     top: 1px;
-    right: 160px;
+    right: 260px;
     background-color: red;
     color: white;
     border-radius: 50%;
@@ -231,6 +231,11 @@ input[type="text"]:focus {
     justify-content: center;
     font-size: 12px;
     font-weight: bold;
+}
+
+.icon-cart {
+    display: flex;
+    align-items: center;
 }
 
 .line {

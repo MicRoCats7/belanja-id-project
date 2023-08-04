@@ -10,11 +10,15 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
 import { HiOutlinePencil } from "react-icons/hi";
-import { Tooltip } from "@mui/material";
+import { Checkbox, Tooltip } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ModalAddJadwal from "../component/modal/modalAddJadwal";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import iconkurir from "../assets/icon/pana.svg";
+import token from "../utils/token";
+import { styled } from "@mui/material/styles";
+import LoadingPengiriman from "../component/loader/loadigPengiriman";
 
 function PengaturanToko() {
   const [activeTab, setActiveTab] = useState("reviews");
@@ -27,18 +31,22 @@ function PengaturanToko() {
   const tabRef = useRef(null);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [cities, setCities] = useState([]);
+  const [couriers, setCouriers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     calculateUnderlineStyle();
-  }, [activeTab]); // Hanya gunakan activeTab sebagai dependency
+  }, [activeTab]);    
 
   useEffect(() => {
     if (editMode) {
-      setEditingOpeningHours([...jadwal]); // Gunakan data jadwal saat editMode aktif
+      setEditingOpeningHours([...jadwal]);
     }
   }, [editMode]);
 
   useEffect(() => {
+    getCities();
     // When the jadwal state changes, update the editingOpeningHours state
     setEditingOpeningHours([...jadwal]);
   }, [jadwal]);
@@ -54,6 +62,40 @@ function PengaturanToko() {
         transform: `translateX(${offsetLeft}px)`,
       });
     }
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        apiurl() +
+          "shipping/cost?origin_city_id=209&destination_city_id=209&weight=500",
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      )
+      .then((response) => {
+        setIsLoading(false);
+        setCouriers(response.data.data.delivery_courier);
+      })
+      .catch((error) => {
+        console.error("Error fetching courier data:", error);
+      });
+  }, []);
+
+  const getCities = () => {
+    axios
+      .get(apiurl() + "cities?province_id=22") // Ganti 'cities' dengan endpoint API yang sesuai
+      .then((response) => {
+        setIsLoading(false);
+        // Simpan data kota ke dalam state 'cities'
+        setCities(response.data.data);
+        console.log("Data kota:", response.data.data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch cities:", error);
+      });
   };
 
   const handleTabClick = (tab) => {
@@ -186,6 +228,65 @@ function PengaturanToko() {
   }, []);
 
   console.log(jadwal);
+
+  const BpIcon = styled("span")(({ theme }) => ({
+    borderRadius: 3,
+    width: 23,
+    height: 23,
+    boxShadow:
+      theme.palette.mode === "dark"
+        ? "0 0 0 1px rgb(16 22 26 / 40%)"
+        : "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+    ".Mui-focusVisible &": {
+      outline: "2px auto #000",
+      outlineOffset: 2,
+    },
+    "input:hover ~ &": {
+      outline: "2px auto #EF233C",
+    },
+    "input:disabled ~ &": {
+      boxShadow: "none",
+      background:
+        theme.palette.mode === "dark"
+          ? "rgba(57,75,89,.5)"
+          : "rgba(206,217,224,.5)",
+    },
+  }));
+
+  const BpCheckedIcon = styled(BpIcon)({
+    backgroundColor: "#EF233C",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+    "&:before": {
+      display: "block",
+      width: 23,
+      height: 23,
+      backgroundImage:
+        "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
+        " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
+        "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
+      content: '""',
+    },
+    "input:hover ~ &": {
+      backgroundColor: "#EF233C",
+    },
+  });
+
+  function BpCheckbox(props) {
+    return (
+      <Checkbox
+        sx={{
+          "&:hover": { bgcolor: "transparent" },
+        }}
+        disableRipple
+        color="default"
+        checkedIcon={<BpCheckedIcon />}
+        icon={<BpIcon />}
+        inputProps={{ "aria-label": "Checkbox demo" }}
+        {...props}
+      />
+    );
+  }
 
   return (
     <div className="pengaturan-toko">
@@ -397,9 +498,73 @@ function PengaturanToko() {
           )}
           {activeTab === "pengiriman" && (
             <div className="pengaturan-tab">
-              <div className="main-pengiriman">
-                <div className="container-asal-pengiriman"></div>
-              </div>
+              {isLoading ? (
+                <LoadingPengiriman />
+              ) : (
+                <div className="main-pengiriman">
+                  <div className="container-asal-pengiriman">
+                    <h1>Asal Pengiriman</h1>
+                    <div className="box-container-asal-pengiriman">
+                      <div className="dropdown-container-pengiriman">
+                        <p>Kota atau Kecamatan</p>
+                        <select>
+                          <option value="">Pilih Kota</option>
+                          {cities.map((city) => (
+                            <option key={city.id} value={city.id}>
+                              {city.city_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="dropdown-container-pengiriman">
+                        <p>Kode Pos</p>
+                        <select>
+                          <option value="">Pilih Kode Pos</option>
+                          {cities.map((postalCode) => (
+                            <option key={postalCode.id} value={postalCode.id}>
+                              {postalCode.postal_code}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="container-pengiriman-kurir">
+                    <h1>Silahkan Pilih Pengiriman</h1>
+                    <div className="main-layanan-kurir">
+                      <div className="layanan-pengiriman-kurir">
+                        <h1>Layanan Kurir</h1>
+                        <p>
+                          Pilih layanan kurir yang ingin kamu sediakan di tokomu
+                        </p>
+                        <p>Semua kurir pada layanan ini memiliki fitur :</p>
+                      </div>
+                      <div className="antar-ke-kantor">
+                        <img src={iconkurir} alt="" />
+                        <div className="text-antar-ke-kantor">
+                          <h1>Antar ke Kantor Agen</h1>
+                          <p>
+                            Bawa pesanan ke kantor agen terdekat dan minta resi
+                            dari petugas.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="select-pengiriman-kurir">
+                      {couriers.map((courier) => (
+                        <div className="box-select-pengiriman-kurir">
+                          <BpCheckbox />
+                          <img src={courier.logo} alt={courier.name} />
+                          <span>{courier.courier}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="btn-simpan-kurir">
+                      <button>Simpan</button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

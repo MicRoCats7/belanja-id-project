@@ -85,7 +85,7 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
 
   return (
     <>
-      <button onClick={toggleModal} className="">
+      <button onClick={toggleModal} className="btn-add-jadwal-toko">
         Daftar
       </button>
 
