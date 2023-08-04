@@ -22,10 +22,14 @@ import LoadingPengiriman from "../component/loader/loadigPengiriman";
 
 function PengaturanToko() {
   const [activeTab, setActiveTab] = useState("reviews");
+  const [toko, setToko] = useState([]);
   const [underlineStyle, setUnderlineStyle] = useState({});
   const [jadwal, setJadwal] = useState([]); // Ensure the initial state is an empty array
   const { id } = useParams();
+  const [inputText, setInputText] = useState("");
+  const [description, storeDescription] = useState("");
   const [editMode, setEditMode] = useState(false);
+  const [isProfileUpdated, setIsProfileUpdated] = useState(false);
   const mergedOpeningHours = [];
   const [editingOpeningHours, setEditingOpeningHours] = useState([...jadwal]);
   const tabRef = useRef(null);
@@ -216,6 +220,45 @@ function PengaturanToko() {
         .catch((error) => console.error(error));
     });
   }
+
+  function EditInformasiToko() {
+    const formData = new FormData();
+    formData.append("name", inputText);
+    formData.append("description", description);
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .post(apiurl() + `stores/${id}`, formData, config)
+      .then((response) => {
+        handleSuccessAlertOpen();
+        console.log("Informasi toko berhasil di ubah:", response.data);
+        // getJadwalOperasional();
+      })
+      .catch((error) => console.error(error));
+  }
+
+  const getToko = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "user/store", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setToko(response.data.data);
+        console.log("Data berhasil diambil", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
   const handleSuccessAlertOpen = () => {
     setSuccessAlertOpen(true);
   };
@@ -225,7 +268,18 @@ function PengaturanToko() {
   };
   useEffect(() => {
     getJadwalOperasional();
+  }, [isProfileUpdated]);
+
+  useEffect(() => {
+    getToko();
   }, []);
+
+  useEffect(() => {
+    if (toko && toko.length > 0) {
+      setInputText(toko[0].name); // Set the Nama Toko input value
+      storeDescription(toko[0].description); // Set the Deskripsi Toko input value
+    }
+  }, [toko]);
 
   console.log(jadwal);
 
@@ -327,11 +381,18 @@ function PengaturanToko() {
                   <h1>Informasi Toko</h1>
                   <div className="info-nama-toko">
                     <h2>Nama Toko</h2>
-                    <p>MicroSport</p>
-                    <h2>Domain Toko</h2>
-                    <p>www.belanja.id/microsport</p>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Ubah Nama Toko Anda"
+                        value={inputText}
+                        onChange={(e) => setInputText(e.target.value)}
+                      />
+                    </div>
+                    {/* <h2>Domain Toko</h2>
+                    <p>www.belanja.id/microsport</p> */}
                     <div className="btn-ubah-info">
-                      <button>Ubah</button>
+                      <button onClick={EditInformasiToko}>Simpan</button>
                     </div>
                   </div>
                 </div>
@@ -341,7 +402,9 @@ function PengaturanToko() {
                     <textarea
                       name=""
                       id=""
-                      placeholder="Deskripsikan tokomu..."
+                      value={description}
+                      onChange={(e) => storeDescription(e.target.value)}
+                      placeholder=" Masukkan Deskripsikan tokomu..."
                     ></textarea>
                     <div className="btn-simpan-toko">
                       <button>Simpan</button>
@@ -380,7 +443,11 @@ function PengaturanToko() {
                   {jadwal.length === 0 ? (
                     <div>
                       <p>Jadwal Anda Kosong</p>
-                      <ModalAddJadwal />
+                      <ModalAddJadwal
+                        tambahJadwalOperasional={() =>
+                          setIsProfileUpdated(!isProfileUpdated)
+                        }
+                      />
                     </div>
                   ) : (
                     <>

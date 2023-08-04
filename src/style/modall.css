@@ -65,6 +65,36 @@ body.active-modal {
     background: rgba(49, 49, 49, 0.5);
 }
 
+
+.ubah-nama-user{
+    color: #EF233C;
+    font-size: 0.857143rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ubah-nohp{
+    color: #EF233C;
+    font-size: 0.857143rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ubah-tanggal-user{
+    color: #EF233C;
+    font-size: 0.857143rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ubah-email-user{
+    color: #EF233C;
+    font-size: 0.857143rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
 .modal-nama, .overlay-nama {
     width: 100vw;
     height: 100vh;
@@ -147,7 +177,7 @@ body.active-modal {
 
 .modal-content-nomerhp{
     width: 400px;
-    height: 400px;
+    height: 350px;
     background-color: white;
     border-radius: 10px;
     position: fixed;
@@ -162,9 +192,24 @@ body.active-modal {
     overflow-y: auto;
 }
 
+
+.wrap-tulisan-email{
+    margin: 20px 0px 20px 0px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+
+.tulisan-nomer{
+    margin: 20px 0px 20px 0px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .modal-content-email{
     width: 400px;
-    height: 400px;
+    height: 350px;
     background-color: white;
     border-radius: 10px;
     position: fixed;
@@ -180,8 +225,8 @@ body.active-modal {
 }
 
 .modal-content-date{
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 350px;
     background-color: white;
     border-radius: 10px;
     position: fixed;

@@ -27,15 +27,21 @@ function UbahProduk() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const { id } = useParams();
-  const [products, setProducts] = useState([]); 
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
-
+  const [skuErrorMessage, setSkuErrorMessage] = useState("");
+  const [skuList, setSkuList] = useState([]);
 
   const handleSKUChange = (event) => {
-    // Mengonversi nilai input menjadi huruf besar semua sebelum menyimpannya ke dalam state
     const uppercaseSKU = event.target.value.toUpperCase();
     setSKU(uppercaseSKU);
+    // Pengecekan apakah SKU sudah ada di dalam daftar skuList
+    if (skuList.includes(uppercaseSKU)) {
+      setSkuErrorMessage("Kode SKU sudah terpakai, gunakan kode yang lain");
+    } else {
+      setSkuErrorMessage("");
+    }
   };
 
   const handleKondisiChange = (event) => {
@@ -55,11 +61,9 @@ function UbahProduk() {
   const [fileName5, setFileName5] = useState("No Selected file");
   // event handler
 
-
-
-const handleChangeName = (event) => {
+  const handleChangeName = (event) => {
     setInputText(event.target.value);
-};
+  };
 
   useEffect(() => {
     getProductByUserId();
@@ -104,17 +108,17 @@ const handleChangeName = (event) => {
     event.preventDefault();
 
     const updatedProduct = {
-        name: name, 
-        category_id: selectedCategory,
-        kondisi_produk: kondisiProduk,
-        description: deskripsiProduk,
-        quantity: value3,
-        price: value2,
-        sku: sku,
-        weight: value4,
-        slug: "pakaian",
-        // picturePath: selectedImagePath,
-      };
+      name: name,
+      category_id: selectedCategory,
+      kondisi_produk: kondisiProduk,
+      description: deskripsiProduk,
+      quantity: value3,
+      price: value2,
+      sku: sku,
+      weight: value4,
+      slug: "pakaian",
+      // picturePath: selectedImagePath,
+    };
 
     const headers = {
       Authorization: `Bearer ${token()}`,
@@ -150,7 +154,6 @@ const handleChangeName = (event) => {
       });
   };
 
-
   const updatePhoto = async (event) => {
     event.preventDefault();
 
@@ -174,7 +177,6 @@ const handleChangeName = (event) => {
       console.error("Failed to update photo:", error);
     }
   };
-
 
   const [selectedValue, setSelectedValue] = React.useState("a");
 
@@ -335,7 +337,7 @@ const handleChangeName = (event) => {
                     type="text"
                     placeholder="Contoh : Sepatu pria (Jenis/Kategori Produk)"
                     value={name}
-                    onChange={handleChangeName} 
+                    onChange={handleChangeName}
                     isInvalid={name.length > characterLimit}
                     maxLength={70}
                   />
@@ -727,6 +729,9 @@ const handleChangeName = (event) => {
                     onChange={handleSKUChange}
                     placeholder="Masukkan SKU"
                   />
+                  {skuErrorMessage && (
+                    <p className="error-message">{skuErrorMessage}</p>
+                  )}
                 </div>
               </div>
             </div>

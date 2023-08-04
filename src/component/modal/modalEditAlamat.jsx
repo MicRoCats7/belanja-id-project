@@ -131,9 +131,9 @@ function ModalAlamat() {
       </h3>
 
       {modal && (
-        <div className="modal-emails">
-          <div onClick={toggleModal} className="overlays"></div>
-          <div className="modals-contents">
+        <div className="modal-ubah-parent">
+          <div onClick={toggleModal} className="overlay"></div>
+          <div className="modals-content-ubah-alamat">
             <div className="text-diatas-popup">
               <h3 className="judul-ubah-alamat">Ubah Alamatmu</h3>
             </div>

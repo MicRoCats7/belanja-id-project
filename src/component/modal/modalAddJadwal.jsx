@@ -86,9 +86,8 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
   return (
     <>
       <button onClick={toggleModal} className="btn-add-jadwal-toko">
-        Daftar
+        Tambah
       </button>
-
       {modal && (
         <div className="modal-jadwal">
           <div onClick={toggleModal} className="overlay"></div>
@@ -101,7 +100,7 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
                   value={day}
                   onChange={(e) => setDay(e.target.value)}
                 >
-                  {/* <option value="">Pilih Hari</option> */}
+                  <option value="">Pilih Hari</option>
                   <option value="Senin">Senin</option>
                   <option value="Selasa">Selasa</option>
                   <option value="Rabu">Rabu</option>
