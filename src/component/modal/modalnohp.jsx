@@ -91,10 +91,12 @@ function ModalHp({ nomProfileUpdate }) {
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content-nomerhp">
             <h3>Daftar Nomor</h3>
-            <p>
-              Silahkan Daftar nomor anda disini , Pastikan nomor hp yang anda
-              masukkan Benar{" "}
-            </p>
+            <div>
+              <p className="tulisan-nomer">
+                Silahkan Daftar nomor anda disini , Pastikan nomor hp yang anda
+                masukkan Benar{" "}
+              </p>
+            </div>
             <div className="nomer-kamu">
               <h3>Nomor hp</h3>
               <input
