@@ -387,20 +387,29 @@ function Keranjang() {
                           checked={selectedItems.includes(item.id)}
                           onChange={() => handleItemCheckboxChange(item.id)}
                         />
-                        <div className="img-item-pro">
-                          <img
-                            src={item.product.picturePath}
-                            alt="gambar produk"
-                          />
-                        </div>
-                        <div className="nama-item-pro">
-                          <h3 className="name-pro-cart">{item.product.name}</h3>
-                          <h4 className="harga-pro-cart">
-                            Rp {formatPrice(item.product.price)}
-                          </h4>
-                          {item.ukuran && <p>{item.ukuran}</p>}
-                          {item.warna && <p>{item.warna}</p>}
-                        </div>
+                        {item.product ? (
+                          <>
+                            <div className="img-item-pro">
+                              <img
+                                src={item.product.picturePath}
+                                alt="gambar produk"
+                              />
+                            </div>
+                            <div className="nama-item-pro">
+                              <h3 className="name-pro-cart">
+                                {item.product.name}
+                              </h3>
+                              <h4 className="harga-pro-cart">
+                                Rp {formatPrice(item.product.price)}
+                              </h4>
+                              {item.ukuran && <p>{item.ukuran}</p>}
+                              {item.warna && <p>{item.warna}</p>}
+                            </div>
+                          </>
+                        ) : (
+                          // If 'item.product' is missing or incomplete, render a placeholder or error message.
+                          <p>Product data is missing or incomplete.</p>
+                        )}
                       </div>
                     </div>
                     <div className="item-pro-bottom">
@@ -442,11 +451,16 @@ function Keranjang() {
                     <div key={item.id} className="pro-wishlist-cart">
                       <div className="item-wishlist-cart">
                         <div className="img-wishlist-cart">
-                          <img src={item.product.picturePath} alt="" />
+                          {item.product && (
+                            <img
+                              src={item.product.picturePath}
+                              alt="gambar produk"
+                            />
+                          )}
                         </div>
                         <div className="nama-wishlist-cart">
-                          <h3>{item.product.name}</h3>
-                          <span>{formatPrice(item.product.price)}</span>
+                          <h3>{item.product?.name}</h3>
+                          <span>{formatPrice(item.product?.price)}</span>
                           <div className="toko-wishlist-cart">
                             <div className="img-toko-wishlist-cart">
                               <img src={ImgCartToko} alt="" />

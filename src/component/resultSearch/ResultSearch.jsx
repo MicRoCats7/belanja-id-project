@@ -22,6 +22,7 @@ function ResultSearch() {
   const [products, setProducts] = useState([]);
   const query = searchParams.get("query");
   const [isLoading, setIsLoading] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -33,14 +34,18 @@ function ResultSearch() {
   }, [query, activeTab]);
 
   const fetchProducts = async () => {
+    setIsSearching(true);
     try {
       const response = await axios.get(apiurl() + `products?query=${query}`);
       setIsLoading(false);
-      const filteredProducts = response.data.data.data.filter((product) =>
+      setIsSearching(false);
+      const filteredProducts = response.data.data.filter((product) =>
         product.name.toLowerCase().includes(query.toLowerCase())
       );
       setProducts(filteredProducts);
     } catch (error) {
+      setIsLoading(false);
+      setIsSearching(false);
       console.error(error);
     }
   };
@@ -107,7 +112,7 @@ function ResultSearch() {
 
             {activeTab === "reviews" && (
               <>
-                {isLoading ? (
+                {isLoading || isSearching ? (
                   <div
                     className="pengaturan-result"
                     style={{ marginRight: "80px" }}
