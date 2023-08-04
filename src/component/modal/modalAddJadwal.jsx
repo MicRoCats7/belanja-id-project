@@ -88,7 +88,6 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
       <button onClick={toggleModal} className="btn-add-jadwal-toko">
         Tambah
       </button>
-
       {modal && (
         <div className="modal-jadwal">
           <div onClick={toggleModal} className="overlay"></div>

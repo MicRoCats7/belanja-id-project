@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../style/alamat.css";
-import ModalAlamat from "../component/modal/modalEditAlamat";
+import ModalEditAlamat from "../component/modal/modalEditAlamat";
 import ModalAddAlamat from "../component/modal/modalAddAlamat";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
@@ -19,33 +19,33 @@ function Alamat() {
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   useEffect(() => {
-    // fetchAlamat();
+    fetchAlamat();
     getProfile();
   }, []);
 
-  // function fetchAlamat() {
-  //   axios
-  //     .get(apiurl() + "user_addresses/" + id, {
-  //       headers: {
-  //         Authorization: `Bearer ${token()}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       const responseData = response.data;
-  //       if (responseData.data) {
-  //         setAlamatList(responseData.data);
-  //         console.log(responseData.data);
-  //       } else {
-  //         console.log(
-  //           "Gagal mengambil data alamat:",
-  //           responseData.meta.message
-  //         );
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("Gagal mengambil data alamat:", error);
-  //     });
-  // }
+  function fetchAlamat() {
+    axios
+      .get(apiurl() + "user_addresses/" + id, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        const responseData = response.data;
+        if (responseData.data) {
+          setAlamatList(responseData.data);
+          console.log(responseData.data);
+        } else {
+          console.log(
+            "Gagal mengambil data alamat:",
+            responseData.meta.message
+          );
+        }
+      })
+      .catch((error) => {
+        console.log("Gagal mengambil data alamat:", error);
+      });
+  }
 
   const getProfile = async () => {
     setIsLoading(true);
@@ -140,7 +140,7 @@ function Alamat() {
                       Hapus
                     </h3>
                     <div>
-                      <ModalAlamat addNewAlamat={addNewAlamat} />
+                      <ModalEditAlamat addNewAlamat={addNewAlamat} />
                     </div>
                   </div>
                 </div>

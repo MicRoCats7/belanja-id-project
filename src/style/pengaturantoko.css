@@ -324,17 +324,145 @@ input[type="time"]:focus {
     box-shadow: 0 0 0 2px #ef233b31;
 }
 
-.edit-mode-actions{
+.edit-mode-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
 }
 
-.edit-mode-actions button{
+.edit-mode-actions button {
     background-color: #EF233C;
     border: none;
     border-radius: 10px;
     padding: 6px 24px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #fff;
+    cursor: pointer;
+}
+
+.main-pengiriman {
+    display: flex;
+    align-items: start;
+    gap: 33px;
+}
+
+.container-asal-pengiriman {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.container-asal-pengiriman h1, .container-pengiriman-kurir h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.box-container-asal-pengiriman {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 19px;
+    border-radius: 5px;
+    background: #FFF;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
+    height: 230px;
+}
+
+.dropdown-container-pengiriman p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 6px;
+}
+
+.dropdown-container-pengiriman select {
+    width: 310px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #787676;
+    padding: 0 10px;
+    appearance: none;
+    background-image: url(../assets/icon/dropdown\ arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right 0.7rem top 50%;
+    background-size: 0.65rem auto;
+}
+
+.main-layanan-kurir {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 14px;
+}
+
+.layanan-pengiriman-kurir h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.layanan-pengiriman-kurir p {
+    font-size: 12px;
+    font-weight: 500;
+    color: #727272;
+}
+
+.antar-ke-kantor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.antar-ke-kantor img {
+    width: 70px;
+    height: 70px;
+}
+
+.text-antar-ke-kantor p {
+    font-size: 12px;
+    font-weight: 500;
+    color: #727272;
+    width: 250px;
+}
+
+.select-pengiriman-kurir {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 45px;
+}
+
+.box-select-pengiriman-kurir {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    background: #FFF;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
+    padding: 15px 30px;
+}
+
+.box-select-pengiriman-kurir img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.btn-simpan-kurir {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 51px;
+}
+
+.btn-simpan-kurir button {
+    background-color: #EF233C;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 77px;
     font-size: 14px;
     font-weight: normal;
     color: #fff;

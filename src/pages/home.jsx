@@ -42,6 +42,8 @@ function Home() {
   const [isImgLoading, setIsImgLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [productsToShow, setProductsToShow] = useState(12);
+  const additionalProducts = 12;
 
   useEffect(() => {
     getProduct();
@@ -80,6 +82,10 @@ function Home() {
       })
       .catch((error) => console.error(error));
   }
+
+  const handleLoadMore = () => {
+    setProductsToShow((prevCount) => prevCount + additionalProducts);
+  };
 
   return (
     <div>
@@ -492,24 +498,28 @@ function Home() {
                     <Loading cards={7} />
                   </div>
                 ) : (
-                  product?.map((item) => (
-                    <Product
-                      name={item.name}
-                      url={item.picturePath}
-                      location={item.product_origin}
-                      price={item.price}
-                      rating={item.rate}
-                      ulasan={item.review}
-                      stok={item.stok}
-                      id={item.id}
-                    />
-                  ))
+                  product
+                    .slice(0, productsToShow)
+                    .map((item) => (
+                      <Product
+                        name={item.name}
+                        url={item.picturePath}
+                        location={item.product_origin}
+                        price={item.price}
+                        rating={item.rate}
+                        ulasan={item.review}
+                        stok={item.stok}
+                        id={item.id}
+                      />
+                    ))
                 )}
               </div>
             </div>
-            <div className="container-btnSeemore">
-              <button>Muat Lebih Banyak</button>
-            </div>
+            {product.length > productsToShow && (
+              <div className="container-btnSeemore">
+                <button onClick={handleLoadMore}>Muat Lebih Banyak</button>
+              </div>
+            )}
           </div>
           <SimpleAccordion />
         </div>
