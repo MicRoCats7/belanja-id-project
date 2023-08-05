@@ -86,7 +86,11 @@ function ModalEmail({ handleProfileUpdate }) {
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content-email">
             <h3>Ubah Email</h3>
-            <p>Silahkan ubah email anda disini , Pastikan email anda Benar </p>
+            <div className="wrap-tulisan-email">
+              <p className="isi-email-anda">
+                Silahkan ubah email anda disini , Pastikan email anda Benar{" "}
+              </p>
+            </div>
             <div className="email-kamu">
               <h3>Email</h3>
               <input
