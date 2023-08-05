@@ -34,7 +34,6 @@ function Detailpesanan() {
   const [couriers, setCouriers] = useState([]);
   const [selectedCourier, setSelectedCourier] = useState(null);
   const [shippingCost, setShippingCost] = useState(0);
-  const [productShippingCosts, setProductShippingCosts] = useState({});
 
   useEffect(() => {
     const fetchProducts = () => {

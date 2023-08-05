@@ -131,9 +131,9 @@ function ModalAlamat() {
       </h3>
 
       {modal && (
-        <div className="modal-ubah-parent">
+        <div className="modal-alamat">
           <div onClick={toggleModal} className="overlay"></div>
-          <div className="modals-content-ubah-alamat">
+          <div className="modals-content-add-alamat">
             <div className="text-diatas-popup">
               <h3 className="judul-ubah-alamat">Ubah Alamatmu</h3>
             </div>
@@ -142,7 +142,7 @@ function ModalAlamat() {
             </button>
             <div className="scrollable-content">
               <div className="kontak-nomer-input">
-                <h3>Nama Penerima dan Nomor Telepon</h3>
+                <h3>Edit Nama Penerima dan Nomor Telepon</h3>
                 <div>
                   <div className="jarak-input-nama">
                     <div className="nama-kamu">
@@ -168,7 +168,7 @@ function ModalAlamat() {
               </div>
               <div className="label-kamu">
                 <div className="step__marker-text">
-                  <h2>Masukkan Alamat Tokomu</h2>
+                  <h2>Edit Alamatmu</h2>
                 </div>
                 <div className="dropdown">
                   <div>
@@ -233,15 +233,10 @@ function ModalAlamat() {
                   onChange={(e) => setAlamat(e.target.value)}
                   placeholder="Masukkan alamat lengkap"
                 />
-                <p className="peringatan-alamat">
-                  Pastikan semua informasi seperti alamat lengkap dan titik
-                  lokasi sudah benar, ya.
-                </p>
               </div>
               <div className="label-kamu">
                 <h3>Label Alamat</h3>
                 <input type="text" placeholder="Label Alamat" />
-                <p>Contoh: Rumah, Kantor, dan lainnya.</p>
               </div>
             </div>
             <button className="btn-simpan-alamat">Ubah Alamat</button>

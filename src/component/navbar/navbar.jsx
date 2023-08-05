@@ -244,7 +244,7 @@ function Navbar() {
                 {hasShop ? (
                   // Tampilkan nama toko jika pengguna sudah memiliki toko
                   <div className="circle">
-                    <Link to={"toko/hometoko"} target="_blank">
+                    <Link to={"/toko/hometoko"} target="_blank">
                       <img src={Icontoko} alt="icon keranjang" />
                     </Link>
                   </div>

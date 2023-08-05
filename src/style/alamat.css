@@ -37,6 +37,24 @@
   margin-bottom: -8px;
 }
 
+.text-alamat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-utama-alamat {
+  background-color: #ef233c;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
 .text-alamat h3 {
   font-weight: 500;
   font-size: 13px;
@@ -120,8 +138,6 @@
   align-self: center;
   margin: 10px 0 50px 0;
 }
-
-.item-alamat {}
 
 .item-alamat-kosong {
   display: flex;
