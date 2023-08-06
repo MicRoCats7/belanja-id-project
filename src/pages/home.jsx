@@ -32,6 +32,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loading from "../component/loader/Loading";
 import LoadingCategories from "../component/loader/LoadingCategories";
 import Skeleton from "react-loading-skeleton";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
   const [product, setProduct] = useState([]);
@@ -44,6 +45,7 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [productsToShow, setProductsToShow] = useState(12);
   const additionalProducts = 12;
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProduct();
@@ -78,7 +80,6 @@ function Home() {
       .then((response) => {
         setCategories(response.data.data);
         setIsLoading(false);
-        // console.log(response.data.data);
       })
       .catch((error) => console.error(error));
   }
@@ -151,13 +152,21 @@ function Home() {
             ) : (
               categories.map((item) => {
                 return (
-                  <div className="kategori-produk">
-                    <img
-                      src={item.photo}
-                      alt="icon kerajinan tangan"
-                      loading="lazy"
-                    />
-                    <h3>{item.name}</h3>
+                  <div className="kategori-produk" key={item.id}>
+                    <div
+                      className="kategori-produk"
+                      onClick={() =>
+                        navigate(`/category/${item.id}/${item.name}`)
+                      }
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img
+                        src={item.photo}
+                        alt="icon kerajinan tangan"
+                        loading="lazy"
+                      />
+                      <h3>{item.name}</h3>
+                    </div>
                   </div>
                 );
               })
@@ -223,7 +232,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -300,7 +309,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -378,7 +387,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -455,7 +464,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -504,7 +513,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}

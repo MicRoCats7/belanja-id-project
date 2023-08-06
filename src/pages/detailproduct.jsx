@@ -295,7 +295,10 @@ function DetailProduct() {
                     <img src={iconToko} alt="" />
                     <Link to={"/detailtoko"}>
                       <h4>
-                        Toko : {detail.length > 0 ? detail[0].store?.name : ""}
+                        Toko :{" "}
+                        {detail.length > 0
+                          ? detail[0].store?.name
+                          : "Toko tidak ada"}
                       </h4>
                     </Link>
                   </div>
