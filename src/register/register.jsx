@@ -12,6 +12,7 @@ import axios from "axios";
 import apiurl from "../utils/apiurl";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import ModalVerifikasiEmail from "../component/modal/modalVerifikasiEmail";
 
 function Register() {
   const {
@@ -21,14 +22,16 @@ function Register() {
   } = useForm();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [user_id, setUserId] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const navigate = useNavigate();
+  const [isRegistered, setIsRegistered] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
-
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
   const onSubmit = async (data) => {
     // e.preventDefault()
     console.log(data);
@@ -49,10 +52,15 @@ function Register() {
       handleSuccessAlertOpen();
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
+      setEmail(data.email); // Set the email state with the registered email
       setLoading(false);
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      setUserId(response.data.user_id);
+      setShowVerificationModal(true);
+      // setTimeout(() => {
+      //   // setShowVerificationModal(false);
+      //   navigate("/login");
+      //   // navigate("/login");
+      // }, 2000);
     } catch (error) {
       handleErrorAlertOpen();
       setLoading(false);
@@ -188,6 +196,13 @@ function Register() {
           </div>
         </div>
       </div>
+      {showVerificationModal && (
+        <ModalVerifikasiEmail
+          email={email}
+          id={user_id} // Pass the user_id to the verification modal
+          onClose={() => setShowVerificationModal(false)}
+        />
+      )}
       {loading && (
         <div className="loading-overlay">
           <div className="loading-icon"></div>
