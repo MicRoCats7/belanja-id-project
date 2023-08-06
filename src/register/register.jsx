@@ -12,6 +12,7 @@ import axios from "axios";
 import apiurl from "../utils/apiurl";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import ModalVerifikasiEmail from "../component/modal/modalVerifikasiEmail";
 
 function Register() {
   const {
@@ -21,14 +22,16 @@ function Register() {
   } = useForm();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [user_id, setUserId] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const navigate = useNavigate();
+  const [isRegistered, setIsRegistered] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
-
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
   const onSubmit = async (data) => {
     // e.preventDefault()
     console.log(data);
@@ -49,9 +52,13 @@ function Register() {
       handleSuccessAlertOpen();
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
+      setEmail(data.email); // Set the email state with the registered email
       setLoading(false);
+      // setUserId(response.data.user.id);
+      // setShowVerificationModal(true);
       setTimeout(() => {
         navigate("/login");
+        // navigate("/login");
       }, 2000);
     } catch (error) {
       handleErrorAlertOpen();
@@ -131,7 +138,13 @@ function Register() {
                   id="email"
                   name="email"
                   placeholder="email"
-                  {...register("email", { required: true })}
+                  {...register("email", {
+                    required: true,
+                    pattern: {
+                      value: /^[\w-\.]+@gmail\.com$/,
+                      message: "Email harus berakhiran @gmail.com",
+                    },
+                  })}
                   className="input-form-email-regis"
                   onKeyPress={handleKeyPress}
                 />
@@ -139,6 +152,9 @@ function Register() {
               <span className="validate">
                 {errors.email?.type === "required" && (
                   <p role="alert">Harap isi email dahulu</p>
+                )}
+                {errors.email?.type === "pattern" && (
+                  <p role="alert">{errors.email.message}</p>
                 )}
               </span>
             </div>
@@ -150,7 +166,13 @@ function Register() {
                   id="password"
                   name="Password"
                   placeholder="password"
-                  {...register("password", { required: true })}
+                  {...register("password", {
+                    required: true,
+                    minLength: {
+                      value: 8,
+                      message: "Password harus terdiri dari minimal 8 karakter",
+                    },
+                  })}
                   className="input-form-password-regis"
                   func={setPassword}
                   onKeyPress={handleKeyPress}
@@ -163,13 +185,16 @@ function Register() {
                 {errors.password?.type === "required" && (
                   <p role="alert">Harap isi password dahulu</p>
                 )}
+                {errors.password?.type === "minLength" && (
+                  <p role="alert">{errors.password.message}</p>
+                )}
               </span>
             </div>
             <div className="button">
               <button className="btn-masukk">Masuk</button>
             </div>
           </form>
-          <div className="register-selain">
+          {/* <div className="register-selain">
             <div className="line-right"></div>
             <p>atau daftar dengan</p>
             <div className="line-left"></div>
@@ -179,7 +204,7 @@ function Register() {
               <img src={imggoogle} className="login-icon" alt="icon" />
               <p className="textgl">Masuk Dengan Google</p>
             </button>
-          </div>
+          </div> */}
           <div className="register-dengan">
             <p className="text-hitam">Sudah punya akun?</p>
             <Link to="/Login">
@@ -188,6 +213,13 @@ function Register() {
           </div>
         </div>
       </div>
+      {showVerificationModal && (
+        <ModalVerifikasiEmail
+          email={email}
+          id={user_id} // Pass the user_id to the verification modal
+          onClose={() => setShowVerificationModal(false)}
+        />
+      )}
       {loading && (
         <div className="loading-overlay">
           <div className="loading-icon"></div>
