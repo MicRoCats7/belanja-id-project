@@ -293,8 +293,10 @@ function DetailProduct() {
                   <div className="line-detail"></div>
                   <div className="toko-detail">
                     <img src={iconToko} alt="" />
-                    <Link to={"/toko"}>
-                      <h4>Toko : Penuh Makna</h4>
+                    <Link to={"/detailtoko"}>
+                      <h4>
+                        Toko : {detail.length > 0 ? detail[0].store?.name : ""}
+                      </h4>
                     </Link>
                   </div>
                 </div>

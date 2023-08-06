@@ -270,7 +270,7 @@ function ModalAlamat({ addNewAlamat }) {
                   </div>
                   <div className="label-kamu">
                     <div className="step__marker-text">
-                      <h2>Masukkan Alamat Tokomu</h2>
+                      <h2>Masukkan Alamatmu</h2>
                     </div>
                     <div className="dropdown">
                       <div>
