@@ -199,9 +199,15 @@ function Navbar() {
             <div className="dropdown-content">
               {categories?.map((category) => {
                 return (
-                  <a href="#" key={category.id}>
+                  <div
+                    className="dropdown-item-category"
+                    key={category.id}
+                    onClick={() =>
+                      navigate(`/category/${category.id}/${category.name}`)
+                    }
+                  >
                     {category.name}
-                  </a>
+                  </div>
                 );
               })}
             </div>

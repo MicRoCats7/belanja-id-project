@@ -444,44 +444,46 @@ function Keranjang() {
                   </div>
                 ))}
               </div>
-              <div className="wishlist-kamu">
-                <h1>Wujudkan Whislist Anda!</h1>
-                <div className="wishlist-pro-kamu">
-                  {firstThreeWishlistItems.map((item) => (
-                    <div key={item.id} className="pro-wishlist-cart">
-                      <div className="item-wishlist-cart">
-                        <div className="img-wishlist-cart">
-                          {item.product && (
-                            <img
-                              src={item.product.picturePath}
-                              alt="gambar produk"
-                            />
-                          )}
-                        </div>
-                        <div className="nama-wishlist-cart">
-                          <h3>{item.product?.name}</h3>
-                          <span>{formatPrice(item.product?.price)}</span>
-                          <div className="toko-wishlist-cart">
-                            <div className="img-toko-wishlist-cart">
-                              <img src={ImgCartToko} alt="" />
-                            </div>
-                            <div className="nama-toko-wishlist-cart">
-                              <h4>Nama Toko</h4>
+              {firstThreeWishlistItems.length > 0 && (
+                <div className="wishlist-kamu">
+                  <h1>Wujudkan Whislist Anda!</h1>
+                  <div className="wishlist-pro-kamu">
+                    {firstThreeWishlistItems.map((item) => (
+                      <div key={item.id} className="pro-wishlist-cart">
+                        <div className="item-wishlist-cart">
+                          <div className="img-wishlist-cart">
+                            {item.product && (
+                              <img
+                                src={item.product.picturePath}
+                                alt="gambar produk"
+                              />
+                            )}
+                          </div>
+                          <div className="nama-wishlist-cart">
+                            <h3>{item.product?.name}</h3>
+                            <span>{formatPrice(item.product?.price)}</span>
+                            <div className="toko-wishlist-cart">
+                              <div className="img-toko-wishlist-cart">
+                                <img src={ImgCartToko} alt="" />
+                              </div>
+                              <div className="nama-toko-wishlist-cart">
+                                <h4>Nama Toko</h4>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="wishlist-bottom-action">
-                        <BsTrash3 className="icon-bottom-action" />
-                        <div className="btn-keranjang-action">
-                          <AiOutlinePlus className="icon-btn-keranjang-icon" />
-                          <span>Keranjang</span>
+                        <div className="wishlist-bottom-action">
+                          <BsTrash3 className="icon-bottom-action" />
+                          <div className="btn-keranjang-action">
+                            <AiOutlinePlus className="icon-btn-keranjang-icon" />
+                            <span>Keranjang</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </>
           )}
         </div>
