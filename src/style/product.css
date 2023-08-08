@@ -83,6 +83,10 @@
 .location p {
     font-size: 12px;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .harga-produk {

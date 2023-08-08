@@ -4,56 +4,56 @@ import { BsShop } from "react-icons/bs";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import gambartoko from "../assets/image/imgToko.svg";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { HiOutlinePencil } from "react-icons/hi";
-import { Tooltip } from "@mui/material";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
+import { HiOutlinePencil } from "react-icons/hi";
+import { Checkbox, Tooltip } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import ModalAddJadwal from "../component/modal/modalAddJadwal";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import iconkurir from "../assets/icon/pana.svg";
+import token from "../utils/token";
+import { styled } from "@mui/material/styles";
+import LoadingPengiriman from "../component/loader/loadigPengiriman";
 
 function PengaturanToko() {
   const [activeTab, setActiveTab] = useState("reviews");
+  const [toko, setToko] = useState([]);
   const [underlineStyle, setUnderlineStyle] = useState({});
+  const [jadwal, setJadwal] = useState([]); // Ensure the initial state is an empty array
+  const { id } = useParams();
+  const [inputText, setInputText] = useState("");
+  const [description, storeDescription] = useState("");
   const [editMode, setEditMode] = useState(false);
+  const [isProfileUpdated, setIsProfileUpdated] = useState(false);
   const mergedOpeningHours = [];
-  const [openingHours, setOpeningHours] = useState([
-    { days: [1], openingHour: "08:00", closingHour: "17:00" },
-    { days: [2], openingHour: "09:00", closingHour: "18:00" },
-    { days: [3], openingHour: "10:00", closingHour: "15:00" },
-    { days: [4], openingHour: "10:00", closingHour: "15:00" },
-    { days: [5], openingHour: "10:00", closingHour: "15:00" },
-    { days: [6], openingHour: "10:00", closingHour: "15:00" },
-    { days: [7], openingHour: "10:00", closingHour: "15:00" },
-  ]);
-  const [editingOpeningHours, setEditingOpeningHours] = useState([]);
+  const [editingOpeningHours, setEditingOpeningHours] = useState([...jadwal]);
   const tabRef = useRef(null);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [cities, setCities] = useState([]);
+  const [couriers, setCouriers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(
-    () => {
-      fetchCitiesByProvince(22);
-      calculateUnderlineStyle();
-      if (editMode) {
-        setEditingOpeningHours([...openingHours]);
-      }
-    },
-    [activeTab],
-    [editMode]
-  );
+  useEffect(() => {
+    calculateUnderlineStyle();
+  }, [activeTab]);    
 
-  const fetchCitiesByProvince = async (provinceId) => {
-    try {
-      const response = await axios.get(
-        apiurl() + `cities?province_id=${provinceId}`
-      );
-      const data = response.data;
-      setCities(data.data);
-      console.log(data.data);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (editMode) {
+      setEditingOpeningHours([...jadwal]);
     }
-  };
+  }, [editMode]);
+
+  useEffect(() => {
+    getCities();
+    // When the jadwal state changes, update the editingOpeningHours state
+    setEditingOpeningHours([...jadwal]);
+  }, [jadwal]);
 
   const calculateUnderlineStyle = () => {
     const activeTabElement = tabRef.current.querySelector(
@@ -68,12 +68,46 @@ function PengaturanToko() {
     }
   };
 
+  useEffect(() => {
+    axios
+      .get(
+        apiurl() +
+          "shipping/cost?origin_city_id=209&destination_city_id=209&weight=500",
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      )
+      .then((response) => {
+        setIsLoading(false);
+        setCouriers(response.data.data.delivery_courier);
+      })
+      .catch((error) => {
+        console.error("Error fetching courier data:", error);
+      });
+  }, []);
+
+  const getCities = () => {
+    axios
+      .get(apiurl() + "cities?province_id=22") // Ganti 'cities' dengan endpoint API yang sesuai
+      .then((response) => {
+        setIsLoading(false);
+        // Simpan data kota ke dalam state 'cities'
+        setCities(response.data.data);
+        console.log("Data kota:", response.data.data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch cities:", error);
+      });
+  };
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
   const handleEditModeToggle = () => {
-    setEditingOpeningHours([...openingHours]);
+    setEditingOpeningHours([...jadwal]);
     setEditMode(true);
   };
 
@@ -83,45 +117,230 @@ function PengaturanToko() {
 
   // Mencetak hasil gabungan jam operasional
   mergedOpeningHours.forEach((entry) => {
-    const days = entry.days.join("-");
-    console.log(`${days}: ${entry.openingHour} - ${entry.closingHour}`);
+    const day = entry.day.join("-");
+    console.log(`${day}: ${entry.open_time} - ${entry.close_time}`);
   });
 
-  const handleOpeningHourChange = (event, entryIndex) => {
-    const value = event.target.value;
-    setEditingOpeningHours((prevHours) => {
-      const updatedHours = [...prevHours];
-      updatedHours[entryIndex].openingHour = value;
-      return updatedHours;
-    });
-  };
-  const handleSaveHours = () => {
-    setOpeningHours([...editingOpeningHours]);
-    setEditMode(false);
+  const dayIdMap = {
+    Senin: 1,
+    Selasa: 2,
+    Rabu: 3,
+    Kamis: 4,
+    Jumat: 5,
+    Sabtu: 6,
+    Minggu: 7,
   };
 
-  const formatDays = (days) => {
-    const dayNames = [
-      "Senin",
-      "Selasa",
-      "Rabu",
-      "Kamis",
-      "Jumat",
-      "Sabtu",
-      "Minggu",
-    ];
-    const formattedDays = days.map((day) => dayNames[day - 1]);
-    return formattedDays.join("-");
+  // const handleOpeningHourChange = (event, entryIndex) => {
+  //   const value = event.target.value;
+  //   setEditingOpeningHours((prevHours) => {
+  //     const updatedHours = [...prevHours];
+  //     updatedHours[entryIndex].openingHour = value;
+  //     return updatedHours;
+  //   });
+  // };
+
+  const handleOpeningHourChange = (event, entryIndex) => {
+    const { name, value } = event.target;
+    setEditingOpeningHours((prevHours) => {
+      const updatedHours = [...prevHours];
+      updatedHours[entryIndex][name] = value;
+      return updatedHours;
+    });
   };
 
   const handleClosingHourChange = (event, entryIndex) => {
-    const value = event.target.value;
+    const { name, value } = event.target;
     setEditingOpeningHours((prevHours) => {
       const updatedHours = [...prevHours];
-      updatedHours[entryIndex].closingHour = value;
+      updatedHours[entryIndex][name] = value;
       return updatedHours;
     });
   };
+
+  const handleSaveHours = () => {
+    setEditMode(false);
+    setJadwal([...editingOpeningHours]);
+    updateJadwalOperasional();
+  };
+
+  function getJadwalOperasional() {
+    axios
+      .get(apiurl() + "store/all-operating-hours", {
+        params: {
+          store_id: id,
+        },
+      })
+      .then((response) => {
+        console.log("Data Jadwal dari server:", response.data.data[0]);
+        const data = response.data.data[0].operating_hours;
+        if (data && data.length > 0) {
+          setJadwal(data);
+          setEditingOpeningHours(data); // Perbarui juga editingOpeningHours
+        } else {
+          setJadwal([]); // Set to empty array if there's no data
+          setEditingOpeningHours([]); // Perbarui juga editingOpeningHours jika tidak ada data
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function updateJadwalOperasional() {
+    editingOpeningHours.forEach((entry) => {
+      const dayName = entry.day;
+      const dayId = dayIdMap[dayName];
+
+      if (!dayId) {
+        console.error(`Invalid day name: ${dayName}`);
+        return; // Skip the current entry if the day name is invalid
+      }
+
+      const dataToUpdate = {
+        store_id: id,
+        day_id: dayId,
+        open_time: entry.open_time,
+        close_time: entry.close_time,
+      };
+
+      axios
+        .put(
+          apiurl() + `store/${id}/update-operating-hours/${dayId}`,
+          dataToUpdate,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          handleSuccessAlertOpen();
+          console.log("Update response:", response.data);
+          getJadwalOperasional();
+        })
+        .catch((error) => console.error(error));
+    });
+  }
+
+  function EditInformasiToko() {
+    const formData = new FormData();
+    formData.append("name", inputText);
+    formData.append("description", description);
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios
+      .post(apiurl() + `stores/${id}`, formData, config)
+      .then((response) => {
+        handleSuccessAlertOpen();
+        console.log("Informasi toko berhasil di ubah:", response.data);
+        // getJadwalOperasional();
+      })
+      .catch((error) => console.error(error));
+  }
+
+  const getToko = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "user/store", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setToko(response.data.data);
+        console.log("Data berhasil diambil", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
+  useEffect(() => {
+    getJadwalOperasional();
+  }, [isProfileUpdated]);
+
+  useEffect(() => {
+    getToko();
+  }, []);
+
+  useEffect(() => {
+    if (toko && toko.length > 0) {
+      setInputText(toko[0].name); // Set the Nama Toko input value
+      storeDescription(toko[0].description); // Set the Deskripsi Toko input value
+    }
+  }, [toko]);
+
+  console.log(jadwal);
+
+  const BpIcon = styled("span")(({ theme }) => ({
+    borderRadius: 3,
+    width: 23,
+    height: 23,
+    boxShadow:
+      theme.palette.mode === "dark"
+        ? "0 0 0 1px rgb(16 22 26 / 40%)"
+        : "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+    ".Mui-focusVisible &": {
+      outline: "2px auto #000",
+      outlineOffset: 2,
+    },
+    "input:hover ~ &": {
+      outline: "2px auto #EF233C",
+    },
+    "input:disabled ~ &": {
+      boxShadow: "none",
+      background:
+        theme.palette.mode === "dark"
+          ? "rgba(57,75,89,.5)"
+          : "rgba(206,217,224,.5)",
+    },
+  }));
+
+  const BpCheckedIcon = styled(BpIcon)({
+    backgroundColor: "#EF233C",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+    "&:before": {
+      display: "block",
+      width: 23,
+      height: 23,
+      backgroundImage:
+        "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
+        " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
+        "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
+      content: '""',
+    },
+    "input:hover ~ &": {
+      backgroundColor: "#EF233C",
+    },
+  });
+
+  function BpCheckbox(props) {
+    return (
+      <Checkbox
+        sx={{
+          "&:hover": { bgcolor: "transparent" },
+        }}
+        disableRipple
+        color="default"
+        checkedIcon={<BpCheckedIcon />}
+        icon={<BpIcon />}
+        inputProps={{ "aria-label": "Checkbox demo" }}
+        {...props}
+      />
+    );
+  }
 
   return (
     <div className="pengaturan-toko">
@@ -162,11 +381,18 @@ function PengaturanToko() {
                   <h1>Informasi Toko</h1>
                   <div className="info-nama-toko">
                     <h2>Nama Toko</h2>
-                    <p>MicroSport</p>
-                    <h2>Domain Toko</h2>
-                    <p>www.belanja.id/microsport</p>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Ubah Nama Toko Anda"
+                        value={inputText}
+                        onChange={(e) => setInputText(e.target.value)}
+                      />
+                    </div>
+                    {/* <h2>Domain Toko</h2>
+                    <p>www.belanja.id/microsport</p> */}
                     <div className="btn-ubah-info">
-                      <button>Ubah</button>
+                      <button onClick={EditInformasiToko}>Simpan</button>
                     </div>
                   </div>
                 </div>
@@ -176,7 +402,9 @@ function PengaturanToko() {
                     <textarea
                       name=""
                       id=""
-                      placeholder="Deskripsikan tokomu..."
+                      value={description}
+                      onChange={(e) => storeDescription(e.target.value)}
+                      placeholder=" Masukkan Deskripsikan tokomu..."
                     ></textarea>
                     <div className="btn-simpan-toko">
                       <button>Simpan</button>
@@ -212,144 +440,230 @@ function PengaturanToko() {
                   memproses pesanan dan memberikan layanan terbaik ke pembeli.
                 </p>
                 <div className="jadwal-hari">
-                  <div className="title-jadwal">
-                    <div className="icon-jam">
-                      <AiOutlineClockCircle />
-                    </div>
-                    <div className="text-jam">
-                      <h3>Atur Jam Operasional Toko</h3>
-                      <p>
-                        Di sini kamu bisa mengatur jadwal tokomu beroperasi
-                        secara rutin setiap minggunya.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="underline-jadwal"></div>
-                  {editMode ? null : (
-                    <div className="btn-ubah">
-                      <button
-                        className="btn-ubah-toko"
-                        onClick={handleEditModeToggle}
-                      >
-                        Ubah
-                        <HiOutlinePencil />
-                      </button>
-                    </div>
-                  )}
-                  {editMode ? (
-                    <div className="container-hari">
-                      {openingHours.map((entry, entryIndex) => (
-                        <div key={entryIndex} className="hari-operasional">
-                          <div className="hari">
-                            <span>{formatDays(entry.days)}</span>
-                            <Tooltip
-                              title="Saat ingin mengganti jam operasional tolong klik icon jam"
-                              placement="right"
-                              color="warning"
-                            >
-                              <InfoOutlinedIcon fontSize="13px" />
-                            </Tooltip>
-                          </div>
-                          <div className="jam-operasional-edit">
-                            <label>
-                              Buka:
-                              <input
-                                type="time"
-                                value={
-                                  editingOpeningHours[entryIndex].openingHour
-                                }
-                                onChange={(event) =>
-                                  handleOpeningHourChange(event, entryIndex)
-                                }
-                                name="time"
-                              />
-                            </label>
-                            <label>
-                              Tutup:
-                              <input
-                                type="time"
-                                value={
-                                  editingOpeningHours[entryIndex].closingHour
-                                }
-                                onChange={(event) =>
-                                  handleClosingHourChange(event, entryIndex)
-                                }
-                              />
-                            </label>
-                          </div>
-                        </div>
-                      ))}
+                  {jadwal.length === 0 ? (
+                    <div>
+                      <p>Jadwal Anda Kosong</p>
+                      <ModalAddJadwal
+                        tambahJadwalOperasional={() =>
+                          setIsProfileUpdated(!isProfileUpdated)
+                        }
+                      />
                     </div>
                   ) : (
-                    <div className="container-hari">
-                      {openingHours.map((entry, entryIndex) => (
-                        <div key={entryIndex} className="hari-operasional">
-                          <div className="hari">
-                            <span>{formatDays(entry.days)}</span>
-                          </div>
-                          <div className="jam-operasional">
-                            <span>
-                              {entry.openingHour} - {entry.closingHour}
-                            </span>
-                          </div>
+                    <>
+                      <div className="title-jadwal">
+                        <div className="icon-jam">
+                          <AiOutlineClockCircle />
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-jam">
+                          <h3>Atur Jam Operasional Toko</h3>
+                          <p>
+                            Di sini kamu bisa mengatur jadwal tokomu beroperasi
+                            secara rutin setiap minggunya.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="underline-jadwal"></div>
+                      {editMode ? null : (
+                        <div className="btn-ubah">
+                          <button
+                            className="btn-ubah-toko"
+                            onClick={handleEditModeToggle}
+                          >
+                            Ubah
+                            <HiOutlinePencil />
+                          </button>
+                          <ModalAddJadwal />
+                        </div>
+                      )}
+                      {editMode ? (
+                        <div className="container-hari">
+                          {editingOpeningHours.map((entry, entryIndex) => (
+                            <div key={entryIndex} className="hari-operasional">
+                              <div className="hari">
+                                <span>{entry.day}</span>
+                                <Tooltip
+                                  title="Saat ingin mengganti jam operasional tolong klik icon jam"
+                                  placement="right"
+                                  color="warning"
+                                >
+                                  <InfoOutlinedIcon fontSize="13px" />
+                                </Tooltip>
+                              </div>
+                              <div className="jam-operasional-edit">
+                                <label>
+                                  Buka:
+                                  <input
+                                    type="time"
+                                    value={entry.open_time}
+                                    onChange={(event) =>
+                                      handleOpeningHourChange(event, entryIndex)
+                                    }
+                                    name="open_time"
+                                  />
+                                </label>
+                                <label>
+                                  Tutup:
+                                  <input
+                                    type="time"
+                                    value={entry.close_time}
+                                    onChange={(event) =>
+                                      handleClosingHourChange(event, entryIndex)
+                                    }
+                                    name="close_time"
+                                  />
+                                </label>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="container-hari">
+                          {jadwal.map((entry, entryIndex) => (
+                            <div key={entryIndex} className="hari-operasional">
+                              <div className="hari">
+                                <span>{entry.day}</span>
+                                <Tooltip
+                                  title="Saat ingin mengganti jam operasional tolong klik icon jam"
+                                  placement="right"
+                                  color="warning"
+                                >
+                                  <InfoOutlinedIcon fontSize="13px" />
+                                </Tooltip>
+                              </div>
+                              <div className="jam-operasional">
+                                <span>
+                                  {entry.open_time.substring(0, 5)} -{" "}
+                                  {entry.close_time.substring(0, 5)}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {editMode ? (
+                        <div className="edit-mode-actions">
+                          <button
+                            className="btn-simpan-toko"
+                            onClick={handleSaveHours}
+                          >
+                            Simpan
+                          </button>
+                          <button
+                            className="btn-batal-toko"
+                            onClick={handleCancelEdit}
+                          >
+                            Batal
+                          </button>
+                        </div>
+                      ) : null}
+                    </>
                   )}
-                  {editMode ? (
-                    <div className="edit-mode-actions">
-                      <button
-                        className="btn-simpan-toko"
-                        onClick={handleSaveHours}
-                      >
-                        Simpan
-                      </button>
-                      <button
-                        className="btn-batal-toko"
-                        onClick={handleCancelEdit}
-                      >
-                        Batal
-                      </button>
-                    </div>
-                  ) : null}
                 </div>
               </div>
             </div>
           )}
           {activeTab === "pengiriman" && (
             <div className="pengaturan-tab">
-              <div className="main-pengiriman">
-                <div className="container-asal-pengiriman">
-                  <h1>Asal Pengiriman</h1>
-                  <div className="box-pilih-kota">
-                    <div className="pilih-kota">
-                      <p>Kota atau Kecamatan</p>
-                      <select name="" id="">
-                        <option value="">Pilih Kota</option>
-                        {/* Map the 'cities' state to generate options in the dropdown */}
-                        {cities.map((city) => (
-                          <option key={city.city_id}>{city.city_name}</option>
-                        ))}
-                      </select>
+              {isLoading ? (
+                <LoadingPengiriman />
+              ) : (
+                <div className="main-pengiriman">
+                  <div className="container-asal-pengiriman">
+                    <h1>Asal Pengiriman</h1>
+                    <div className="box-container-asal-pengiriman">
+                      <div className="dropdown-container-pengiriman">
+                        <p>Kota atau Kecamatan</p>
+                        <select>
+                          <option value="">Pilih Kota</option>
+                          {cities.map((city) => (
+                            <option key={city.id} value={city.id}>
+                              {city.city_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="dropdown-container-pengiriman">
+                        <p>Kode Pos</p>
+                        <select>
+                          <option value="">Pilih Kode Pos</option>
+                          {cities.map((postalCode) => (
+                            <option key={postalCode.id} value={postalCode.id}>
+                              {postalCode.postal_code}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-                    <div className="pilih-kode-pos">
-                      <p>Kota atau Kecamatan</p>
-                      <select name="" id="">
-                        <option value="">Pilih Kota</option>
-                        {/* Map the 'cities' state to generate options in the dropdown */}
-                        {cities.map((city) => (
-                          <option key={city.city_id}>{city.postal_code}</option>
-                        ))}
-                      </select>
+                  </div>
+                  <div className="container-pengiriman-kurir">
+                    <h1>Silahkan Pilih Pengiriman</h1>
+                    <div className="main-layanan-kurir">
+                      <div className="layanan-pengiriman-kurir">
+                        <h1>Layanan Kurir</h1>
+                        <p>
+                          Pilih layanan kurir yang ingin kamu sediakan di tokomu
+                        </p>
+                        <p>Semua kurir pada layanan ini memiliki fitur :</p>
+                      </div>
+                      <div className="antar-ke-kantor">
+                        <img src={iconkurir} alt="" />
+                        <div className="text-antar-ke-kantor">
+                          <h1>Antar ke Kantor Agen</h1>
+                          <p>
+                            Bawa pesanan ke kantor agen terdekat dan minta resi
+                            dari petugas.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="select-pengiriman-kurir">
+                      {couriers.map((courier) => (
+                        <div className="box-select-pengiriman-kurir">
+                          <BpCheckbox />
+                          <img src={courier.logo} alt={courier.name} />
+                          <span>{courier.courier}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="btn-simpan-kurir">
+                      <button>Simpan</button>
                     </div>
                   </div>
                 </div>
-                <div className="container-pilih-pengiriman"></div>
-              </div>
+              )}
             </div>
           )}
         </div>
       </div>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Alhamdulillah Jadwal Berhasil Diubah
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Maaf, terjadi kesalahan. Gagal Mengubah Jadwal.
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

@@ -77,16 +77,20 @@ function ModalEmail({ handleProfileUpdate }) {
 
   return (
     <>
-      <h3 onClick={toggleModal} className="ubah-email">
+      <h3 onClick={toggleModal} className="ubah-email-user">
         Ubah
       </h3>
 
       {modal && (
         <div className="modal-email">
           <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
+          <div className="modal-content-email">
             <h3>Ubah Email</h3>
-            <p>Silahkan ubah email anda disini , Pastikan email anda Benar </p>
+            <div className="wrap-tulisan-email">
+              <p className="isi-email-anda">
+                Silahkan ubah email anda disini , Pastikan email anda Benar{" "}
+              </p>
+            </div>
             <div className="email-kamu">
               <h3>Email</h3>
               <input

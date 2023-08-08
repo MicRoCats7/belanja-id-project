@@ -119,7 +119,7 @@ function Detailtoko() {
               </div>
             ) : (
               <div className="produk-terbaru-toko">
-                {product.map((item) => (
+                {product?.map((item) => (
                   <Product
                     name={item.name}
                     url={item.picturePath}
@@ -149,7 +149,7 @@ function Detailtoko() {
               </div>
             ) : (
               <div className="produk-terbaru-toko">
-                {product.map((item) => (
+                {product?.map((item) => (
                   <Product
                     name={item.name}
                     url={item.picturePath}

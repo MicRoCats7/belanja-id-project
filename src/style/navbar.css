@@ -171,22 +171,22 @@ input[type="text"]:focus {
     position: absolute;
     left: 0;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 5px;
     /* margin-top: 5px; */
 }
 
-.dropdown-content a {
+.dropdown-content .dropdown-item-category {
     color: #000;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    border-radius: 5px;
+    cursor: pointer;
 }
 
-.dropdown-content a:hover {
+.dropdown-content .dropdown-item-category:hover {
     background-color: #EF233C;
     color: #ffff;
 }
@@ -220,7 +220,7 @@ input[type="text"]:focus {
 .cart-item-count {
     position: absolute;
     top: 1px;
-    right: 160px;
+    right: 260px;
     background-color: red;
     color: white;
     border-radius: 50%;
@@ -231,6 +231,11 @@ input[type="text"]:focus {
     justify-content: center;
     font-size: 12px;
     font-weight: bold;
+}
+
+.icon-cart {
+    display: flex;
+    align-items: center;
 }
 
 .line {

@@ -387,22 +387,31 @@ function Keranjang() {
                           checked={selectedItems.includes(item.id)}
                           onChange={() => handleItemCheckboxChange(item.id)}
                         />
-                        <div className="img-item-pro">
-                          {item.product && (
+                        {item.product ? (
+                          <>
+                            <div className="img-item-pro">
+                              {item.product && (
                             <img
-                              src={item.product.picturePath}
-                              alt="gambar produk"
-                            />
-                          )}
+                                  src={item.product.picturePath}
+                                  alt="gambar produk"
+                                />
+                              )}
                         </div>
-                        <div className="nama-item-pro">
-                          <h3 className="name-pro-cart">{item.product.name}</h3>
-                          <h4 className="harga-pro-cart">
-                            Rp {formatPrice(item.product.price)}
-                          </h4>
-                          {item.ukuran && <p>{item.ukuran}</p>}
-                          {item.warna && <p>{item.warna}</p>}
-                        </div>
+                            <div className="nama-item-pro">
+                              <h3 className="name-pro-cart">
+                                {item.product.name}
+                              </h3>
+                              <h4 className="harga-pro-cart">
+                                Rp {formatPrice(item.product.price)}
+                              </h4>
+                              {item.ukuran && <p>{item.ukuran}</p>}
+                              {item.warna && <p>{item.warna}</p>}
+                            </div>
+                          </>
+                        ) : (
+                          // If 'item.product' is missing or incomplete, render a placeholder or error message.
+                          <p>Product data is missing or incomplete.</p>
+                        )}
                       </div>
                     </div>
                     <div className="item-pro-bottom">
@@ -437,44 +446,46 @@ function Keranjang() {
                   </div>
                 ))}
               </div>
-              <div className="wishlist-kamu">
-                <h1>Wujudkan Whislist Anda!</h1>
-                <div className="wishlist-pro-kamu">
-                  {firstThreeWishlistItems.map((item) => (
-                    <div key={item.id} className="pro-wishlist-cart">
-                      <div className="item-wishlist-cart">
-                        <div className="img-wishlist-cart">
-                          {item.product && (
-                            <img
-                              src={item.product.picturePath}
-                              alt="gambar produk"
-                            />
-                          )}
-                        </div>
-                        <div className="nama-wishlist-cart">
-                          <h3>{item.product?.name}</h3>
-                          <span>{formatPrice(item.product?.price)}</span>
-                          <div className="toko-wishlist-cart">
-                            <div className="img-toko-wishlist-cart">
-                              <img src={ImgCartToko} alt="" />
-                            </div>
-                            <div className="nama-toko-wishlist-cart">
-                              <h4>Nama Toko</h4>
+              {firstThreeWishlistItems.length > 0 && (
+                <div className="wishlist-kamu">
+                  <h1>Wujudkan Whislist Anda!</h1>
+                  <div className="wishlist-pro-kamu">
+                    {firstThreeWishlistItems.map((item) => (
+                      <div key={item.id} className="pro-wishlist-cart">
+                        <div className="item-wishlist-cart">
+                          <div className="img-wishlist-cart">
+                            {item.product && (
+                              <img
+                                src={item.product.picturePath}
+                                alt="gambar produk"
+                              />
+                            )}
+                          </div>
+                          <div className="nama-wishlist-cart">
+                            <h3>{item.product?.name}</h3>
+                            <span>{formatPrice(item.product?.price)}</span>
+                            <div className="toko-wishlist-cart">
+                              <div className="img-toko-wishlist-cart">
+                                <img src={ImgCartToko} alt="" />
+                              </div>
+                              <div className="nama-toko-wishlist-cart">
+                                <h4>Nama Toko</h4>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="wishlist-bottom-action">
-                        <BsTrash3 className="icon-bottom-action" />
-                        <div className="btn-keranjang-action">
-                          <AiOutlinePlus className="icon-btn-keranjang-icon" />
-                          <span>Keranjang</span>
+                        <div className="wishlist-bottom-action">
+                          <BsTrash3 className="icon-bottom-action" />
+                          <div className="btn-keranjang-action">
+                            <AiOutlinePlus className="icon-btn-keranjang-icon" />
+                            <span>Keranjang</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </>
           )}
         </div>

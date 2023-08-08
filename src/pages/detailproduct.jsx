@@ -81,7 +81,7 @@ function DetailProduct() {
         },
       })
       .then((response) => {
-        let filteredData = response.data.data.data.filter(
+        let filteredData = response.data.data.filter(
           (item) => item.products_id == id
         );
         console.log(filteredData);
@@ -293,8 +293,13 @@ function DetailProduct() {
                   <div className="line-detail"></div>
                   <div className="toko-detail">
                     <img src={iconToko} alt="" />
-                    <Link to={"/toko"}>
-                      <h4>Toko : Penuh Makna</h4>
+                    <Link to={"/detailtoko"}>
+                      <h4>
+                        Toko :{" "}
+                        {detail.length > 0
+                          ? detail[0].store?.name
+                          : "Toko tidak ada"}
+                      </h4>
                     </Link>
                   </div>
                 </div>

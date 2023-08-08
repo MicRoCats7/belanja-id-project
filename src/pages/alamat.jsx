@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../style/alamat.css";
-import ModalAlamat from "../component/modal/modalEditAlamat";
+import ModalEditAlamat from "../component/modal/modalEditAlamat";
 import ModalAddAlamat from "../component/modal/modalAddAlamat";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import imgAlamatKosong from "../assets/image/postman.png";
+import { MdDone } from "react-icons/md";
+import LoadingAlamat from "../component/loader/LoadingAlamat";
 
 function Alamat() {
   const [alamatList, setAlamatList] = useState([]);
@@ -17,35 +19,51 @@ function Alamat() {
   const [profile, setProfile] = useState({});
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [selectedPrimaryAddress, setSelectedPrimaryAddress] = useState(null);
+  const [editingAddress, setEditingAddress] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
-    // fetchAlamat();
+    fetchAlamat();
     getProfile();
   }, []);
 
-  // function fetchAlamat() {
-  //   axios
-  //     .get(apiurl() + "user_addresses/" + id, {
-  //       headers: {
-  //         Authorization: `Bearer ${token()}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       const responseData = response.data;
-  //       if (responseData.data) {
-  //         setAlamatList(responseData.data);
-  //         console.log(responseData.data);
-  //       } else {
-  //         console.log(
-  //           "Gagal mengambil data alamat:",
-  //           responseData.meta.message
-  //         );
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("Gagal mengambil data alamat:", error);
-  //     });
-  // }
+  useEffect(() => {
+    if (selectedPrimaryAddress) {
+      updatePrimaryAddressInDatabase(selectedPrimaryAddress.id);
+    }
+  }, [selectedPrimaryAddress]);
+
+  function fetchAlamat() {
+    axios
+      .get(apiurl() + "user_addresses/" + id, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        const responseData = response.data;
+        if (responseData.data) {
+          setAlamatList(responseData.data);
+          const primaryAddress = responseData.data.find(
+            (alamat) => alamat.is_primary === "1"
+          );
+          if (!primaryAddress && responseData.data.length > 1) {
+            setSelectedPrimaryAddress(responseData.data[1]);
+          } else {
+            setSelectedPrimaryAddress(primaryAddress);
+          }
+        } else {
+          console.log(
+            "Gagal mengambil data alamat:",
+            responseData.meta.message
+          );
+        }
+      })
+      .catch((error) => {
+        console.log("Gagal mengambil data alamat:", error);
+      });
+  }
 
   const getProfile = async () => {
     setIsLoading(true);
@@ -66,6 +84,54 @@ function Alamat() {
     }
   };
 
+  function updatePrimaryAddressInDatabase(addressId) {
+    // Menggunakan Promise.all untuk menjalankan kedua permintaan bersamaan
+    Promise.all([
+      axios.put(
+        apiurl() + "user_addresses/" + addressId,
+        { is_primary: "1" },
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      ),
+      // Mengubah is_primary menjadi 0 untuk alamat lainnya
+      ...alamatList.map((alamat) =>
+        axios.put(
+          apiurl() + "user_addresses/" + alamat.id,
+          { is_primary: alamat.id === addressId ? "1" : "0" },
+          {
+            headers: {
+              Authorization: `Bearer ${token()}`,
+            },
+          }
+        )
+      ),
+    ])
+      .then((responses) => {
+        // Ambil respons pertama, yang berisi pembaruan alamat utama
+        const response = responses[0];
+        console.log(
+          "Alamat utama berhasil diperbarui di database:",
+          response.data
+        );
+
+        // Update is_primary value in alamatList
+        const updatedAlamatList = alamatList.map((alamat) => {
+          if (alamat.id === addressId) {
+            return { ...alamat, is_primary: "1" };
+          } else {
+            return { ...alamat, is_primary: "0" };
+          }
+        });
+        setAlamatList(updatedAlamatList);
+      })
+      .catch((error) => {
+        console.log("Gagal memperbarui alamat utama di database:", error);
+      });
+  }
+
   function deleteAlamat(id) {
     axios
       .delete(apiurl() + "user_addresses/" + id, {
@@ -75,16 +141,29 @@ function Alamat() {
       })
       .then((response) => {
         handleSuccessAlertOpen();
-        // Berhasil dihapus dari server, sekarang hapus juga dari state alamatList
         setAlamatList((prevAlamatList) =>
           prevAlamatList.filter((alamat) => alamat.id !== id)
         );
+        if (selectedPrimaryAddress && selectedPrimaryAddress.id === id) {
+          const newPrimaryAddress = alamatList.find(
+            (alamat) => alamat.id !== id
+          );
+          setSelectedPrimaryAddress(newPrimaryAddress);
+          updatePrimaryAddressInDatabase(newPrimaryAddress.id);
+        }
         console.log("Alamat berhasil dihapus:", response.data);
       })
       .catch((error) => {
         console.log("Gagal menghapus alamat:", error);
         handleErrorAlertOpen();
       });
+  }
+
+  function handlePrimaryAddressSelection(address) {
+    setSelectedPrimaryAddress(address);
+
+    const updatedAlamatList = alamatList.filter((a) => a.id !== address.id);
+    setAlamatList([address, ...updatedAlamatList]);
   }
 
   const handleSuccessAlertOpen = () => {
@@ -97,29 +176,53 @@ function Alamat() {
 
   const addNewAlamat = (newAlamat) => {
     setAlamatList([...alamatList, newAlamat]);
+    setIsAddModalOpen(false); // Menutup modal setelah alamat ditambahkan
+  };
+
+  const handleEditAddress = (address) => {
+    setEditingAddress(address);
   };
 
   return (
     <>
-      {alamatList.length === 0 ? (
+      {isLoading ? ( // Display the loading skeleton while isLoading is true
+        <LoadingAlamat />
+      ) : alamatList.length === 0 ? (
         <div className="item-alamat-kosong">
           <div className="text-alamat-kosong">
             <img src={imgAlamatKosong} alt="alamat kosong" />
             <h1>Alamat Kamu Kosong Isi Dulu Yuk!!</h1>
-            <ModalAddAlamat addNewAlamat={addNewAlamat} />
+            <ModalAddAlamat
+              addNewAlamat={addNewAlamat}
+              closeModal={() => setIsAddModalOpen(false)}
+            />
           </div>
         </div>
       ) : (
         <div className="contain">
           <div className="plus-alamat">
-            <ModalAddAlamat />
+            <ModalAddAlamat
+              addNewAlamat={addNewAlamat}
+              closeModal={() => setIsAddModalOpen(false)}
+            />
           </div>
           {alamatList.map((alamat) => (
-            <div className="box-alamat">
+            <div className="box-alamat" key={alamat.id}>
               <div className="isi-alamat">
                 <div className="item-alamat" key={alamat.id}>
                   <div className="text-alamat">
                     <h3>{alamat.label_address}</h3>
+                    {!selectedPrimaryAddress ||
+                    selectedPrimaryAddress.id !== alamat.id ? (
+                      <button
+                        className="btn-utama-alamat"
+                        onClick={() => handlePrimaryAddressSelection(alamat)}
+                      >
+                        Pilih Alamat
+                      </button>
+                    ) : (
+                      <MdDone fontSize={30} color="#ef233c" />
+                    )}
                   </div>
                   <div className="line-atas"></div>
                   <div className="nama-nomer-alamat">
@@ -140,7 +243,10 @@ function Alamat() {
                       Hapus
                     </h3>
                     <div>
-                      <ModalAlamat addNewAlamat={addNewAlamat} />
+                      <ModalEditAlamat
+                        address={editingAddress}
+                        closeModal={() => setEditingAddress(null)}
+                      />
                     </div>
                   </div>
                 </div>

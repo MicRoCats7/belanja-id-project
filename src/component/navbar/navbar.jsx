@@ -19,12 +19,16 @@ function Navbar() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [toko, setToko] = useState([]);
+  const [hasShop, setHasShop] = useState(false);
   const [produkList, setProdukList] = useState([]);
   const [text, setText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [cartItemCount, setCartItemCount] = useState([]);
+  const [searchClicked, setSearchClicked] = useState(false);
+  const [shopName, setShopName] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -32,6 +36,7 @@ function Navbar() {
     getProduct();
     getProfile();
     getCategories();
+    getToko();
   }, []);
 
   const getProfile = async () => {
@@ -77,6 +82,31 @@ function Navbar() {
     }
   };
 
+  const getToko = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(apiurl() + "user/store", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setToko(response.data.data);
+        if (response.data.data) {
+          // Jika data toko ada (pengguna sudah memiliki toko), set nama toko di state shopName
+          setHasShop(true);
+          setShopName(response.data.data.name); // Simpan nama toko
+        } else {
+          setHasShop(false);
+        }
+        console.log("Data successfully fetched:", response.data.data);
+      } catch (error) {
+        setHasShop(false);
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+
   const handleSuccessAlertOpen = () => {
     setSuccessAlertOpen(true);
   };
@@ -101,22 +131,21 @@ function Navbar() {
       // console.log(response.data.data);
     } catch (error) {
       console.error(error);
+      setProdukList([]);
     }
   };
 
   const onSuggestHandler = (selectedSuggestion) => {
-    setText(selectedSuggestion); // Setel state "text" dengan teks yang dipilih dari saran
-    setSuggestions([]); // Kosongkan daftar saran setelah pencarian dilakukan
-    handleSearch(selectedSuggestion); // Panggil fungsi "handleSearch" dengan teks yang dipilih dari saran
+    setText(selectedSuggestion);
+    setSuggestions([]);
+    navigate(`/search?query=${selectedSuggestion}`);
   };
 
   const onChangeHandler = (text) => {
     let matches = [];
-    if (text.length > 0) {
-      matches = produkList.filter((pro) => {
-        const regex = new RegExp(`${text}`, "gi");
-        return pro.name.match(regex);
-      });
+    if (produkList && produkList.length > 0) {
+      const regex = new RegExp(`${text}`, "gi");
+      matches = produkList.filter((pro) => pro.name.match(regex));
     }
     setSuggestions(matches);
     setText(text);
@@ -124,13 +153,8 @@ function Navbar() {
 
   const handleSearch = (query) => {
     // Redirect to search page with the search text
-    navigate(`/search?query=${query}`);
-    const filteredProducts = produkList.filter((pro) => {
-      const regex = new RegExp(`${query}`, "gi");
-      return pro.name.match(regex);
-    });
-
-    setFilteredProducts(filteredProducts);
+    navigate(`/search?query=${text}`);
+    setSearchClicked(false);
   };
 
   const handleKeyPress = (e) => {
@@ -154,6 +178,15 @@ function Navbar() {
     }
   };
 
+  const handleInputBlur = () => {
+    setSearchClicked(false); // Sembunyikan dropdown ketika kehilangan fokus
+    // Hapus setTimeout dan setSuggestions([]) dari handleInputBlur
+  };
+
+  const handleInputClick = () => {
+    setSearchClicked(true); // Menampilkan dropdown ketika tombol pencarian diklik
+  };
+
   return (
     <>
       <div className="navbar">
@@ -168,9 +201,15 @@ function Navbar() {
             <div className="dropdown-content">
               {categories?.map((category) => {
                 return (
-                  <a href="#" key={category.id}>
+                  <div
+                    className="dropdown-item-category"
+                    key={category.id}
+                    onClick={() =>
+                      navigate(`/category/${category.id}/${category.name}`)
+                    }
+                  >
                     {category.name}
-                  </a>
+                  </div>
                 );
               })}
             </div>
@@ -182,12 +221,9 @@ function Navbar() {
                 placeholder="Cari Produk"
                 onChange={(e) => onChangeHandler(e.target.value)}
                 value={text}
-                onBlur={() => {
-                  setTimeout(() => {
-                    setSuggestions([]);
-                  }, 100);
-                }}
-                onKeyPress={handleKeyPress} // Handle key press event
+                onClick={handleInputClick} // Set searchClicked to true when the input is clicked
+                onBlur={handleInputBlur} // Handle blur event to hide the dropdown
+                onKeyPress={handleKeyPress}
               />
               <button type="submit" onClick={handleSearch}>
                 Search
@@ -201,21 +237,41 @@ function Navbar() {
             <div className="icon-navbar">
               <img src={iconChat} alt="icon chat" />
               <Link to={"/cart"}>
-                <BsCart2 />
-                {cartItemCount > 0 && (
-                  <span className="cart-item-count">{cartItemCount}</span>
-                )}
+                <div className="icon-cart">
+                  <BsCart2 />
+                  {cartItemCount > 0 && (
+                    <span className="cart-item-count">{cartItemCount}</span>
+                  )}
+                </div>
               </Link>
               <img src={IconNotif} alt="icon notif" />
             </div>
             <div className="line"></div>
             {localStorage.getItem("token") ? (
               <div className="myshop">
-                <div className="circle">
-                  <Link to={"/daftartoko"}>
-                    <img src={Icontoko} alt="icon keranjang" />
-                  </Link>
-                </div>
+                {hasShop ? (
+                  // Tampilkan nama toko jika pengguna sudah memiliki toko
+                  <div className="circle">
+                    <Link to={"/toko/hometoko"} target="_blank">
+                      <img src={Icontoko} alt="icon keranjang" />
+                    </Link>
+                  </div>
+                ) : (
+                  // Tampilkan tombol daftar toko jika pengguna belum memiliki toko
+                  <div className="circle">
+                    <Link to={"/daftartoko"}>
+                      <img src={Icontoko} alt="icon keranjang" />
+                    </Link>
+                  </div>
+                )}
+                {hasShop && (
+                  // Tampilkan nama toko di samping ikon toko jika pengguna sudah memiliki toko
+                  <div className="shop-name">
+                    <Link to={"/toko/hometoko"} target="_blank">
+                      <span>{shopName}</span>
+                    </Link>
+                  </div>
+                )}
                 <div className="drop-profile">
                   <div className="circle-photo">
                     <img
@@ -266,8 +322,11 @@ function Navbar() {
           </div>
         </div>
       </div>
-      {suggestions && suggestions.length > 0 && (
-        <div className="dropdown-result">
+      {searchClicked && suggestions && suggestions.length > 0 && (
+        <div
+          className="dropdown-result"
+          onMouseDown={(e) => e.preventDefault()}
+        >
           {suggestions.slice(0, 5).map((suggestion, i) => (
             <div
               key={i}

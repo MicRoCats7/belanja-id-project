@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "../style/detailpesanan.css";
 import NavbarCheckout from "../component/navbar/navbarCheckout";
 import {
+  MdDone,
   MdKeyboardArrowRight,
   MdLocationOn,
   MdOutlineClose,
@@ -16,6 +17,9 @@ import apiurl from "../utils/apiurl";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Skeleton from "react-loading-skeleton";
+import ModalEditAlamat from "../component/modal/modalEditAlamat";
+import { IoMdClose } from "react-icons/io";
+import ModalAddAlamat from "../component/modal/modalAddAlamat";
 
 function Detailpesanan() {
   const [product, setProduct] = useState([]);
@@ -34,7 +38,12 @@ function Detailpesanan() {
   const [couriers, setCouriers] = useState([]);
   const [selectedCourier, setSelectedCourier] = useState(null);
   const [shippingCost, setShippingCost] = useState(0);
-  const [productShippingCosts, setProductShippingCosts] = useState({});
+  const [addresses, setAddresses] = useState([]);
+  const [isEditClicked, setIsEditClicked] = useState(false);
+  const [selectedPrimaryAddress, setSelectedPrimaryAddress] = useState(null);
+  const [alamatList, setAlamatList] = useState([]);
+  const [editingAddress, setEditingAddress] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = () => {
@@ -57,6 +66,27 @@ function Detailpesanan() {
     } else {
       setSelectedItems([]);
     }
+  }, []);
+
+  useEffect(() => {
+    const user_id = localStorage.getItem("user_id");
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          apiurl() + "user_addresses/" + user_id,
+          {
+            headers: {
+              Authorization: `Bearer ${token()}`,
+            },
+          }
+        );
+        setAddresses(response.data.data);
+      } catch (error) {
+        console.error("Error fetching address data:", error);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   useEffect(() => {
@@ -200,6 +230,85 @@ function Detailpesanan() {
     }
   };
 
+  function updatePrimaryAddressInDatabase(addressId) {
+    // Menggunakan Promise.all untuk menjalankan kedua permintaan bersamaan
+    Promise.all([
+      axios.put(
+        apiurl() + "user_addresses/" + addressId,
+        { is_primary: "1" },
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      ),
+      // Mengubah is_primary menjadi 0 untuk alamat lainnya
+      ...alamatList.map((alamat) =>
+        axios.put(
+          apiurl() + "user_addresses/" + alamat.id,
+          { is_primary: alamat.id === addressId ? "1" : "0" },
+          {
+            headers: {
+              Authorization: `Bearer ${token()}`,
+            },
+          }
+        )
+      ),
+    ])
+      .then((responses) => {
+        // Ambil respons pertama, yang berisi pembaruan alamat utama
+        const response = responses[0];
+        console.log(
+          "Alamat utama berhasil diperbarui di database:",
+          response.data
+        );
+
+        // Update is_primary value in alamatList
+        const updatedAlamatList = alamatList.map((alamat) => {
+          if (alamat.id === addressId) {
+            return { ...alamat, is_primary: "1" };
+          } else {
+            return { ...alamat, is_primary: "0" };
+          }
+        });
+        setAlamatList(updatedAlamatList);
+      })
+      .catch((error) => {
+        console.log("Gagal memperbarui alamat utama di database:", error);
+      });
+  }
+
+  function deleteAlamat(id) {
+    axios
+      .delete(apiurl() + "user_addresses/" + id, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        handleSuccessAlertOpen();
+        setAlamatList((prevAlamatList) =>
+          prevAlamatList.filter((alamat) => alamat.id !== id)
+        );
+        if (selectedPrimaryAddress && selectedPrimaryAddress.id === id) {
+          const newPrimaryAddress = alamatList.find(
+            (alamat) => alamat.id !== id
+          );
+          setSelectedPrimaryAddress(newPrimaryAddress);
+          updatePrimaryAddressInDatabase(newPrimaryAddress.id);
+        }
+        console.log("Alamat berhasil dihapus:", response.data);
+      })
+      .catch((error) => {
+        console.log("Gagal menghapus alamat:", error);
+        handleErrorAlertOpen();
+      });
+  }
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
   const handleErrorAlertOpen = () => {
     setErrorAlertOpen(true);
   };
@@ -230,6 +339,22 @@ function Detailpesanan() {
     setShowShippingPopup(false);
   };
 
+  function handlePrimaryAddressSelection(address) {
+    setSelectedPrimaryAddress(address);
+
+    const updatedAlamatList = alamatList.map((a) =>
+      a.id === address.id
+        ? { ...a, is_primary: "1" }
+        : { ...a, is_primary: "0" }
+    );
+    setAlamatList(updatedAlamatList);
+  }
+
+  const addNewAlamat = (newAlamat) => {
+    setAlamatList([...alamatList, newAlamat]);
+    setIsAddModalOpen(false); // Menutup modal setelah alamat ditambahkan
+  };
+
   return (
     <div>
       <NavbarCheckout />
@@ -240,34 +365,113 @@ function Detailpesanan() {
             <div className="container-info-alamat">
               <div className="container-alamat">
                 <h1>Alamat pengiriman</h1>
-                <div className="top-alamat">
-                  <div className="top-left-alamat">
-                    <MdLocationOn color="#969696" />
-                    <h4>Rumah</h4>
-                    <div className="role-alamat">
-                      <h3>Utama</h3>
+                {selectedPrimaryAddress ? (
+                  <div className="main-box-address">
+                    <div className="top-alamat">
+                      <div className="top-left-alamat">
+                        <MdLocationOn color="#969696" />
+                        <h4>{selectedPrimaryAddress.label_address}</h4>
+                        <div className="role-alamat">
+                          <h3>Utama</h3>
+                        </div>
+                      </div>
+                      <div className="top-right-alamat">
+                        <h3 onClick={() => setIsEditClicked(true)}>Ubah</h3>
+                      </div>
+                    </div>
+                    <div className="content-address">
+                      <div className="name-user">
+                        <h3>{selectedPrimaryAddress.receiver_name}</h3>
+                        <div className="line-address"></div>
+                        <p>{selectedPrimaryAddress.phone_number}</p>
+                      </div>
+                      <div className="full-address">
+                        <p>{selectedPrimaryAddress.address_one}</p>
+                        <p>{`${selectedPrimaryAddress.regencies} - ${selectedPrimaryAddress.provinces} - ${selectedPrimaryAddress.zip_code}`}</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="top-right-alamat">
-                    <h3>Ubah</h3>
-                  </div>
-                </div>
-                <div className="content-address">
-                  <div className="name-user">
-                    <h3>Andi</h3>
-                    <div className="line-address"></div>
-                    <p>082128066795</p>
-                  </div>
-                  <div className="full-address">
-                    <p>
-                      7VXR+CCF, Kajar Selatan, Kajar, Kec. Dawe, Kabupaten
-                      Kudus, Jawa Tengah 59353, Indonesia Kajar - Dawe - Kab.
-                      Kudus - Jawa Tengah - 59353
-                    </p>
-                  </div>
-                  <h2>Catatan Alamat</h2>
-                </div>
+                ) : (
+                  <ModalAddAlamat
+                    addNewAlamat={addNewAlamat}
+                    closeModal={() => setIsAddModalOpen(false)}
+                  />
+                )}
               </div>
+              {isEditClicked && (
+                <div className="address-popup-overlay">
+                  <div className="address-popup-content">
+                    <div className="top-addres-popup-close">
+                      <div className="plus-alamat">
+                        <ModalAddAlamat
+                          addNewAlamat={addNewAlamat}
+                          closeModal={() => setIsAddModalOpen(false)}
+                        />
+                      </div>
+                      <button
+                        className="address-popup-close"
+                        onClick={() => setIsEditClicked(false)}
+                      >
+                        <IoMdClose fontSize={30} />
+                      </button>
+                    </div>
+                    {addresses.map((address) => (
+                      <div className="box-alamat-popup" key={address.id}>
+                        <div className="isi-alamat">
+                          <div className="item-alamat" key={address.id}>
+                            <div className="text-alamat">
+                              <h3>{address.label_address}</h3>
+                              {!selectedPrimaryAddress ||
+                              selectedPrimaryAddress.id !== address.id ? (
+                                <button
+                                  className="btn-utama-alamat"
+                                  onClick={() => {
+                                    handlePrimaryAddressSelection(address);
+                                    setIsEditClicked(false); // Close the popup
+                                  }}
+                                >
+                                  Pilih Alamat
+                                </button>
+                              ) : (
+                                <MdDone fontSize={30} color="#ef233c" />
+                              )}
+                            </div>
+                            <div className="line-atas"></div>
+                            <div className="nama-nomer-alamat">
+                              <h3 className="nama-user-alamat">
+                                {address.receiver_name}
+                              </h3>
+                              <hr />
+                              <h3>{address.phone_number}</h3>
+                            </div>
+                            <div className="deskripsi-alamat">
+                              <h3 className="detail-alamat">
+                                {address.address_one}
+                              </h3>
+                              <h3 className="desa-kecamatan">{`${address.regencies} - ${address.provinces} - ${address.zip_code}`}</h3>
+                            </div>
+                            <div className="line-bawah"></div>
+                            <div className="opsi-alamat">
+                              <h3
+                                onClick={() => deleteAlamat(address.id)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                Hapus
+                              </h3>
+                              <div>
+                                <ModalEditAlamat
+                                  address={editingAddress}
+                                  closeModal={() => setEditingAddress(null)}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             {selectedItems.map((item, idx) => (
               <div key={idx} className="container-info-produk">

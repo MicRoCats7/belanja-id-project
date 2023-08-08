@@ -12,6 +12,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import apiurl from "../utils/apiurl";
 import axios from "axios";
+import ModalForgotPass from "../component/modal/modalForgotPass";
 // import { SessionContext } from "../utils/googlelogin";
 
 function Login() {
@@ -63,6 +64,7 @@ function Login() {
       handleSuccessAlertOpen();
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
+      localStorage.setItem("user_id", response.data.data.user.id);
       setLoading(false);
       setTimeout(() => {
         navigate("/");
@@ -164,7 +166,7 @@ function Login() {
               <button className="btn-masuk">Masuk</button>
             </div>
           </form>
-          <div className="daftar-selain">
+          {/* <div className="daftar-selain">
             <div className="line-right"></div>
             <p>atau daftar dengan</p>
             <div className="line-left"></div>
@@ -174,6 +176,9 @@ function Login() {
               <img src={imggoogle} className="login-icon" alt="icon" />
               <p className="textgl">Masuk Dengan Google</p>
             </button>
+          </div> */}
+          <div className="daftar-dengan">
+            <ModalForgotPass />
           </div>
           <div className="daftar-dengan">
             <p className="text-hitam">Belum punya akun?</p>

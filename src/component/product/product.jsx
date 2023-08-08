@@ -18,12 +18,7 @@ function formatPrice(price) {
 function Product(props) {
   const [showWishlist, setShowWishlist] = useState(false);
   const formattedPrice = formatPrice(props.price);
-  const [product, setData] = useState([]);
-  const [detail, setDetail] = useState([]);
   const wishlistRef = useRef(null);
-  const [filteredData, setFilteredData] = useState([]);
-  const [whislistData, setDataWhislist] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [wishlistAdded, setWishlistAdded] = useState(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);

@@ -81,7 +81,6 @@ function Home() {
       .then((response) => {
         setCategories(response.data.data);
         setIsLoading(false);
-        // console.log(response.data.data);
       })
       .catch((error) => console.error(error));
   }
@@ -95,15 +94,15 @@ function Home() {
     }
   };
 
-  const handleLoadMore = () => {
-    setProductsToShow((prevCount) => prevCount + additionalProducts);
-  };
-
   const handleCategorySelection = (categoryId) => {
     setSelectedCategoryId(categoryId);
     getProductsByCategory(categoryId);
 
     navigate(`/categories/${categoryId}`);
+  };
+
+  const handleLoadMore = () => {
+    setProductsToShow((prevCount) => prevCount + additionalProducts);
   };
 
   return (
@@ -170,16 +169,21 @@ function Home() {
             ) : (
               categories.map((item) => {
                 return (
-                  <div
-                    className="kategori-produk"
-                    onClick={() => handleCategorySelection(item.id)}
-                  >
-                    <img
-                      src={item.photo}
-                      alt="icon kerajinan tangan"
-                      loading="lazy"
-                    />
-                    <h3>{item.name}</h3>
+                  <div className="kategori-produk" key={item.id}>
+                    <div
+                      className="kategori-produk"
+                      onClick={() =>
+                        navigate(`/category/${item.id}/${item.name}`)
+                      }
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img
+                        src={item.photo}
+                        alt="icon kerajinan tangan"
+                        loading="lazy"
+                      />
+                      <h3>{item.name}</h3>
+                    </div>
                   </div>
                 );
               })
@@ -245,7 +249,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -322,7 +326,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -400,7 +404,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -477,7 +481,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -526,7 +530,7 @@ function Home() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.product_origin}
+                        location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
