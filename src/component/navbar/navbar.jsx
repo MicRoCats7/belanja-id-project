@@ -29,11 +29,12 @@ function Navbar() {
   const [cartItemCount, setCartItemCount] = useState([]);
   const [searchClicked, setSearchClicked] = useState(false);
   const [shopName, setShopName] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    getProfile();
-    getProduct();
     LoadProduk();
+    getProduct();
+    getProfile();
     getCategories();
     getToko();
   }, []);
@@ -127,7 +128,7 @@ function Navbar() {
     try {
       const response = await axios.get(apiurl() + "products");
       setProdukList(response.data.data);
-      console.log(response.data.data);
+      // console.log(response.data.data);
     } catch (error) {
       console.error(error);
       setProdukList([]);
@@ -150,7 +151,7 @@ function Navbar() {
     setText(text);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (query) => {
     // Redirect to search page with the search text
     navigate(`/search?query=${text}`);
     setSearchClicked(false);
@@ -158,7 +159,8 @@ function Navbar() {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      handleSearch(text);
+      setSuggestions([]);
     }
   };
 

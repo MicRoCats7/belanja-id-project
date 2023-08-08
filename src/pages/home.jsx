@@ -32,13 +32,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loading from "../component/loader/Loading";
 import LoadingCategories from "../component/loader/LoadingCategories";
 import Skeleton from "react-loading-skeleton";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [product, setProduct] = useState([]);
-  const [productKerajinan, setProducKerajinan] = useState([]);
-  const [productFood, setProductFood] = useState([]);
-  const [productFashion, setProductFashion] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [banner, setBanners] = useState([]);
   const [isPrevArrowVisible, setIsPrevArrowVisible] = useState(false);
   const [isNextArrowVisible, setIsNextArrowVisible] = useState(true);
@@ -136,6 +134,22 @@ function Home() {
       })
       .catch((error) => console.error(error));
   }
+
+  const getProductsByCategory = async (categoryId) => {
+    try {
+      const response = await axios.get(apiurl() + `categories/${categoryId}`);
+      setProduct(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCategorySelection = (categoryId) => {
+    setSelectedCategoryId(categoryId);
+    getProductsByCategory(categoryId);
+
+    navigate(`/categories/${categoryId}`);
+  };
 
   const handleLoadMore = () => {
     setProductsToShow((prevCount) => prevCount + additionalProducts);
