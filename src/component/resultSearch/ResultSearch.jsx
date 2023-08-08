@@ -19,6 +19,7 @@ function ResultSearch() {
   const [underlineStyle, setUnderlineStyle] = useState({});
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  const categoryId = searchParams.get("categoryId");
   const [products, setProducts] = useState([]);
   const query = searchParams.get("query");
   const [isLoading, setIsLoading] = useState(true);
@@ -31,12 +32,19 @@ function ResultSearch() {
   useEffect(() => {
     fetchProducts();
     calculateUnderlineStyle();
-  }, [query, activeTab]);
+  }, [query, activeTab, categoryId]);
 
   const fetchProducts = async () => {
     setIsSearching(true);
     try {
-      const response = await axios.get(apiurl() + `products?query=${query}`);
+      let response;
+      if (categoryId) {
+        response = await axios.get(
+          apiurl() + `products?categoryId=${categoryId}`
+        );
+      } else {
+        response = await axios.get(apiurl() + `products?query=${query}`);
+      }
       setIsLoading(false);
       setIsSearching(false);
       const filteredProducts = response.data.data.filter((product) =>
@@ -47,6 +55,7 @@ function ResultSearch() {
       setIsLoading(false);
       setIsSearching(false);
       console.error(error);
+      setIsLoading(false);
     }
   };
   const calculateUnderlineStyle = () => {

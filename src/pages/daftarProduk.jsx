@@ -80,7 +80,7 @@ function DaftarProduk() {
     } catch (error) {
       handleErrorAlertOpen();
       console.log("Gagal menghapus item dari API:", error);
-    }
+    }   
   };
 
   // useEffect(() => {

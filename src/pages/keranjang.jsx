@@ -390,11 +390,13 @@ function Keranjang() {
                         {item.product ? (
                           <>
                             <div className="img-item-pro">
-                              <img
-                                src={item.product.picturePath}
-                                alt="gambar produk"
-                              />
-                            </div>
+                              {item.product && (
+                            <img
+                                  src={item.product.picturePath}
+                                  alt="gambar produk"
+                                />
+                              )}
+                        </div>
                             <div className="nama-item-pro">
                               <h3 className="name-pro-cart">
                                 {item.product.name}
