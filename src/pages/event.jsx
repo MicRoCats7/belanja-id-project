@@ -11,7 +11,6 @@ import axios from "axios";
 import apiurl from "../utils/apiurl";
 
 function Event() {
-
   const itemsPerPage = 6; // Jumlah item per halaman
   const [event, setEvents] = useState([]);
   const totalPages = Math.ceil(event.data?.length / itemsPerPage); // Total halaman
@@ -24,8 +23,8 @@ function Event() {
   useEffect(() => {
     getEvent();
     getImg();
-  }, []); 
-  
+  }, []);
+
   useEffect(() => {
     if (event.data) {
       const startIndex = (currentPage - 1) * itemsPerPage;
@@ -33,7 +32,7 @@ function Event() {
       setCurrentItems(event.data.slice(startIndex, endIndex));
     }
   }, [currentPage, event.data]);
-  
+
   function getEvent() {
     axios
       .get(apiurl() + "events")
@@ -44,7 +43,6 @@ function Event() {
       .catch((error) => console.error(error));
   }
 
-
   const getImg = async () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -53,14 +51,14 @@ function Event() {
           headers: {
             Authorization: "Bearer " + token,
           },
-        }); 
+        });
         setImg(response.data.data);
         console.log("Data successfully fetched:", response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-  }
+  };
   // Mengubah halaman
   const changePage = (page) => {
     setCurrentPage(page);
@@ -78,7 +76,7 @@ function Event() {
                 <div className="box-event">
                   <div className="wrap-content-event">
                     <div className="img-event">
-                    {/* {imageEvents.map((img) =>
+                      {/* {imageEvents.map((img) =>
                         img.events_id === dataevent.id ? (
                           <img
                             key={img.id}
@@ -95,8 +93,8 @@ function Event() {
                           />
                         )
                       )} */}
-                       <img
-                        src={dataevent.url || imgEvent}
+                      <img
+                        src={dataevent.poster || imgEvent}
                         alt=""
                         className="img-photo-event"
                       />
@@ -104,9 +102,7 @@ function Event() {
                     <div className="info">
                       <p className="data-event-nama">{dataevent.name}</p>
                       <h3>{dataevent.title}</h3>
-                      <p className="asal-event">
-                        Kota: {dataevent.location} 
-                      </p>
+                      <p className="asal-event">Kota: {dataevent.location}</p>
                       <p className="tanggal-event">
                         <MdOutlineDateRange />
                         {dataevent.date}
@@ -130,39 +126,39 @@ function Event() {
           )}
         </div>
         {totalPages > 1 && (
-        <div className="pagination">
-          <button
-            onClick={() => changePage(currentPage - 1)}
-            className={currentPage === 1 ? "disabled" : ""}
-          >
-            <span className="arrow-back">
-              <IoIosArrowBack />
-            </span>
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <button
-                key={page}
-                className={currentPage === page ? "active" : ""}
-                onClick={() => changePage(page)}
-              >
-                {page}
-              </button>
-            )
-          )}
-          {hasNextPage && (
+          <div className="pagination">
             <button
-              onClick={() => changePage(currentPage + 1)}
-              className={currentPage === totalPages ? "disabled" : ""}
+              onClick={() => changePage(currentPage - 1)}
+              className={currentPage === 1 ? "disabled" : ""}
             >
-              <span className="arrow-next">
-                <IoIosArrowForward />
+              <span className="arrow-back">
+                <IoIosArrowBack />
               </span>
             </button>
-          )}
-        </div>
-      )}
-    </div>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              (page) => (
+                <button
+                  key={page}
+                  className={currentPage === page ? "active" : ""}
+                  onClick={() => changePage(page)}
+                >
+                  {page}
+                </button>
+              )
+            )}
+            {hasNextPage && (
+              <button
+                onClick={() => changePage(currentPage + 1)}
+                className={currentPage === totalPages ? "disabled" : ""}
+              >
+                <span className="arrow-next">
+                  <IoIosArrowForward />
+                </span>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
       <Footer />
     </div>
   );

@@ -38,7 +38,11 @@ function Detailevent() {
         {selectedEvent ? (
           <div className="con-box-detail-evnt">
             <div className="image-detail-event">
-              <img src={imgDetailEvnt} className="img-event-detail" alt="" />
+              <img
+                src={selectedEvent.poster}
+                className="img-event-detail"
+                alt=""
+              />
             </div>
             <div className="box-event-detail">
               <div className="con-detail-event">
@@ -74,8 +78,8 @@ function Detailevent() {
                   </h3>
                 </div>
                 <div className="btn-join-event">
-              <button className="">Bergabung Yuk</button>
-            </div>
+                  <button className="">Bergabung Yuk</button>
+                </div>
               </div>
             </div>
           </div>

@@ -41,6 +41,9 @@
 
 .img-event-detail{
     border-radius: 10px;
+    width: 300px;
+    height:350px;
+    object-fit: cover;
 }
 
 .con-detail-event{

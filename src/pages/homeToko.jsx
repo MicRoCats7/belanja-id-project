@@ -8,13 +8,16 @@ import { TbTruckDelivery } from "react-icons/tb";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
 import { AiFillStar } from "react-icons/ai";
-import token from "../utils/token";
+import { useParams } from "react-router-dom";
 
 function HomeToko() {
   const [toko, setToko] = useState([]); // Initialize as an empty array
   const [isLoading, setIsLoading] = useState(true);
+  const [products, setProduct] = useState([]);
+  const { id } = useParams();
   useEffect(() => {
     getToko();
+    getProductByUserId();
     window.scrollTo(0, 0);
   }, []);
 
@@ -36,11 +39,26 @@ function HomeToko() {
     }
   };
 
+  function getProductByUserId() {
+    axios
+      .get(apiurl() + "products", {
+        params: {
+          store_id: id,
+        },
+      })
+      .then((response) => {
+        console.log("Data produk hometoko dari server:", response.data.data);
+        setProduct(response.data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
     <div className="container-hometoko">
       <div className="banner-hero">
         <div className="text-banner">
-        {toko && (
+          {toko && (
             <h2>
               Selamat datang seller <span>{toko.name}</span>
             </h2>
@@ -125,7 +143,7 @@ function HomeToko() {
               </div>
             </div>
           </div>
-          <div className="column-penting-hari-ini">
+          {/* <div className="column-penting-hari-ini">
             <div className="icon-penting-hari">
               <BsChatSquareText />
             </div>
@@ -140,7 +158,7 @@ function HomeToko() {
                 <h3>5</h3>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="detail-toko">
@@ -159,7 +177,7 @@ function HomeToko() {
                 </Tooltip>
               </div>
               <div className="jumlah-hari-ini">
-                <h3>100</h3>
+                <h3>0</h3>
               </div>
             </div>
           </div>
@@ -178,7 +196,7 @@ function HomeToko() {
                 </Tooltip>
               </div>
               <div className="jumlah-hari-ini">
-                <h3>4.000</h3>
+                <h3>0</h3>
               </div>
             </div>
           </div>
