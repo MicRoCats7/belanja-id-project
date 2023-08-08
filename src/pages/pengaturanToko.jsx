@@ -19,12 +19,13 @@ import iconkurir from "../assets/icon/pana.svg";
 import token from "../utils/token";
 import { styled } from "@mui/material/styles";
 import LoadingPengiriman from "../component/loader/loadigPengiriman";
+import { FiTrash2 } from "react-icons/fi";
 
 function PengaturanToko() {
   const [activeTab, setActiveTab] = useState("reviews");
   const [toko, setToko] = useState([]);
   const [underlineStyle, setUnderlineStyle] = useState({});
-  const [jadwal, setJadwal] = useState([]); // Ensure the initial state is an empty array
+  const [jadwal, setJadwal] = useState([]);
   const { id } = useParams();
   const [inputText, setInputText] = useState("");
   const [description, storeDescription] = useState("");
@@ -38,10 +39,11 @@ function PengaturanToko() {
   const [cities, setCities] = useState([]);
   const [couriers, setCouriers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedImagePath, setSelectedImagePath] = useState("");
 
   useEffect(() => {
     calculateUnderlineStyle();
-  }, [activeTab]);    
+  }, [activeTab]);
 
   useEffect(() => {
     if (editMode) {
@@ -158,6 +160,13 @@ function PengaturanToko() {
     });
   };
 
+  const handleImageChange1 = (e) => {
+    const file = e.target.files[0];
+    if (e.target.files && e.target.files[0]) {
+      setSelectedImagePath(e.target.files[0]);
+    }
+  };
+
   const handleSaveHours = () => {
     setEditMode(false);
     setJadwal([...editingOpeningHours]);
@@ -252,6 +261,10 @@ function PengaturanToko() {
             Authorization: "Bearer " + token,
           },
         });
+        const productData = response.data.data;
+        setSelectedImagePath(productData.logo);
+        storeDescription(productData.description);
+        setInputText(productData.name);
         setToko(response.data.data);
         console.log("Data berhasil diambil", response.data);
       } catch (error) {
@@ -259,6 +272,27 @@ function PengaturanToko() {
       }
     }
   };
+
+  function AploadFoto() {
+    const formData = new FormData();
+    formData.append("logo", selectedImagePath);
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    if (token) {
+      axios
+        .post(apiurl() + "stores/" + id, formData, config)
+        .then((response) => {
+          console.log("Berhasil Mengapload logo", response.data);
+        })
+        .catch((error) => console.error("Gagal mengapload logo", error));
+    }
+  }
   const handleSuccessAlertOpen = () => {
     setSuccessAlertOpen(true);
   };
@@ -346,7 +380,7 @@ function PengaturanToko() {
     <div className="pengaturan-toko">
       <div className="nama-toko">
         <BsShop />
-        <h3>Microsport</h3>
+        <h3>{toko.name}</h3>
       </div>
       <div className="box-pengaturan">
         <div className="tab-navigation" ref={tabRef}>
@@ -416,8 +450,47 @@ function PengaturanToko() {
               <div className="gambar-toko">
                 <h2>Gambar Toko</h2>
                 <div className="ubah-gambar-toko">
-                  <div className="image-toko">
-                    <img src={gambartoko} alt="" />
+                  <div className="addImg">
+                    <label
+                      htmlFor="input-file-toko"
+                      className={`file-label-toko ${
+                        !selectedImagePath ? "no-border" : ""
+                      }`}
+                    >
+                      {selectedImagePath ? (
+                        <img
+                          src={selectedImagePath}
+                          width={200}
+                          height={200}
+                          alt="Uploaded"
+                          className="uploaded-image-toko"
+                        />
+                      ) : (
+                        <>
+                          <img
+                            src={gambartoko}
+                            alt=""
+                            className="apload-foto-toko"
+                          />
+                          <p>Pilih Foto</p>
+                        </>
+                      )}
+                    </label>
+                    <input
+                      id="input-file"
+                      type="file"
+                      accept=".jpg, .jpeg, .png"
+                      className="input-field"
+                      onChange={handleImageChange1}
+                      hidden
+                    />
+                    {selectedImagePath && (
+                      <div className="upload-row">
+                        <span className="upload-content">
+                          <FiTrash2 onClick={() => setSelectedImagePath("")} />
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="info-button-gambar">
                     <p>
@@ -425,7 +498,9 @@ function PengaturanToko() {
                       Maksimum 10.000.000 bytes (10 Megabytes). Ekstensi file
                       yang diperbolehkan: JPG, JPEG, PNG
                     </p>
-                    <button>Pilih Foto</button>
+                    <div>
+                      <button onClick={AploadFoto}>Simpan</button>
+                    </div>
                   </div>
                 </div>
               </div>

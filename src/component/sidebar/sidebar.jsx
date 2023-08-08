@@ -1,4 +1,3 @@
-
 import "../../style/sidebar.css";
 import logoTokoSeller from "../../assets/image/imgToko.svg";
 import { BiHome, BiMessageDetail } from "react-icons/bi";
@@ -14,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import token from "../../utils/token";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
-
 
 function Sidebar() {
   const [toko, setToko] = useState([]);
@@ -44,7 +42,7 @@ function Sidebar() {
           name: "Tambah Produk",
         },
         {
-          path: "daftarproduk/" + toko.id ,
+          path: "daftarproduk/" + toko.id,
           name: "Daftar Produk",
         },
       ],
@@ -60,15 +58,12 @@ function Sidebar() {
       icon: <BsPersonCheck fontSize={20} />,
     },
     {
-      path: "pengaturantoko/" + toko.id ,
+      path: "pengaturantoko/" + toko.id,
       name: "Pengaturan",
-      icon: <BsGear />
+      icon: <BsGear />,
     },
   ];
 
-  
- 
-  
   const getToko = async () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -86,8 +81,6 @@ function Sidebar() {
       }
     }
   };
-
-  
 
   useEffect(() => {
     getToko();
@@ -108,8 +101,12 @@ function Sidebar() {
         <div className="sidebar">
           <div className="top_section">
             <div className="logo-toko">
-            {toko && <img src={toko.logo} alt="Logo Toko" />}
-             <h3>{toko.name}</h3>
+              {toko.logo ? (
+                <img src={toko.logo} alt="Logo Toko" />
+              ) : (
+                <img src={logoTokoSeller} alt="Logo Toko Seller" />
+              )}
+              <h3>{toko.name}</h3>
             </div>
             <div className="line-top_section"></div>
             <div className="saldo_info">

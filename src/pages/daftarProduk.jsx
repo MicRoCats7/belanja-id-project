@@ -254,7 +254,7 @@ function DaftarProduk() {
               // Render a placeholder if products are not found based on the filter
               <tr>
                 <td colSpan="5" className="alert-notfound">
-                  Data tidak ditemukan.
+                  Produk tidak ditemukan.
                 </td>
               </tr>
             )}

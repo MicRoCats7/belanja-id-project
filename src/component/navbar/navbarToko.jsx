@@ -55,46 +55,10 @@ function NavbarToko() {
             <input type="text" placeholder="Cari Produk " />
             <button type="submit">Search</button>
           </div>
-          <div className="icon-navbarToko">
+          {/* <div className="icon-navbarToko">
             <img src={IconNotif} alt="icon notif" />
-          </div>
-          <div className="line-toko"></div>
-          {token ? (
-            <div className="drop-profile">
-              <img
-                className="photo-profile"
-                src={profile.profile_photo_url}
-                alt=""
-              />
-              <div className="menu-dropdown">
-                <div className="user-info">
-                  <img
-                    className="photo-profile"
-                    src={profile.profile_photo_url}
-                    alt=""
-                  />
-                  <h3 className="nama-user">{profile.name}</h3>
-                </div>
-                <hr />
-                <a href="/" className="sub-menu-link">
-                  Profile
-                </a>
-                <a href="Whislist">Whislist</a>
-                <button className="btn-logout" onClick={logout}>
-                  Logout
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="login-daftar">
-              <Link to="/login">
-                <button class="btn-login">Masuk</button>
-              </Link>
-              <Link to="/register">
-                <button class="daftar">Daftar</button>
-              </Link>
-            </div>
-          )}
+          </div> */}
+          {/* <div className="line-toko"></div> */}
         </div>
       </div>
     </div>

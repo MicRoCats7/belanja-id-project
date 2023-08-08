@@ -21,6 +21,33 @@
     font-weight: 600;
     color: #000;
 }
+.file-label-toko {
+    border: 1px solid #606060;
+    border-radius: 5px;
+    padding: 1px;
+    width: 155px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.uploaded-image-toko{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.apload-foto-toko{
+    width: 140px;
+    height: 140px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
 
 .pengaturan-toko .nama-toko svg {
     font-size: 35px;

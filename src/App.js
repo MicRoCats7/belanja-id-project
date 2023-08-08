@@ -41,7 +41,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/category/:id/:name" element={<CategoryPage />} />
           <Route path="/cart" element={<Keranjang />} />
-          <Route path="/detailtoko" element={<Detailtoko />} />
+          <Route path="/detailtoko/:id" element={<Detailtoko />} />
           <Route path="/notifikasi" element={<Notifikasi />} />
           <Route path="/ubahProduk/:id" element={<UbahProduk />} />
         </Routes>

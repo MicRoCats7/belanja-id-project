@@ -8,29 +8,90 @@ import { HiOutlineArchiveBox } from "react-icons/hi2";
 import { IoPersonAddOutline } from "react-icons/io5";
 import Product from "../component/product/product";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import apiurl from "../utils/apiurl";
 import { useState } from "react";
 import { useEffect } from "react";
 import Loading from "../component/loader/Loading";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Detailtoko() {
   const [product, setProduct] = useState([]);
+  const [toko, setToko] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   useEffect(() => {
-    getProduct();
+    getProductByUserId();
     window.scrollTo(0, 0);
   }, []);
 
-  function getProduct() {
+  useEffect(() => {
+    getEventById();
+  }, []);
+
+  function getEventById() {
     axios
-      .get(apiurl() + "products")
+      .get(apiurl() + `stores?id=${id}`)
       .then((response) => {
+        setToko(response.data.data);
+        console.log("Data Store by ID:", response.data.data);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function followStore() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .post(
+          apiurl() + "follow/" + id,
+          {},
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        )
+        .then((response) => {
+          handleSuccessAlertFollow();
+          setIsFollowing(true);
+          setToko((prevToko) => ({
+            ...prevToko,
+            followers: prevToko.followers ? prevToko.followers + 1 : 1, // Tambahkan nilai 1 jika followers sudah ada, jika belum set menjadi 1
+          }));
+          console.log("Berhasil mengikuti toko", response.data);
+        })
+        .catch((error) => console.error("Gagal mengikuti toko", error));
+    }
+  }
+
+  function getProductByUserId() {
+    axios
+      .get(apiurl() + "products", {
+        params: {
+          store_id: id,
+        },
+      })
+      .then((response) => {
+        console.log("Data produk dari server:", response.data.data);
         setProduct(response.data.data);
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
   }
+
+  const handleSuccessAlertFollow = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertFollow = () => {
+    setErrorAlertOpen(true);
+  };
 
   return (
     <>
@@ -38,13 +99,17 @@ function Detailtoko() {
       <div className="container-detail-toko">
         <div className="container-info-detail-toko">
           <div className="container-img-detail-toko">
-            <img src={imgToko} alt="Foto Toko" />
+            <img src={toko.logo} alt="Logo Toko" />
           </div>
           <div className="container-btn-detail-toko">
-            <button className="btn-follow-toko">
-              <AiOutlinePlus />
-              IKUTI
-            </button>
+            {isFollowing ? (
+              <button className="btn-follow-toko disabled">SUDAH DIKUTI</button>
+            ) : (
+              <button className="btn-follow-toko" onClick={followStore}>
+                <AiOutlinePlus />
+                IKUTI
+              </button>
+            )}
             <button className="btn-chat-toko">
               <BsChatLeftText />
               Chat Penjual
@@ -54,32 +119,22 @@ function Detailtoko() {
             <div className="total-produk-detail-toko">
               <HiOutlineArchiveBox />
               <p>
-                Produk: <span>50</span>
-              </p>
-            </div>
-            <div className="total-follow-detail-toko">
-              <IoPersonAddOutline />
-              <p>
-                Mengikuti: <span>100</span>
+                Produk: <span>{toko.products_count}</span>
               </p>
             </div>
             <div className="total-followers-detail-toko">
-              <BsPeople />
-              <p>
-                Pengikut: <span>50</span>
-              </p>
-            </div>
-            <div className="total-review-detail-toko">
               <BsStar />
               <p>
-                Penilaian: <span>4.5</span>
+                Pengikut: <span>{toko.followers}</span>
               </p>
             </div>
           </div>
           <div className="container-pesanan-jam-infolokasi">
             <div className="container-proses-pesanan">
-              <h3>1 jam</h3>
-              <h4>Pesanan diProses</h4>
+              <h3>Nama Toko</h3>
+              <p>
+                <span>{toko.name}</span>
+              </p>
             </div>
             <div className="container-jam">
               <h3>Buka 24jam</h3>
@@ -87,7 +142,9 @@ function Detailtoko() {
             </div>
             <div className="container-info-lokasi">
               <h3>Info toko & lokasi</h3>
-              <h4>Besito, Kudus</h4>
+              <h4>
+                {toko.provinces}, {toko.regencies}
+              </h4>
             </div>
           </div>
         </div>
@@ -95,15 +152,11 @@ function Detailtoko() {
           <div className="title-deskripsi-detail-toko">
             <h3>Deskripsi Toko</h3>
           </div>
-          <p>
-            Selamat datang di Microsport Kami Menyediakan berbagai macam produk
-            berkualitas dengan harga yang terjangkau. Kami menawarkan produk -
-            produk terbaru dan terbaik di kategori fashion, Kami selalu
-            berkomitmen untuk memberikan pengalaman berbelanja yang menyenangkan
-            dan memuaskan kepada pelanggan kami. Dalam hal demikian kami selalu
-            memperhatikan kualitas dan ketersediaan produk, serta memberikan
-            layanan yang ramah dan responsif kepada pelanggan
-          </p>
+          {toko.description ? (
+            <p>{toko.description}</p>
+          ) : (
+            <p>Toko ini belum memiliki deskripsi.</p>
+          )}
         </div>
         <div className="container-produk-terbaru-detail-toko">
           <div className="title-produk-terbaru-detail-toko">
@@ -165,6 +218,34 @@ function Detailtoko() {
             )}
           </div>
         </div>
+        <Snackbar
+          open={successAlertOpen}
+          autoHideDuration={3000}
+          onClose={() => setSuccessAlertOpen(false)}
+        >
+          <MuiAlert
+            onClose={() => setSuccessAlertOpen(false)}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            Berhasil Mengikuti Toko ini
+          </MuiAlert>
+        </Snackbar>
+        <Snackbar
+          open={errorAlertOpen}
+          autoHideDuration={3000}
+          onClose={() => setErrorAlertOpen(false)}
+        >
+          <MuiAlert
+            onClose={() => setErrorAlertOpen(false)}
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            Gagal Mengikuti toko ini
+          </MuiAlert>
+        </Snackbar>
       </div>
     </>
   );
