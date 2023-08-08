@@ -21,6 +21,7 @@ function Alamat() {
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [selectedPrimaryAddress, setSelectedPrimaryAddress] = useState(null);
   const [editingAddress, setEditingAddress] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     fetchAlamat();
@@ -175,6 +176,7 @@ function Alamat() {
 
   const addNewAlamat = (newAlamat) => {
     setAlamatList([...alamatList, newAlamat]);
+    setIsAddModalOpen(false); // Menutup modal setelah alamat ditambahkan
   };
 
   const handleEditAddress = (address) => {
@@ -190,13 +192,19 @@ function Alamat() {
           <div className="text-alamat-kosong">
             <img src={imgAlamatKosong} alt="alamat kosong" />
             <h1>Alamat Kamu Kosong Isi Dulu Yuk!!</h1>
-            <ModalAddAlamat addNewAlamat={addNewAlamat} />
+            <ModalAddAlamat
+              addNewAlamat={addNewAlamat}
+              closeModal={() => setIsAddModalOpen(false)}
+            />
           </div>
         </div>
       ) : (
         <div className="contain">
           <div className="plus-alamat">
-            <ModalAddAlamat />
+            <ModalAddAlamat
+              addNewAlamat={addNewAlamat}
+              closeModal={() => setIsAddModalOpen(false)}
+            />
           </div>
           {alamatList.map((alamat) => (
             <div className="box-alamat" key={alamat.id}>
