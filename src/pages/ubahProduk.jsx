@@ -28,6 +28,11 @@ function UbahProduk() {
   const [selectedImagePath4, setSelectedImagePath4] = useState("");
   const [selectedImagePath5, setSelectedImagePath5] = useState("");
   const [selectedImagePath, setSelectedImagePath] = useState("");
+  const [previewImg, setPreviewImg] = useState(null);
+  const [previewImg2, setPreviewImg2] = useState(null);
+  const [previewImg3, setPreviewImg3] = useState(null);
+  const [previewImg4, setPreviewImg4] = useState(null);
+  const [previewImg5, setPreviewImg5] = useState(null);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const { id } = useParams();
@@ -58,7 +63,6 @@ function UbahProduk() {
   const [fileName4, setFileName4] = useState("No Selected file");
   const [image5, setImage5] = useState(null);
   const [fileName5, setFileName5] = useState("No Selected file");
-  // event handler
 
   const handleChangeName = (event) => {
     setInputText(event.target.value);
@@ -94,14 +98,14 @@ function UbahProduk() {
         setKondisiProduk(productData.kondisi_produk);
         setDeskripsiProduk(productData.description);
         setSKU(productData.sku);
-        setSelectedImagePath(productData.picturePath);
+        setPreviewImg(productData.picturePath);
         setValue3(productData.quantity);
         setValue2(productData.price);
         setValue4(productData.weight);
-        setSelectedImagePath2(productData.photo1);
-        setSelectedImagePath3(productData.photo2);
-        setSelectedImagePath4(productData.photo3);
-        setSelectedImagePath5(productData.photo4);
+        setPreviewImg2(productData.photo1);
+        setPreviewImg3(productData.photo2);
+        setPreviewImg4(productData.photo3);
+        setPreviewImg5(productData.photo4);
         console.log("Data produk dari server:", response.data.data);
       })
       .catch((error) => console.error(error));
@@ -110,57 +114,56 @@ function UbahProduk() {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("price", value2);
-    formData.append("description", deskripsiProduk);
-    formData.append("weight", value4);
-    formData.append("quantity", value3);
-    formData.append("sku", skuInput);
-    formData.append("category_id", selectedCategory);
-    formData.append("kondisi_produk", kondisiProduk);
-    formData.append("picturePath", selectedImagePath);
-    formData.append("photo1", selectedImagePath2);
-    formData.append("photo2", selectedImagePath3);
-    formData.append("photo3", selectedImagePath4);
-    formData.append("photo4", selectedImagePath5);
-    formData.append("slug", "pakaian");
-    const headers = {
-      Authorization: `Bearer ${token()}`,
-    };
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("price", value2);
+      formData.append("description", deskripsiProduk);
+      formData.append("weight", value4);
+      formData.append("quantity", value3);
+      formData.append("sku", skuInput);
+      formData.append("category_id", selectedCategory);
+      formData.append("kondisi_produk", kondisiProduk);
+      formData.append("picturePath", selectedImagePath);
+      if (selectedImagePath2) {
+        formData.append("photo1", selectedImagePath2);
+      }
 
-    axios
-      .post(apiurl() + "products/edit/" + id, FormData, { headers })
-      .then((response) => {
-        console.log("Product updated successfully:", response.data);
-        setSuccessAlertOpen(true);
-        const updatedProductIndex = products.findIndex((p) => p.id === id);
-        if (updatedProductIndex !== -1) {
-          const updatedProducts = [...products];
-          updatedProducts[updatedProductIndex] = {
-            ...updatedProducts[updatedProductIndex],
-            name: name,
-            category_id: selectedCategory,
-            kondisi_produk: kondisiProduk,
-            description: deskripsiProduk,
-            quantity: value3,
-            price: value2,
-            sku: skuInput,
-            slug: "pakaian",
-            weight: value4,
-            picturePath: selectedImagePath,
-            photo1: selectedImagePath2,
-            photo2: selectedImagePath3,
-            photo3: selectedImagePath4,
-            photo4: selectedImagePath5,
-          };
-          setProducts(updatedProducts);
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating product:", error);
-        setErrorAlertOpen(true);
-      });
+      if (selectedImagePath3) {
+        formData.append("photo2", selectedImagePath3);
+      }
+
+      if (selectedImagePath4) {
+        formData.append("photo3", selectedImagePath4);
+      }
+
+      if (selectedImagePath5) {
+        formData.append("photo4", selectedImagePath5);
+      }
+      formData.append("slug", "pakaian");
+
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + token,
+        },
+      };
+      const response = await axios.post(
+        apiurl() + "products/edit/" + id,
+        formData,
+        config
+      );
+      handleSuccessAlertToko();
+      const newProductData = response.data.data;
+      console.log("Produk berhasil diedit:", newProductData);
+      setTimeout(() => {
+        navigate("/toko/daftarproduk/");
+      }, 2000);
+    } catch (error) {
+      handleErrorAlertToko();
+      console.error("Error saat mengedit produk:", error);
+    }
   };
 
   const [selectedValue, setSelectedValue] = React.useState("a");
@@ -185,6 +188,7 @@ function UbahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath(e.target.files[0]);
+      setPreviewImg(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -192,6 +196,7 @@ function UbahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath2(e.target.files[0]);
+      setPreviewImg2(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -199,12 +204,14 @@ function UbahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath3(e.target.files[0]);
+      setPreviewImg3(URL.createObjectURL(e.target.files[0]));
     }
   };
   const handleImageChange4 = (e) => {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath4(e.target.files[0]);
+      setPreviewImg4(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -212,6 +219,7 @@ function UbahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath5(e.target.files[0]);
+      setPreviewImg5(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -391,9 +399,9 @@ function UbahProduk() {
                         !selectedImagePath ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath ? (
+                      {previewImg ? (
                         <img
-                          src={selectedImagePath}
+                          src={previewImg}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -414,10 +422,10 @@ function UbahProduk() {
                       onChange={handleImageChange1}
                       hidden
                     />
-                    {selectedImagePath && (
+                    {previewImg && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath("")} />
+                          <FiTrash2 onClick={() => setPreviewImg("")} />
                         </span>
                       </div>
                     )}
@@ -429,9 +437,9 @@ function UbahProduk() {
                         !selectedImagePath2 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath2 ? (
+                      {previewImg2 ? (
                         <img
-                          src={selectedImagePath2}
+                          src={previewImg2}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -452,10 +460,10 @@ function UbahProduk() {
                       onChange={handleImageChange2}
                       hidden
                     />
-                    {selectedImagePath2 && (
+                    {previewImg2 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath2("")} />
+                          <FiTrash2 onClick={() => setPreviewImg2("")} />
                         </span>
                       </div>
                     )}
@@ -467,9 +475,9 @@ function UbahProduk() {
                         !selectedImagePath3 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath3 ? (
+                      {previewImg3 ? (
                         <img
-                          src={selectedImagePath3}
+                          src={previewImg3}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -490,10 +498,10 @@ function UbahProduk() {
                       onChange={handleImageChange3}
                       hidden
                     />
-                    {selectedImagePath3 && (
+                    {previewImg3 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath3("")} />
+                          <FiTrash2 onClick={() => setPreviewImg3("")} />
                         </span>
                       </div>
                     )}
@@ -505,9 +513,9 @@ function UbahProduk() {
                         !selectedImagePath4 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath4 ? (
+                      {previewImg4 ? (
                         <img
-                          src={selectedImagePath4}
+                          src={previewImg4}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -528,10 +536,10 @@ function UbahProduk() {
                       onChange={handleImageChange4}
                       hidden
                     />
-                    {selectedImagePath4 && (
+                    {previewImg4 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath4("")} />
+                          <FiTrash2 onClick={() => setPreviewImg4("")} />
                         </span>
                       </div>
                     )}
@@ -543,9 +551,9 @@ function UbahProduk() {
                         !selectedImagePath5 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath5 ? (
+                      {previewImg5 ? (
                         <img
-                          src={selectedImagePath5}
+                          src={previewImg5}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -566,10 +574,10 @@ function UbahProduk() {
                       onChange={handleImageChange5}
                       hidden
                     />
-                    {selectedImagePath5 && (
+                    {previewImg5 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath5("")} />
+                          <FiTrash2 onClick={() => setPreviewImg5("")} />
                         </span>
                       </div>
                     )}

@@ -32,7 +32,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loading from "../component/loader/Loading";
 import LoadingCategories from "../component/loader/LoadingCategories";
 import Skeleton from "react-loading-skeleton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Home() {
   const [product, setProduct] = useState([]);
@@ -41,6 +41,9 @@ function Home() {
   const [isPrevArrowVisible, setIsPrevArrowVisible] = useState(false);
   const [isNextArrowVisible, setIsNextArrowVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [productKerajinan, setProducKerajinan] = useState();
+  const [productFood, setProductFood] = useState();
+  const [productFashion, setProductFashion] = useState();
   const [isImgLoading, setIsImgLoading] = useState(true);
   const { id } = useParams();
   const [isHovered, setIsHovered] = useState(false);
@@ -55,7 +58,7 @@ function Home() {
     getProductByCategoryFood(id);
     getCategories();
     getProductByCategoryFashion(id);
-    getBanner();
+    // getBanner();
     window.scrollTo(0, 0);
   }, [id]);
 
@@ -115,15 +118,15 @@ function Home() {
       .catch((error) => console.error(error));
   }
 
-  function getBanner() {
-    axios
-      .get(apiurl() + "banners")
-      .then((response) => {
-        setBanners(response.data);
-        console.log("Berhasil mengambil data banner:", response.data);
-      })
-      .catch((error) => console.error(error));
-  }
+  // function getBanner() {
+  //   axios
+  //     .get(apiurl() + "banners")
+  //     .then((response) => {
+  //       setBanners(response.data);
+  //       console.log("Berhasil mengambil data banner:", response.data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }
 
   function getCategories() {
     axios
@@ -448,7 +451,7 @@ function Home() {
                     <Loading cards={7} />
                   </div>
                 ) : (
-                  productFashion.map((item, index) => (
+                  productFashion?.map((item, index) => (
                     <SwiperSlide key={index}>
                       <Product
                         name={item.name}

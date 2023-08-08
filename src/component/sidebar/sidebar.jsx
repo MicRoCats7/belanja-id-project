@@ -7,7 +7,7 @@ import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Switch } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import token from "../../utils/token";
@@ -15,6 +15,9 @@ import axios from "axios";
 import apiurl from "../../utils/apiurl";
 
 function Sidebar() {
+  const { id } = useParams();
+  const [jadwal, setJadwal] = useState([]);
+  const [editingOpeningHours, setEditingOpeningHours] = useState([...jadwal]);
   const [toko, setToko] = useState([]);
   const [checked, setChecked] = React.useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -82,8 +85,30 @@ function Sidebar() {
     }
   };
 
+  function getJadwalOperasional() {
+    axios
+      .get(apiurl() + "store/all-operating-hours", {
+        params: {
+          store_id: id,
+        },
+      })
+      .then((response) => {
+        console.log("Data Jadwal Sidebar dari server:", response.data.data[0]);
+        const data = response.data.data[0].operating_hours;
+        if (data && data.length > 0) {
+          setJadwal(data);
+          setEditingOpeningHours(data);
+        } else {
+          setJadwal([]);
+          setEditingOpeningHours([]);
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
   useEffect(() => {
     getToko();
+    getJadwalOperasional();
     window.scrollTo(0, 0);
   }, []);
 

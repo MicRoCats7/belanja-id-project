@@ -20,6 +20,7 @@ import token from "../utils/token";
 import { styled } from "@mui/material/styles";
 import LoadingPengiriman from "../component/loader/loadigPengiriman";
 import { FiTrash2 } from "react-icons/fi";
+import { BiImageAdd } from "react-icons/bi";
 
 function PengaturanToko() {
   const [activeTab, setActiveTab] = useState("reviews");
@@ -34,12 +35,15 @@ function PengaturanToko() {
   const mergedOpeningHours = [];
   const [editingOpeningHours, setEditingOpeningHours] = useState([...jadwal]);
   const tabRef = useRef(null);
-  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successAlertOpen1, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [successAlertOpen2, setSuccessAlertOpen2] = useState(false);
+  const [errorAlertOpen2, setErrorAlertOpen2] = useState(false);
   const [cities, setCities] = useState([]);
   const [couriers, setCouriers] = useState([]);
+  const [previewImg, setPreviewImg] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedImagePath, setSelectedImagePath] = useState("");
+  const [selectedImagePathToko, setSelectedImagePath] = useState("");
 
   useEffect(() => {
     calculateUnderlineStyle();
@@ -133,15 +137,6 @@ function PengaturanToko() {
     Minggu: 7,
   };
 
-  // const handleOpeningHourChange = (event, entryIndex) => {
-  //   const value = event.target.value;
-  //   setEditingOpeningHours((prevHours) => {
-  //     const updatedHours = [...prevHours];
-  //     updatedHours[entryIndex].openingHour = value;
-  //     return updatedHours;
-  //   });
-  // };
-
   const handleOpeningHourChange = (event, entryIndex) => {
     const { name, value } = event.target;
     setEditingOpeningHours((prevHours) => {
@@ -160,10 +155,11 @@ function PengaturanToko() {
     });
   };
 
-  const handleImageChange1 = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath(e.target.files[0]);
+      setPreviewImg(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -185,10 +181,10 @@ function PengaturanToko() {
         const data = response.data.data[0].operating_hours;
         if (data && data.length > 0) {
           setJadwal(data);
-          setEditingOpeningHours(data); // Perbarui juga editingOpeningHours
+          setEditingOpeningHours(data);
         } else {
-          setJadwal([]); // Set to empty array if there's no data
-          setEditingOpeningHours([]); // Perbarui juga editingOpeningHours jika tidak ada data
+          setJadwal([]);
+          setEditingOpeningHours([]);
         }
       })
       .catch((error) => console.error(error));
@@ -245,7 +241,7 @@ function PengaturanToko() {
     axios
       .post(apiurl() + `stores/${id}`, formData, config)
       .then((response) => {
-        handleSuccessAlertOpen();
+        handleSuccessAlertInfo();
         console.log("Informasi toko berhasil di ubah:", response.data);
         // getJadwalOperasional();
       })
@@ -262,7 +258,7 @@ function PengaturanToko() {
           },
         });
         const productData = response.data.data;
-        setSelectedImagePath(productData.logo);
+        setPreviewImg(productData.logo);
         storeDescription(productData.description);
         setInputText(productData.name);
         setToko(response.data.data);
@@ -275,7 +271,7 @@ function PengaturanToko() {
 
   function AploadFoto() {
     const formData = new FormData();
-    formData.append("logo", selectedImagePath);
+    formData.append("logo", selectedImagePathToko);
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -300,6 +296,14 @@ function PengaturanToko() {
   const handleErrorAlertOpen = () => {
     setErrorAlertOpen(true);
   };
+
+  const handleSuccessAlertInfo = () => {
+    setSuccessAlertOpen2(true);
+  };
+
+  const handleErrorAlertInfo = () => {
+    setErrorAlertOpen(true);
+  };
   useEffect(() => {
     getJadwalOperasional();
   }, [isProfileUpdated]);
@@ -310,8 +314,8 @@ function PengaturanToko() {
 
   useEffect(() => {
     if (toko && toko.length > 0) {
-      setInputText(toko[0].name); // Set the Nama Toko input value
-      storeDescription(toko[0].description); // Set the Deskripsi Toko input value
+      setInputText(toko[0].name);
+      storeDescription(toko[0].description);
     }
   }, [toko]);
 
@@ -452,27 +456,23 @@ function PengaturanToko() {
                 <div className="ubah-gambar-toko">
                   <div className="addImg">
                     <label
-                      htmlFor="input-file-toko"
-                      className={`file-label-toko ${
-                        !selectedImagePath ? "no-border" : ""
+                      htmlFor="input-file"
+                      className={`file-label ${
+                        !selectedImagePathToko ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath ? (
+                      {previewImg ? (
                         <img
-                          src={selectedImagePath}
-                          width={200}
-                          height={200}
+                          src={previewImg}
+                          width={150}
+                          height={150}
                           alt="Uploaded"
                           className="uploaded-image-toko"
                         />
                       ) : (
                         <>
-                          <img
-                            src={gambartoko}
-                            alt=""
-                            className="apload-foto-toko"
-                          />
-                          <p>Pilih Foto</p>
+                          <BiImageAdd color="#606060" size={60} />
+                          <p>Pilih Foto Anda</p>
                         </>
                       )}
                     </label>
@@ -481,13 +481,13 @@ function PengaturanToko() {
                       type="file"
                       accept=".jpg, .jpeg, .png"
                       className="input-field"
-                      onChange={handleImageChange1}
+                      onChange={handleImageChange}
                       hidden
                     />
-                    {selectedImagePath && (
+                    {previewImg && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath("")} />
+                          <FiTrash2 onClick={() => setPreviewImg("")} />
                         </span>
                       </div>
                     )}
@@ -712,8 +712,8 @@ function PengaturanToko() {
         </div>
       </div>
       <Snackbar
-        open={successAlertOpen}
-        autoHideDuration={3000}
+        open={successAlertOpen1}
+        autoHideDuration={1500}
         onClose={() => setSuccessAlertOpen(false)}
       >
         <MuiAlert
@@ -737,6 +737,34 @@ function PengaturanToko() {
           sx={{ width: "100%" }}
         >
           Maaf, terjadi kesalahan. Gagal Mengubah Jadwal.
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={successAlertOpen2}
+        autoHideDuration={1500}
+        onClose={() => setSuccessAlertOpen2(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen2(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Alhamdulillah Informasi Berhasil Diubah
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen2}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen2(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen2(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Maaf, terjadi kesalahan. Gagal Mengubah Informasi.
         </MuiAlert>
       </Snackbar>
     </div>
