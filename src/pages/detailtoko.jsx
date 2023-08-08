@@ -20,7 +20,7 @@ import { MdOutlineLeaderboard } from "react-icons/md";
 
 function Detailtoko() {
   const [product, setProduct] = useState([]);
-  const [toko, setToko] = useState([]);
+  const [toko, setToko] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [isFollowing, setIsFollowing] = useState(false);
@@ -30,11 +30,8 @@ function Detailtoko() {
 
   useEffect(() => {
     getProductByUserId();
+    getEventById(); // Move this call to the useEffect
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    getEventById();
   }, []);
 
   function getEventById() {
@@ -42,7 +39,7 @@ function Detailtoko() {
       .get(apiurl() + `stores?id=${id}`)
       .then((response) => {
         setToko(response.data.data);
-        setIsFollowing(response.data.data.followers);
+        setIsFollowing(response.data);
         console.log("Data Store by ID:", response.data.data);
       })
       .catch((error) => console.error(error));
@@ -60,11 +57,11 @@ function Detailtoko() {
             },
           })
           .then((response) => {
-            setIsFollowing(false);
             setToko((prevToko) => ({
               ...prevToko,
               followers: prevToko.followers ? prevToko.followers - 1 : 0,
             }));
+            setIsFollowing(false); // Set isFollowing to false
             console.log("Berhasil Berhenti Mengikuti toko", response.data);
           })
           .catch((error) =>
@@ -82,12 +79,12 @@ function Detailtoko() {
             }
           )
           .then((response) => {
-            setIsFollowing(true);
             handleSuccessAlertFollow();
             setToko((prevToko) => ({
               ...prevToko,
               followers: prevToko.followers ? prevToko.followers + 1 : 1,
             }));
+            setIsFollowing(true); // Set isFollowing to true
             console.log("Berhasil mengikuti toko", response.data);
           })
           .catch((error) => console.error("Gagal mengikuti toko", error));
@@ -130,17 +127,14 @@ function Detailtoko() {
           </div>
           <div className="container-btn-detail-toko">
             <div className="btn-fol-unfoll">
-              <button className="btn-follow-toko" onClick={toggleFollow}>
+              <button
+                className={`btn-follow-toko ${isFollowing ? "diikuti" : ""}`}
+                onClick={toggleFollow}
+              >
                 {isFollowing ? "Diikuti" : "IKUTI"}
               </button>
             </div>
             {/* <button className="btn-follow-toko" onClick={followStore}>
-              IKUTI
-            </button> */}
-            {/* <button className="btn-chat-toko">
-              <BsChatLeftText />
-              Chat Penjual
-            </button> */}
           </div>
           <div className="container-information-detail-toko">
             <div className="total-produk-detail-toko">

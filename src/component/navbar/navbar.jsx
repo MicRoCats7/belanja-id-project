@@ -235,7 +235,7 @@ function Navbar() {
               <p>Event</p>
             </Link>
             <div className="icon-navbar">
-              <img src={iconChat} alt="icon chat" />
+              {/* <img src={iconChat} alt="icon chat" /> */}
               <Link to={"/cart"}>
                 <div className="icon-cart">
                   <BsCart2 />

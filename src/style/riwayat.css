@@ -472,3 +472,63 @@ input[type="text"]:focus {
 .info-pengiriman-rincian-biaya .rincian-biaya-riwayat {
     width: 50%;
 }
+
+/* CSS untuk popup */
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 80%;
+    height: 73%;
+    max-width: 600px;
+}
+
+.top-popup-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* CSS untuk timeline */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.timeline-item-content {
+    border-left: 2px solid #ccc;
+    padding-left: 16px;
+    margin-left: 12px;
+}
+
+.timeline-item-content p:first-child {
+    font-weight: bold;
+}
+
+.timeline-item-content p:last-child {
+    color: #666;
+    margin-top: 4px;
+}

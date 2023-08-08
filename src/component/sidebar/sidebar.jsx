@@ -28,11 +28,11 @@ function Sidebar() {
       name: "Home",
       icon: <BiHome />,
     },
-    {
-      path: "chat",
-      name: "Chat",
-      icon: <BiMessageDetail />,
-    },
+    // {
+    //   path: "chat",
+    //   name: "Chat",
+    //   icon: <BiMessageDetail />,
+    // },
     {
       path: "produk",
       name: "Produk",
@@ -51,7 +51,7 @@ function Sidebar() {
       ],
     },
     {
-      path: "pesanantoko",
+      path: "pesanantoko/" + toko.id,
       name: "Pesanan",
       icon: <HiOutlineClipboardDocumentList />,
     },

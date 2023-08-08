@@ -147,6 +147,7 @@ input[type="text"]:focus {
     width: 40px;
     height: 40px;
     border-radius: 100%;
+    object-fit: cover;
 }
 
 @media only screen and (max-width: 480px) {

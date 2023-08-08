@@ -84,13 +84,44 @@
     height: 15px;
     background-color: #EF233C;
     border-radius: 5px;
+    margin-right: 10px;
 }
 
 .box-item-pesanan-baru .top-item-box-pesanan-baru {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #E5E5E5;
     gap: 2px;
+    padding-bottom: 10px;
+}
+
+.top-item-box-pesanan-baru .text-top-item-box-pesanan-baru {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.top-item-box-pesanan-baru .label-top-item-box-pesanan-baru {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    border-radius: 3px;
+    line-height: 16px;
+    padding: 2px 8px;
+    height: 20px;
+    font-size: 0.714286rem;
+    background-color: rgb(238, 243, 239);
+    color: rgb(201, 36, 18);
+    justify-content: center;
+    transition: all 300ms ease-out 0s;
+}
+
+.top-item-box-pesanan-baru .label-top-item-box-pesanan-baru h1 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #EF233C;
 }
 
 .top-item-box-pesanan-baru h1, .top-item-box-pesanan-baru span {
@@ -102,6 +133,7 @@
 .product-item-pesanan-baru {
     display: flex;
     align-items: start;
+    justify-content: space-between;
     gap: 20px;
     border-bottom: 1px solid #E5E5E5;
     padding: 20px 0;
@@ -110,7 +142,7 @@
 .detail-product-pesanan-baru {
     display: flex;
     align-items: start;
-    gap: 10px;
+    gap: 20px;
 }
 
 .detail-product-pesanan-baru .img-pesanan-baru img {
@@ -121,13 +153,14 @@
 }
 
 .detail-product-pesanan-baru .text-detail-pesanan-baru h2 {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #000;
+    width: 90%;
 }
 
 .detail-product-pesanan-baru .text-detail-pesanan-baru p {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500;
     color: #727272;
 }
@@ -146,7 +179,7 @@
 }
 
 .detail-alamat-pesanan-baru p {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500;
     color: #727272;
 }
@@ -164,7 +197,7 @@
 }
 
 .detail-kurir-pesanan-baru p {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500;
     color: #727272;
 }

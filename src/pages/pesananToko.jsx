@@ -4,6 +4,11 @@ import { useState } from "react";
 import { useRef } from "react";
 import "../style/pesananToko.css";
 import PesananBaru from "../component/pesananbaru/pesananBaru";
+import SudahDibayar from "../component/sudah-dibayar/sudahDibayar";
+import DiProses from "../component/diproses/diProses";
+import DiKirim from "../component/dikirim/diKirim";
+import DiTolak from "../component/ditolak/diTolak";
+import Selesai from "../component/selesai/selesai";
 
 function PesananToko() {
   const tabRef = useRef(null);
@@ -43,7 +48,14 @@ function PesananToko() {
             onClick={() => handleTabClick("pesananbaru")}
             data-tab="pesananbaru"
           >
-            Pesanan Baru
+            Semua Pesanan
+          </button>
+          <button
+            className={activeTab === "dibayar" ? "active" : ""}
+            onClick={() => handleTabClick("dibayar")}
+            data-tab="dibayar"
+          >
+            Sudah Dibayar
           </button>
           <button
             className={activeTab === "diproses" ? "active" : ""}
@@ -60,18 +72,18 @@ function PesananToko() {
             Dikirim
           </button>
           <button
+            className={activeTab === "selesai" ? "active" : ""}
+            onClick={() => handleTabClick("selesai")}
+            data-tab="selesai"
+          >
+            Selesai
+          </button>
+          <button
             className={activeTab === "ditolak" ? "active" : ""}
             onClick={() => handleTabClick("ditolak")}
             data-tab="ditolak"
           >
             Ditolak
-          </button>
-          <button
-            className={activeTab === "menunggu-diambil" ? "active" : ""}
-            onClick={() => handleTabClick("menunggu-diambil")}
-            data-tab="menunggu-diambil"
-          >
-            Menunggu Diambil
           </button>
           <div className="tab-indicator" style={underlineStyle}></div>
         </div>
@@ -81,24 +93,29 @@ function PesananToko() {
               <PesananBaru />
             </div>
           )}
+          {activeTab === "dibayar" && (
+            <div className="pengaturan-tab">
+              <SudahDibayar />
+            </div>
+          )}
           {activeTab === "diproses" && (
             <div className="pengaturan-tab">
-              <h1>Pesanan Diproses</h1>
+              <DiProses />
             </div>
           )}
           {activeTab === "dikirim" && (
             <div className="pengaturan-tab">
-              <h1>Pesanan Dikirim</h1>
+              <DiKirim />
+            </div>
+          )}
+          {activeTab === "selesai" && (
+            <div className="pengaturan-tab">
+              <Selesai />
             </div>
           )}
           {activeTab === "ditolak" && (
             <div className="pengaturan-tab">
-              <h1>Pesanan dibatalkan</h1>
-            </div>
-          )}
-          {activeTab === "menunggu-diambil" && (
-            <div className="pengaturan-tab">
-              <h1>Pesanan Menunggu Diambil</h1>
+              <DiTolak />
             </div>
           )}
         </div>
