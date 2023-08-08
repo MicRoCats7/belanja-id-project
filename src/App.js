@@ -20,6 +20,7 @@ import Detailtoko from "./pages/detailtoko";
 import Notifikasi from "./pages/notifikasi";
 import UbahProduk from "./pages/ubahProduk";
 import CategoryPage from "./pages/categoryPage";
+import PesananToko from "./pages/pesananToko";
 
 function App() {
   return (

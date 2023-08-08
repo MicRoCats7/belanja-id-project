@@ -9,7 +9,7 @@ import token from "../../utils/token";
 import { useParams } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
 
-function PesananBaru() {
+function SudahDibayar() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
   const { id } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,6 +31,22 @@ function PesananBaru() {
         console.log("Data transaksi dari server:", response.data.data);
       })
       .catch((error) => console.error(error));
+  }
+
+  function acceptTransaction(transactionId) {
+    axios
+      .get(apiurl() + `transactions/${transactionId}/accept`, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        // Manajemen status atau tampilan jika permintaan sukses
+        console.log("Transaction accepted:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error accepting transaction:", error);
+      });
   }
 
   function filterByStatus(transaksi) {
@@ -74,28 +90,14 @@ function PesananBaru() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <div className="filter-section">
-          <div className="dropdown-produk">
-            <select
-              name="kategori-produk"
-              id="kategori-produk"
-              value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
-            >
-              <option value="all">Semua</option>
-              <option value="PENDING">Pending</option>
-              <option value="SUCCESS">Success</option>
-              <option value="SHIPPED">Shipped</option>
-              <option value="FINISHED">Finished</option>
-            </select>
-          </div>
-        </div>
       </div>
       <div className="item-pesanan-baru">
-        {riwayatTransaksi.length > 0 ? (
+        {riwayatTransaksi.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
           riwayatTransaksi
-            .filter(filterByStatus)
             .filter(searchFilter)
+            .filter((transaksi) => transaksi.status === "SUCCESS")
             .map((transaksi) => (
               <div className="box-item-pesanan-baru" key={transaksi.id}>
                 <div className="top-item-box-pesanan-baru">
@@ -144,6 +146,7 @@ function PesananBaru() {
                     </div>
                     <button
                       className="btn-terima-pesanan-baru"
+                      onClick={() => acceptTransaction(transaksi.id)}
                       style={{ cursor: "pointer" }}
                     >
                       Terima Pesanan
@@ -152,12 +155,10 @@ function PesananBaru() {
                 </div>
               </div>
             ))
-        ) : (
-          <p>Loading...</p>
         )}
       </div>
     </div>
   );
 }
 
-export default PesananBaru;
+export default SudahDibayar;

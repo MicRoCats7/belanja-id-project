@@ -32,7 +32,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loading from "../component/loader/Loading";
 import LoadingCategories from "../component/loader/LoadingCategories";
 import Skeleton from "react-loading-skeleton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Home() {
   const [product, setProduct] = useState([]);
@@ -48,6 +48,9 @@ function Home() {
   const [productsToShow, setProductsToShow] = useState(12);
   const additionalProducts = 12;
   const navigate = useNavigate();
+  const [productKerajinan, setProducKerajinan] = useState();
+  const [productFood, setProductFood] = useState();
+  const [productFashion, setProductFashion] = useState();
 
   useEffect(() => {
     getProductByCategoryId(id);
@@ -448,7 +451,7 @@ function Home() {
                     <Loading cards={7} />
                   </div>
                 ) : (
-                  productFashion.map((item, index) => (
+                  productFashion?.map((item, index) => (
                     <SwiperSlide key={index}>
                       <Product
                         name={item.name}

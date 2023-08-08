@@ -357,7 +357,7 @@ function TambahProduk() {
                       type="file"
                       accept=".jpg, .jpeg, .png"
                       className="input-field"
-                      onChange={handleImageChange}
+                      onChange={handleImageChange1}
                       hidden
                     />
                     {selectedImagePath && (
