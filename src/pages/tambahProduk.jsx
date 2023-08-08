@@ -10,28 +10,30 @@ import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { red } from "@mui/material/colors";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function TambahProduk() {
   const [categories, setCategories] = useState([]);
   const [inputText, setInputText] = useState("");
-  const [storeName, setProductName] = useState("");
   const [characterLimit] = useState(70);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [kondisiProduk, setKondisiProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [sku, setSKU] = useState("");
   const [selectedImagePath, setSelectedImagePath] = useState("");
+  const [selectedImagePath2, setSelectedImagePath2] = useState("");
+  const [selectedImagePath3, setSelectedImagePath3] = useState("");
+  const [selectedImagePath4, setSelectedImagePath4] = useState("");
+  const [selectedImagePath5, setSelectedImagePath5] = useState("");
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleSKUChange = (event) => {
-    // Mengonversi nilai input menjadi huruf besar semua sebelum menyimpannya ke dalam state
     const uppercaseSKU = event.target.value.toUpperCase();
     setSKU(uppercaseSKU);
   };
   const handleKondisiChange = (event) => {
-    // Mengubah nilai kondisiProduk ke huruf kecil sebelum disimpan di state
     setKondisiProduk(event.target.value.toLowerCase());
   };
 
@@ -45,7 +47,6 @@ function TambahProduk() {
   const [fileName4, setFileName4] = useState("No Selected file");
   const [image5, setImage5] = useState(null);
   const [fileName5, setFileName5] = useState("No Selected file");
-  // event handler
   const handleChange = (event) => {
     setInputText(event.target.value);
   };
@@ -78,9 +79,13 @@ function TambahProduk() {
       formData.append("category_id", selectedCategory);
       formData.append("kondisi_produk", kondisiProduk);
       formData.append("picturePath", selectedImagePath);
+      formData.append("photo1", selectedImagePath2);
+      formData.append("photo2", selectedImagePath3);
+      formData.append("photo3", selectedImagePath4);
+      formData.append("photo4", selectedImagePath5);
       formData.append("slug", "pakaian");
 
-      const token = localStorage.getItem("token"); // Ganti dengan token akses yang valid
+      const token = localStorage.getItem("token");
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -95,6 +100,9 @@ function TambahProduk() {
       handleSuccessAlertToko();
       const newProductData = response.data.data;
       console.log("Produk berhasil ditambahkan:", newProductData);
+      setTimeout(() => {
+        navigate("/toko/daftarproduk/:id");
+      }, 2000);
     } catch (error) {
       handleErrorAlertToko();
       console.error("Error saat menambahkan produk:", error);
@@ -126,33 +134,30 @@ function TambahProduk() {
     }
   };
 
-  const handleImageChange2 = (event) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      setFileName2(files[0].name);
-      setImage2(URL.createObjectURL(files[0]));
-    }
-  };
-  const handleImageChange3 = (event) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      setFileName3(files[0].name);
-      setImage3(URL.createObjectURL(files[0]));
-    }
-  };
-  const handleImageChange4 = (event) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      setFileName4(files[0].name);
-      setImage4(URL.createObjectURL(files[0]));
+  const handleImageChange2 = (e) => {
+    const file = e.target.files[0];
+    if (e.target.files && e.target.files[0]) {
+      setSelectedImagePath2(e.target.files[0]);
     }
   };
 
-  const handleImageChange5 = (event) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      setFileName5(files[0].name);
-      setImage5(URL.createObjectURL(files[0]));
+  const handleImageChange3 = (e) => {
+    const file = e.target.files[0];
+    if (e.target.files && e.target.files[0]) {
+      setSelectedImagePath3(e.target.files[0]);
+    }
+  };
+  const handleImageChange4 = (e) => {
+    const file = e.target.files[0];
+    if (e.target.files && e.target.files[0]) {
+      setSelectedImagePath4(e.target.files[0]);
+    }
+  };
+
+  const handleImageChange5 = (e) => {
+    const file = e.target.files[0];
+    if (e.target.files && e.target.files[0]) {
+      setSelectedImagePath5(e.target.files[0]);
     }
   };
 
@@ -352,7 +357,7 @@ function TambahProduk() {
                       type="file"
                       accept=".jpg, .jpeg, .png"
                       className="input-field"
-                      onChange={handleImageChange1}
+                      onChange={handleImageChange}
                       hidden
                     />
                     {selectedImagePath && (
@@ -366,14 +371,16 @@ function TambahProduk() {
                   <div className="addImg">
                     <label
                       htmlFor="input-file2"
-                      className={`file-label ${!image2 ? "no-border" : ""}`}
+                      className={`file-label ${
+                        !selectedImagePath2 ? "no-border" : ""
+                      }`}
                     >
-                      {image2 ? (
+                      {selectedImagePath2 ? (
                         <img
-                          src={image2}
+                          src={selectedImagePath2}
                           width={150}
                           height={150}
-                          alt={fileName2}
+                          alt="Uploaded"
                           className="uploaded-image"
                         />
                       ) : (
@@ -391,10 +398,10 @@ function TambahProduk() {
                       onChange={handleImageChange2}
                       hidden
                     />
-                    {image2 && (
+                    {selectedImagePath2 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={handleImageRemove2} />
+                          <FiTrash2 onClick={() => setSelectedImagePath2("")} />
                         </span>
                       </div>
                     )}
@@ -402,14 +409,16 @@ function TambahProduk() {
                   <div className="addImg">
                     <label
                       htmlFor="input-file3"
-                      className={`file-label ${!image3 ? "no-border" : ""}`}
+                      className={`file-label ${
+                        !selectedImagePath3 ? "no-border" : ""
+                      }`}
                     >
-                      {image3 ? (
+                      {selectedImagePath3 ? (
                         <img
-                          src={image3}
+                          src={selectedImagePath3}
                           width={150}
                           height={150}
-                          alt={fileName3}
+                          alt="Uploaded"
                           className="uploaded-image"
                         />
                       ) : (
@@ -427,10 +436,10 @@ function TambahProduk() {
                       onChange={handleImageChange3}
                       hidden
                     />
-                    {image3 && (
+                    {selectedImagePath3 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={handleImageRemove3} />
+                          <FiTrash2 onClick={() => setSelectedImagePath3("")} />
                         </span>
                       </div>
                     )}
@@ -438,14 +447,16 @@ function TambahProduk() {
                   <div className="addImg">
                     <label
                       htmlFor="input-file4"
-                      className={`file-label ${!image4 ? "no-border" : ""}`}
+                      className={`file-label ${
+                        !selectedImagePath4 ? "no-border" : ""
+                      }`}
                     >
-                      {image4 ? (
+                      {selectedImagePath4 ? (
                         <img
-                          src={image4}
+                          src={selectedImagePath4}
                           width={150}
                           height={150}
-                          alt={fileName4}
+                          alt="Uploaded"
                           className="uploaded-image"
                         />
                       ) : (
@@ -463,10 +474,10 @@ function TambahProduk() {
                       onChange={handleImageChange4}
                       hidden
                     />
-                    {image4 && (
+                    {selectedImagePath4 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={handleImageRemove4} />
+                          <FiTrash2 onClick={() => setSelectedImagePath4("")} />
                         </span>
                       </div>
                     )}
@@ -474,14 +485,16 @@ function TambahProduk() {
                   <div className="addImg">
                     <label
                       htmlFor="input-file5"
-                      className={`file-label ${!image5 ? "no-border" : ""}`}
+                      className={`file-label ${
+                        !selectedImagePath5 ? "no-border" : ""
+                      }`}
                     >
-                      {image5 ? (
+                      {selectedImagePath5 ? (
                         <img
-                          src={image5}
+                          src={selectedImagePath5}
                           width={150}
                           height={150}
-                          alt={fileName5}
+                          alt="Uploaded"
                           className="uploaded-image"
                         />
                       ) : (
@@ -499,10 +512,10 @@ function TambahProduk() {
                       onChange={handleImageChange5}
                       hidden
                     />
-                    {image5 && (
+                    {selectedImagePath5 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={handleImageRemove5} />
+                          <FiTrash2 onClick={() => setSelectedImagePath5("")} />
                         </span>
                       </div>
                     )}

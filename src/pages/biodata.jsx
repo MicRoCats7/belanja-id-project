@@ -143,12 +143,12 @@ function Biodata() {
                   />
                 </div>
               </div>
-              <div className="edit-tanggal">
+              {/* <div className="edit-tanggal">
                 <span className="nama-tgl">Tanggal Lahir</span>
                 <div>
                   <Modaldate />
                 </div>
-              </div>
+              </div> */}
               <h3 className="ubah-kontak">Ubah Kontak Anda</h3>
               <div className="edit-kontak">
                 <span className="email-text">Email</span>

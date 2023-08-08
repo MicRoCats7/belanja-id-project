@@ -42,6 +42,7 @@ function Home() {
   const [isNextArrowVisible, setIsNextArrowVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isImgLoading, setIsImgLoading] = useState(true);
+  const { id } = useParams();
   const [isHovered, setIsHovered] = useState(false);
   const [categories, setCategories] = useState([]);
   const [productsToShow, setProductsToShow] = useState(12);
@@ -49,11 +50,16 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    getProductByCategoryId(id);
     getProduct();
+    getProductByCategoryFood(id);
     getCategories();
+    getProductByCategoryFashion(id);
     getBanner();
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
+
+  const desiredCategoryIds = [1];
 
   function getProduct() {
     axios
@@ -61,6 +67,50 @@ function Home() {
       .then((response) => {
         setProduct(response.data.data);
         setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function getProductByCategoryId(categoryId) {
+    setIsLoading(true);
+    axios
+      .get(apiurl() + "products?category_id=" + "1")
+      .then((response) => {
+        setProducKerajinan(response.data.data);
+        setIsLoading(false);
+        console.log(
+          "Berhasil mengambil data produk dengan ID kategori:",
+          categoryId
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+  function getProductByCategoryFood() {
+    setIsLoading(true);
+    axios
+      .get(apiurl() + "products?category_id=" + "3")
+      .then((response) => {
+        setProductFood(response.data.data);
+        setIsLoading(false);
+        console.log(
+          "Berhasil mengambil data produk dengan ID kategori:",
+          response.data.data
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function getProductByCategoryFashion() {
+    setIsLoading(true);
+    axios
+      .get(apiurl() + "products?category_id=" + "5")
+      .then((response) => {
+        setProductFashion(response.data.data);
+        setIsLoading(false);
+        console.log(
+          "Berhasil mengambil data produk dengan ID kategori:",
+          response.data.data
+        );
       })
       .catch((error) => console.error(error));
   }
@@ -321,7 +371,7 @@ function Home() {
                     <Loading cards={7} />
                   </div>
                 ) : (
-                  product?.map((item, index) => (
+                  productFood?.map((item, index) => (
                     <SwiperSlide key={index}>
                       <Product
                         name={item.name}
@@ -330,7 +380,6 @@ function Home() {
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
-                        slug={item.slug}
                         stok={item.stok}
                         id={item.id}
                       />
@@ -399,7 +448,7 @@ function Home() {
                     <Loading cards={7} />
                   </div>
                 ) : (
-                  product?.map((item, index) => (
+                  productFashion.map((item, index) => (
                     <SwiperSlide key={index}>
                       <Product
                         name={item.name}
@@ -476,7 +525,7 @@ function Home() {
                     <Loading cards={7} />
                   </div>
                 ) : (
-                  product?.map((item, index) => (
+                  productKerajinan?.map((item, index) => (
                     <SwiperSlide key={index}>
                       <Product
                         name={item.name}
