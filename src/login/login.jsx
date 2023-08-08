@@ -64,6 +64,7 @@ function Login() {
       handleSuccessAlertOpen();
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
+      localStorage.setItem("user_id", response.data.data.user.id);
       setLoading(false);
       setTimeout(() => {
         navigate("/");
