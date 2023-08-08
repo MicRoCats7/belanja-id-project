@@ -126,7 +126,7 @@ function DiKirim() {
                   </div>
                   <div className="detail-kurir-pesanan-baru">
                     <h2>Kurir</h2>
-                    <p>{transaksi.courier.title}</p>
+                    <p>{transaksi.courier?.title}</p>
                   </div>
                 </div>
                 <div className="btn-total-pesanan-baru">

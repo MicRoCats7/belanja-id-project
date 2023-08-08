@@ -20,6 +20,11 @@ function TambahProduk() {
   const [kondisiProduk, setKondisiProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [sku, setSKU] = useState("");
+  const [previewImg, setPreviewImg] = useState(null);
+  const [previewImg2, setPreviewImg2] = useState(null);
+  const [previewImg3, setPreviewImg3] = useState(null);
+  const [previewImg4, setPreviewImg4] = useState(null);
+  const [previewImg5, setPreviewImg5] = useState(null);
   const [selectedImagePath, setSelectedImagePath] = useState("");
   const [selectedImagePath2, setSelectedImagePath2] = useState("");
   const [selectedImagePath3, setSelectedImagePath3] = useState("");
@@ -101,7 +106,7 @@ function TambahProduk() {
       const newProductData = response.data.data;
       console.log("Produk berhasil ditambahkan:", newProductData);
       setTimeout(() => {
-        navigate("/toko/daftarproduk/:id");
+        navigate("/toko/daftarproduk/");
       }, 2000);
     } catch (error) {
       handleErrorAlertToko();
@@ -131,6 +136,7 @@ function TambahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath(e.target.files[0]);
+      setPreviewImg(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -138,6 +144,7 @@ function TambahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath2(e.target.files[0]);
+      setPreviewImg2(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -145,12 +152,14 @@ function TambahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath3(e.target.files[0]);
+      setPreviewImg3(URL.createObjectURL(e.target.files[0]));
     }
   };
   const handleImageChange4 = (e) => {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath4(e.target.files[0]);
+      setPreviewImg4(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -158,6 +167,7 @@ function TambahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath5(e.target.files[0]);
+      setPreviewImg5(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -337,9 +347,9 @@ function TambahProduk() {
                         !selectedImagePath ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath ? (
+                      {previewImg ? (
                         <img
-                          src={selectedImagePath}
+                          src={previewImg}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -360,10 +370,10 @@ function TambahProduk() {
                       onChange={handleImageChange1}
                       hidden
                     />
-                    {selectedImagePath && (
+                    {previewImg && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath("")} />
+                          <FiTrash2 onClick={() => setPreviewImg(null)} />
                         </span>
                       </div>
                     )}
@@ -375,9 +385,9 @@ function TambahProduk() {
                         !selectedImagePath2 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath2 ? (
+                      {previewImg2 ? (
                         <img
-                          src={selectedImagePath2}
+                          src={previewImg2}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -398,10 +408,10 @@ function TambahProduk() {
                       onChange={handleImageChange2}
                       hidden
                     />
-                    {selectedImagePath2 && (
+                    {previewImg2 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath2("")} />
+                          <FiTrash2 onClick={() => setPreviewImg2("")} />
                         </span>
                       </div>
                     )}
@@ -413,9 +423,9 @@ function TambahProduk() {
                         !selectedImagePath3 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath3 ? (
+                      {previewImg3 ? (
                         <img
-                          src={selectedImagePath3}
+                          src={previewImg3}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -436,10 +446,10 @@ function TambahProduk() {
                       onChange={handleImageChange3}
                       hidden
                     />
-                    {selectedImagePath3 && (
+                    {previewImg3 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath3("")} />
+                          <FiTrash2 onClick={() => setPreviewImg3("")} />
                         </span>
                       </div>
                     )}
@@ -451,9 +461,9 @@ function TambahProduk() {
                         !selectedImagePath4 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath4 ? (
+                      {previewImg4 ? (
                         <img
-                          src={selectedImagePath4}
+                          src={previewImg4}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -474,10 +484,10 @@ function TambahProduk() {
                       onChange={handleImageChange4}
                       hidden
                     />
-                    {selectedImagePath4 && (
+                    {previewImg4 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath4("")} />
+                          <FiTrash2 onClick={() => setPreviewImg4("")} />
                         </span>
                       </div>
                     )}
@@ -489,9 +499,9 @@ function TambahProduk() {
                         !selectedImagePath5 ? "no-border" : ""
                       }`}
                     >
-                      {selectedImagePath5 ? (
+                      {previewImg5 ? (
                         <img
-                          src={selectedImagePath5}
+                          src={previewImg5}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -512,10 +522,10 @@ function TambahProduk() {
                       onChange={handleImageChange5}
                       hidden
                     />
-                    {selectedImagePath5 && (
+                    {previewImg5 && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setSelectedImagePath5("")} />
+                          <FiTrash2 onClick={() => setPreviewImg5("")} />
                         </span>
                       </div>
                     )}

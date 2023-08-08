@@ -84,6 +84,7 @@ function PesananBaru() {
             >
               <option value="all">Semua</option>
               <option value="PENDING">Pending</option>
+              <option value="PROCESSED">Processed</option>
               <option value="SUCCESS">Success</option>
               <option value="SHIPPED">Shipped</option>
               <option value="FINISHED">Finished</option>

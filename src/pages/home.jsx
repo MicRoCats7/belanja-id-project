@@ -41,6 +41,9 @@ function Home() {
   const [isPrevArrowVisible, setIsPrevArrowVisible] = useState(false);
   const [isNextArrowVisible, setIsNextArrowVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [productKerajinan, setProducKerajinan] = useState();
+  const [productFood, setProductFood] = useState();
+  const [productFashion, setProductFashion] = useState();
   const [isImgLoading, setIsImgLoading] = useState(true);
   const { id } = useParams();
   const [isHovered, setIsHovered] = useState(false);
@@ -48,9 +51,6 @@ function Home() {
   const [productsToShow, setProductsToShow] = useState(12);
   const additionalProducts = 12;
   const navigate = useNavigate();
-  const [productKerajinan, setProducKerajinan] = useState();
-  const [productFood, setProductFood] = useState();
-  const [productFashion, setProductFashion] = useState();
 
   useEffect(() => {
     getProductByCategoryId(id);
@@ -58,7 +58,7 @@ function Home() {
     getProductByCategoryFood(id);
     getCategories();
     getProductByCategoryFashion(id);
-    getBanner();
+    // getBanner();
     window.scrollTo(0, 0);
   }, [id]);
 
@@ -118,15 +118,15 @@ function Home() {
       .catch((error) => console.error(error));
   }
 
-  function getBanner() {
-    axios
-      .get(apiurl() + "banners")
-      .then((response) => {
-        setBanners(response.data);
-        console.log("Berhasil mengambil data banner:", response.data);
-      })
-      .catch((error) => console.error(error));
-  }
+  // function getBanner() {
+  //   axios
+  //     .get(apiurl() + "banners")
+  //     .then((response) => {
+  //       setBanners(response.data);
+  //       console.log("Berhasil mengambil data banner:", response.data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }
 
   function getCategories() {
     axios
