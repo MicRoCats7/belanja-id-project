@@ -56,7 +56,7 @@ function Sidebar() {
       icon: <HiOutlineClipboardDocumentList />,
     },
     {
-      path: "ulasanpembeli",
+      path: "ulasanpembeli/" + toko.id,
       name: "Ulasan Pembeli",
       icon: <BsPersonCheck fontSize={20} />,
     },
