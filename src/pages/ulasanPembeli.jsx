@@ -75,7 +75,7 @@ function UlasanPembeli() {
   };
 
   useEffect(() => {
-    setFilteredReviews(toko); // Set initial filtered reviews to all reviews
+    setFilteredReviews(toko);
   }, [toko]);
 
   return (
@@ -171,11 +171,20 @@ function UlasanPembeli() {
                       <div className="balas-ulasan">
                         <div className="img-ulasan">
                           {review.gallery_reviews.map((galleryReview) => (
-                            <img
+                            <div
                               key={galleryReview.id}
-                              src={galleryReview.image_path}
-                              alt=""
-                            />
+                              className="img-container"
+                            >
+                              {galleryReview.image_path && (
+                                <img src={galleryReview.image_path} alt="" />
+                              )}
+                              {galleryReview.image_path_2 && (
+                                <img src={galleryReview.image_path_2} alt="" />
+                              )}
+                              {galleryReview.image_path_3 && (
+                                <img src={galleryReview.image_path_3} alt="" />
+                              )}
+                            </div>
                           ))}
                           {/* <img src={review.product.photo4} alt="" /> */}
                           <p>{review.product.name}</p>

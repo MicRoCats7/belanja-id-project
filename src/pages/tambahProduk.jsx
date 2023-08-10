@@ -32,6 +32,7 @@ function TambahProduk() {
   const [selectedImagePath5, setSelectedImagePath5] = useState("");
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSKUChange = (event) => {
@@ -72,6 +73,7 @@ function TambahProduk() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       const formData = new FormData();
@@ -111,6 +113,8 @@ function TambahProduk() {
     } catch (error) {
       handleErrorAlertToko();
       console.error("Error saat menambahkan produk:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -708,8 +712,12 @@ function TambahProduk() {
             </div>
           </div>
           <div className="btn-eksekusi">
-            <button className="btn-btl">Batal</button>
-            <button className="btn-baru">Tambah Baru</button>
+            <Link to={"/toko/produk"}>
+              <button className="btn-btl">Kembali</button>
+            </Link>
+            <button className="btn-baru" disabled={isLoading}>
+              {isLoading ? "wait.." : "Tambah Baru"}
+            </button>
           </div>
         </form>
       </div>

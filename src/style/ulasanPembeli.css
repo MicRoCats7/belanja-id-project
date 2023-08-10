@@ -54,6 +54,9 @@
     /* background-color: #EF233C; */
 }
 
+
+
+
 .newUlasan-tab {
     /* Your reviews tab content styles */
     display: flex;
@@ -233,9 +236,15 @@
 .img-ulasan {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 20px;
 }
 
+
+.img-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .balas-ulasan .img-ulasan img {
     width: 54px;
     height: 49px;
