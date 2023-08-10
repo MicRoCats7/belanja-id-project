@@ -209,10 +209,15 @@ function Riwayat() {
   const handleImageChange2 = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedReviewPhotos((prevPhotos) => ({
-        ...prevPhotos,
-        image_path_2: file,
-      }));
+      setSelectedReviewPhotos((prevPhotos) => {
+        console.log("Foto sebelumnya:", prevPhotos);
+        const updatedPhotos = {
+          ...prevPhotos,
+          image_path_2: file,
+        };
+        console.log("Foto diperbarui:", updatedPhotos);
+        return updatedPhotos;
+      });
       setPreviewImg2(URL.createObjectURL(file));
     }
   };
@@ -220,10 +225,15 @@ function Riwayat() {
   const handleImageChange3 = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedReviewPhotos((prevPhotos) => ({
-        ...prevPhotos,
-        image_path_3: file,
-      }));
+      setSelectedReviewPhotos((prevPhotos) => {
+        console.log("Foto sebelumnya:", prevPhotos);
+        const updatedPhotos = {
+          ...prevPhotos,
+          image_path_3: file,
+        };
+        console.log("Foto diperbarui:", updatedPhotos);
+        return updatedPhotos;
+      });
       setPreviewImg3(URL.createObjectURL(file));
     }
   };
@@ -259,10 +269,14 @@ function Riwayat() {
 
         // Upload selected review photos
         const formData = new FormData();
-        for (const [path, photo] of Object.entries(selectedReviewPhotos)) {
-          if (photo) {
-            formData.append("image", photo);
-          }
+        if (selectedReviewPhotos.image_path) {
+          formData.append("image", selectedReviewPhotos.image_path);
+        }
+        if (selectedReviewPhotos.image_path_2) {
+          formData.append("image_path_2", selectedReviewPhotos.image_path_2);
+        }
+        if (selectedReviewPhotos.image_path_3) {
+          formData.append("image_path_3", selectedReviewPhotos.image_path_3);
         }
 
         await axios.post(
@@ -291,10 +305,14 @@ function Riwayat() {
       ...prevPhotos,
       [path]: null,
     }));
-    // Bersihkan juga preview gambar
-    setPreviewImg1(null);
+    if (path === "image_path") {
+      setPreviewImg2(null);
+    } else if (path === "image_path_2") {
+      setPreviewImg2(null);
+    } else if (path === "image_path_3") {
+      setPreviewImg3(null);
+    }
   };
-
   return (
     <div className="content">
       <div className="text-histori">
@@ -550,7 +568,7 @@ function Riwayat() {
                     <div className="upload-row">
                       <span className="upload-content">
                         <FiTrash2
-                          onClick={() => removeSelectedPhoto("image_path")}
+                          onClick={() => removeSelectedPhoto("image_path_2")}
                         />
                       </span>
                     </div>
@@ -590,7 +608,7 @@ function Riwayat() {
                     <div className="upload-row">
                       <span className="upload-content">
                         <FiTrash2
-                          onClick={() => removeSelectedPhoto("image_path")}
+                          onClick={() => removeSelectedPhoto("image_path_3")}
                         />
                       </span>
                     </div>

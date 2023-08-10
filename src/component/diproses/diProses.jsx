@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "../../style/pesananToko.css";
 import { CiClock2, CiSearch } from "react-icons/ci";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { useEffect } from "react";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
 import token from "../../utils/token";
 import { useParams } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
+import LoadingPesananToko from "../loader/LoadingPesananToko";
 
 function DiProses() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -85,7 +85,7 @@ function DiProses() {
       </div>
       <div className="item-pesanan-baru">
         {riwayatTransaksi.length === 0 ? (
-          <p>Loading...</p>
+          <LoadingPesananToko />
         ) : (
           riwayatTransaksi
             .filter(searchFilter)
@@ -133,9 +133,6 @@ function DiProses() {
                 <div className="btn-total-pesanan-baru">
                   <h2>{formatPrice(transaksi.total)}</h2>
                   <div className="con-btn-pesanan-baru">
-                    <div className="point-three">
-                      <BiDotsHorizontalRounded />
-                    </div>
                     <button
                       className="btn-terima-pesanan-baru"
                       onClick={() => acceptTransaction(transaksi.id)}

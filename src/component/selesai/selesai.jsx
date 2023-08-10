@@ -7,6 +7,7 @@ import apiurl from "../../utils/apiurl";
 import token from "../../utils/token";
 import { useParams } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
+import LoadingPesananToko from "../loader/LoadingPesananToko";
 
 function Selesai() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -68,7 +69,7 @@ function Selesai() {
       </div>
       <div className="item-pesanan-baru">
         {riwayatTransaksi.length === 0 ? (
-          <p>Loading...</p>
+          <LoadingPesananToko />
         ) : (
           riwayatTransaksi
             .filter(searchFilter)

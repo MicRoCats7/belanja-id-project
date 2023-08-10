@@ -8,6 +8,7 @@ import apiurl from "../../utils/apiurl";
 import token from "../../utils/token";
 import { useParams } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
+import LoadingPesananToko from "../loader/LoadingPesananToko";
 
 function PesananBaru() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -62,6 +63,22 @@ function PesananBaru() {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
+  function acceptTransaction(transactionId) {
+    axios
+      .get(apiurl() + `transactions/shipped/${transactionId}`, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        // Manajemen status atau tampilan jika permintaan sukses
+        console.log("Transaction accepted:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error accepting transaction:", error);
+      });
+  }
+
   return (
     <div className="container-pesanan-baru">
       <div className="filter-pesanan-baru">
@@ -85,7 +102,6 @@ function PesananBaru() {
               <option value="all">Semua</option>
               <option value="PENDING">Pending</option>
               <option value="PROCESSED">Processed</option>
-              <option value="SUCCESS">Success</option>
               <option value="SHIPPED">Shipped</option>
               <option value="FINISHED">Finished</option>
             </select>
@@ -139,19 +155,36 @@ function PesananBaru() {
                 </div>
                 <div className="btn-total-pesanan-baru">
                   <h2>{formatPrice(transaksi.total)}</h2>
-                  <div className="con-btn-pesanan-baru">
-                    <button
-                      className="btn-terima-pesanan-baru"
-                      style={{ cursor: "pointer" }}
-                    >
-                      Terima Pesanan
-                    </button>
+                  <div className="opsi-belilagi-lihatdetail">
+                    {transaksi.status === "PROCESSED" && (
+                      <button
+                        className="btn-terima-pesanan-baru"
+                        onClick={() => acceptTransaction(transaksi.id)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Kirim Pesanan
+                      </button>
+                    )}
+                    {transaksi.status === "SHIPPED" && (
+                      <>
+                        <button className="btn-terima-pesanan-baru">
+                          Lihat Status
+                        </button>
+                      </>
+                    )}
+                    {transaksi.status === "FINISHED" && (
+                      <>
+                        <button className="btn-terima-pesanan-baru">
+                          Detail Transaksi
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
             ))
         ) : (
-          <p>Loading...</p>
+          <LoadingPesananToko />
         )}
       </div>
     </div>

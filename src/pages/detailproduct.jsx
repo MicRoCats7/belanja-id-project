@@ -41,6 +41,11 @@ function DetailProduct() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const user_id = localStorage.getItem("user_id");
+  const productOwnerId = detail.length > 0 ? detail[0].store.user_id : null;
+  const loggedInUserId = user_id; // Ganti ini dengan cara yang benar untuk mendapatkan ID pengguna yang sedang masuk
+
+  const isOwner = loggedInUserId === productOwnerId;
 
   const [appState, changeState] = useState({
     activeObject: null,
@@ -102,26 +107,38 @@ function DetailProduct() {
 
   function addToCart(kuantitas) {
     const product = detail && detail.length > 0 ? detail[0] : null;
-    const payload = {
-      products_id: product.id,
-      quantity: kuantitas,
-    };
-    // console.log(product.id);
-    axios
-      .post(apiurl() + "cart/add", payload, {
-        headers: {
-          Authorization: `Bearer ${token()}`,
-        },
-      })
-      .then((response) => {
-        handleSuccessAlertOpen();
-        setQuantity(1);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        handleErrorAlertOpen();
-        console.error(error);
-      });
+
+    const idPemilikToko = user_id; // Ganti ini dengan cara nyata untuk mendapatkan ID pengguna
+    if (product && product.store.user_id === idPemilikToko) {
+      alert("Anda tidak bisa membeli produk milik Anda sendiri.");
+      return; // Jangan melanjutkan proses
+    }
+
+    if (product && product.quantity > 0) {
+      const payload = {
+        products_id: product.id,
+        quantity: kuantitas,
+      };
+
+      axios
+        .post(apiurl() + "cart/add", payload, {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        })
+        .then((response) => {
+          handleSuccessAlertOpen();
+          setQuantity(1);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          handleErrorAlertOpen();
+          console.error(error);
+        });
+    } else {
+      // Menangani kasus di mana stok habis dan mencegah penambahan ke keranjang
+      console.log("Stok habis, tidak bisa ditambahkan ke keranjang.");
+    }
   }
 
   function addToCartAndNavigateToCartPage(kuantitas) {
@@ -130,6 +147,12 @@ function DetailProduct() {
       products_id: product.id,
       quantity: kuantitas,
     };
+
+    const idPemilikToko = user_id; // Ganti ini dengan cara nyata untuk mendapatkan ID pengguna
+    if (product && product.store.user_id === idPemilikToko) {
+      alert("Anda tidak bisa membeli produk milik Anda sendiri.");
+      return; // Jangan melanjutkan proses
+    }
     // ... (fungsi lainnya tetap sama)
     axios
       .post(apiurl() + "cart/add", payload, {
@@ -340,23 +363,56 @@ function DetailProduct() {
                     <button onClick={incrementQuantity}>+</button>
                   </div>
                   <p>
-                    Tersisa {detail.length > 0 ? detail[0].quantity : ""} buah{" "}
+                    Tersisa{" "}
+                    {detail && detail.length > 0 ? detail[0].quantity : 0} buah{" "}
+                    {detail &&
+                      detail.length > 0 &&
+                      parseInt(detail[0].quantity) === 0 && (
+                        <span className="stok-out" style={{ color: "red" }}>
+                          Stok habis
+                        </span>
+                      )}
+                    {detail &&
+                      detail.length > 0 &&
+                      parseInt(detail[0].quantity) !== 0 &&
+                      parseInt(detail[0].quantity) < 3 && (
+                        <span className="stok-warning" style={{ color: "red" }}>
+                          Stok tinggal sedikit
+                        </span>
+                      )}
                   </p>
                 </div>
                 <div className="btn-cartBuy">
-                  <button
-                    className="btn-cart"
-                    onClick={() => addToCart(quantity)}
-                  >
-                    <img src={cart} alt="" />
-                    Tambahkan ke Keranjang
-                  </button>
-                  <button
-                    className="btn-buy"
-                    onClick={() => addToCartAndNavigateToCartPage(quantity)}
-                  >
-                    Beli Sekarang
-                  </button>
+                  {detail && detail.length > 0 ? (
+                    isOwner ? (
+                      <button
+                        className="btn-edit-detail-product"
+                        onClick={() => navigate("/ubahProduk/" + detail[0].id)}
+                      >
+                        Edit Produk
+                      </button>
+                    ) : detail[0].quantity > 0 ? (
+                      <>
+                        <button
+                          className="btn-cart"
+                          onClick={() => addToCart(quantity)}
+                        >
+                          <img src={cart} alt="" />
+                          Tambahkan ke Keranjang
+                        </button>
+                        <button
+                          className="btn-buy"
+                          onClick={() =>
+                            addToCartAndNavigateToCartPage(quantity)
+                          }
+                        >
+                          Beli Sekarang
+                        </button>
+                      </>
+                    ) : (
+                      <div className="out-of-stock">Produk tidak tersedia.</div>
+                    )
+                  ) : null}
                 </div>
               </div>
             </div>
