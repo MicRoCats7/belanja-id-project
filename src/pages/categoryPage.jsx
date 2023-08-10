@@ -99,7 +99,7 @@ function CategoryPage() {
                                 key={index}
                                 name={item.name}
                                 url={item.picturePath}
-                                location={item.product_origin}
+                                location={item.store?.provinces}
                                 price={item.price}
                                 rating={item.rate}
                                 ulasan={item.review}

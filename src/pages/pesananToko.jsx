@@ -4,10 +4,8 @@ import { useState } from "react";
 import { useRef } from "react";
 import "../style/pesananToko.css";
 import PesananBaru from "../component/pesananbaru/pesananBaru";
-import SudahDibayar from "../component/sudah-dibayar/sudahDibayar";
 import DiProses from "../component/diproses/diProses";
 import DiKirim from "../component/dikirim/diKirim";
-import DiTolak from "../component/ditolak/diTolak";
 import Selesai from "../component/selesai/selesai";
 
 function PesananToko() {
@@ -51,13 +49,6 @@ function PesananToko() {
             Semua Pesanan
           </button>
           <button
-            className={activeTab === "dibayar" ? "active" : ""}
-            onClick={() => handleTabClick("dibayar")}
-            data-tab="dibayar"
-          >
-            Sudah Dibayar
-          </button>
-          <button
             className={activeTab === "diproses" ? "active" : ""}
             onClick={() => handleTabClick("diproses")}
             data-tab="diproses"
@@ -78,24 +69,12 @@ function PesananToko() {
           >
             Selesai
           </button>
-          <button
-            className={activeTab === "ditolak" ? "active" : ""}
-            onClick={() => handleTabClick("ditolak")}
-            data-tab="ditolak"
-          >
-            Ditolak
-          </button>
           <div className="tab-indicator" style={underlineStyle}></div>
         </div>
         <div className="tab-content">
           {activeTab === "pesananbaru" && (
             <div className="pengaturan-tab">
               <PesananBaru />
-            </div>
-          )}
-          {activeTab === "dibayar" && (
-            <div className="pengaturan-tab">
-              <SudahDibayar />
             </div>
           )}
           {activeTab === "diproses" && (
@@ -111,11 +90,6 @@ function PesananToko() {
           {activeTab === "selesai" && (
             <div className="pengaturan-tab">
               <Selesai />
-            </div>
-          )}
-          {activeTab === "ditolak" && (
-            <div className="pengaturan-tab">
-              <DiTolak />
             </div>
           )}
         </div>

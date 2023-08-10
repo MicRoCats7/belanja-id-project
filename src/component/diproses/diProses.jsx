@@ -67,7 +67,7 @@ function DiProses() {
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
     // Return the formatted date string
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
+    return `${day} - ${month} - ${year} ${hours}:${minutes}`;
   }
 
   return (

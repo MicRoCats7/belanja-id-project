@@ -97,6 +97,7 @@ function Event() {
                         src={dataevent.poster || imgEvent}
                         alt=""
                         className="img-photo-event"
+                        loading="lazy"
                       />
                     </div>
                     <div className="info">

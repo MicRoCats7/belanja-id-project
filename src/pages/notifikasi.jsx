@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import imgProduk from "../assets/image/imgProduk.svg";
+import iconNoneData from "../assets/icon/icon-notif-kosong.svg";
 import "../style/notifikasi.css";
 
 function Notifikasi() {
@@ -74,7 +75,20 @@ function Notifikasi() {
                       <img src={imgProduk} alt="" />
                     </div>
                     <div className="card-notifikasi-right">
-                      <h1>Produk Anda telah diulas</h1>
+                      <h1>Produk incaranmu ada lagi stoknya</h1>
+                      <p>
+                        Baju Polo, Pria lengan pendek polos original sudah ada
+                        lagi.Yuk,checkout sekarang sebelum kehabisan!
+                      </p>
+                      <span>1 hari yang lalu, 14.15</span>
+                    </div>
+                  </div>
+                  <div className="card-notifikasi">
+                    <div className="card-notifikasi-left">
+                      <img src={imgProduk} alt="" />
+                    </div>
+                    <div className="card-notifikasi-right">
+                      <h1>Produk incaranmu ada lagi stoknya</h1>
                       <p>
                         Baju Polo, Pria lengan pendek polos original sudah ada
                         lagi.Yuk,checkout sekarang sebelum kehabisan!
@@ -86,12 +100,24 @@ function Notifikasi() {
               )}
               {activeTab === "ratings" && (
                 <div className="pengaturan-tab">
-                  <h1>Jadwal Operasional Toko</h1>
+                  <div className="tidak-ada-data">
+                    <img src={iconNoneData} alt="" />
+                    <h1>Tunggu notifikasinya, ya!</h1>
+                    <p>
+                      Notifikasi yang kami kirimkan untukmu akan muncul di sini.
+                    </p>
+                  </div>
                 </div>
               )}
               {activeTab === "pengiriman" && (
                 <div className="pengaturan-tab">
-                  <h1>Pengiriman</h1>
+                  <div className="tidak-ada-data">
+                    <img src={iconNoneData} alt="" />
+                    <h1>Tunggu notifikasinya, ya!</h1>
+                    <p>
+                      Notifikasi yang kami kirimkan untukmu akan muncul di sini.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

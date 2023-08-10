@@ -244,7 +244,9 @@ function Navbar() {
                   )}
                 </div>
               </Link>
-              <img src={IconNotif} alt="icon notif" />
+              {/* <Link to={"/notifikasi"}>
+                <img src={IconNotif} alt="icon notif" />
+              </Link> */}
             </div>
             <div className="line"></div>
             {localStorage.getItem("token") ? (
