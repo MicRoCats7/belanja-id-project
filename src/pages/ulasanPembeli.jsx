@@ -15,6 +15,7 @@ function UlasanPembeli() {
   const { id } = useParams();
   const tabRef = useRef(null);
   const [toko, setToko] = useState([]);
+  const [filteredReviews, setFilteredReviews] = useState([]);
 
   useEffect(() => {
     getReviewById();
@@ -58,14 +59,24 @@ function UlasanPembeli() {
 
   const handleFilterStarClick = (star) => {
     setActiveFilterStar(star);
-  };
 
+    if (star === null) {
+      setFilteredReviews(toko); // Show all reviews
+    } else {
+      const filtered = toko.filter((review) => review.rate === star.toString());
+      setFilteredReviews(filtered);
+    }
+  };
   const toggleAccordion = () => {
     setAccordionOpen(!accordionOpen);
   };
   const toggleAccordion2 = () => {
     setAccordionOpen2(!accordionOpen2);
   };
+
+  useEffect(() => {
+    setFilteredReviews(toko); // Set initial filtered reviews to all reviews
+  }, [toko]);
 
   return (
     <div className="container-ulasan">
@@ -133,24 +144,40 @@ function UlasanPembeli() {
                 </button>
               </div>
               <div className="page-ulasan">
-                {toko.length === 0 ? (
-                  <p>Anda belum memiliki ulasan.</p>
+                {filteredReviews.length === 0 ? (
+                  <p>Tidak ada ulasan yang sesuai dengan filter ini.</p>
                 ) : (
-                  toko?.map((review, index) => (
+                  filteredReviews.map((review, index) => (
                     <div className="ulasan-item" key={review.id}>
                       <div className="info-ulasan">
                         <div className="rating-ulasan">
                           <AiFillStar />
-                          <h3>{review.rating}</h3>
+                          <h3>{review.rate}</h3>
                         </div>
                         <p>
                           Oleh <span>{review.user.name}</span>
                         </p>
-                        <p>{review.created_at}</p>
+                        <p>
+                          {new Date(review.created_at).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
+                        </p>
                       </div>
                       <div className="balas-ulasan">
                         <div className="img-ulasan">
-                          <img src={imgpro} alt="" />
+                          {review.gallery_reviews.map((galleryReview) => (
+                            <img
+                              key={galleryReview.id}
+                              src={galleryReview.image_path}
+                              alt=""
+                            />
+                          ))}
+                          {/* <img src={review.product.photo4} alt="" /> */}
                           <p>{review.product.name}</p>
                         </div>
                         <div className="form-balasan">
@@ -160,51 +187,6 @@ function UlasanPembeli() {
                     </div>
                   ))
                 )}
-              </div>
-            </div>
-          )}
-          {activeTab === "ratings" && (
-            <div className="belum-ulas">
-              <div className="title-blmUlas">
-                <h1>Produk yang belum diulas</h1>
-              </div>
-              <div className="pro-belum-ulas">
-                <div className="table-blmUlas">
-                  <div className="pro">
-                    <div className="img-pro">
-                      <img src={imgpro} alt="" />
-                    </div>
-                    <p>Jual Dodol rumput laut Per pcs</p>
-                  </div>
-                  <div className="pro">
-                    <div className="img-pro">
-                      <img src={imgpro} alt="" />
-                    </div>
-                    <p>Jual Dodol rumput laut Per pcs</p>
-                  </div>
-                  <div className="pro">
-                    <div className="img-pro">
-                      <img src={imgpro} alt="" />
-                    </div>
-                    <p>Jual Dodol rumput laut Per pcs</p>
-                  </div>
-                  <div className="pro">
-                    <div className="img-pro">
-                      <img src={imgpro} alt="" />
-                    </div>
-                    <p>Jual Dodol rumput laut Per pcs</p>
-                  </div>
-                </div>
-                <div className="form-blmUlas">
-                  <h3>Kirim chat kepada pembeli untuk mengulas produk</h3>
-                  {/* <div className="textareaBlm">
-                    <textarea
-                      name=""
-                      id=""
-                      placeholder="Kirim Chat Kepada Pembeli agar Produkmu diulas"
-                    ></textarea>
-                  </div> */}
-                </div>
               </div>
             </div>
           )}
