@@ -203,6 +203,18 @@ input[type="text"]:focus {
     transition: 0.2s ease-in;
 }
 
+.btn-detailtransaksi {
+    color: #EF233C;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 4px 16px;
+    border: 1px solid #EF233C;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+
 .form-riwayat {
     width: 900px;
     padding: 16px;
@@ -531,4 +543,88 @@ input[type="text"]:focus {
 .timeline-item-content p:last-child {
     color: #666;
     margin-top: 4px;
+}
+
+.popup-container-review {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content-review {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+}
+
+.rating-review-user {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rating-review-user .text-review p {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+}
+
+.input-review-user {
+    width: 100%;
+}
+
+.input-review-user textarea {
+    width: 100%;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}
+
+.btn-kirim-review {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.btn-kirim-review .btn-batal-ulasan {
+    width: 20%;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #727272;
+    color: #717171;
+    font-weight: 500;
+}
+
+.btn-kirim-review .btn-kirim-ulasan {
+    width: 20%;
+    height: 40px;
+    background-color: #EF233C;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+}
+
+.add-img-review {
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

@@ -12,6 +12,9 @@ import LoadingSkeletonRiwayat from "../component/loader/LoadingSkeletonRiwayat";
 import { MdOutlineClose, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { BsShop } from "react-icons/bs";
 import { IoMdCopy } from "react-icons/io";
+import { Box, Rating, Typography } from "@mui/material";
+import { BiImageAdd } from "react-icons/bi";
+import { FiTrash2 } from "react-icons/fi";
 
 function Riwayat() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -21,6 +24,12 @@ function Riwayat() {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [showStatusPopup, setShowStatusPopup] = useState(false);
   const [selectedStatusData, setSelectedStatusData] = useState(null);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [value, setValue] = React.useState(2);
+  const [selectedImagePath, setSelectedImagePath] = useState("");
+  const [previewImg, setPreviewImg] = useState(null);
+  const [selectedReviewPhotos, setSelectedReviewPhotos] = useState([]);
+  const [selectedProductId, setSelectedProductId] = useState([]);
 
   const dummyStatusData = {
     id: 123,
@@ -79,14 +88,18 @@ function Riwayat() {
     document.body.style.overflow = "auto";
   };
 
+  const user_id = localStorage.getItem("user_id");
   async function getRiwayatTransaksi() {
     setIsLoading(true);
     try {
-      const response = await axios.get(apiurl() + "transactions", {
-        headers: {
-          Authorization: `Bearer ${token()}`,
-        },
-      });
+      const response = await axios.get(
+        apiurl() + "transactions?user_id=" + user_id,
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      );
       setRiwayatTransaksi(response.data.data);
       setIsLoading(false);
       console.log(response.data.data);
@@ -157,6 +170,64 @@ function Riwayat() {
     document.body.style.overflow = "auto";
   };
 
+  const handleShowReviewPopup = (productId) => {
+    setSelectedProductId(productId);
+    setShowReviewPopup(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleCloseReviewPopup = () => {
+    setShowReviewPopup(false);
+    document.body.style.overflow = "auto";
+  };
+
+  const handleImageChange1 = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedReviewPhotos([...selectedReviewPhotos, file]);
+      setPreviewImg(URL.createObjectURL(file));
+    }
+  };
+
+  const addReviewToApi = async (reviewData) => {
+    try {
+      const formData = new FormData();
+      formData.append("users_id", reviewData.users_id);
+      formData.append("product_id", reviewData.product_id);
+      formData.append("review", reviewData.review);
+      formData.append("rate", reviewData.rate);
+      // Append selected photos to the form data
+      selectedReviewPhotos.forEach((photo) => {
+        formData.append("photos", photo);
+      });
+
+      await axios.post(apiurl() + "reviews", formData, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      handleCloseReviewPopup();
+      // Refresh the data after adding the review
+      getRiwayatTransaksi();
+    } catch (error) {
+      console.error("Error adding review:", error);
+    }
+  };
+
+  const handleSubmitReview = () => {
+    // Gather review data
+    const reviewData = {
+      users_id: localStorage.getItem("user_id"),
+      product_id: selectedProductId, // Use the selected product ID
+      review: "Your review text here", // Replace with actual review text
+      rate: value, // The rating value from the Rating component
+    };
+
+    // Call the function to add review to API
+    addReviewToApi(reviewData);
+  };
+
   return (
     <div className="content">
       <div className="text-histori">
@@ -183,7 +254,6 @@ function Riwayat() {
               <option value="all">Semua</option>
               <option value="PENDING">Pending</option>
               <option value="PROCESSED">Processed</option>
-              <option value="SUCCESS">Success</option>
               <option value="SHIPPED">Shipped</option>
               <option value="FINISHED">Finished</option>
             </select>
@@ -259,14 +329,6 @@ function Riwayat() {
                       Lihat Status
                     </button>
                   )}
-                  {transaksi.status === "SUCCESS" && (
-                    <button
-                      className="btn-belilagi"
-                      onClick={() => handleShowStatusPopup(transaksi)}
-                    >
-                      Lihat Status
-                    </button>
-                  )}
                   {transaksi.status === "SHIPPED" && (
                     <>
                       <button className="btn-belilagi">Lihat Status</button>
@@ -276,18 +338,24 @@ function Riwayat() {
                       >
                         Selesaikan Pesanan
                       </button>
-                      <button className="btn-belilagi">Bantuan</button>
                     </>
                   )}
                   {transaksi.status === "FINISHED" && (
                     <>
                       <button
-                        className="btn-belilagi"
+                        className="btn-detailtransaksi"
                         onClick={() => handleDetailTransaksi(transaksi)}
                       >
                         Detail Transaksi
                       </button>
-                      <button className="btn-belilagi">Review</button>
+                      <button
+                        className="btn-belilagi"
+                        onClick={() =>
+                          handleShowReviewPopup(transaksi.product?.id)
+                        }
+                      >
+                        Review
+                      </button>
                       <button className="btn-belilagi">Beli Lagi</button>
                     </>
                   )}
@@ -300,7 +368,7 @@ function Riwayat() {
         <div className="popup-container">
           <div className="popup-content">
             <div className="top-popup-content">
-              <h2>Status Transaksi</h2>
+              <h2>Status Barang</h2>
               <MdOutlineClose onClick={handleCloseStatusPopup} fontSize={30} />
             </div>
             <div className="timeline">
@@ -312,6 +380,132 @@ function Riwayat() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {showReviewPopup && (
+        <div className="popup-container-review">
+          <div className="popup-content-review">
+            <div className="rating-review-user">
+              <div className="text-review">
+                <p>Silahkan Berikan Ulasan Untuk produk ini</p>
+              </div>
+              <Box
+                sx={{
+                  "& > legend": { mt: 2 },
+                }}
+              >
+                <Rating
+                  name="simple-controlled"
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                  style={{ fontSize: "50px" }}
+                />
+              </Box>
+              <div className="add-img-review">
+                <div className="addImg">
+                  <label
+                    htmlFor="input-file"
+                    className={`file-label ${
+                      !selectedImagePath ? "no-border" : ""
+                    }`}
+                  >
+                    {previewImg ? (
+                      <img
+                        src={previewImg}
+                        width={150}
+                        height={150}
+                        alt="Uploaded"
+                        className="uploaded-image"
+                      />
+                    ) : (
+                      <>
+                        <BiImageAdd color="#606060" size={60} />
+                        <p>Foto Utama</p>
+                      </>
+                    )}
+                  </label>
+                  <input
+                    id="input-file"
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    className="input-field"
+                    onChange={handleImageChange1}
+                    hidden
+                  />
+                  {previewImg && (
+                    <div className="upload-row">
+                      <span className="upload-content">
+                        <FiTrash2 onClick={() => setPreviewImg(null)} />
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="addImg">
+                  <label
+                    htmlFor="input-file"
+                    className={`file-label ${
+                      !selectedImagePath ? "no-border" : ""
+                    }`}
+                  >
+                    {previewImg ? (
+                      <img
+                        src={previewImg}
+                        width={150}
+                        height={150}
+                        alt="Uploaded"
+                        className="uploaded-image"
+                      />
+                    ) : (
+                      <>
+                        <BiImageAdd color="#606060" size={60} />
+                        <p>Foto Utama</p>
+                      </>
+                    )}
+                  </label>
+                  <input
+                    id="input-file"
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    className="input-field"
+                    onChange={handleImageChange1}
+                    hidden
+                  />
+                  {previewImg && (
+                    <div className="upload-row">
+                      <span className="upload-content">
+                        <FiTrash2 onClick={() => setPreviewImg(null)} />
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="input-review-user">
+                <textarea
+                  name="review"
+                  id="review"
+                  cols="30"
+                  rows="10"
+                  placeholder="Tulis Review Anda"
+                ></textarea>
+              </div>
+              <div className="btn-kirim-review">
+                <button
+                  className="btn-batal-ulasan"
+                  onClick={handleCloseReviewPopup}
+                >
+                  Batal
+                </button>
+                <button
+                  className="btn-kirim-ulasan"
+                  onClick={handleSubmitReview}
+                >
+                  Kirim
+                </button>
+              </div>
             </div>
           </div>
         </div>

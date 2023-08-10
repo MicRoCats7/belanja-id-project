@@ -30,6 +30,11 @@ function DaftarProduk() {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = products.filter(
       (product) =>
+        product &&
+        product.name &&
+        product.sku &&
+        product.kondisi_produk &&
+        product.category_id &&
         (product.name.toLowerCase().includes(lowercasedQuery) ||
           product.sku.toLowerCase().includes(lowercasedQuery)) &&
         (conditionFilter === "all" ||
@@ -212,8 +217,8 @@ function DaftarProduk() {
                   <td>{product.id}</td>
                   <td className="info-produk">
                     <img
-                      src={product.picturePath}
-                      alt={product.name}
+                      src={product.picturePath || ""}
+                      alt={product.name || ""}
                       width={100}
                     />
                     <div className="detail-produkTbl">

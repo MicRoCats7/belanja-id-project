@@ -155,7 +155,7 @@ function Biodata() {
                 <span className="email-user-profile">
                   {email || (profile.user && profile.user.email)}
                 </span>
-                <div className="data-verifikasi">Terverifikasi</div>
+                <div className="data-verifikasi">Tidak Terverifikasi</div>
                 <ModalEmail
                   handleProfileUpdate={() =>
                     setIsProfileUpdated(!isProfileUpdated)

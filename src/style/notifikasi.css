@@ -27,5 +27,42 @@
 }
 
 .card-notifikasi {
-    background-color: #ff5a5a;
+    background-color: #ffdada;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+
+.card-notifikasi .card-notifikasi-left img {
+    width: 90px;
+    height: 100px;
+}
+
+.card-notifikasi .card-notifikasi-right h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.card-notifikasi .card-notifikasi-right p {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.card-notifikasi .card-notifikasi-right span {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+.tidak-ada-data{
+    text-align: center;
+    margin: auto;
 }
