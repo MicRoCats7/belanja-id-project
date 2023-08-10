@@ -27,9 +27,19 @@ function Riwayat() {
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [value, setValue] = React.useState(2);
   const [selectedImagePath, setSelectedImagePath] = useState("");
-  const [previewImg, setPreviewImg] = useState(null);
-  const [selectedReviewPhotos, setSelectedReviewPhotos] = useState([]);
+  const [previewImg1, setPreviewImg1] = useState(null);
+  const [previewImg2, setPreviewImg2] = useState(null);
+  const [previewImg3, setPreviewImg3] = useState(null);
+  const [selectedReviewPhotos, setSelectedReviewPhotos] = useState({
+    image_path: null,
+    image_path_2: null,
+    image_path_3: null,
+  });
   const [selectedProductId, setSelectedProductId] = useState([]);
+  const [reviewText, setReviewText] = useState(""); // State untuk teks ulasan
+  const [ratingValue, setRatingValue] = useState(0); // State untuk nilai peringkat
+  const [reviewPhotos, setReviewPhotos] = useState([]); // State untuk foto ulasan
+  const [reviewedProducts, setReviewedProducts] = useState([]);
 
   const dummyStatusData = {
     id: 123,
@@ -100,6 +110,10 @@ function Riwayat() {
           },
         }
       );
+      const storedReviewedProducts =
+        JSON.parse(localStorage.getItem("reviewedProducts")) || [];
+
+      setReviewedProducts(storedReviewedProducts);
       setRiwayatTransaksi(response.data.data);
       setIsLoading(false);
       console.log(response.data.data);
@@ -184,48 +198,101 @@ function Riwayat() {
   const handleImageChange1 = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedReviewPhotos([...selectedReviewPhotos, file]);
-      setPreviewImg(URL.createObjectURL(file));
+      setSelectedReviewPhotos((prevPhotos) => ({
+        ...prevPhotos,
+        image_path: file,
+      }));
+      setPreviewImg1(URL.createObjectURL(file));
     }
   };
 
-  const addReviewToApi = async (reviewData) => {
-    try {
-      const formData = new FormData();
-      formData.append("users_id", reviewData.users_id);
-      formData.append("product_id", reviewData.product_id);
-      formData.append("review", reviewData.review);
-      formData.append("rate", reviewData.rate);
-      // Append selected photos to the form data
-      selectedReviewPhotos.forEach((photo) => {
-        formData.append("photos", photo);
-      });
-
-      await axios.post(apiurl() + "reviews", formData, {
-        headers: {
-          Authorization: `Bearer ${token()}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      handleCloseReviewPopup();
-      // Refresh the data after adding the review
-      getRiwayatTransaksi();
-    } catch (error) {
-      console.error("Error adding review:", error);
+  const handleImageChange2 = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedReviewPhotos((prevPhotos) => ({
+        ...prevPhotos,
+        image_path_2: file,
+      }));
+      setPreviewImg2(URL.createObjectURL(file));
     }
   };
 
-  const handleSubmitReview = () => {
-    // Gather review data
-    const reviewData = {
-      users_id: localStorage.getItem("user_id"),
-      product_id: selectedProductId, // Use the selected product ID
-      review: "Your review text here", // Replace with actual review text
-      rate: value, // The rating value from the Rating component
-    };
+  const handleImageChange3 = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedReviewPhotos((prevPhotos) => ({
+        ...prevPhotos,
+        image_path_3: file,
+      }));
+      setPreviewImg3(URL.createObjectURL(file));
+    }
+  };
 
-    // Call the function to add review to API
-    addReviewToApi(reviewData);
+  const handleSubmitReview = async () => {
+    if (reviewText && ratingValue > 0) {
+      const reviewData = {
+        users_id: localStorage.getItem("user_id"),
+        product_id: selectedProductId,
+        review: reviewText,
+        rate: ratingValue,
+      };
+
+      try {
+        const response = await axios.post(apiurl() + "reviews", reviewData, {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        });
+
+        const reviewedProductId = selectedProductId;
+        const updatedReviewedProducts = [
+          ...reviewedProducts,
+          reviewedProductId,
+        ];
+
+        // Update state dan penyimpanan
+        setReviewedProducts(updatedReviewedProducts);
+        localStorage.setItem(
+          "reviewedProducts",
+          JSON.stringify(updatedReviewedProducts)
+        );
+
+        // Upload selected review photos
+        const formData = new FormData();
+        for (const [path, photo] of Object.entries(selectedReviewPhotos)) {
+          if (photo) {
+            formData.append("image", photo);
+          }
+        }
+
+        await axios.post(
+          apiurl() + `gallery-reviews/${response.data.data.id}/upload-image`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token()}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        handleCloseReviewPopup();
+        getRiwayatTransaksi();
+      } catch (error) {
+        console.error("Error adding review:", error);
+      }
+    } else {
+      // Handle validation error
+    }
+  };
+
+  const removeSelectedPhoto = (path) => {
+    setSelectedReviewPhotos((prevPhotos) => ({
+      ...prevPhotos,
+      [path]: null,
+    }));
+    // Bersihkan juga preview gambar
+    setPreviewImg1(null);
   };
 
   return (
@@ -313,6 +380,17 @@ function Riwayat() {
                   </div>
                 </div>
                 <div className="opsi-belilagi-lihatdetail">
+                  {transaksi.status === "FINISHED" &&
+                    !reviewedProducts.includes(transaksi.product?.id) && (
+                      <button
+                        className="btn-belilagi"
+                        onClick={() =>
+                          handleShowReviewPopup(transaksi.product?.id)
+                        }
+                      >
+                        Review
+                      </button>
+                    )}
                   {transaksi.status === "PENDING" && (
                     <button
                       className="btn-belilagi"
@@ -347,14 +425,6 @@ function Riwayat() {
                         onClick={() => handleDetailTransaksi(transaksi)}
                       >
                         Detail Transaksi
-                      </button>
-                      <button
-                        className="btn-belilagi"
-                        onClick={() =>
-                          handleShowReviewPopup(transaksi.product?.id)
-                        }
-                      >
-                        Review
                       </button>
                       <button className="btn-belilagi">Beli Lagi</button>
                     </>
@@ -398,9 +468,9 @@ function Riwayat() {
               >
                 <Rating
                   name="simple-controlled"
-                  value={value}
+                  value={ratingValue}
                   onChange={(event, newValue) => {
-                    setValue(newValue);
+                    setRatingValue(newValue);
                   }}
                   style={{ fontSize: "50px" }}
                 />
@@ -410,12 +480,12 @@ function Riwayat() {
                   <label
                     htmlFor="input-file"
                     className={`file-label ${
-                      !selectedImagePath ? "no-border" : ""
+                      selectedReviewPhotos.image_path ? "no-border" : ""
                     }`}
                   >
-                    {previewImg ? (
+                    {previewImg1 ? (
                       <img
-                        src={previewImg}
+                        src={previewImg1}
                         width={150}
                         height={150}
                         alt="Uploaded"
@@ -424,7 +494,7 @@ function Riwayat() {
                     ) : (
                       <>
                         <BiImageAdd color="#606060" size={60} />
-                        <p>Foto Utama</p>
+                        <p>Foto Ulasan</p>
                       </>
                     )}
                   </label>
@@ -436,24 +506,26 @@ function Riwayat() {
                     onChange={handleImageChange1}
                     hidden
                   />
-                  {previewImg && (
+                  {previewImg1 && (
                     <div className="upload-row">
                       <span className="upload-content">
-                        <FiTrash2 onClick={() => setPreviewImg(null)} />
+                        <FiTrash2
+                          onClick={() => removeSelectedPhoto("image_path")}
+                        />
                       </span>
                     </div>
                   )}
                 </div>
                 <div className="addImg">
                   <label
-                    htmlFor="input-file"
+                    htmlFor="input-file-2"
                     className={`file-label ${
-                      !selectedImagePath ? "no-border" : ""
+                      selectedReviewPhotos.image_path_2 ? "no-border" : ""
                     }`}
                   >
-                    {previewImg ? (
+                    {previewImg2 ? (
                       <img
-                        src={previewImg}
+                        src={previewImg2}
                         width={150}
                         height={150}
                         alt="Uploaded"
@@ -462,22 +534,64 @@ function Riwayat() {
                     ) : (
                       <>
                         <BiImageAdd color="#606060" size={60} />
-                        <p>Foto Utama</p>
+                        <p>Foto Ulasan</p>
                       </>
                     )}
                   </label>
                   <input
-                    id="input-file"
+                    id="input-file-2"
                     type="file"
                     accept=".jpg, .jpeg, .png"
                     className="input-field"
-                    onChange={handleImageChange1}
+                    onChange={handleImageChange2}
                     hidden
                   />
-                  {previewImg && (
+                  {previewImg2 && (
                     <div className="upload-row">
                       <span className="upload-content">
-                        <FiTrash2 onClick={() => setPreviewImg(null)} />
+                        <FiTrash2
+                          onClick={() => removeSelectedPhoto("image_path")}
+                        />
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="addImg">
+                  <label
+                    htmlFor="input-file-3"
+                    className={`file-label ${
+                      selectedReviewPhotos.image_path_3 ? "no-border" : ""
+                    }`}
+                  >
+                    {previewImg3 ? (
+                      <img
+                        src={previewImg3}
+                        width={150}
+                        height={150}
+                        alt="Uploaded"
+                        className="uploaded-image"
+                      />
+                    ) : (
+                      <>
+                        <BiImageAdd color="#606060" size={60} />
+                        <p>Foto Ulasan</p>
+                      </>
+                    )}
+                  </label>
+                  <input
+                    id="input-file-3"
+                    type="file"
+                    accept=".jpg, .jpeg, .png"
+                    className="input-field"
+                    onChange={handleImageChange3}
+                    hidden
+                  />
+                  {previewImg3 && (
+                    <div className="upload-row">
+                      <span className="upload-content">
+                        <FiTrash2
+                          onClick={() => removeSelectedPhoto("image_path")}
+                        />
                       </span>
                     </div>
                   )}
@@ -490,6 +604,8 @@ function Riwayat() {
                   cols="30"
                   rows="10"
                   placeholder="Tulis Review Anda"
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
                 ></textarea>
               </div>
               <div className="btn-kirim-review">
