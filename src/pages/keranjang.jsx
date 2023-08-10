@@ -156,6 +156,7 @@ function Keranjang() {
             }
           });
           setCart(updatedProduct);
+          console.log("cart", updatedProduct);
           setCartId(response.data.data.id);
           saveToLocalStorage(updatedProduct);
         } else {
@@ -373,11 +374,11 @@ function Keranjang() {
                       />
                       <div className="toko-keranjang">
                         <div className="img-checkbox">
-                          <img src={ImgCartToko} alt="" />
+                          <img src={item.store.logo} alt="" />
                         </div>
                         <div className="nama-toko-keranjang">
-                          <h3>Nama Toko</h3>
-                          <p>Sumbawa Besar</p>
+                          <h3>{item.store.name}</h3>
+                          <p>{item.store.regencies}</p>
                         </div>
                       </div>
                     </div>

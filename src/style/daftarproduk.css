@@ -125,6 +125,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    width: 80%;
 }
 
 .detail-produkTbl {
@@ -150,7 +151,7 @@
     gap: 20px;
     border: 1px solid #D3D3D3;
     border-radius: 5px;
-    width: 75%;
+    width: 100%;
 }
 
 .box-harga {
@@ -216,8 +217,10 @@ td {
     display: flex;
     align-items: center;
     gap: 20px;
+    padding: 0 17px;
 }
-.alert-notfound{
+
+.alert-notfound {
     text-align: center;
     font-size: 17px;
     font-weight: 500;

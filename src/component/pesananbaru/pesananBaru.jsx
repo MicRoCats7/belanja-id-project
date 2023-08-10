@@ -140,9 +140,6 @@ function PesananBaru() {
                 <div className="btn-total-pesanan-baru">
                   <h2>{formatPrice(transaksi.total)}</h2>
                   <div className="con-btn-pesanan-baru">
-                    <div className="point-three">
-                      <BiDotsHorizontalRounded />
-                    </div>
                     <button
                       className="btn-terima-pesanan-baru"
                       style={{ cursor: "pointer" }}

@@ -80,7 +80,15 @@ function Detailpesanan() {
             },
           }
         );
-        setAddresses(response.data.data);
+        const primaryAddress = response.data.data.find(
+          (address) => address.is_primary === "1"
+        );
+        // Filter alamat yang tidak utama
+        const otherAddresses = response.data.data.filter(
+          (address) => address.is_primary !== "1"
+        );
+        setSelectedPrimaryAddress(primaryAddress);
+        setAddresses(otherAddresses);
       } catch (error) {
         console.error("Error fetching address data:", error);
       }
@@ -518,9 +526,9 @@ function Detailpesanan() {
                       <>
                         <p>Pilih kurir untuk melihat detail pengiriman.</p>
                         <div className="btn-pilih-shipping">
-                          <h2 onClick={handlePilihMetodeLain}>
-                            Pilih Metode Lain
-                          </h2>
+                          <button onClick={handlePilihMetodeLain}>
+                            Pilih Pengiriman
+                          </button>
                         </div>
                       </>
                     )}

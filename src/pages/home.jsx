@@ -21,9 +21,9 @@ import {
   Keyboard,
 } from "swiper";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import imgIklan from "../assets/image/iklan-top.svg";
-import imgIklan2 from "../assets/image/iklan-top2.svg";
-import imgIklan3 from "../assets/image/iklan-top3.svg";
+import imgIklan from "../assets/image/iklan-toko.svg";
+import imgIklan2 from "../assets/image/iklan-toko-event.svg";
+import imgIklan3 from "../assets/image/iklan-toko-add.svg";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -77,7 +77,7 @@ function Home() {
   function getProductByCategoryId(categoryId) {
     setIsLoading(true);
     axios
-      .get(apiurl() + "products?category_id=" + "1")
+      .get(apiurl() + "products?category_id=" + "26")
       .then((response) => {
         setProducKerajinan(response.data.data);
         setIsLoading(false);
