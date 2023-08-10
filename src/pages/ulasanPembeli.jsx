@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "../style/ulasanPembeli.css";
 import { AiFillStar } from "react-icons/ai";
 import imgpro from "../assets/image/imgProduk.svg";
+import { useParams } from "react-router-dom";
+import apiurl from "../utils/apiurl";
+import axios from "axios";
 
 function UlasanPembeli() {
   const [activeTab, setActiveTab] = useState("reviews");
@@ -9,7 +12,28 @@ function UlasanPembeli() {
   const [activeFilterStar, setActiveFilterStar] = useState(null);
   const [accordionOpen, setAccordionOpen] = useState(false);
   const [accordionOpen2, setAccordionOpen2] = useState(false);
+  const { id } = useParams();
   const tabRef = useRef(null);
+  const [toko, setToko] = useState([]);
+
+  useEffect(() => {
+    getReviewById();
+  }, []);
+
+  function getReviewById() {
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    axios
+      .get(apiurl() + `reviews/products?store_id=${id}`, { headers })
+      .then((response) => {
+        setToko(response.data.data);
+        console.log("Data Store by ID:", response.data.data);
+      })
+      .catch((error) => console.error(error));
+  }
 
   useEffect(() => {
     calculateUnderlineStyle();
@@ -108,130 +132,34 @@ function UlasanPembeli() {
                   <AiFillStar /> 5
                 </button>
               </div>
-              <div className="accordion">
-                <button
-                  className={`accordion-toggle ${accordionOpen ? "open" : ""}`}
-                  onClick={toggleAccordion}
-                >
-                  <span className="accordion-text">Belum dibalas</span>
-                  <span className={`arrow ${accordionOpen ? "up" : "down"}`} />
-                  <p>(1) dalam sebulan terakhir</p>
-                </button>
-                <div
-                  className={`accordion-content ${accordionOpen ? "open" : ""}`}
-                >
-                  <div className="page-ulasan">
-                    <div className="info-ulasan">
-                      <div className="rating-ulasan">
-                        <AiFillStar />
-                        <h3>5</h3>
+              <div className="page-ulasan">
+                {toko.length === 0 ? (
+                  <p>Anda belum memiliki ulasan.</p>
+                ) : (
+                  toko?.map((review, index) => (
+                    <div className="ulasan-item" key={review.id}>
+                      <div className="info-ulasan">
+                        <div className="rating-ulasan">
+                          <AiFillStar />
+                          <h3>{review.rating}</h3>
+                        </div>
+                        <p>
+                          Oleh <span>{review.user.name}</span>
+                        </p>
+                        <p>{review.created_at}</p>
                       </div>
-                      <p>
-                        Oleh <span> Ilyasa Santoso</span>
-                      </p>
-                      <p>Hari ini</p>
-                    </div>
-                    <div className="balas-ulasan">
-                      <div className="img-ulasan">
-                        <img src={imgpro} alt="" />
-                        <p>Jual Dodol rumput laut Per pcs</p>
-                      </div>
-                      <div className="form-balasan">
-                        <p>Ulasan Tidak Tersedia</p>
-                        <div className="textareaForm">
-                          <div className="underline-ulasan"></div>
-                          <textarea
-                            name=""
-                            id=""
-                            placeholder="Balas ulasan pembeli disini"
-                          ></textarea>
-                          <button>Kirim</button>
+                      <div className="balas-ulasan">
+                        <div className="img-ulasan">
+                          <img src={imgpro} alt="" />
+                          <p>{review.product.name}</p>
+                        </div>
+                        <div className="form-balasan">
+                          <p>{review.review}</p>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="underline"></div>
-                  <div className="page-ulasan">
-                    <div className="info-ulasan">
-                      <div className="rating-ulasan">
-                        <AiFillStar />
-                        <h3>5</h3>
-                      </div>
-                      <p>
-                        Oleh <span> Ilyasa Santoso</span>
-                      </p>
-                      <p>Hari ini</p>
-                    </div>
-                    <div className="balas-ulasan">
-                      <div className="img-ulasan">
-                        <img src={imgpro} alt="" />
-                        <p>Jual Dodol rumput laut Per pcs</p>
-                      </div>
-                      <div className="form-balasan">
-                        <p>Ulasan Tidak Tersedia</p>
-                        <div className="textareaForm">
-                          <div className="underline-ulasan"></div>
-                          <textarea
-                            name=""
-                            id=""
-                            placeholder="Balas ulasan pembeli disini"
-                          ></textarea>
-                          <button>Kirim</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="underline"></div>
-                  <div className="page-ulasan">
-                    <div className="info-ulasan">
-                      <div className="rating-ulasan">
-                        <AiFillStar />
-                        <h3>5</h3>
-                      </div>
-                      <p>
-                        Oleh <span> Ilyasa Santoso</span>
-                      </p>
-                      <p>Hari ini</p>
-                    </div>
-                    <div className="balas-ulasan">
-                      <div className="img-ulasan">
-                        <img src={imgpro} alt="" />
-                        <p>Jual Dodol rumput laut Per pcs</p>
-                      </div>
-                      <div className="form-balasan">
-                        <p>Ulasan Tidak Tersedia</p>
-                        <div className="textareaForm">
-                          <div className="underline-ulasan"></div>
-                          <textarea
-                            name=""
-                            id=""
-                            placeholder="Balas ulasan pembeli disini"
-                          ></textarea>
-                          <button>Kirim</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="accordion">
-                <button
-                  className={`accordion-toggle ${accordionOpen2 ? "open" : ""}`}
-                  onClick={toggleAccordion2}
-                >
-                  <span className="accordion-text">Sudah Dibalas</span>
-                  <span className={`arrow ${accordionOpen2 ? "up" : "down"}`} />
-                  <p>(100)</p>
-                </button>
-                <div
-                  className={`accordion-content ${
-                    accordionOpen2 ? "open" : ""
-                  }`}
-                >
-                  <div className="page-ulasan">
-                    <h3>Halaman Ulasan</h3>
-                  </div>
-                </div>
+                  ))
+                )}
               </div>
             </div>
           )}
@@ -269,14 +197,13 @@ function UlasanPembeli() {
                 </div>
                 <div className="form-blmUlas">
                   <h3>Kirim chat kepada pembeli untuk mengulas produk</h3>
-                  <div className="textareaBlm">
+                  {/* <div className="textareaBlm">
                     <textarea
                       name=""
                       id=""
                       placeholder="Kirim Chat Kepada Pembeli agar Produkmu diulas"
                     ></textarea>
-                    <button>Kirim</button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

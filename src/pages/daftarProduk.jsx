@@ -11,6 +11,7 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import { formatPrice } from "../utils/helpers";
 import LoadingDaftarProduk from "../component/loader/LoadingDaftarProduk";
+import ModalDelToko from "../component/modal/modalDelToko";
 
 function DaftarProduk() {
   const [products, setProduct] = useState([]); // Ensure the initial state is an empty array
@@ -44,7 +45,13 @@ function DaftarProduk() {
     }
     setFilteredProducts(filtered);
   }
-
+  const handleDeleteProduct = (productId) => {
+    // Memperbarui state produk setelah penghapusan
+    const updatedProducts = products.filter(
+      (product) => product.id !== productId
+    );
+    setProduct(updatedProducts);
+  };
   function getProductByUserId() {
     axios
       .get(apiurl() + "products", {
@@ -239,13 +246,10 @@ function DaftarProduk() {
                       <button className="btn-edit">
                         <Link to={`/ubahProduk/${product.id}`}>Edit</Link>
                       </button>
-                      <button
-                        className="btn-hapus"
-                        onClick={() => handleDeleteItem(product.id)}
-                      >
-                        <BsTrash3 />
-                        Hapus
-                      </button>
+                      <ModalDelToko
+                        product={product}
+                        onDelete={handleDeleteProduct}
+                      />
                     </div>
                   </td>
                 </tr>

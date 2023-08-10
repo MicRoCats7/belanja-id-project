@@ -24,8 +24,8 @@ function Toko() {
           <Route path="/hometoko" element={<HomeToko />} />
           <Route path="/chat" element={<ChatToko />} />
           <Route path="/daftarproduk/:id" element={<DaftarProduk />} />
-          <Route path="/pesanantoko" element={<PesananToko />} />
-          <Route path="/ulasanpembeli" element={<UlasanPembeli />} />
+          <Route path="/pesanantoko/:id" element={<PesananToko />} />
+          <Route path="/ulasanpembeli/:id" element={<UlasanPembeli />} />
           <Route path="/pengaturantoko/:id" element={<PengaturanToko />} />
         </Routes>
       </div>
