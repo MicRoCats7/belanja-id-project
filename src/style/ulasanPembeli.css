@@ -175,6 +175,13 @@
     display: flex;
     align-items: start;
     gap: 77px;
+    flex-direction: column;
+}
+
+.ulasan-item{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto; 
 }
 
 .info-ulasan {
@@ -219,6 +226,8 @@
     align-items: start;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
+    margin-left: 50px;
 }
 
 .img-ulasan {

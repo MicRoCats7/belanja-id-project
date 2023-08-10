@@ -156,9 +156,9 @@ function Whislist() {
 
   const productList = whislistData.map((item) => {
     if (!item.product || !item.product.id) {
-      return null; // Handle cases where item.product or item.product.id is null or undefined
+      return null;
     }
-    const isProductInWishlist = checkIfProductInWishlist(item.product.id); // Implement your logic to check if product is in the wishlist
+    const isProductInWishlist = checkIfProductInWishlist(item.product.id);
     return (
       <Product
         key={item.product.id}
@@ -176,15 +176,18 @@ function Whislist() {
       />
     );
   });
+
   function checkIfProductInWishlist(productId) {
     if (!whislistData || whislistData.length === 0) {
-      return false; // Return false if wishlist data is null or empty
+      return false;
     }
 
     return whislistData.some(
       (item) => item.product && item.product.id === productId
     );
   }
+
+  console.log("whislistData length:", whislistData.length);
 
   return (
     <div className="whislist">
@@ -232,7 +235,25 @@ function Whislist() {
                   selectedSortOption || selectedPriceRange ? "fade" : ""
                 }`}
               >
-                {productList.length > 0 ? productList : renderEmptywishlist()}
+                {whislistData.length > 0 ? (
+                  productList
+                ) : (
+                  <div className="empty-wishlist-container">
+                    <div className="empty-wishlist">
+                      <img src={imgbelanja} alt="" loading="lazy" />
+                      <h2>wishlist Anda Kosong</h2>
+                      <p>
+                        Anda belum menambahkan produk apapun ke dalam wishlist.
+                      </p>
+                      <button
+                        onClick={() => navigate("/")}
+                        className="btn-primary"
+                      >
+                        Lanjut Belanja
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
             {totalPages > 1 && (

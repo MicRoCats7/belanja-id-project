@@ -135,6 +135,11 @@ function Detailtoko() {
               </button>
             </div>
             {/* <button className="btn-follow-toko" onClick={followStore}>
+            </button> */}
+            {/* <button className="btn-chat-toko">
+              <BsChatLeftText />
+              Chat Penjual
+            </button> */}
           </div>
           <div className="container-information-detail-toko">
             <div className="total-produk-detail-toko">
