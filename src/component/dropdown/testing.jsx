@@ -4,10 +4,14 @@ import defaultImage from "../../assets/icon/anonimprofile.jpg";
 import apiurl from "../../utils/apiurl";
 import { FiTrash2 } from "react-icons/fi";
 import { BiImageAdd } from "react-icons/bi";
+import { Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 function ImageUploader() {
   const [selectedImagePath, setSelectedImagePath] = useState("");
   const [previewImg, setPreviewImg] = useState(null);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   const handleImageChange1 = (e) => {
     const file = e.target.files[0];
@@ -30,11 +34,23 @@ function ImageUploader() {
       axios
         .post(apiurl() + "user/photo", formData, config)
         .then((response) => {
+          handleSuccessAlertProfile();
           console.log("Berhasil Mengapload photo", response.data);
         })
-        .catch((error) => console.error("Gagal mengapload photo", error));
+        .catch((error) => {
+          handleErrorAlertProfile();
+          console.error("Gagal mengapload photo", error);
+        });
     }
   }
+
+  const handleSuccessAlertProfile = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertProfile = () => {
+    setErrorAlertOpen(true);
+  };
 
   return (
     <div>
@@ -79,6 +95,34 @@ function ImageUploader() {
       <button onClick={AploadFotoProfile} className="input-image">
         Simpan
       </button>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Berhasil Mengubah Profile Anda
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Gagal Mengubah Profile anda
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

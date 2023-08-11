@@ -810,7 +810,7 @@ function Riwayat() {
         </MuiAlert>
       </Snackbar>
       <Snackbar
-        open={successAlertOpen}
+        open={successOpen}
         autoHideDuration={3000}
         onClose={() => setSuccesOpen(false)}
       >

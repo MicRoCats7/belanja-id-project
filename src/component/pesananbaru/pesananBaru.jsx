@@ -54,18 +54,6 @@ function PesananBaru() {
     );
   }
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    // Return the formatted date string
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
-  }
-
   function acceptTransaction(transactionId) {
     axios
       .get(apiurl() + `transactions/shipped/${transactionId}`, {
@@ -137,7 +125,16 @@ function PesananBaru() {
                     <span style={{ color: "#EF233C" }}>{transaksi.id}</span>
                     <h1>/{transaksi.user?.name}/</h1>
                     <CiClock2 />
-                    <h1>{formatDate(transaksi.created_at)}</h1>
+                    <h1>
+                      {new Date(transaksi.created_at).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )}
+                    </h1>
                   </div>
                   <div className="label-top-item-box-pesanan-baru">
                     <h1>{transaksi.status}</h1>
