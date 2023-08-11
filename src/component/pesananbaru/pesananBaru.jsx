@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../../style/pesananToko.css";
 import { CiClock2, CiSearch } from "react-icons/ci";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { useEffect } from "react";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
@@ -9,12 +8,16 @@ import token from "../../utils/token";
 import { useParams } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
 import LoadingPesananToko from "../loader/LoadingPesananToko";
+import { Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 function PesananBaru() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
   const { id } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   useEffect(() => {
     getRiwayatTransaksi();
@@ -73,11 +76,24 @@ function PesananBaru() {
       .then((response) => {
         // Manajemen status atau tampilan jika permintaan sukses
         console.log("Transaction accepted:", response.data);
+        handleSuccessAlertOpen();
+        setRiwayatTransaksi((prevTransaksi) =>
+          prevTransaksi.filter((transaksi) => transaksi.id !== transactionId)
+        );
       })
       .catch((error) => {
         console.error("Error accepting transaction:", error);
+        handleErrorAlertOpen();
       });
   }
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
 
   return (
     <div className="container-pesanan-baru">
@@ -160,7 +176,10 @@ function PesananBaru() {
                       <button
                         className="btn-terima-pesanan-baru"
                         onClick={() => acceptTransaction(transaksi.id)}
-                        style={{ cursor: "pointer" }}
+                        style={{
+                          cursor: "pointer",
+                          display: "none" /* Tambahkan ini */,
+                        }}
                       >
                         Kirim Pesanan
                       </button>
@@ -187,6 +206,34 @@ function PesananBaru() {
           <LoadingPesananToko />
         )}
       </div>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Kirim Pesanan Berhasil
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Gagal Mengirim Pesanan
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

@@ -217,10 +217,17 @@ input[type="text"]:focus {
     cursor: pointer;
 }
 
+.icon-navbar .cart-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 1px;
+}
+
 .cart-item-count {
     position: absolute;
-    top: 1px;
-    right: 260px;
+    top: -8px;
+    right: -8px;
     background-color: red;
     color: white;
     border-radius: 50%;
@@ -231,11 +238,13 @@ input[type="text"]:focus {
     justify-content: center;
     font-size: 12px;
     font-weight: bold;
+    z-index: 9999;
 }
 
 .icon-cart {
     display: flex;
-    align-items: center;
+    align-items: start;
+    justify-content: center;
 }
 
 .line {
@@ -275,7 +284,7 @@ input[type="text"]:focus {
     transition: 0.2s ease-in;
 }
 
-.shop-name span{
+.shop-name span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

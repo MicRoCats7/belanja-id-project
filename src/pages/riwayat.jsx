@@ -12,9 +12,10 @@ import LoadingSkeletonRiwayat from "../component/loader/LoadingSkeletonRiwayat";
 import { MdOutlineClose, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { BsShop } from "react-icons/bs";
 import { IoMdCopy } from "react-icons/io";
-import { Box, Rating, Typography } from "@mui/material";
+import { Box, Rating, Snackbar, Typography } from "@mui/material";
 import { BiImageAdd } from "react-icons/bi";
 import { FiTrash2 } from "react-icons/fi";
+import MuiAlert from "@mui/material/Alert";
 
 function Riwayat() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -40,6 +41,10 @@ function Riwayat() {
   const [ratingValue, setRatingValue] = useState(0); // State untuk nilai peringkat
   const [reviewPhotos, setReviewPhotos] = useState([]); // State untuk foto ulasan
   const [reviewedProducts, setReviewedProducts] = useState([]);
+  const [submittingReview, setSubmittingReview] = useState(false);
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successOpen, setSuccesOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   const dummyStatusData = {
     id: 123,
@@ -133,22 +138,14 @@ function Riwayat() {
       .then((response) => {
         // Manajemen status atau tampilan jika permintaan sukses
         console.log("Transaction accepted:", response.data);
+        setIsLoading(false);
+        handleSuccesstOpen();
       })
       .catch((error) => {
         console.error("Error accepting transaction:", error);
+        setIsLoading(false);
+        handleErrorAlertOpen();
       });
-  }
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    // Return the formatted date string
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
   function filterByStatus(transaksi) {
@@ -246,6 +243,7 @@ function Riwayat() {
         review: reviewText,
         rate: ratingValue,
       };
+      setSubmittingReview(true);
 
       try {
         const response = await axios.post(apiurl() + "reviews", reviewData, {
@@ -289,11 +287,14 @@ function Riwayat() {
             },
           }
         );
-
+        handleSuccessAlertOpen();
+        setSubmittingReview(false);
         handleCloseReviewPopup();
         getRiwayatTransaksi();
       } catch (error) {
         console.error("Error adding review:", error);
+        setSubmittingReview(false);
+        handleErrorAlertOpen();
       }
     } else {
       // Handle validation error
@@ -313,6 +314,19 @@ function Riwayat() {
       setPreviewImg3(null);
     }
   };
+
+  const handleSuccessAlertOpen = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleSuccesstOpen = () => {
+    setSuccesOpen(true);
+  };
+
+  const handleErrorAlertOpen = () => {
+    setErrorAlertOpen(true);
+  };
+
   return (
     <div className="content">
       <div className="text-histori">
@@ -359,7 +373,16 @@ function Riwayat() {
                   <img src={BagIcon} alt="" />
                   <p className="text-belanja">Belanja</p>
                   <div className="data-verifikasi">{transaksi.status}</div>
-                  <p>{formatDate(transaksi.created_at)}</p>
+                  <p>
+                    {new Date(transaksi.created_at).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
+                  </p>
                   <p style={{ color: "red" }}>ID ORDER : {transaksi.id}</p>
                 </div>
                 <div className="toko-barang">
@@ -463,7 +486,16 @@ function Riwayat() {
               {dummyStatusData.timeline.map((statusItem) => (
                 <div key={statusItem.id} className="timeline-item">
                   <div className="timeline-item-content">
-                    <p>{formatDate(statusItem.timestamp)}</p>
+                    <p>
+                      {new Date(statusItem.timestamp).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )}
+                    </p>
                     <p>{statusItem.description}</p>
                   </div>
                 </div>
@@ -481,7 +513,7 @@ function Riwayat() {
               </div>
               <Box
                 sx={{
-                  "& > legend": { mt: 2 },
+                  "& > legend": { mt: 4 },
                 }}
               >
                 <Rating
@@ -490,7 +522,7 @@ function Riwayat() {
                   onChange={(event, newValue) => {
                     setRatingValue(newValue);
                   }}
-                  style={{ fontSize: "50px" }}
+                  style={{ fontSize: "70px" }}
                 />
               </Box>
               <div className="add-img-review">
@@ -636,8 +668,13 @@ function Riwayat() {
                 <button
                   className="btn-kirim-ulasan"
                   onClick={handleSubmitReview}
+                  disabled={submittingReview}
                 >
-                  Kirim
+                  {submittingReview ? (
+                    <span className="loading-spinner-review" />
+                  ) : (
+                    "Kirim"
+                  )}
                 </button>
               </div>
             </div>
@@ -758,6 +795,48 @@ function Riwayat() {
           </div>
         </div>
       )}
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Terima kasih sudah memberi ulasan untuk produk ini
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccesOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccesOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Barang sudah diselesaikan
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Kirim ulasan gagal, silahkan coba lagi
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

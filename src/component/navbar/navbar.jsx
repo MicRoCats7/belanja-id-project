@@ -236,9 +236,13 @@ function Navbar() {
             </Link>
             <div className="icon-navbar">
               {/* <img src={iconChat} alt="icon chat" /> */}
-              <Link to={"/cart"}>
+              <Link to={"/cart"} className="cart-icon">
                 <div className="icon-cart">
-                  <BsCart2 />
+                  <div className="icon-cart-navbar">
+                    <BsCart2 />
+                  </div>
+                </div>
+                <div className="item-count">
                   {cartItemCount > 0 && (
                     <span className="cart-item-count">{cartItemCount}</span>
                   )}
