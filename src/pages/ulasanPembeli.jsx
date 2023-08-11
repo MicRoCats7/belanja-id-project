@@ -169,6 +169,11 @@ function UlasanPembeli() {
                         </p>
                       </div>
                       <div className="balas-ulasan">
+                        <div className="img-comment">
+                          <img src={review.product.picturePath} alt="" />
+                          {/* <img src={review.product.photo4} alt="" /> */}
+                          <p className="comment-user">{review.product.name}</p>
+                        </div>
                         <div className="img-ulasan">
                           {review.gallery_reviews.map((galleryReview) => (
                             <div
@@ -186,8 +191,6 @@ function UlasanPembeli() {
                               )}
                             </div>
                           ))}
-                          {/* <img src={review.product.photo4} alt="" /> */}
-                          <p>{review.product.name}</p>
                         </div>
                         <div className="form-balasan">
                           <p>{review.review}</p>
