@@ -92,13 +92,6 @@ function UlasanPembeli() {
           >
             Ulasan Baru
           </button>
-          <button
-            className={activeTab === "ratings" ? "active" : ""}
-            onClick={() => handleTabClick("ratings")}
-            data-tab="ratings"
-          >
-            Belum diulas
-          </button>
           <div className="tab-indicator" style={underlineStyle}></div>
         </div>
         <div className="tab-content">

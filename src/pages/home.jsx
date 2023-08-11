@@ -164,8 +164,7 @@ function Home() {
       <div className="homepage">
         <div className="heroPage">
           <Swiper
-            modules={[Navigation, Pagination, Autoplay, Mousewheel, Keyboard]}
-            navigation
+            modules={[ Pagination, Autoplay, Mousewheel, Keyboard]}
             autoplay={{ delay: 2500 }}
             cssMode={true}
             mousewheel={true}

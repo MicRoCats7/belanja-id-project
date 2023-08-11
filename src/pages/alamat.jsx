@@ -244,7 +244,7 @@ function Alamat() {
                     </h3>
                     <div>
                       <ModalEditAlamat
-                        address={editingAddress}
+                        selectedPrimaryAddress={selectedPrimaryAddress}
                         closeModal={() => setEditingAddress(null)}
                       />
                     </div>

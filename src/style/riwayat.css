@@ -620,11 +620,39 @@ input[type="text"]:focus {
     border: none;
     color: #fff;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-img-review {
-    margin: 30px 0;
+    margin: 10px 0;
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.loading-spinner-review {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s infinite linear;
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+
+/* Keyframes for the loading spinner animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

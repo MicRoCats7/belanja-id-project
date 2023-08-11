@@ -7,11 +7,9 @@ import "../style/tambahproduk.css";
 import { BiImageAdd } from "react-icons/bi";
 import { FiTrash2 } from "react-icons/fi";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import { red } from "@mui/material/colors";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import token from "../utils/token";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function UbahProduk() {
   const [productToEdit, setProductToEdit] = useState(null);

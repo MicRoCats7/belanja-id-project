@@ -222,7 +222,7 @@ function Detailtoko() {
                       <Product
                         name={item.name}
                         url={item.picturePath}
-                        location={item.store?.provinces}
+                        location={item.product_origin}
                         price={item.price}
                         rating={item.rate}
                         ulasan={item.review}
@@ -253,7 +253,7 @@ function Detailtoko() {
                   <Product
                     name={item.name}
                     url={item.picturePath}
-                    location={item.store?.provinces}
+                    location={item.product_origin}
                     price={item.price}
                     rating={item.rate}
                     ulasan={item.review}
