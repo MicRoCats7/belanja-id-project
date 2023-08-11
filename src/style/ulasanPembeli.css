@@ -55,14 +55,13 @@
 }
 
 
-
-
 .newUlasan-tab {
     /* Your reviews tab content styles */
     display: flex;
     align-items: start;
     flex-direction: column;
 }
+
 
 .tab-filterStar {
     display: flex;
@@ -228,7 +227,7 @@
     display: flex;
     align-items: start;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
     margin-top: 20px;
     margin-left: 50px;
 }
@@ -239,6 +238,23 @@
     gap: 20px;
 }
 
+.img-comment {
+    display: flex;
+    align-items: start;
+    gap: 20px;
+}
+
+.balas-ulasan .img-comment img {
+    width: 54px;
+    height: 49px;
+    border-radius: 10px;
+}
+
+.img-comment .comment-user {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e1d1d;
+}
 
 .img-container {
     display: flex;
