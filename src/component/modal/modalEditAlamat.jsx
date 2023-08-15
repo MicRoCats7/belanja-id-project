@@ -5,10 +5,12 @@ import axios from "axios";
 import apiurl from "../../utils/apiurl";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import token from "../../utils/token";
 
-function ModalAlamat() {
+function ModalEditAlamat() {
   const [modal, setModal] = useState(false);
+  const { id } = useParams();
   const [alamat, setAlamat] = useState("");
   const [nama, setNama] = useState("");
   const [phone, setNomor] = useState("");
@@ -23,10 +25,13 @@ function ModalAlamat() {
   const [searchKeywordCity, setSearchKeywordCity] = useState("");
   const [searchResultsCity, setSearchResultsCity] = useState([]);
   const [selectedCityName, setSelectedCityName] = useState("");
+  const [selectedPrimaryAddress, setSelectedPrimaryAddress] = useState(null);
+  const [alamatList, setAlamatList] = useState([]);
 
   useEffect(() => {
+    fetchAlamat();
     fetchProvinces();
-  }, []);
+  }, [id]);
 
   const fetchProvinces = async () => {
     try {
@@ -48,6 +53,71 @@ function ModalAlamat() {
       console.log("Failed to fetch provinces:", error);
     }
   };
+
+  const handleEditAlamat = async () => {
+    try {
+      const response = await axios.put(
+        apiurl() + "user_addresses/id" + id,
+        {
+          receiver_name: nama,
+          phone_number: phone,
+          province_id: selectedProvince,
+          city_id: selectedCity,
+          full_address: alamat,
+          // ... and other fields
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      );
+
+      if (response.data.meta && response.data.meta.code === 200) {
+        // Sukses, lakukan pembaruan tampilan jika perlu
+        // Misalnya, panggil fungsi untuk mengambil data alamat kembali
+        fetchAlamat();
+        // Tutup modal
+        toggleModal();
+      } else {
+        console.log("Failed to edit address:", response.data.meta.message);
+        // Munculkan pesan kesalahan jika perlu
+      }
+    } catch (error) {
+      console.error("Error editing address:", error);
+    }
+  };
+
+  function fetchAlamat() {
+    axios
+      .get(apiurl() + "user_addresses/" + id, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        const responseData = response.data;
+        if (responseData.data) {
+          setAlamatList(responseData.data);
+          const primaryAddress = responseData.data.find(
+            (alamat) => alamat.is_primary === "1"
+          );
+          if (!primaryAddress && responseData.data.length > 1) {
+            setSelectedPrimaryAddress(responseData.data[1]);
+          } else {
+            setSelectedPrimaryAddress(primaryAddress);
+          }
+        } else {
+          console.log(
+            "Gagal mengambil data alamat:",
+            responseData.meta.message
+          );
+        }
+      })
+      .catch((error) => {
+        console.log("Gagal mengambil data alamat:", error);
+      });
+  }
 
   const handleProvinceChange = (e) => {
     const selectedId = e.target.value;
@@ -108,6 +178,13 @@ function ModalAlamat() {
 
   const toggleModal = () => {
     setModal(!modal);
+    // Mengisi data alamat yang sedang diedit
+    setNama(selectedPrimaryAddress?.receiver_name);
+    setNomor(selectedPrimaryAddress?.phone_number);
+    setSelectedProvince(selectedPrimaryAddress?.province_id);
+    setSelectedCity(selectedPrimaryAddress?.city_id);
+    setAlamat(selectedPrimaryAddress?.full_address);
+    // ... dan lainnya
   };
 
   const handleNameChange = (event) => {
@@ -127,7 +204,7 @@ function ModalAlamat() {
   return (
     <>
       <h3 onClick={toggleModal} className="edit-alamat">
-        Ubah alamat
+        Edit alamat
       </h3>
 
       {modal && (
@@ -247,4 +324,4 @@ function ModalAlamat() {
   );
 }
 
-export default ModalAlamat;
+export default ModalEditAlamat;

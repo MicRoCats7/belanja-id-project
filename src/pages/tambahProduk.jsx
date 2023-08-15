@@ -109,7 +109,7 @@ function TambahProduk() {
       console.log("Produk berhasil ditambahkan:", newProductData);
       setTimeout(() => {
         navigate("/toko/daftarproduk/");
-      }, 1000);
+      }, 900);
     } catch (error) {
       handleErrorAlertToko();
       console.error("Error saat menambahkan produk:", error);

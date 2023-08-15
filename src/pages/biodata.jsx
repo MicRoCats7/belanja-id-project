@@ -130,8 +130,8 @@ function Biodata() {
                   <ImageUploader />
                   <div className="isibox">
                     <h3 className="text-ukuran">
-                      Ukuran gambar: maks. 1 MB Format gambar: .JPEG, .PNG , dan
-                      ukuran minimum 300 x 300px.
+                      Ukuran gambar: maks. 1 MB Format gambar: .JPG, .JPEG, .PNG
+                      , dan ukuran minimum 300 x 300px.
                     </h3>
                   </div>
                 </div>
