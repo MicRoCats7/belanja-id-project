@@ -143,7 +143,7 @@ function Keranjang(props) {
           const cartItems = response.data.data.cartItems;
           const storedCartItems = JSON.parse(localStorage.getItem("cartItems"));
           const updatedProduct = cartItems.map((item) => {
-            const storedItem = storedCartItems.find(
+            const storedItem = storedCartItems?.find(
               (storedItem) => storedItem.id === item.id
             );
             if (storedItem) {
