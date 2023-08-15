@@ -4,7 +4,7 @@ import apiurl from "../utils/apiurl";
 import "../style/biodata.css";
 import Modal from "../component/modal/modal";
 import ModalEmail from "../component/modal/modalemail";
-import Modaldate from "../component/modal/modaldate";
+import ModalVerifikasi from "../component/modal/modalVerifikasiEmail";
 import ModalHp from "../component/modal/modalnohp";
 import ImageUploader from "../component/dropdown/testing";
 import { useNavigate } from "react-router-dom";
@@ -19,10 +19,13 @@ function Biodata() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(""); // Define the user state
   const [updatedEmail, setUpdatedEmail] = useState("");
   const [isProfileUpdated, setIsProfileUpdated] = useState(false);
   const [nomorTelepon, setNomorTelepon] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const navigate = useNavigate();
 
@@ -40,7 +43,9 @@ function Biodata() {
             Authorization: "Bearer " + token,
           },
         });
+        setUser(response.data.data.user.id);
         setProfile(response.data.data);
+        setIsEmailVerified(response.data.data.user.email_verified_at);
         setIsLoading(false);
         console.log(response.data.data);
       } catch (error) {
@@ -105,6 +110,10 @@ function Biodata() {
     setErrorAlertOpen(true);
   };
 
+  const handleVerificationSuccess = () => {
+    setIsProfileUpdated(!isProfileUpdated);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -155,12 +164,18 @@ function Biodata() {
                 <span className="email-user-profile">
                   {email || (profile.user && profile.user.email)}
                 </span>
-                <div className="data-verifikasi">Tidak Terverifikasi</div>
-                <ModalEmail
-                  handleProfileUpdate={() =>
-                    setIsProfileUpdated(!isProfileUpdated)
-                  }
-                />
+                {isEmailVerified ? (
+                  <div className="data-verifikasi">Terverifikasi</div>
+                ) : (
+                  <div className="data-verifikasi">Tidak Terverifikasi</div>
+                )}
+                {!isEmailVerified && ( // Hanya tampilkan jika email belum terverifikasi
+                  <ModalVerifikasi
+                    email={email || (profile.user && profile.user.email)}
+                    user={user || (profile.user && profile.user.id)}
+                    onClose={() => setShowVerificationModal(false)}
+                  />
+                )}
               </div>
               <div className="edit-nohp">
                 <span className="text-nohp">No Hp</span>

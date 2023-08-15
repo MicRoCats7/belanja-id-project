@@ -25,6 +25,18 @@ body.active-modal {
     overflow: hidden;
 }
 
+.modal-verif .overlay{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    overflow: hidden;
+    background: rgba(49, 49, 49, 0.5);
+}
+
 .modal-jadwal, .overlay {
     width: 100vw;
     height: 100vh;
@@ -132,6 +144,7 @@ body.active-modal {
 }
 
 
+
 .modal-forgot, .overlay {
     width: 100vw;
     height: 100vh;
@@ -143,27 +156,6 @@ body.active-modal {
     overflow: hidden;
     background: rgba(49, 49, 49, 0.5);
 }
-/* .overlays {
-    background: rgba(99, 99, 99, 0.8);
-} */
-/* 
-.modals-contents {
-    width: 600px;
-    height: 680px;
-    background-color: white;
-    border-radius: 10px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 2rem 2.5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    overflow-y: auto;
-} */
-
 
 .modals-content-ubah-alamat{
     width: 600px;
@@ -217,29 +209,7 @@ body.active-modal {
     overflow-y: auto;
 }
 
-/* modalVerifikasiEmail.css */
 
-/* styles.css */
-
-.verification-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .verification-modal {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-  }
-  
   .modal-buttons {
     display: flex;
     justify-content: space-between;
@@ -384,6 +354,25 @@ body.active-modal {
 }
 
 
+
+.verification-content-modal{
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    border-radius: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 2rem 2.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    overflow-y: auto;
+}
+
+
 .modals-contents h3 {
     font-weight: 650;
     font-size: 20px;
@@ -495,6 +484,14 @@ body.active-modal {
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
 
+.modal-verif{
+    z-index: 999;
+    will-change: opacity;
+    transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
+}
+
+
+
 
 .modal-alamat {
     z-index: 999;
@@ -521,6 +518,16 @@ body.active-modal {
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
 
+
+.tutup-modal{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px 7px;
+    background: none;
+    border: none;
+    font-size: 30px;
+}
 
 
 .close-modal {
@@ -830,7 +837,6 @@ input .input-nomer {
     line-height: 16px;
     margin-bottom: 10px;
 }
-
 
 
 .btn-kirim-pw{

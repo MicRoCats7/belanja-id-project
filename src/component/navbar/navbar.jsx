@@ -13,6 +13,7 @@ import axios from "axios";
 import { CiSearch } from "react-icons/ci";
 import { BsCart2 } from "react-icons/bs";
 import token from "../../utils/token";
+import ModalLogout from "../modal/modalLogout.";
 
 function Navbar() {
   const [profile, setProfile] = useState({});
@@ -236,9 +237,13 @@ function Navbar() {
             </Link>
             <div className="icon-navbar">
               {/* <img src={iconChat} alt="icon chat" /> */}
-              <Link to={"/cart"}>
+              <Link to={"/cart"} className="cart-icon">
                 <div className="icon-cart">
-                  <BsCart2 />
+                  <div className="icon-cart-navbar">
+                    <BsCart2 />
+                  </div>
+                </div>
+                <div className="item-count">
                   {cartItemCount > 0 && (
                     <span className="cart-item-count">{cartItemCount}</span>
                   )}
@@ -304,9 +309,7 @@ function Navbar() {
                           Whislist
                         </button>
                       </Link>
-                      <button className="btn-logout" onClick={logout}>
-                        Logout
-                      </button>
+                      <ModalLogout />
                     </div>
                   </div>
                 </div>
