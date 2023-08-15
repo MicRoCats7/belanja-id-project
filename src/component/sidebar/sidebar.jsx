@@ -112,9 +112,11 @@ function Sidebar() {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+  const handleChange = () => {
+    setChecked(!checked);
   };
+
+  const saldoDisplay = checked ? "********" : "Rp. 100.000";
 
   const [subnav, setSubnav] = useState(false);
 
@@ -137,7 +139,7 @@ function Sidebar() {
             <div className="saldo_info">
               <div className="saldo">
                 <h3>Saldo</h3>
-                <span>Rp. 100.000</span>
+                <span>{saldoDisplay}</span>
               </div>
               <div className="hide-saldo">
                 <h3>Sembunyikan Saldo</h3>

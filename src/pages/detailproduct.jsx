@@ -44,13 +44,17 @@ function DetailProduct() {
   const user_id = localStorage.getItem("user_id");
   const productOwnerId = detail.length > 0 ? detail[0].store.user_id : null;
   const loggedInUserId = user_id; // Ganti ini dengan cara yang benar untuk mendapatkan ID pengguna yang sedang masuk
-
   const isOwner = loggedInUserId === productOwnerId;
-
   const [appState, changeState] = useState({
     activeObject: null,
     objects: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
   });
+
+  useEffect(() => {
+    getGallery(id);
+    getDetail(id);
+    window.scrollTo(0, 0);
+  }, [id]);
 
   function toggleActive(index) {
     changeState({ ...appState, activeObject: appState.objects[index] });
@@ -98,12 +102,6 @@ function DetailProduct() {
       .catch((error) => console.error(error));
   }
   console.log(gallery);
-
-  useEffect(() => {
-    getGallery(id);
-    getDetail(id);
-    window.scrollTo(0, 0);
-  }, [id]);
 
   function addToCart(kuantitas) {
     const product = detail && detail.length > 0 ? detail[0] : null;
@@ -311,7 +309,7 @@ function DetailProduct() {
                   </div>
                   <div className="like">
                     <img src={iconLove} alt="" />
-                    <h4>Suka ({detail.length > 0 ? detail[0].like : ""})</h4>
+                    <h4>Suka</h4>
                   </div>
                   <div className="line-detail"></div>
                   <div className="toko-detail">

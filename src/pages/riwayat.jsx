@@ -16,6 +16,7 @@ import { Box, Rating, Snackbar, Typography } from "@mui/material";
 import { BiImageAdd } from "react-icons/bi";
 import { FiTrash2 } from "react-icons/fi";
 import MuiAlert from "@mui/material/Alert";
+import { Link } from "react-router-dom";
 
 function Riwayat() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -400,19 +401,21 @@ function Riwayat() {
                   </div>
                 </div>
                 <div className="info-detail-total" key={transaksi.product?.id}>
-                  <div className="wrap">
-                    <div className="images">
-                      <img src={transaksi.product?.picturePath} alt="" />
-                    </div>
-                    <div className="info-detail-toko">
-                      <div className="nama-barang">
-                        {transaksi.product?.name}
+                  <Link to={"/detailproduct/" + transaksi.product?.id}>
+                    <div className="wrap">
+                      <div className="images">
+                        <img src={transaksi.product?.picturePath} alt="" />
                       </div>
-                      <div className="total-barang">
-                        {transaksi.quantity} barang
+                      <div className="info-detail-toko">
+                        <div className="nama-barang">
+                          {transaksi.product?.name}
+                        </div>
+                        <div className="total-barang">
+                          {transaksi.quantity} barang
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                   <div className="total-riwayat">
                     <div className="txt-belanja">Total Belanja</div>
                     <div className="harga-belanja">

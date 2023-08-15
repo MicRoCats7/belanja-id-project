@@ -312,7 +312,6 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    margin-left: 20px;
 }
 
 
@@ -330,7 +329,7 @@
 }
 
 .btn-buatToko a .btn-kembali {
-    width: 150%;
+    width: 100%;
     height: 40px;
     border-radius: 5px;
     background-color: #fff;

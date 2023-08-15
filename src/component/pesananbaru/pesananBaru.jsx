@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
 import token from "../../utils/token";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
 import LoadingPesananToko from "../loader/LoadingPesananToko";
 import { Snackbar } from "@mui/material";
@@ -142,13 +142,18 @@ function PesananBaru() {
                 </div>
                 <div className="product-item-pesanan-baru">
                   <div className="detail-product-pesanan-baru">
-                    <div className="img-pesanan-baru">
-                      <img src={transaksi.product.picturePath} alt="" />
-                    </div>
-                    <div className="text-detail-pesanan-baru">
-                      <h2>{transaksi.product.name}</h2>
-                      <p>Rp {formatPrice(transaksi.product.price)}</p>
-                    </div>
+                    <Link
+                      to={"/detailproduct/" + transaksi.product.id}
+                      className="detail-product-pesanan-baru"
+                    >
+                      <div className="img-pesanan-baru">
+                        <img src={transaksi.product.picturePath} alt="" />
+                      </div>
+                      <div className="text-detail-pesanan-baru">
+                        <h2>{transaksi.product.name}</h2>
+                        <p>Rp {formatPrice(transaksi.product.price)}</p>
+                      </div>
+                    </Link>
                   </div>
                   <div className="detail-alamat-pesanan-baru">
                     <h2>Alamat</h2>
