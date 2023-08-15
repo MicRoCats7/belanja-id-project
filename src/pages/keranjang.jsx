@@ -16,12 +16,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import token from "../utils/token";
 import { formatPrice } from "../utils/helpers";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 import imgbelanja from "../assets/image/shopping-bag-chat.svg";
 import LoadingKeranjang from "../component/loader/LoadingKeranjanjg";
 
-function Keranjang() {
+function Keranjang(props) {
   const navigate = useNavigate();
   const [cartId, setCartId] = useState(null);
   const [product, setCart] = useState([]);
@@ -390,24 +390,29 @@ function Keranjang() {
                         />
                         {item.product ? (
                           <>
-                            <div className="img-item-pro">
-                              {item.product && (
-                                <img
-                                  src={item.product.picturePath}
-                                  alt="gambar produk"
-                                />
-                              )}
-                            </div>
-                            <div className="nama-item-pro">
-                              <h3 className="name-pro-cart">
-                                {item.product.name}
-                              </h3>
-                              <h4 className="harga-pro-cart">
-                                Rp {formatPrice(item.product.price)}
-                              </h4>
-                              {item.ukuran && <p>{item.ukuran}</p>}
-                              {item.warna && <p>{item.warna}</p>}
-                            </div>
+                            <Link
+                              to={"/detailproduct/" + item.product.id}
+                              className="item-pro"
+                            >
+                              <div className="img-item-pro">
+                                {item.product && (
+                                  <img
+                                    src={item.product.picturePath}
+                                    alt="gambar produk"
+                                  />
+                                )}
+                              </div>
+                              <div className="nama-item-pro">
+                                <h3 className="name-pro-cart">
+                                  {item.product.name}
+                                </h3>
+                                <h4 className="harga-pro-cart">
+                                  Rp {formatPrice(item.product.price)}
+                                </h4>
+                                {item.ukuran && <p>{item.ukuran}</p>}
+                                {item.warna && <p>{item.warna}</p>}
+                              </div>
+                            </Link>
                           </>
                         ) : (
                           // If 'item.product' is missing or incomplete, render a placeholder or error message.
