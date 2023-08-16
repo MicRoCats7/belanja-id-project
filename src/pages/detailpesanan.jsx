@@ -495,7 +495,7 @@ function Detailpesanan() {
                     <div className="info-pro-ship">
                       <h1>{item.product.name}</h1>
                       <h2>Rp {formatPrice(item.product.price)}</h2>
-                      <h3>Kuantitas : {item.product.quantity}</h3>
+                      <h3>Kuantitas : {item.quantity}</h3>
                     </div>
                   </div>
                   <div className="line-shipping"></div>
