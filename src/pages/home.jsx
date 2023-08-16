@@ -164,7 +164,7 @@ function Home() {
       <div className="homepage">
         <div className="heroPage">
           <Swiper
-            modules={[ Pagination, Autoplay, Mousewheel, Keyboard]}
+            modules={[Pagination, Autoplay, Mousewheel, Keyboard]}
             autoplay={{ delay: 2500 }}
             cssMode={true}
             mousewheel={true}
@@ -304,7 +304,7 @@ function Home() {
                         location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
-                        ulasan={item.review}
+                        ulasan={item.sold_quantity}
                         stok={item.stok}
                         id={item.id}
                       />
@@ -381,7 +381,7 @@ function Home() {
                         location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
-                        ulasan={item.review}
+                        ulasan={item.sold_quantity}
                         stok={item.stok}
                         id={item.id}
                       />
@@ -458,7 +458,7 @@ function Home() {
                         location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
-                        ulasan={item.review}
+                        ulasan={item.sold_quantity}
                         stok={item.stok}
                         id={item.id}
                       />
@@ -535,7 +535,7 @@ function Home() {
                         location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
-                        ulasan={item.review}
+                        ulasan={item.sold_quantity}
                         stok={item.stok}
                         id={item.id}
                       />
@@ -584,7 +584,7 @@ function Home() {
                         location={item.store?.provinces}
                         price={item.price}
                         rating={item.rate}
-                        ulasan={item.review}
+                        ulasan={item.sold_quantity}
                         stok={item.stok}
                         id={item.id}
                       />

@@ -24,6 +24,7 @@ import { MdClose } from "react-icons/md";
 import Skeleton from "react-loading-skeleton";
 import ProductDetailSkeleton from "../component/loader/ProductDetailSkeleton";
 import { useNavigate } from "react-router-dom";
+import { IoIosArrowDown } from "react-icons/io";
 
 function DetailProduct() {
   const [value, setValue] = React.useState(5);
@@ -49,12 +50,27 @@ function DetailProduct() {
     activeObject: null,
     objects: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
   });
+  const [reviews, setReviews] = useState([]);
+  const [filteredReviews, setFilteredReviews] = useState([]);
 
   useEffect(() => {
-    getGallery(id);
     getDetail(id);
     window.scrollTo(0, 0);
   }, [id]);
+
+  useEffect(() => {
+    // ... (other useEffect code)
+
+    // Filter reviews based on activeFilterStar
+    if (activeFilterStar === null) {
+      setFilteredReviews(reviews);
+    } else {
+      const filtered = reviews.filter(
+        (review) => review.rate === activeFilterStar
+      );
+      setFilteredReviews(filtered);
+    }
+  }, [reviews, activeFilterStar]);
 
   function toggleActive(index) {
     changeState({ ...appState, activeObject: appState.objects[index] });
@@ -76,32 +92,29 @@ function DetailProduct() {
         let filteredData = response.data.data.filter((item) => item.id == id);
         if (filteredData.length > 0) {
           setDetail(filteredData);
+          getReviews(id);
         }
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
   }
 
-  function getGallery(id) {
+  function getReviews(productId) {
     axios
-      .get(apiurl() + "product/img", {
+      .get(apiurl() + `reviews/products?product_id=${id}`, {
+        params: {
+          product_id: productId,
+        },
         headers: {
           Authorization: `Bearer ${token()}`,
         },
       })
       .then((response) => {
-        let filteredData = response.data.data.filter(
-          (item) => item.products_id == id
-        );
-        console.log(filteredData);
-        if (filteredData.length > 0) {
-          setGalleryImg(filteredData);
-        }
-        setIsLoading(false);
+        setReviews(response.data.data);
+        console.log(response.data.data);
       })
       .catch((error) => console.error(error));
   }
-  console.log(gallery);
 
   function addToCart(kuantitas) {
     const product = detail && detail.length > 0 ? detail[0] : null;
@@ -171,13 +184,16 @@ function DetailProduct() {
   function handleQuantityChange(e) {
     e.preventDefault();
 
-    const inputValue = e.target.value;
-    const numericValue = parseInt(inputValue);
+    const nilaiInput = e.target.value;
+    const nilaiNumerik = parseInt(nilaiInput);
 
-    if (inputValue.trim() === "" || isNaN(numericValue)) {
+    if (nilaiInput.trim() === "" || isNaN(nilaiNumerik)) {
       setQuantity(1);
     } else {
-      setQuantity(numericValue);
+      const maksKuantitas =
+        detail && detail.length > 0 ? detail[0].quantity : 1;
+      const kuantitasBaru = Math.min(maksKuantitas, nilaiNumerik);
+      setQuantity(kuantitasBaru);
     }
   }
 
@@ -231,6 +247,11 @@ function DetailProduct() {
     setIsOpen(false);
   };
 
+  const [visibleReviews, setVisibleReviews] = useState(5);
+  const incrementVisibleReviews = () => {
+    setVisibleReviews(visibleReviews + 10);
+  };
+
   return (
     <div className="main-detail">
       <Navbar />
@@ -263,22 +284,6 @@ function DetailProduct() {
           <>
             <div className="detail-product">
               <div className="detail-product-img">
-                <div className="more-img">
-                  {gallery && gallery.length > 0
-                    ? gallery.map((image, index) => (
-                        <div className="small-img-col">
-                          <img
-                            key={image.id}
-                            src={image.url}
-                            alt="foto produk"
-                            loading="lazy"
-                            className={index === activeIndex ? "active" : ""}
-                            onClick={() => changeMainImage(image.url, index)}
-                          />
-                        </div>
-                      ))
-                    : null}
-                </div>
                 <div className="main-img">
                   <img
                     src={
@@ -287,6 +292,80 @@ function DetailProduct() {
                     }
                     alt="foto produk"
                   />
+                </div>
+                <div className="more-img">
+                  {detail.length > 0 && detail[0].picturePath && (
+                    <div
+                      className={`small-img-col ${
+                        activeIndex === 0 ? "active" : ""
+                      }`}
+                    >
+                      <img
+                        src={detail[0].picturePath}
+                        alt="foto produk"
+                        loading="lazy"
+                        onClick={() =>
+                          changeMainImage(detail[0].picturePath, 0)
+                        }
+                      />
+                    </div>
+                  )}
+                  {detail.length > 0 && detail[0].photo1 && (
+                    <div
+                      className={`small-img-col ${
+                        activeIndex === 1 ? "active" : ""
+                      }`}
+                    >
+                      <img
+                        src={detail[0].photo1}
+                        alt="foto produk"
+                        loading="lazy"
+                        onClick={() => changeMainImage(detail[0].photo1, 1)}
+                      />
+                    </div>
+                  )}
+                  {detail.length > 0 && detail[0].photo2 && (
+                    <div
+                      className={`small-img-col ${
+                        activeIndex === 2 ? "active" : ""
+                      }`}
+                    >
+                      <img
+                        src={detail[0].photo2}
+                        alt="foto produk"
+                        loading="lazy"
+                        onClick={() => changeMainImage(detail[0].photo2, 2)}
+                      />
+                    </div>
+                  )}
+                  {detail.length > 0 && detail[0].photo3 && (
+                    <div
+                      className={`small-img-col ${
+                        activeIndex === 3 ? "active" : ""
+                      }`}
+                    >
+                      <img
+                        src={detail[0].photo3}
+                        alt="foto produk"
+                        loading="lazy"
+                        onClick={() => changeMainImage(detail[0].photo3, 3)}
+                      />
+                    </div>
+                  )}
+                  {detail.length > 0 && detail[0].photo4 && (
+                    <div
+                      className={`small-img-col ${
+                        activeIndex === 4 ? "active" : ""
+                      }`}
+                    >
+                      <img
+                        src={detail[0].photo4}
+                        alt="foto produk"
+                        loading="lazy"
+                        onClick={() => changeMainImage(detail[0].photo4, 4)}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="detail-product-desc">
@@ -358,7 +437,28 @@ function DetailProduct() {
                       value={quantity}
                       onChange={(e) => handleQuantityChange(e)}
                     />
-                    <button onClick={incrementQuantity}>+</button>
+                    <button
+                      onClick={incrementQuantity}
+                      disabled={
+                        quantity >=
+                        (detail && detail.length > 0 ? detail[0].quantity : 1)
+                      }
+                      style={{
+                        cursor:
+                          quantity >=
+                          (detail && detail.length > 0 ? detail[0].quantity : 1)
+                            ? "not-allowed"
+                            : "pointer",
+                        backgroundColor:
+                          quantity >=
+                          (detail && detail.length > 0 ? detail[0].quantity : 1)
+                            ? "#ccc"
+                            : "#fff",
+                        color: "#333",
+                      }}
+                    >
+                      +
+                    </button>
                   </div>
                   <p>
                     Tersisa{" "}
@@ -431,35 +531,6 @@ function DetailProduct() {
             </div>
             <div className="penilaian-produk">
               <h3>Penilaian Produk</h3>
-              <div className="produk-dinilai">
-                <div className="img-pro-dinilai">
-                  <img
-                    src={detail.length > 0 ? detail[0].picturePath : ""}
-                    alt="produk review"
-                  />
-                  <div className="name-produk-dinilai">
-                    <h1>{detail.length > 0 ? detail[0].name : ""}</h1>
-                    <h2>
-                      Rp {formatPrice(detail.length > 0 ? detail[0].price : "")}
-                    </h2>
-                  </div>
-                </div>
-                <div className="dropdown-urutkan">
-                  <p className="urutkan-teks">Urutkan</p>
-                  <div className="center">
-                    <select
-                      name="sortBy"
-                      id="sortBy"
-                      className="custom-select sources"
-                      onChange={handleSortChange}
-                    >
-                      <option value="terbaru">Terbaru</option>
-                      <option value="harga-tinggi">Harga Tertinggi</option>
-                      <option value="harga-rendah">Harga Terendah</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
               <div className="tab-filterStar-penilaian">
                 <p>Filter</p>
                 <button
@@ -500,68 +571,102 @@ function DetailProduct() {
                 </button>
               </div>
               <div className="penilaian-item">
-                <div className="penilaian-item1">
-                  <div className="profile-nilai">
-                    <div className="profile-penilaian">
-                      <img src={exampProfile} alt="profile" />
-                      <h4>Faisal Mahadi</h4>
+                {filteredReviews.slice(0, visibleReviews).map((review) => (
+                  <div className="penilaian-item1">
+                    <div className="profile-nilai">
+                      <div className="profile-penilaian">
+                        <div className="img-profile-ulasan">
+                          <img
+                            src={review.user.profile_photo_path}
+                            alt="profile"
+                          />
+                        </div>
+                        <h4>{review.user.name}</h4>
+                      </div>
+                      <div className="tgl-penilaian">
+                        <h4>
+                          {" "}
+                          {new Date(review.created_at).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
+                        </h4>
+                      </div>
                     </div>
-                    <div className="tgl-penilaian">
-                      <h4>2022-05-29 16:51</h4>
-                    </div>
-                  </div>
-                  <div className="desc-penilaian">
-                    <div className="rating">
-                      <h4>{detail.length > 0 ? detail[0].name : ""}</h4>
-
-                      <Rating name="read-only" value={value} readOnly />
-                    </div>
-                    <p>
-                      Harga Murah, Ukr. L Real picture, Benar Cartoon 24S,
-                      Jahitan Rapi, Bahannya Halus, lembut, dan dingin Serta
-                      enak Saat di pakai untuk kegiatan sehari-hari maupun
-                      santai di rumah. Recommended Seller deh !!! Buruan Order.
-                    </p>
-                  </div>
-                  <div className="img-produk-penilaian">
-                    <img
-                      src={exampProduk}
-                      alt="foto produk ulasan"
-                      onClick={() => openModal(exampProduk)}
-                    />
-                    <img
-                      src={exampProduk}
-                      alt="foto produk ulasan"
-                      onClick={() => openModal(exampProduk)}
-                    />
-                    <img
-                      src={exampProduk}
-                      alt="foto produk ulasan"
-                      onClick={() => openModal(exampProduk)}
-                    />
-                    <Modal
-                      isOpen={isOpen}
-                      onRequestClose={closeModal}
-                      contentLabel="Gambar Popup"
-                      shouldCloseOnOverlayClick={true}
-                      shouldCloseOnEsc={true}
-                      className="modal-content-penilaian"
-                      overlayClassName="modal-overlay"
-                    >
-                      {selectedImage && (
-                        <img
-                          src={selectedImage}
-                          alt="foto produk popup"
-                          className="modal-image"
+                    <div className="desc-penilaian">
+                      <div className="rating">
+                        <h4>
+                          {reviews.length > 0 ? reviews[0].product.name : ""}
+                        </h4>
+                        <Rating
+                          name="read-only"
+                          value={parseInt(review.rate)}
+                          readOnly
                         />
-                      )}
-                      <button className="modal-close" onClick={closeModal}>
-                        <MdClose />
-                      </button>
-                    </Modal>
+                      </div>
+                      <p>{review.review}</p>
+                    </div>
+                    {review.gallery_reviews.map((gallery) => (
+                      <div className="img-produk-penilaian" key={gallery.id}>
+                        {gallery.image_path && (
+                          <img
+                            src={gallery.image_path}
+                            alt="foto produk ulasan"
+                            onClick={() => openModal(gallery.image_path)}
+                          />
+                        )}
+                        {gallery.image_path_2 && (
+                          <img
+                            src={gallery.image_path_2}
+                            alt="foto produk ulasan"
+                            onClick={() => openModal(gallery.image_path_2)}
+                          />
+                        )}
+                        {gallery.image_path_3 && (
+                          <img
+                            src={gallery.image_path_3}
+                            alt="foto produk ulasan"
+                            onClick={() => openModal(gallery.image_path_3)}
+                          />
+                        )}
+                        <Modal
+                          isOpen={isOpen}
+                          onRequestClose={closeModal}
+                          contentLabel="Gambar Popup"
+                          shouldCloseOnOverlayClick={true}
+                          shouldCloseOnEsc={true}
+                          className="modal-content-penilaian"
+                          overlayClassName="modal-overlay"
+                        >
+                          {selectedImage && (
+                            <img
+                              src={selectedImage}
+                              alt="foto produk popup"
+                              className="modal-image"
+                            />
+                          )}
+                          <button className="modal-close" onClick={closeModal}>
+                            <MdClose />
+                          </button>
+                        </Modal>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                ))}
               </div>
+              {filteredReviews.length > visibleReviews && (
+                <div
+                  className="btn-lihat-lebih-banyak-ulasan"
+                  onClick={incrementVisibleReviews}
+                >
+                  <h1>Tampilkan lebih banyak ulasan</h1>
+                  <IoIosArrowDown />
+                </div>
+              )}
             </div>
           </>
         )}

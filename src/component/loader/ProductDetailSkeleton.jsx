@@ -6,12 +6,12 @@ const ProductDetailSkeleton = () => {
     <>
       <div className="detail-product">
         <div className="detail-product-img">
+          <Skeleton height={400} width={500} />
           <div className="more-img">
             {[...Array(3)].map((_, index) => (
               <Skeleton key={index} height={100} width={100} />
             ))}
           </div>
-            <Skeleton height= {400} width={500} />
         </div>
         <div className="detail-product-desc">
           <h1>

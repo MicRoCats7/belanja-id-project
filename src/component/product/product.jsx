@@ -61,7 +61,6 @@ function Product(props) {
     }
   };
 
-
   const handleClickWishlist = (event) => {
     event.stopPropagation();
     setShowWishlist(!showWishlist);
@@ -97,7 +96,7 @@ function Product(props) {
               <div className="rating-pro">
                 <BsFillStarFill color="#EDB902" />
                 <h3>{props.rating}</h3>
-                <h3>({props.ulasan} Ulasan)</h3>
+                <h3>({props.ulasan} Terjual)</h3>
               </div>
             </div>
           </div>

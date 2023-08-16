@@ -5,45 +5,45 @@
 }
 
 
-.box-biodata{
+.box-biodata {
     background: #FFFFFF;
-    border: 1px solid var(--NN100,#d6d7da);
+    border: 1px solid var(--NN100, #d6d7da);
     border-radius: 10px;
     box-sizing: border-box;
-    width: 900px;
-    height: 600px;  
+    width: 1100px;
+    height: 600px;
     margin-top: 50px;
     margin-bottom: 20px;
 }
 
-.box-photo{
+.box-photo {
     background: #FFFFFF;
     max-width: 250px;
     height: 370px;
     padding: 10px;
     display: flex;
     border-radius: 8px;
-    border-color: var(--NN200,#D6DFEB);
+    border-color: var(--NN200, #D6DFEB);
     box-shadow: rgba(141, 150, 170, 0.4) 0px 1px 4px
-} 
+}
 
-.box-photo div{
+.box-photo div {
     align-self: flex-end;
 }
 
-.biodata-kiri h3{
+.biodata-kiri h3 {
     color: rgba(107, 89, 89, 0.77);
 }
 
-.text-judul{
+.text-judul {
     font-weight: 500;
     font-size: 20px;
     line-height: 30px;
-    color: var(--NN600,#6D7588);
+    color: var(--NN600, #6D7588);
     padding: 22px 46px;
 }
 
-.isibox h3{
+.isibox h3 {
     display: flex;
     text-align: center;
     font-weight: 500;
@@ -52,16 +52,17 @@
     margin-top: 10px;
 }
 
-.input-image{
+.input-image {
     height: 50px;
     width: 100%;
     cursor: pointer;
-    border: 1px solid var(--NN100,#EF233C);
+    border: 1px solid var(--NN100, #EF233C);
     border-radius: 5px;
     margin-top: 25px;
     margin-bottom: 20px;
     background-color: #FFFFFF;
 }
+
 .file-labelprofile {
     border: 1px solid #606060;
     border-radius: 5px;
@@ -73,7 +74,8 @@
     justify-content: center;
     cursor: pointer;
 }
-.image-bapak{
+
+.image-bapak {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,7 +85,7 @@
     margin-top: auto;
 }
 
-.img-profile{
+.img-profile {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -91,22 +93,23 @@
 }
 
 
-.add-foto{
+.add-foto {
     display: none;
 }
 
-.edit-biodata{
-    color: var(--NN600,#6D7588);
+.edit-biodata {
+    color: var(--NN600, #6D7588);
     font-size: 18px;
     line-height: 24px;
 }
 
-.container{
+.container {
     display: flex;
     padding: 35px;
     gap: 30px;
     align-items: start;
 }
+
 /* 
 .inputnama{
     display: flex;
@@ -126,66 +129,67 @@
     background-color: #D9D9D9;
 } */
 
-.ubah-nama{
+.ubah-nama {
     font-weight: 500;
     font-size: 15px;
     line-height: 21px;
     color: #EF233C;
 }
 
-.nama-user-biodata{
+.nama-user-biodata {
     margin-right: 12px;
 }
 
-.email-user-profile{
+.email-user-profile {
     margin-right: 12px;
 }
 
-.biodata-kanan{
+.biodata-kanan {
     gap: 20px;
     display: flex;
     flex-direction: column;
 }
 
-.edit-nama{
+.edit-nama {
     align-items: center;
     display: flex;
 }
 
-.nama-text{
+.nama-text {
     width: 130px;
 }
 
-.tgl-lahir-user{
+.tgl-lahir-user {
     margin-right: 12px;
 }
 
-.nama-user{
+.nama-user {
     margin-right: 12px;
 }
 
-.nama-tgl{
+.nama-tgl {
     width: 130px;
 }
-.edit-tanggal{
+
+.edit-tanggal {
     display: flex;
     align-items: center;
 }
 
-.text-tgl{
+.text-tgl {
     width: 20%;
 }
 
 
-.email-text{
+.email-text {
     width: 130px;
 }
 
-.email-user{
+.email-user {
     margin-right: 12px;
 }
 
-.ubah-email{
+.ubah-email {
     color: #EF233C;
     font-size: 15px;
     text-decoration: none;
@@ -212,7 +216,7 @@
     background-color: #D9D9D9;
 } */
 
-.data-verifikasi{
+.data-verifikasi {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -228,7 +232,7 @@
     transition: all 300ms ease-out 0s;
 }
 
-.data-verifikasi-nohp{
+.data-verifikasi-nohp {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -244,30 +248,30 @@
     transition: all 300ms ease-out 0s;
 }
 
-.jenis-kelamin{
+.jenis-kelamin {
     margin-top: 20px;
 }
 
-.nohp-user{
+.nohp-user {
     margin-right: 12px;
 }
 
-.edit-kontak{
+.edit-kontak {
     align-items: center;
     display: flex;
 }
 
-.edit-nohp{
+.edit-nohp {
     align-items: center;
     display: flex;
 }
 
-.text-nohp{
+.text-nohp {
     width: 130px;
 }
 
-.ubah-kontak{
-    color: var(--NN600,#6D7588);
+.ubah-kontak {
+    color: var(--NN600, #6D7588);
     font-size: 18px;
     margin-top: 20px;
 }

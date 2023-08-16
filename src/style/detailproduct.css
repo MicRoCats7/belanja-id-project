@@ -64,33 +64,31 @@
 .detail-product-img {
     width: 50%;
     display: flex;
+    flex-direction: column;
     gap: 10px;
 }
 
 .main-img {
     width: 500px;
     height: 500px;
-    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-img img {
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .more-img {
     display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     gap: 25px;
-}
-
-.small-img-col {
-    width: 130px;
-    height: 130px;
-    flex-basis: 24%;
+    width: 80%;
 }
 
 .more-img img {
@@ -102,9 +100,19 @@
     cursor: pointer;
 }
 
-.more-img img.active {
+.small-img-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.small-img-col.active {
+    border-radius: 10px;
     border: 2px solid red;
-    /* Ganti dengan warna border yang Anda inginkan */
+    /* Change the border color as needed */
 }
 
 .detail-product-desc {
@@ -548,10 +556,17 @@ input[type="number"]::-webkit-outer-spin-button {
     gap: 20px;
 }
 
-.profile-penilaian img {
+.img-profile-ulasan {
     width: 30%;
-    object-fit: contain;
-    border-radius: 50%;
+}
+
+.profile-penilaian .img-profile-ulasan img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+    display: flex;
+    cursor: pointer;
 }
 
 .profile-penilaian h4 {
@@ -699,7 +714,23 @@ input[type="number"]::-webkit-outer-spin-button {
     transition: 0.3s;
 }
 
-.btn-edit-detail-product:hover{
+.btn-edit-detail-product:hover {
     background-color: #EF233C;
     color: #fff;
+}
+
+.btn-lihat-lebih-banyak-ulasan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 20px;
+    color: #EF233C;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-lihat-lebih-banyak-ulasan h1 {
+    font-size: 16px;
+    font-weight: 600;
 }
