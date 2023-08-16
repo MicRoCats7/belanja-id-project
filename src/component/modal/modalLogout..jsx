@@ -73,9 +73,9 @@ function ModalLogout({ onClose }) {
       </p>
 
       {modal && (
-        <div className="modal-forgot">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content-forgot">
+        <div className="modal-logout">
+          <div onClick={toggleModal} className="overlay-logout"></div>
+          <div className="modal-content-logout">
             <h2>Logout</h2>
             <div className="conten-forgot-pw">
               <h3 className="masuk-email-pw">Yakin Dek Mau Keluar?</h3>

@@ -54,7 +54,10 @@
     flex-direction: column;
     width: 100%;
 }
-
+.shrink {
+    transform: scale(0.9); /* Shrink the button when clicked */
+    transition: transform 0.2s ease-in-out;
+  }
 .search {
     display: flex;
     justify-content: space-between;

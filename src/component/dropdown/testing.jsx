@@ -12,6 +12,7 @@ function ImageUploader() {
   const [previewImg, setPreviewImg] = useState(null);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [photo, setPhoto] = useState("");
 
   const handleImageChange1 = (e) => {
     const file = e.target.files[0];

@@ -13,6 +13,7 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
   const navigate = useNavigate();
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleResendVerificationEmail = async () => {
     const token = localStorage.getItem("token");
@@ -25,6 +26,7 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
         apiurl() + "resend-verification-email",
         formData
       );
+      handleSuccessAlertOpen();
       console.log("Email berhasil dikirim ulang:", response.data.message);
       console.log("Email verification sent:", response.data);
       console.log("User ID:", response.data.user_id);
@@ -33,7 +35,10 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
       setVerificationData(response.data.data);
       onClose();
     } catch (error) {
+      handleErrorAlertOpen();
       console.error("Failed to resend verification email:", error);
+    } finally {
+      setIsLoading(false); // Reset loading status after API call
     }
   };
 
@@ -71,13 +76,17 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
           <div onClick={toggleModal} className="overlay"></div>
           <div className="verification-content-modal">
             <h3>Verifikasi Email</h3>
-            <p>Verfikasi Email Telah Dikirim , Silahkan Cek Email Anda!</p>
+            <p>
+              Silahkan klik tombol lanjutkan untuk memverifikasi , dan cek
+              melalui email anda!
+            </p>
             <div className="modal-buttons">
               <button
                 className="btn-lanjutkan"
                 onClick={handleResendVerificationEmail}
+                disabled={isLoading}
               >
-                Lanjutkan
+                {isLoading ? "Loading..." : "Lanjutkan"}{" "}
               </button>
               <button className="tutup-email" onClick={toggleModal}>
                 Kembali
@@ -97,7 +106,7 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Alhamdulillah Nama Berhasil Diubah
+          Link Berhasil Dikirim Ke Email
         </MuiAlert>
       </Snackbar>
       <Snackbar
@@ -111,7 +120,7 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Nama gagal diubah.
+          Verfikasi gagal!
         </MuiAlert>
       </Snackbar>
     </>

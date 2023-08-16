@@ -32,6 +32,15 @@ function TambahProduk() {
   const [selectedImagePath5, setSelectedImagePath5] = useState("");
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [inputTextError, setInputTextError] = useState(false);
+  const [value2Error, setValue2Error] = useState(false);
+  const [deskripsiProdukError, setDeskripsiProdukError] = useState(false);
+  const [value3Error, setValue3Error] = useState(false);
+  const [value4Error, setValue4Error] = useState(false);
+  const [skuError, setSkuError] = useState(false);
+  const [selectedCategoryError, setSelectedCategoryError] = useState(false);
+  const [kondisiProdukError, setKondisiProdukError] = useState(false);
+  const [selectedImagePathError, setSelectedImagePathError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -74,6 +83,68 @@ function TambahProduk() {
   const onSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+
+    setInputTextError(false);
+    setValue2Error(false);
+    setDeskripsiProdukError(false);
+    setValue3Error(false);
+    setValue4Error(false);
+    setSkuError(false);
+    setSelectedCategoryError(false);
+    setKondisiProdukError(false);
+    setSelectedImagePathError(false);
+
+    let isValid = true;
+
+    if (inputText.trim() === "") {
+      setInputTextError(true);
+      isValid = false;
+    }
+
+    if (value2.trim() === "") {
+      setValue2Error(true);
+      isValid = false;
+    }
+
+    if (deskripsiProduk.trim() === "") {
+      setDeskripsiProdukError(true);
+      isValid = false;
+    }
+
+    if (value3.trim() === "") {
+      setValue3Error(true);
+      isValid = false;
+    }
+
+    if (value4.trim() === "") {
+      setValue4Error(true);
+      isValid = false;
+    }
+
+    if (sku.trim() === "") {
+      setSkuError(true);
+      isValid = false;
+    }
+
+    if (selectedCategory === "") {
+      setSelectedCategoryError(true);
+      isValid = false;
+    }
+
+    if (kondisiProduk === "") {
+      setKondisiProdukError(true);
+      isValid = false;
+    }
+
+    if (!selectedImagePath) {
+      setSelectedImagePathError(true);
+      isValid = false;
+    }
+
+    if (!isValid) {
+      setIsLoading(false); // Stop submission
+      return;
+    }
 
     try {
       const formData = new FormData();
@@ -280,9 +351,16 @@ function TambahProduk() {
                     placeholder="Contoh : Sepatu pria (Jenis/Kategori Produk)"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    isInvalid={inputText.length > characterLimit}
+                    onFocus={() => setInputTextError(false)} // Reset error on focus
                     maxLength={70}
+                    className={inputTextError ? "input-error" : ""}
                   />
+                  {inputTextError && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      Nama produk tidak boleh kosong
+                    </p>
+                  )}
+
                   <div className="bottom-input">
                     <p>Tips : Jenis Produk + Keterangan Tambahan</p>
                     <p>
@@ -306,7 +384,9 @@ function TambahProduk() {
                 <div className="dropdown-kategoripro">
                   <select
                     name="kategori"
+                    onFocus={() => setSelectedCategoryError(false)}
                     id="kategori"
+                    className={selectedCategoryError ? "input-error" : ""}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                   >
                     <option value="">Kategori</option>
@@ -318,6 +398,11 @@ function TambahProduk() {
                       );
                     })}
                   </select>
+                  {selectedCategoryError && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      Please select a category
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -550,6 +635,8 @@ function TambahProduk() {
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
                       value={kondisiProduk}
+                      onFocus={() => setKondisiProdukError(false)}
+                      className={kondisiProdukError ? "input-error" : ""}
                       onChange={handleKondisiChange}
                     >
                       <FormControlLabel
@@ -563,6 +650,11 @@ function TambahProduk() {
                         label="bekas"
                       />
                     </RadioGroup>
+                    {kondisiProdukError && (
+                      <p className="error-message" style={{ color: "red" }}>
+                        Pilih kondisi produk
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -588,8 +680,15 @@ function TambahProduk() {
                   <textarea
                     placeholder="Tulis Deskripsi yang unik untuk produk kamu untuk menarik pembeli"
                     value={deskripsiProduk}
+                    onFocus={() => setDeskripsiProdukError(false)}
                     onChange={handleDeskripsiChange}
+                    className={deskripsiProdukError ? "input-error" : ""}
                   ></textarea>
+                  {deskripsiProdukError && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      Masukkan Deskripsi produk
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -597,22 +696,6 @@ function TambahProduk() {
           <div className="container-infoProduk">
             <h2>Harga</h2>
             <div className="container-inputProduk">
-              {/* <div className="container-namaProduk">
-                <div className="minimumPro">
-                  <div className="namapro-top">
-                    <h1>Minimum Pemesanan</h1>
-                  </div>
-                  <p>Atur jumlah minimum yang harus dibeli untuk produk ini.</p>
-                </div>
-                <div className="inputHargaProduk">
-                  <input
-                    type="text"
-                    value={value}
-                    onChange={handleChangeNumber}
-                    maxLength={5}
-                  />
-                </div>
-              </div> */}
               <div className="container-namaProduk">
                 <div className="hargapro">
                   <div className="namapro-top">
@@ -627,13 +710,22 @@ function TambahProduk() {
                   <div className="box-harga-satuan">
                     <h4>Rp</h4>
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Masukkan Harga"
-                    value={value2}
-                    onChange={handleChangeNumber2}
-                    maxLength={100}
-                  />
+                  <div className="inpt-harga-add">
+                    <input
+                      type="text"
+                      placeholder="Masukkan Harga"
+                      value={value2}
+                      onChange={handleChangeNumber2}
+                      maxLength={100}
+                      onFocus={() => setValue2Error(false)}
+                      className={value2Error ? "input-error" : ""}
+                    />
+                    {value2Error && (
+                      <p className="error-message" style={{ color: "red" }}>
+                        Masukkan Harga{" "}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -656,8 +748,15 @@ function TambahProduk() {
                     value={value3}
                     onChange={handleChangeStok}
                     maxLength={100}
+                    onFocus={() => setValue3Error(false)}
+                    className={value3Error ? "input-error" : ""}
                     placeholder="Masukkan Jumlah Stok"
                   />
+                  {value3Error && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      masukkan stok produk
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="container-namaProduk">
@@ -672,13 +771,20 @@ function TambahProduk() {
                     Gunakan kode unik SKU jika kamu ingin menandai produkmu.
                   </p>
                 </div>
-                <div className="harga-satuan">
+                <div className="sku-kode">
                   <input
                     type="text"
                     value={sku}
+                    onFocus={() => setSkuError(false)}
+                    className={skuError ? "input-error" : ""}
                     onChange={handleSKUChange}
                     placeholder="Masukkan SKU"
                   />
+                  {skuError && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      masukkan Sku produk
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -697,13 +803,22 @@ function TambahProduk() {
                   <p>Masukkan berat dengan menimbang produk setelah dikemas.</p>
                 </div>
                 <div className="gram">
-                  <input
-                    type="text"
-                    placeholder="Berat Produk"
-                    value={value4}
-                    onChange={handleChangeBerat}
-                    maxLength={100}
-                  />
+                  <div className="gram-eror">
+                    <input
+                      type="text"
+                      placeholder="Berat Produk"
+                      value={value4}
+                      onFocus={() => setValue4Error(false)}
+                      className={value4Error ? "input-error" : ""}
+                      onChange={handleChangeBerat}
+                      maxLength={100}
+                    />
+                    {value4Error && (
+                      <p className="error-message" style={{ color: "red" }}>
+                        masukkan berat produk
+                      </p>
+                    )}
+                  </div>
                   <div className="box-gram">
                     <h4>gram</h4>
                   </div>

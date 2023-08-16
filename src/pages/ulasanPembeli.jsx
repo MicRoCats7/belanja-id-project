@@ -8,6 +8,7 @@ import axios from "axios";
 
 function UlasanPembeli() {
   const [activeTab, setActiveTab] = useState("reviews");
+  const [lastActiveTab, setLastActiveTab] = useState("");
   const [underlineStyle, setUnderlineStyle] = useState({});
   const [activeFilterStar, setActiveFilterStar] = useState(null);
   const [accordionOpen, setAccordionOpen] = useState(false);
@@ -22,8 +23,9 @@ function UlasanPembeli() {
   const hasProductImage = (review) => {
     const hasImage =
       review.product &&
-      review.product.image_path &&
-      review.gallery_reviews.some((galleryReview) => galleryReview.image_path);
+      review.product.picturePath &&
+      review.gallery_reviews &&
+      review.gallery_reviews.length > 0;
 
     console.log("Review ID:", review.id, "Has Image:", hasImage);
 
@@ -31,10 +33,9 @@ function UlasanPembeli() {
   };
 
   const countReviewsWithImageGallery = () => {
-    return filteredReviews.filter((review) =>
-      review.gallery_reviews.some((galleryReview) => galleryReview.image_path)
-    ).length;
+    return filteredReviews.filter((review) => hasProductImage(review)).length;
   };
+
   useEffect(() => {
     getReviewById();
   }, []);
@@ -76,8 +77,14 @@ function UlasanPembeli() {
   };
 
   const handleTabClick = (tab) => {
-    setActiveTab(tab);
+    if (tab === "gallery" && activeTab === "reviews") {
+      setLastActiveTab("reviews");
+      setActiveTab("gallery");
+    } else {
+      setActiveTab(tab);
+    }
   };
+
   const handleFilterImageOnlyReviews = (review) => {
     if (showImageOnlyReviews) {
       return hasProductImage(review);
@@ -86,18 +93,24 @@ function UlasanPembeli() {
   };
 
   const handleToggleImageOnlyReviews = () => {
+    console.log("Before Toggle:", showImageOnlyReviews);
     setShowImageOnlyReviews(!showImageOnlyReviews);
   };
+
   const handleFilterStarClick = (star) => {
     setActiveFilterStar(star);
 
     if (star === null) {
-      setFilteredReviews(toko); // Show all reviews
+      setFilteredReviews(toko);
     } else {
       const filtered = toko.filter((review) => review.rate === star.toString());
       setFilteredReviews(filtered);
     }
+
+    setLastActiveTab(activeTab);
+    setActiveTab("reviews");
   };
+
   const toggleAccordion = () => {
     setAccordionOpen(!accordionOpen);
   };
@@ -106,8 +119,8 @@ function UlasanPembeli() {
   };
 
   useEffect(() => {
-    setFilteredReviews(toko);
-  }, [toko]);
+    setFilteredReviews(toko.filter(handleFilterImageOnlyReviews));
+  }, [toko, showImageOnlyReviews]);
 
   return (
     <div className="container-ulasan">
@@ -182,70 +195,65 @@ function UlasanPembeli() {
                       Jumlah ulasan dengan gambar:{" "}
                       {countReviewsWithImageGallery()}
                     </p>
-                    {filteredReviews
-                      .filter(handleFilterImageOnlyReviews)
-                      .map((review, index) => (
-                        <div className="ulasan-item" key={review.id}>
-                          <div className="info-ulasan">
-                            <div className="rating-ulasan">
-                              <AiFillStar />
-                              <h3>{review.rate}</h3>
-                            </div>
-                            <p>
-                              Oleh <span>{review.user.name}</span>
-                            </p>
-                            <p>
-                              {new Date(review.created_at).toLocaleDateString(
-                                "en-US",
-                                {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                }
-                              )}
+                    {filteredReviews.map((review) => (
+                      <div className="ulasan-item" key={review.id}>
+                        <div className="info-ulasan">
+                          <div className="rating-ulasan">
+                            <AiFillStar />
+                            <h3>{review.rate}</h3>
+                          </div>
+                          <p>
+                            Oleh <span>{review.user.name}</span>
+                          </p>
+                          <p>
+                            {new Date(review.created_at).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )}
+                          </p>
+                        </div>
+                        <div className="balas-ulasan">
+                          <div className="img-comment">
+                            <img src={review.product.picturePath} alt="" />
+                            {/* <img src={review.product.photo4} alt="" /> */}
+                            <p className="comment-user">
+                              {review.product.name}
                             </p>
                           </div>
-                          <div className="balas-ulasan">
-                            <div className="img-comment">
-                              <img src={review.product.picturePath} alt="" />
-                              {/* <img src={review.product.photo4} alt="" /> */}
-                              <p className="comment-user">
-                                {review.product.name}
-                              </p>
-                            </div>
-                            <div className="img-ulasan">
-                              {review.gallery_reviews.map((galleryReview) => (
-                                <div
-                                  key={galleryReview.id}
-                                  className="img-container"
-                                >
-                                  {galleryReview.image_path && (
-                                    <img
-                                      src={galleryReview.image_path}
-                                      alt=""
-                                    />
-                                  )}
-                                  {galleryReview.image_path_2 && (
-                                    <img
-                                      src={galleryReview.image_path_2}
-                                      alt=""
-                                    />
-                                  )}
-                                  {galleryReview.image_path_3 && (
-                                    <img
-                                      src={galleryReview.image_path_3}
-                                      alt=""
-                                    />
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                            <div className="form-balasan">
-                              <p>{review.review}</p>
-                            </div>
+                          <div className="img-ulasan">
+                            {review.gallery_reviews.map((galleryReview) => (
+                              <div
+                                key={galleryReview.id}
+                                className="img-container"
+                              >
+                                {galleryReview.image_path && (
+                                  <img src={galleryReview.image_path} alt="" />
+                                )}
+                                {galleryReview.image_path_2 && (
+                                  <img
+                                    src={galleryReview.image_path_2}
+                                    alt=""
+                                  />
+                                )}
+                                {galleryReview.image_path_3 && (
+                                  <img
+                                    src={galleryReview.image_path_3}
+                                    alt=""
+                                  />
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                          <div className="form-balasan">
+                            <p>{review.review}</p>
                           </div>
                         </div>
-                      ))}
+                      </div>
+                    ))}
                   </>
                 )}
               </div>
