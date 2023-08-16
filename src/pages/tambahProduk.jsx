@@ -78,7 +78,7 @@ function TambahProduk() {
     try {
       const formData = new FormData();
       formData.append("name", inputText);
-      formData.append("price", value2);
+      formData.append("price", value2.replace(/\D/g, ""));
       formData.append("description", deskripsiProduk);
       formData.append("weight", value4);
       formData.append("quantity", value3);
@@ -211,10 +211,20 @@ function TambahProduk() {
     setValue(result);
   };
 
-  const handleChangeNumber2 = (event) => {
-    const result = event.target.value.replace(/\D/g, "");
+  const handleChangeNumber2 = (e) => {
+    const inputValue = e.target.value;
+    const formattedValue = formatNumber(inputValue);
+    setValue2(formattedValue);
+  };
 
-    setValue2(result);
+  const formatNumber = (number) => {
+    // Menghapus semua karakter selain digit
+    const cleanNumber = number.replace(/[^\d]/g, "");
+
+    // Menggunakan fungsi Number.toLocaleString() untuk menambahkan titik ribuan
+    const formattedNumber = Number(cleanNumber).toLocaleString("id-ID");
+
+    return formattedNumber;
   };
 
   const handleChangeStok = (event) => {

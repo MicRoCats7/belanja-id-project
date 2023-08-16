@@ -180,7 +180,6 @@ function PesananBaru() {
                         onClick={() => acceptTransaction(transaksi.id)}
                         style={{
                           cursor: "pointer",
-                          display: "none" /* Tambahkan ini */,
                         }}
                       >
                         Kirim Pesanan

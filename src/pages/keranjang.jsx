@@ -374,11 +374,11 @@ function Keranjang(props) {
                       />
                       <div className="toko-keranjang">
                         <div className="img-checkbox">
-                          <img src={item.store.logo} alt="" />
+                          <img src={item.product?.store?.logo} alt="" />
                         </div>
                         <div className="nama-toko-keranjang">
-                          <h3>{item.store.name}</h3>
-                          <p>{item.store.regencies}</p>
+                          <h3>{item.product?.store?.name}</h3>
+                          <p>{item.product?.store?.regencies}</p>
                         </div>
                       </div>
                     </div>

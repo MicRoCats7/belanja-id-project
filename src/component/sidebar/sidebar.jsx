@@ -10,9 +10,9 @@ import {
 import { NavLink, useParams } from "react-router-dom";
 import { Switch } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import token from "../../utils/token";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
+import { formatPrice } from "../../utils/helpers";
 
 function Sidebar() {
   const { id } = useParams();
@@ -21,6 +21,8 @@ function Sidebar() {
   const [toko, setToko] = useState([]);
   const [checked, setChecked] = React.useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaldoHidden, setIsSaldoHidden] = useState(false);
+  const [saldoStarCount, setSaldoStarCount] = useState(0);
 
   const menuItem = [
     {
@@ -77,6 +79,8 @@ function Sidebar() {
           },
         });
         setToko(response.data.data);
+        const saldoDigits = response.data.data.saldo.toString().length;
+        setSaldoStarCount(saldoDigits);
         console.log("Data berhasil diambil", response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -114,9 +118,8 @@ function Sidebar() {
 
   const handleChange = () => {
     setChecked(!checked);
+    setIsSaldoHidden(!isSaldoHidden);
   };
-
-  const saldoDisplay = checked ? "********" : "Rp. 100.000";
 
   const [subnav, setSubnav] = useState(false);
 
@@ -139,7 +142,11 @@ function Sidebar() {
             <div className="saldo_info">
               <div className="saldo">
                 <h3>Saldo</h3>
-                <span>{saldoDisplay}</span>
+                <span>
+                  {isSaldoHidden
+                    ? `Rp ${formatPrice(toko.saldo)}`
+                    : "*".repeat(saldoStarCount)}
+                </span>
               </div>
               <div className="hide-saldo">
                 <h3>Sembunyikan Saldo</h3>

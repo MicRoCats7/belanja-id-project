@@ -140,7 +140,7 @@ function ResultSearch() {
                             location={item.store?.provinces}
                             price={item.price}
                             rating={item.rate}
-                            ulasan={item.review}
+                            ulasan={item.sold_quantity}
                             stok={item.stok}
                             id={item.id}
                           />
