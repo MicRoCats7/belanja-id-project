@@ -20,7 +20,7 @@ import { MdOutlineLeaderboard } from "react-icons/md";
 
 function Detailtoko() {
   const [product, setProduct] = useState([]);
-  const [toko, setToko] = useState({});
+  const [shop, setToko] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [isFollowing, setIsFollowing] = useState(false);
@@ -29,17 +29,17 @@ function Detailtoko() {
   const [latestProducts, setLatestProducts] = useState([]);
 
   useEffect(() => {
+    getToko(id);
     getProductByUserId();
-    getEventById(); // Move this call to the useEffect
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
 
-  function getEventById() {
+  function getToko() {
     axios
       .get(apiurl() + `stores?id=${id}`)
       .then((response) => {
-        setToko(response.data.data);
-        setIsFollowing(response.data);
+        setToko(response.data.data[0]);
+        setIsFollowing(response.data.data[0]);
         console.log("Data Store by ID:", response.data.data);
       })
       .catch((error) => console.error(error));
@@ -123,7 +123,7 @@ function Detailtoko() {
       <div className="container-detail-toko">
         <div className="container-info-detail-toko">
           <div className="container-img-detail-toko">
-            <img src={toko.logo} alt="Logo Toko" />
+            <img src={shop.logo} alt="Logo Toko" />
           </div>
           <div className="container-btn-detail-toko">
             <div className="btn-fol-unfoll">
@@ -151,19 +151,19 @@ function Detailtoko() {
             <div className="total-followers-detail-toko">
               <BsStar />
               <p>
-                Rating: <span>{toko.rate}</span>
+                Rating: <span>{shop.rate}</span>
               </p>
             </div>
             <div className="total-followers-detail-toko">
               <RiUserFollowLine />
               <p>
-                Pengikut: <span>{toko.followers}</span>
+                Pengikut: <span>{shop.followers}</span>
               </p>
             </div>
             <div className="total-followers-detail-toko">
               <MdOutlineLeaderboard />
               <p>
-                Negara: <span>{toko.country}</span>
+                Negara: <span>{shop.country}</span>
               </p>
             </div>
           </div>
@@ -171,7 +171,7 @@ function Detailtoko() {
             <div className="container-proses-pesanan">
               <h3>Nama Toko</h3>
               <p>
-                <span>{toko.name}</span>
+                <span>{shop.name}</span>
               </p>
             </div>
             <div className="container-jam">
@@ -181,7 +181,7 @@ function Detailtoko() {
             <div className="container-info-lokasi">
               <h3>Info toko & lokasi</h3>
               <h4>
-                {toko.provinces}, {toko.regencies}
+                {shop.provinces}, {shop.regencies}
               </h4>
             </div>
           </div>
@@ -190,8 +190,8 @@ function Detailtoko() {
           <div className="title-deskripsi-detail-toko">
             <h3>Deskripsi Toko</h3>
           </div>
-          {toko.description ? (
-            <p>{toko.description}</p>
+          {shop.description ? (
+            <p>{shop.description}</p>
           ) : (
             <p>Toko ini belum memiliki deskripsi.</p>
           )}

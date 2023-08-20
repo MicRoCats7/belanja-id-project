@@ -154,14 +154,17 @@
 }
 
 .deskripsi-tokomu .btn-simpan-toko button {
+    width: 150px;
+    height: 46px;
     background-color: #EF233C;
-    border: none;
+    border: 1px solid #E2E2E2;
     border-radius: 10px;
     padding: 6px 24px;
-    font-size: 14px;
-    font-weight: normal;
-    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    color:#FFFFFF;
     cursor: pointer;
+    margin-top: 15px;
 }
 
 .underline-info-toko {
@@ -495,4 +498,36 @@ input[type="time"]:focus {
     font-weight: normal;
     color: #fff;
     cursor: pointer;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.load-spin-info{
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #000;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    margin-left: 40px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.load-spin-uploadphoto{
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #000;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    margin-left: 120px;
 }

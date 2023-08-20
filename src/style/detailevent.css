@@ -153,4 +153,20 @@
 }
 
 
+.check-event-daftar{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    border-radius: 3px;
+    line-height: 16px;
+    padding: 0px 8px;
+    height: 20px;
+    font-size: 15px;
+    background-color: rgb(238, 243, 239);
+    color: rgb(201, 36, 18);
+    justify-content: center;
+    transition: all 300ms ease-out 0s;
+}
+
 
