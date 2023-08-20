@@ -10,6 +10,7 @@ import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UbahProduk() {
   const [productToEdit, setProductToEdit] = useState(null);
@@ -26,7 +27,16 @@ function UbahProduk() {
   const [selectedImagePath4, setSelectedImagePath4] = useState("");
   const [selectedImagePath5, setSelectedImagePath5] = useState("");
   const [selectedImagePath, setSelectedImagePath] = useState("");
-  const [previewImg, setPreviewImg] = useState(null);
+  const [nameError, setInputTextError] = useState(false);
+  const [value2Error, setValue2Error] = useState(false);
+  const [deskripsiProdukError, setDeskripsiProdukError] = useState(false);
+  const [value3Error, setValue3Error] = useState(false);
+  const [value4Error, setValue4Error] = useState(false);
+  const [skuError, setSkuError] = useState(false);
+  const [selectedCategoryError, setSelectedCategoryError] = useState(false);
+  const [kondisiProdukError, setKondisiProdukError] = useState(false);
+  const [selectedImagePathError, setSelectedImagePathError] = useState(false);
+  const [previewImg, setPreviewImg1] = useState(null);
   const [previewImg2, setPreviewImg2] = useState(null);
   const [previewImg3, setPreviewImg3] = useState(null);
   const [previewImg4, setPreviewImg4] = useState(null);
@@ -39,15 +49,14 @@ function UbahProduk() {
   const [file, setFile] = useState(null);
   const [skuErrorMessage, setSkuErrorMessage] = useState("");
   const [skuList, setSkuList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSKUChange = (event) => {
-    // Mengonversi nilai input menjadi huruf besar semua sebelum menyimpannya ke dalam state
     const uppercaseSKU = event.target.value.toUpperCase();
     setSKU(uppercaseSKU);
   };
 
   const handleKondisiChange = (event) => {
-    // Mengubah nilai kondisiProduk ke huruf kecil sebelum disimpan di state
     setKondisiProduk(event.target.value.toLowerCase());
   };
 
@@ -96,7 +105,7 @@ function UbahProduk() {
         setKondisiProduk(productData.kondisi_produk);
         setDeskripsiProduk(productData.description);
         setSKU(productData.sku);
-        setPreviewImg(productData.picturePath);
+        setPreviewImg1(productData.picturePath);
         setValue3(productData.quantity);
         setValue2(productData.price);
         setValue4(productData.weight);
@@ -111,7 +120,7 @@ function UbahProduk() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("name", name);
@@ -156,6 +165,7 @@ function UbahProduk() {
       const newProductData = response.data.data;
       console.log("Produk berhasil diedit:", newProductData);
       setTimeout(() => {
+        setIsLoading(false);
         navigate("/toko/daftarproduk/");
       }, 2000);
     } catch (error) {
@@ -186,7 +196,7 @@ function UbahProduk() {
     const file = e.target.files[0];
     if (e.target.files && e.target.files[0]) {
       setSelectedImagePath(e.target.files[0]);
-      setPreviewImg(URL.createObjectURL(e.target.files[0]));
+      setPreviewImg1(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -296,8 +306,6 @@ function UbahProduk() {
   const handleErrorAlertToko = () => {
     setErrorAlertOpen(true);
   };
-
-  console.log(selectedImagePath);
   return (
     <div className="tmbhpro">
       <NavbarToko />
@@ -335,6 +343,11 @@ function UbahProduk() {
                       {name.length}/{characterLimit}
                     </p>
                   </div>
+                  {nameError && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      Nama produk tidak boleh kosong
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="container-namaProduk">
@@ -364,6 +377,11 @@ function UbahProduk() {
                       );
                     })}
                   </select>
+                  {selectedCategoryError && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      Pilih kategori produk
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -423,7 +441,7 @@ function UbahProduk() {
                     {previewImg && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setPreviewImg("")} />
+                          <FiTrash2 onClick={() => setPreviewImg1("")} />
                         </span>
                       </div>
                     )}
@@ -609,6 +627,11 @@ function UbahProduk() {
                         label="bekas"
                       />
                     </RadioGroup>
+                    {kondisiProdukError && (
+                      <p className="error-message" style={{ color: "red" }}>
+                        Pilih kondisi produk
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -725,9 +748,6 @@ function UbahProduk() {
                     onChange={handleSKUChange}
                     placeholder="Masukkan SKU"
                   />
-                  {skuErrorMessage && (
-                    <p className="error-message">{skuErrorMessage}</p>
-                  )}
                 </div>
               </div>
             </div>
@@ -761,8 +781,18 @@ function UbahProduk() {
             </div>
           </div>
           <div className="btn-eksekusi">
-            <button className="btn-btl">Batal</button>
-            <button className="btn-baru">Update Produk</button>
+            <Link to={"/toko/produk"}>
+              <button className="btn-btl">batal</button>
+            </Link>
+            <button className="btn-baru" disabled={isLoading}>
+              {isLoading ? (
+                <div className="load-con-edit">
+                  <div className="load-spin-edit"></div>
+                </div>
+              ) : (
+                "Update Produk"
+              )}
+            </button>
           </div>
         </form>
       </div>

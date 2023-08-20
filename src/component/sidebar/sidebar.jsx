@@ -23,6 +23,9 @@ function Sidebar() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaldoHidden, setIsSaldoHidden] = useState(false);
   const [saldoStarCount, setSaldoStarCount] = useState(0);
+  const [produkSubnav, setProdukSubnav] = useState(false);
+
+  const showProdukSubnav = () => setProdukSubnav(!produkSubnav);
 
   const menuItem = [
     {
@@ -176,23 +179,34 @@ function Sidebar() {
           </div>
           {menuItem.map((item, index) => (
             <div key={index}>
-              <NavLink
-                to={item.path}
-                onClick={item.subNav ? showSubnav : null}
-                className="link"
-                activeClassName="active"
-              >
-                <div className="icon">{item.icon}</div>
-                <div className="link_text">{item.name}</div>
-                {item.subNav && (
+              {item.subNav ? (
+                <div
+                  className="link"
+                  onClick={item.name === "Produk" ? showProdukSubnav : null}
+                >
+                  <div className="icon">{item.icon}</div>
+                  <div className="link_text">{item.name}</div>
                   <div className="subMenu">
-                    {subnav ? item.iconOpen : item.iconClosed}
+                    {item.name === "Produk" ? (
+                      <div className="icon">
+                        {produkSubnav ? item.iconOpen : item.iconClosed}
+                      </div>
+                    ) : null}
                   </div>
-                )}
-              </NavLink>
-              {subnav &&
-                item.subNav?.map((subItem, subIndex) => {
-                  return (
+                </div>
+              ) : (
+                <NavLink
+                  to={item.path}
+                  className="link"
+                  activeClassName="active"
+                >
+                  <div className="icon">{item.icon}</div>
+                  <div className="link_text">{item.name}</div>
+                </NavLink>
+              )}
+              {produkSubnav && item.name === "Produk" && (
+                <div className="produk-subnav">
+                  {item.subNav?.map((subItem, subIndex) => (
                     <NavLink
                       key={subIndex}
                       to={subItem.path}
@@ -202,8 +216,9 @@ function Sidebar() {
                       <div className="icon">{subItem.icon}</div>
                       <div className="subMenu_link">{subItem.name}</div>
                     </NavLink>
-                  );
-                })}
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>

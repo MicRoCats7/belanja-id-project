@@ -5,6 +5,7 @@ import iconChat from "../../assets/icon/iconChat.svg";
 import DeafultPhoto from "../../assets/icon/anonimprofile.jpg";
 import IconNotif from "../../assets/icon/notif.svg";
 import { Link, useNavigate } from "react-router-dom";
+import "../../style/modall.css";
 import Icontoko from "../../assets/icon/tokoo.svg";
 import apiurl from "../../utils/apiurl";
 import Snackbar from "@mui/material/Snackbar";
@@ -18,6 +19,7 @@ import ModalLogout from "../modal/modalLogout.";
 function Navbar() {
   const [profile, setProfile] = useState({});
   const [categories, setCategories] = useState([]);
+  const [loadingDots, setLoadingDots] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [toko, setToko] = useState([]);
@@ -31,6 +33,16 @@ function Navbar() {
   const [searchClicked, setSearchClicked] = useState(false);
   const [shopName, setShopName] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const handleLogoutModalOpen = () => {
+    setLogoutModalOpen(true);
+  };
+
+  const handleLogoutModalClose = () => {
+    setLogoutModalOpen(false);
+  };
 
   useEffect(() => {
     LoadProduk();
@@ -60,7 +72,14 @@ function Navbar() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        setLoading(true);
+        setIsLoading(true);
+        setLoadingDots(""); // Reset the loading dots
+        const interval = setInterval(() => {
+          setLoadingDots((prevDots) =>
+            prevDots.length < 4 ? prevDots + "." : ""
+          );
+        }, 500); // Add a dot every 300 milliseconds
+
         await axios.post(
           apiurl() + "logout",
           {},
@@ -70,15 +89,17 @@ function Navbar() {
             },
           }
         );
+        clearInterval(interval); // Stop adding dots
         handleSuccessAlertOpen();
         localStorage.removeItem("token");
-        setLoading(false);
+        setIsLoading(false);
         setTimeout(() => {
           navigate("/login");
         }, 1500);
       } catch (error) {
         console.error(error);
-        setLoading(false);
+        setIsLoading(false);
+        setLoadingDots(""); // Reset the loading dots in case of error
       }
     }
   };
@@ -311,7 +332,12 @@ function Navbar() {
                           Whislist
                         </button>
                       </Link>
-                      <ModalLogout />
+                      <button
+                        className="btn-logout"
+                        onClick={handleLogoutModalOpen}
+                      >
+                        Logout
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -329,6 +355,26 @@ function Navbar() {
           </div>
         </div>
       </div>
+      {logoutModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content-logout">
+            <h2>Logout</h2>
+            <p>Yakin Dek Mau Keluar?</p>
+            <div className="modal-buttons">
+              <button className="btn-batal" onClick={handleLogoutModalClose}>
+                Batal
+              </button>
+              <button
+                className="btn-submit"
+                onClick={logout}
+                disabled={isLoading}
+              >
+                {isLoading ? `wait${loadingDots}` : "Yakin"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {searchClicked && suggestions && suggestions.length > 0 && (
         <div
           className="dropdown-result"

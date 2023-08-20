@@ -4,6 +4,9 @@ import { styled } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import apiurl from "../../utils/apiurl";
+import axios from "axios";
 
 function App() {
   const [accordionOpen, setAccordionOpen] = useState(true);
@@ -12,11 +15,16 @@ function App() {
   const [accordionOpen4, setAccordionOpen4] = useState(true);
   const [activeIndex, setActiveIndex] = useState(null);
   const [value, setValue] = useState("");
+  const [provinces, setProvinces] = useState([]);
+  const [selectedProvinces, setSelectedProvinces] = useState([]);
   const [valueRate, setValueRate] = React.useState(5);
   const [valueRate2, setValueRate2] = React.useState(4);
   const [valueRate3, setValueRate3] = React.useState(3);
   const [valueRate4, setValueRate4] = React.useState(2);
   const [valueRate5, setValueRate5] = React.useState(1);
+  const [showAllProvinces, setShowAllProvinces] = useState(false);
+  const [visibleDataCount, setVisibleDataCount] = useState(15);
+  const dataPerPage = 15;
 
   const toggleAccordion = () => {
     setAccordionOpen(!accordionOpen);
@@ -29,6 +37,9 @@ function App() {
   };
   const toggleAccordion4 = () => {
     setAccordionOpen4(!accordionOpen4);
+  };
+  const handleShowMore = () => {
+    setVisibleDataCount(visibleDataCount + dataPerPage);
   };
 
   const BpIcon = styled("span")(({ theme }) => ({
@@ -90,6 +101,27 @@ function App() {
     );
   }
 
+  const fetchProvinces = async () => {
+    try {
+      const response = await axios.get(apiurl() + "provinces");
+      const responseData = response.data;
+
+      if (responseData.meta && responseData.meta.code === 200) {
+        const provincesData = responseData.data;
+        const provincesWithNames = provincesData.map((province) => ({
+          ...province,
+          province_name: province.province,
+        }));
+        setProvinces(provincesWithNames);
+        setSelectedProvinces(provincesWithNames);
+      } else {
+        console.log("Failed to fetch provinces:", responseData.meta.message);
+      }
+    } catch (error) {
+      console.log("Failed to fetch provinces:", error);
+    }
+  };
+
   const handleChangeNumber2 = (event) => {
     const result = event.target.value.replace(/\D/g, "");
 
@@ -99,6 +131,20 @@ function App() {
   const handleClick = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
   };
+
+  const handleProvinceChange = (provinceId) => {
+    setSelectedProvinces((prevSelectedProvinces) => {
+      if (prevSelectedProvinces.includes(provinceId)) {
+        return prevSelectedProvinces.filter((id) => id !== provinceId);
+      } else {
+        return [...prevSelectedProvinces, provinceId];
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchProvinces();
+  }, []);
 
   return (
     <div className="container-filter">
@@ -115,34 +161,21 @@ function App() {
           className={`accordion-content-filter ${accordionOpen ? "open" : ""}`}
         >
           <div className="page-filter">
-            <div className="checkbox-filter">
-              <BpCheckbox />
-              <label htmlFor="">Sumbawa</label>
-            </div>
-            <div className="checkbox-filter">
-              <BpCheckbox />
-              <label htmlFor="">Sumbawa</label>
-            </div>
-            <div className="checkbox-filter">
-              <BpCheckbox />
-              <label htmlFor="">Sumbawa</label>
-            </div>
-            <div className="checkbox-filter">
-              <BpCheckbox />
-              <label htmlFor="">Sumbawa</label>
-            </div>
-            <div className="checkbox-filter">
-              <BpCheckbox />
-              <label htmlFor="">Sumbawa</label>
-            </div>
-            <div className="checkbox-filter">
-              <BpCheckbox />
-              <label htmlFor="">Sumbawa</label>
-            </div>
-            <Link to={"/modal-lokasi"}>
-              <p>Lihat Lebih banyak</p>
-            </Link>
+            {provinces.slice(0, visibleDataCount).map((province) => (
+              <div className="checkbox-filter" key={province.province_id}>
+                <BpCheckbox
+                  checked={selectedProvinces.includes(province.province_id)}
+                  onChange={() => handleProvinceChange(province.province_id)}
+                />
+                <label htmlFor="">{province.province_name}</label>
+              </div>
+            ))}
           </div>
+          {visibleDataCount < provinces.length && (
+            <button className="show-more-button" onClick={handleShowMore}>
+              Tampilkan Lebih Banyak
+            </button>
+          )}
         </div>
       </div>
       <div className="accordion-filter">

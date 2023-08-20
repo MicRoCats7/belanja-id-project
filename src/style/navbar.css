@@ -305,6 +305,7 @@ input[type="text"]:focus {
 
 .circle {
     height: 40px;
+    width: 40px;
     border-radius: 100%;
     background: #f4f4f4;
     display: flex;

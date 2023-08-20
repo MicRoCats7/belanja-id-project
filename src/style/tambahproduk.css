@@ -21,7 +21,7 @@
 .container-infoProduk {
     margin-top: 19px;
     background-color: #ffff;
-    padding: 29px 30px 39px 30px;
+    padding: 29px 30px 70px 30px;
     border-radius: 10px;
 }
 
@@ -142,7 +142,9 @@ width: 100%;
     color: #000;
     margin-bottom: 8px;
 }
-
+.inpt-harga-add input{
+    margin-bottom: 8px;
+}
 .inputNamaProduk input:focus {
     outline: 1px solid #EF233C;
 }
@@ -217,6 +219,7 @@ width: 100%;
     cursor: pointer;
 }
 
+
 .uploaded-image {
     width: 133px;
     height: 123px;
@@ -280,12 +283,22 @@ width: 100%;
     height: 45px;
 }
 
+.sku-kode{
+    display: flex;
+    gap: 15px;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+    width: 80%;
+    height: 45px;
+    flex-direction: column;
+}
+
 .gram {
     display: flex;
     gap: 15px;
     border: 1px solid #D3D3D3;
     border-radius: 5px;
-    width: 30%;
+    /* width: 30%; */
     height: 45px;
 }
 
@@ -303,6 +316,14 @@ width: 100%;
     width: 29px;
 }
 
+.gram-eror{
+  display: flex;
+  flex-direction: column;
+}
+
+.gram-eror input{
+    margin-bottom: 10px;
+}
 .box-gram {
     display: flex;
     align-items: center;
@@ -319,7 +340,16 @@ width: 100%;
     color: #606060;
 }
 
+.error-message{
+    font-size: 15px;
+    font-weight: 400;
+}
+
 .harga-satuan input:focus {
+    outline: none;
+}
+
+.sku-kode input:focus {
     outline: none;
 }
 
@@ -394,6 +424,7 @@ width: 100%;
     color: #000;
     font-size: 14px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .btn-eksekusi .btn-baru {
@@ -404,6 +435,29 @@ width: 100%;
     background-color: #EF233C;
     color: #fff;
     font-size: 14px;
+    cursor: pointer;
     font-weight: 600;
 }
 
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+.load-con-edit{
+    display: flex;
+    align-items: center;
+    margin-left: 100px;
+}
+
+.load-spin-edit{
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    margin-right: 10px;
+}
+  

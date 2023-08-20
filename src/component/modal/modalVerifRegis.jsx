@@ -6,6 +6,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function ModalVerifikasiEmail({ onClose, email, user }) {
   const [modal, setModal] = useState(false);
@@ -60,41 +61,31 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
     setErrorAlertOpen(true);
   };
 
-  const handleKembaliClick = () => {
-    onClose(); // Close the verification modal
-    navigate("/profile/biodata"); // Navigate to the home page
-  };
-
   return (
     <>
-      <h3 onClick={toggleModal} className="ubah-nama-user">
-        verikasi
-      </h3>
-
-      {modal && (
-        <div className="modal-verif">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="verification-content-modal">
-            <h3>Verifikasi Email</h3>
-            <p>
-              Silahkan klik tombol lanjutkan untuk memverifikasi , dan cek
-              melalui email anda!
-            </p>
-            <div className="modal-buttons">
-              <button
-                className="btn-lanjutkan"
-                onClick={handleResendVerificationEmail}
-                disabled={isLoading}
-              >
-                {isLoading ? "Loading..." : "Lanjutkan"}{" "}
-              </button>
-              <button className="tutup-email" onClick={toggleModal}>
-                Kembali
-              </button>
-            </div>
+      <div className="modal-verif">
+        <div onClick={toggleModal} className="overlay"></div>
+        <div className="verification-content-modal">
+          <h3>Verifikasi Email</h3>
+          <p>
+            Silahkan klik tombol lanjutkan untuk memverifikasi , dan cek melalui
+            email anda!
+          </p>
+          <div className="modal-button">
+            <button
+              className="btn-lanjutkan"
+              onClick={handleResendVerificationEmail}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Lanjutkan"}{" "}
+            </button>
+            <Link to="/Login">
+              <button className="tutup-email">Kembali</button>
+            </Link>
           </div>
         </div>
-      )}
+      </div>
+
       <Snackbar
         open={successAlertOpen}
         autoHideDuration={3000}

@@ -12,12 +12,15 @@ import axios from "axios";
 import apiurl from "../utils/apiurl";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import token from "../utils/token";
 
 function Detailevent() {
   const { id } = useParams();
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
+    checkUserRegistration();
     getEventById();
   }, []);
 
@@ -31,6 +34,50 @@ function Detailevent() {
       .catch((error) => console.error(error));
   }
 
+  function handleJoinEvent() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token not found");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .post(apiurl() + `events/${id}/register-send-invoice`, null, config)
+      .then((response) => {
+        setIsRegistered(true);
+        console.log("Response data:", response.data);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function checkUserRegistration() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token not found");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .get(apiurl() + `events/${id}/registered-users`, config)
+      .then((response) => {
+        setIsRegistered(response.data.data[0]);
+      })
+      .catch((error) => console.error(error));
+  }
   return (
     <div className="main-evnt">
       <Navbar />
@@ -78,7 +125,15 @@ function Detailevent() {
                   </h3>
                 </div>
                 <div className="btn-join-event">
-                  <button className="">Bergabung Yuk</button>
+                  {!isRegistered ? (
+                    <button className="" onClick={handleJoinEvent}>
+                      Daftar Event
+                    </button>
+                  ) : (
+                    <p className="check-event-daftar">
+                      Anda sudah terdaftar dalam event ini
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

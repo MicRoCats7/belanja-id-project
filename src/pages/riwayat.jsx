@@ -130,6 +130,7 @@ function Riwayat() {
 
       setReviewedProducts(storedReviewedProducts);
       setRiwayatTransaksi(response.data.data);
+      setSelectedTransaction(response.data[0]);
       setIsLoading(false);
       console.log(response.data.data);
     } catch (error) {
@@ -789,7 +790,7 @@ function Riwayat() {
         </div>
       )}
       {selectedTransaction && (
-        <div className="modal-container">
+        <div className="modal-container-detail-transaksi">
           <div className="modal-content-detail-transaksi">
             <div className="top-modal-content">
               <h2>Detail Transaksi</h2>
@@ -802,36 +803,58 @@ function Riwayat() {
             <div className="content-info-pesanan-invoice">
               <div className="no-invoice">
                 <h2>No.Invoice</h2>
-                <span>368</span>
+                <span>{selectedTransaction.id}</span>
               </div>
               <div className="tanggal-pembelian">
                 <h2>Tanggal Pembelian</h2>
-                <h2>15 Mei 2023, 09:25 WIB</h2>
+                <h2>
+                  {new Date(selectedTransaction.created_at).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
+                </h2>
               </div>
             </div>
             <div className="title-detail-riwayat">
               <h1>Detail Produk</h1>
               <div className="btn-riawayat-toko">
                 <BsShop />
-                <h2>Sumbawa Official</h2>
+                {selectedTransaction.store && (
+                  <h2>{selectedTransaction.store.name}</h2>
+                )}
                 <MdOutlineKeyboardArrowRight />
               </div>
             </div>
             <div className="content-info-pesanan-produk">
               <div className="produk-pesanan-info">
                 <div className="img-produk">
-                  <img src={fotobarang} alt="" />
+                  {selectedTransaction.product && (
+                    <img src={selectedTransaction.product.picturePath} alt="" />
+                  )}
                 </div>
                 <div className="info-produk">
-                  <h2>Baju Polo, Pria lengan pendek polos original Ukuran L</h2>
-                  <h2 style={{ color: "#727272" }}>2x Rp 35.000</h2>
+                  {selectedTransaction.product && (
+                    <h2>{selectedTransaction.product.name}</h2>
+                  )}
+                  {selectedTransaction.product && (
+                    <h2 style={{ color: "#727272" }}>
+                      {selectedTransaction.quantity}x Rp{" "}
+                      {formatPrice(selectedTransaction.product.price)}
+                    </h2>
+                  )}
                 </div>
               </div>
               <div className="line-content-info-pesanan-produk"></div>
               <div className="produk-pesanan-info-total">
                 <div className="total-produk-pesanan-info">
                   <h1>Total Harga</h1>
-                  <h1 style={{ color: "#000" }}>Rp. 35.000</h1>
+                  <h1 style={{ color: "#000" }}>
+                    Rp. {formatPrice(selectedTransaction.total)}
+                  </h1>
                 </div>
                 <button className="btn-beli-lagi-info">Beli Lagi</button>
               </div>
@@ -844,8 +867,9 @@ function Riwayat() {
                 <div className="content-info-pesanan-invoice">
                   <div className="info-pengiriman-user">
                     <h2>Kurir</h2>
-                    <p style={{ marginLeft: "19px" }}>:</p>
-                    <span>Anteraja-Reguler</span>
+                    <p style={{ marginLeft: "19px" }}>
+                      : {selectedTransaction.courier?.title}
+                    </p>
                   </div>
                   <div className="tanggal-pembelian-user">
                     <h2>No.Resi</h2>
@@ -857,14 +881,18 @@ function Riwayat() {
                   <div className="tanggal-pembelian-user">
                     <h2>Alamat</h2>
                     <p>:</p>
-                    <span className="alamat-user-pembelian">
-                      Amri Iqro <br />{" "}
-                      <p>
-                        6282128066795 Besito, Kec. Gebog, Kabupaten Kudus, Jawa
-                        Tengah [Belanja.id Note: Gang 11 gang buntu] Gebog, Kab.
-                        Kudus Jawa Tengah 5933
-                      </p>
-                    </span>
+                    {selectedTransaction.user_address && (
+                      <span className="alamat-user-pembelian">
+                        {selectedTransaction.user_address.receiver_name} <br />{" "}
+                        <p>
+                          {selectedTransaction.user_address.phone_number}{" "}
+                          {selectedTransaction.user_address.address_one} -{" "}
+                          {selectedTransaction.user_address.regencies} -{" "}
+                          {selectedTransaction.user_address.provinces} -{" "}
+                          {selectedTransaction.user_address.zip_code}
+                        </p>
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -878,22 +906,35 @@ function Riwayat() {
                 >
                   <div className="no-invoice">
                     <h2>Metode Pembayaran</h2>
-                    <span>BNI Virtual Account</span>
+                    <span>Midtrans</span>
                   </div>
                   <div className="no-invoice">
-                    <h2>Total Harga (2 barang)</h2>
-                    <span>Rp35.000</span>
+                    <h2>Jumlah barang</h2>
+                    <span>({selectedTransaction.quantity} barang)</span>
                   </div>
                   <div className="no-invoice">
-                    <h2>Total Ongkos Kirim (600 gr)</h2>
-                    <span>Rp25.000</span>
+                    {selectedTransaction.product && <h2>Harga Barang</h2>}
+                    <span>
+                      Rp {formatPrice(selectedTransaction.product.price)}
+                    </span>
+                  </div>
+                  <div className="no-invoice">
+                    {selectedTransaction.product && (
+                      <h2>
+                        Total Ongkos Kirim ({selectedTransaction.product.weight}{" "}
+                        kg)
+                      </h2>
+                    )}
+                    <span>
+                      Rp {formatPrice(selectedTransaction.shipping_cost)}
+                    </span>
                   </div>
                   <div className="tanggal-pembelian">
                     <h2 style={{ fontSize: "20px", color: "#000" }}>
                       Total Belanja
                     </h2>
                     <h2 style={{ fontSize: "20px", color: "#EF233C" }}>
-                      Rp60.000
+                      Rp {formatPrice(selectedTransaction.total)}
                     </h2>
                   </div>
                 </div>
