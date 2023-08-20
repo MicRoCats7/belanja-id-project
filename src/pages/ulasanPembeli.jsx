@@ -109,6 +109,8 @@ function UlasanPembeli() {
 
     setLastActiveTab(activeTab);
     setActiveTab("reviews");
+
+    setShowImageOnlyReviews(showImageOnlyReviews && star !== null);
   };
 
   const toggleAccordion = () => {
@@ -192,7 +194,7 @@ function UlasanPembeli() {
                 ) : (
                   <>
                     <p>
-                      Jumlah ulasan dengan gambar:{" "}
+                      Ulasan dengan gambar review:{" "}
                       {countReviewsWithImageGallery()}
                     </p>
                     {filteredReviews.map((review) => (

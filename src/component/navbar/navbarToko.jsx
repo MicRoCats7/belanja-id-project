@@ -51,10 +51,10 @@ function NavbarToko() {
           <img src={logoBelanjaID} alt="logo belanja.id" />
         </div>
         <div className="listNavbarToko">
-          <div className="search-toko">
+          {/* <div className="search-toko">
             <input type="text" placeholder="Cari Produk " />
             <button type="submit">Search</button>
-          </div>
+          </div> */}
           {/* <div className="icon-navbarToko">
             <img src={IconNotif} alt="icon notif" />
           </div> */}

@@ -290,6 +290,7 @@ width: 100%;
     border-radius: 5px;
     width: 80%;
     height: 45px;
+    flex-direction: column;
 }
 
 .gram {
@@ -337,6 +338,11 @@ width: 100%;
     font-size: 14px;
     font-weight: 600;
     color: #606060;
+}
+
+.error-message{
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .harga-satuan input:focus {
@@ -418,6 +424,7 @@ width: 100%;
     color: #000;
     font-size: 14px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .btn-eksekusi .btn-baru {
@@ -428,6 +435,29 @@ width: 100%;
     background-color: #EF233C;
     color: #fff;
     font-size: 14px;
+    cursor: pointer;
     font-weight: 600;
 }
 
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+.load-con-edit{
+    display: flex;
+    align-items: center;
+    margin-left: 100px;
+}
+
+.load-spin-edit{
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    margin-right: 10px;
+}
+  

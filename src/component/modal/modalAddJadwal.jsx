@@ -11,6 +11,7 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
   const [modal, setModal] = useState(false);
   const [day, setDay] = useState("");
   const [openTime, setOpenTime] = useState("");
+  const [loading, setLoading] = useState(false);
   const [closeTime, setCloseTime] = useState("");
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
@@ -37,6 +38,7 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
   };
 
   function tambahJadwalOperasional() {
+    setLoading(true);
     const newOperatingHours = {
       operating_hours: [
         {
@@ -51,13 +53,17 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
       .post(apiurl() + `store/${id}/add-operating-hours`, newOperatingHours)
       .then((response) => {
         handleSuccessAlertOpen();
+        setLoading(false);
         console.log(
           "Response setelah menambahkan jadwal operasional:",
           response.data
         );
         // getJadwalOperasional();
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        setLoading(false);
+        console.error(error);
+      });
   }
   useEffect(() => {
     if (successAlertOpen || errorAlertOpen) {
@@ -132,9 +138,13 @@ function ModalAddJadwal({ closeModal, tambahJadwalOperasional }) {
               </div>
             </div>
             <div className="modal-buttons">
-              <button className="btn-save" onClick={tambahJadwalOperasional}>
-                Simpan
+              <button
+                className={`btn-save ${loading ? "loading" : ""}`}
+                onClick={loading ? null : tambahJadwalOperasional}
+              >
+                {loading ? <div className="spinner-jadwal"></div> : "Simpan"}
               </button>
+
               <button className="btn-cancel" onClick={toggleModal}>
                 Batal
               </button>

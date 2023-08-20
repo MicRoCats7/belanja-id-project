@@ -13,6 +13,7 @@ import apiurl from "../utils/apiurl";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import ModalVerifikasiEmail from "../component/modal/modalVerifikasiEmail";
+import ModalVerifReg from "../component/modal/modalVerifRegis";
 
 function Register() {
   const {
@@ -50,14 +51,14 @@ function Register() {
         },
       });
       handleSuccessAlertOpen();
+      setShowVerificationModal(true);
+      console.log("showVerificationModal:", showVerificationModal);
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
-      setEmail(data.email); // Set the email state with the registered email
+      setEmail(response.data.email);
+      setUserId(response.data.data.id);
       setLoading(false);
-      // setUserId(response.data.user.id);
-      // setShowVerificationModal(true);
       setTimeout(() => {
-        navigate("/login");
         // navigate("/login");
       }, 2000);
     } catch (error) {
@@ -214,9 +215,9 @@ function Register() {
         </div>
       </div>
       {showVerificationModal && (
-        <ModalVerifikasiEmail
+        <ModalVerifReg
           email={email}
-          id={user_id} // Pass the user_id to the verification modal
+          user={user_id}
           onClose={() => setShowVerificationModal(false)}
         />
       )}

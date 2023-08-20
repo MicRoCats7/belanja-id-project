@@ -44,6 +44,8 @@ function PengaturanToko() {
   const [previewImg, setPreviewImg] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImagePathToko, setSelectedImagePath] = useState("");
+  const [isLoadingUpdt, setIsLoadingUpdt] = useState(false);
+  const [isLoadingUploadFoto, setIsLoadingUploadFoto] = useState(false);
 
   useEffect(() => {
     calculateUnderlineStyle();
@@ -227,6 +229,7 @@ function PengaturanToko() {
   }
 
   function EditInformasiToko() {
+    setIsLoadingUpdt(true);
     const formData = new FormData();
     formData.append("name", inputText);
     formData.append("description", description);
@@ -241,11 +244,15 @@ function PengaturanToko() {
     axios
       .post(apiurl() + `stores/${id}`, formData, config)
       .then((response) => {
+        setIsLoadingUpdt(false);
         handleSuccessAlertInfo();
         console.log("Informasi toko berhasil di ubah:", response.data);
         // getJadwalOperasional();
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        setIsLoadingUpdt(false);
+        console.error(error);
+      });
   }
 
   const getToko = async () => {
@@ -270,6 +277,7 @@ function PengaturanToko() {
   };
 
   function AploadFoto() {
+    setIsLoadingUploadFoto(true);
     const formData = new FormData();
     formData.append("logo", selectedImagePathToko);
     const token = localStorage.getItem("token");
@@ -284,9 +292,13 @@ function PengaturanToko() {
       axios
         .post(apiurl() + "stores/" + id, formData, config)
         .then((response) => {
+          setIsLoadingUploadFoto(false);
           console.log("Berhasil Mengapload logo", response.data);
         })
-        .catch((error) => console.error("Gagal mengapload logo", error));
+        .catch((error) => {
+          setIsLoadingUploadFoto(false);
+          console.error("Gagal mengapload logo", error);
+        });
     }
   }
   const handleSuccessAlertOpen = () => {
@@ -429,9 +441,9 @@ function PengaturanToko() {
                     </div>
                     {/* <h2>Domain Toko</h2>
                     <p>www.belanja.id/microsport</p> */}
-                    <div className="btn-ubah-info">
+                    {/* <div className="btn-ubah-info">
                       <button onClick={EditInformasiToko}>Simpan</button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="deskripsi-tokomu">
@@ -445,7 +457,13 @@ function PengaturanToko() {
                       placeholder=" Masukkan Deskripsikan tokomu..."
                     ></textarea>
                     <div className="btn-simpan-toko">
-                      <button>Simpan</button>
+                      <button onClick={EditInformasiToko}>
+                        {isLoadingUpdt ? (
+                          <div className="load-spin-info"></div>
+                        ) : (
+                          "Simpan"
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -499,7 +517,13 @@ function PengaturanToko() {
                       yang diperbolehkan: JPG, JPEG, PNG
                     </p>
                     <div>
-                      <button onClick={AploadFoto}>Simpan</button>
+                      <button onClick={AploadFoto}>
+                        {isLoadingUploadFoto ? (
+                          <div className="load-spin-uploadphoto"></div> // Ganti dengan elemen loader yang sesuai
+                        ) : (
+                          "Upload Foto"
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>

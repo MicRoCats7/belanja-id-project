@@ -54,10 +54,7 @@
     flex-direction: column;
     width: 100%;
 }
-.shrink {
-    transform: scale(0.9); /* Shrink the button when clicked */
-    transition: transform 0.2s ease-in-out;
-  }
+
 .search {
     display: flex;
     justify-content: space-between;
@@ -308,6 +305,7 @@ input[type="text"]:focus {
 
 .circle {
     height: 40px;
+    width: 40px;
     border-radius: 100%;
     background: #f4f4f4;
     display: flex;

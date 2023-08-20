@@ -130,19 +130,49 @@ body.active-modal {
     overflow: hidden;
     background: rgba(49, 49, 49, 0.5);
 }
+  
 
 
-.modal-forgot, .overlay {
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    right: 0;
+/* 
+.bg__modal__cropper .modal__cropper {
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
     bottom: 0;
-    position: fixed;
-    overflow: hidden;
-    background: rgba(49, 49, 49, 0.5);
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    left: 0;
+    margin: auto;
+    padding: 1rem 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 500px;
 }
+
+
+.bg__modal__cropper .modal__cropper .wrapper__btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.bg__modal__cropper {
+    background-color: rgba(0,0,0,.3);
+    bottom: 0;
+    height: 100vh;
+    left: 0;
+    margin: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    z-index: 9999;
+} */
+
 
 .modal-verif, .overlay {
     width: 100vw;
@@ -153,7 +183,7 @@ body.active-modal {
     bottom: 0;
     position: fixed;
     overflow: hidden;
-    background: rgba(49, 49, 49, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 /* .overlays {
     background: rgba(99, 99, 99, 0.8);
@@ -175,6 +205,20 @@ body.active-modal {
     display: -ms-flexbox;
     overflow-y: auto;
 } */
+
+/* .bg__modal__cropper .overlay{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    overflow: hidden;
+    background: rgba(49, 49, 49, 0.5);
+} */
+
+
 
 
 .modals-content-ubah-alamat{
@@ -292,7 +336,7 @@ body.active-modal {
   }
   
   .btn-lanjutkan {
-    background-color: #007bff;
+    background-color: #EF233C;
     color: #fff;
   }
   
@@ -301,9 +345,6 @@ body.active-modal {
     color: #fff;
   }
   
-  
-
-
 .wrap-tulisan-email{
     margin: 20px 0px 20px 0px;
     font-size: 14px;
@@ -420,6 +461,24 @@ body.active-modal {
     overflow-y: auto;
 }
 
+/* .modal__cropper{
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border-radius: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 2rem 2.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    overflow-y: auto;
+} */
+
+
 
 .modals-contents h3 {
     font-weight: 650;
@@ -500,6 +559,83 @@ body.active-modal {
     width: 100%;
 }
 
+
+/* modall.css */
+.bg__modal__cropper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 999;
+  }
+  
+  .modal__cropper {
+    width: 500px;
+    height: 600px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .modal__cropper h1 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 1rem;
+    margin-right: auto;
+    padding-left: 1rem;
+  }
+  
+  .wrapper__btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 0 1rem;
+  }
+  
+  .wrapper__btn button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .wrapper__btn button:first-child {
+    background-color: #666; 
+  }
+  
+  .wrapper__btn button:nth-child(2) {
+    background-color: #EF233C; 
+  }
+  
+  .reactEasyCrop_Container {
+    width: 100%;
+    height: 80%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    filter: none;
+    position: relative !important;
+  }
+  
+
 .modal-buttons{
     margin-top: 20px;
 }
@@ -510,6 +646,7 @@ body.active-modal {
     will-change: opacity;
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
+
 .modal-verif {
     z-index: 999;
     will-change: opacity;
@@ -522,7 +659,6 @@ body.active-modal {
     will-change: opacity;
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
-
 
 
 .modal-email {
@@ -779,14 +915,22 @@ input .input-nomer {
 
 .modal-content {
     max-height: 400px;
-    /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
     overflow: auto;
-    /* Tampilkan scrollbar hanya jika kontennya melebihi tinggi maksimum */
 }
 
 .modal-content-nama {
     max-height: 400px;
-    /* Atur tinggi maksimum pop-up agar scroll muncul ketika kontennya melebihi */
+}
+
+
+.tutup-email{
+    margin: 0 5px;
+    padding: 10px 20px;
+    background-color: #ccc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 
@@ -920,12 +1064,64 @@ input .input-nomer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 40%;
     gap: 10px;
     transition: background-color 0.3s;
   }
   
-  .btn-delete-popup:hover {
-    background-color: #cc0000; 
+    .btn-delete-popup:hover {
+        background-color: #cc0000; 
+    }
+
+.btn-cancel-product{
+    background-color: #8f8b8b; 
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    }
+
+
+   .wrapper-del-cancel{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 0 1rem;
   }
      
+
+
+  .modal-container-detail-transaksi{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  @keyframes loading {
+    0%, 20% {
+      content: ".";
+    }
+    40% {
+      content: "..";
+    }
+    60% {
+      content: "...";
+    }
+    80% {
+      content: "";
+    }
+  }
+
+  .spinner-jadwal {
+    animation: loading 1.5s steps(1) infinite;
+  }

@@ -142,7 +142,7 @@ function TambahProduk() {
     }
 
     if (!isValid) {
-      setIsLoading(false); // Stop submission
+      setIsLoading(false);
       return;
     }
 
@@ -333,6 +333,7 @@ function TambahProduk() {
   };
 
   console.log(selectedImagePath);
+
   return (
     <div className="tmbhpro">
       <NavbarToko />
@@ -361,22 +362,21 @@ function TambahProduk() {
                     placeholder="Contoh : Sepatu pria (Jenis/Kategori Produk)"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    onFocus={() => setInputTextError(false)} // Reset error on focus
                     maxLength={70}
+                    onFocus={() => setInputTextError(false)} // Reset error on focus
                     className={inputTextError ? "input-error" : ""}
                   />
-                  {inputTextError && (
-                    <p className="error-message" style={{ color: "red" }}>
-                      Nama produk tidak boleh kosong
-                    </p>
-                  )}
-
                   <div className="bottom-input">
                     <p>Tips : Jenis Produk + Keterangan Tambahan</p>
                     <p>
                       {inputText.length}/{characterLimit}
                     </p>
                   </div>
+                  {inputTextError && (
+                    <p className="error-message" style={{ color: "red" }}>
+                      Nama produk tidak boleh kosong
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="container-namaProduk">
@@ -394,8 +394,8 @@ function TambahProduk() {
                 <div className="dropdown-kategoripro">
                   <select
                     name="kategori"
-                    onFocus={() => setSelectedCategoryError(false)}
                     id="kategori"
+                    onFocus={() => setSelectedCategoryError(false)}
                     className={selectedCategoryError ? "input-error" : ""}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                   >
@@ -410,7 +410,7 @@ function TambahProduk() {
                   </select>
                   {selectedCategoryError && (
                     <p className="error-message" style={{ color: "red" }}>
-                      Please select a category
+                      Pilih kategori produk
                     </p>
                   )}
                 </div>
