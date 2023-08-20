@@ -1,0 +1,87 @@
+.container-sidebarChat {
+    border-right: 1px solid #DCDCDC;
+    padding: 20px;
+}
+
+.sidebarChat .top-sectionChat h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+}
+
+.sidebarChat .top-sectionChat .searchChat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 0 10px;
+    margin: 10px 0 10px 0;
+    font-size: 25px;
+}
+
+.searchChat input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 10px;
+    color: #000;
+}
+
+.list-chat {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.chat-column {
+    display: flex;
+    align-items: center;
+    margin: 10px 0 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+.chat-column:hover {
+    background: rgba(255, 190, 190, 0.52);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.chat-column .img-chat img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.content-chat {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.content-chat .chat-top .namechat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.namechat h4 {
+    font-size: 16px;
+    font-weight: normal;
+    color: #000;
+}
+
+.namechat p {
+    font-size: 12px;
+    font-weight: normal;
+    color: #969696;
+}
+
+.chat-bottom p {
+    font-size: 12px;
+    font-weight: normal;
+    color: #505050;
+}

@@ -1,32 +1,35 @@
-import React, { useState } from "react";
-import "../style/chtToko.css";
-import SidebarChat from "../component/sidebar/sidebarChat";
-import imgChat from "../assets/image/shopping-bag-chat.svg";
+import React from "react";
+import "../style/chatUser.css";
+import SidebarChatUser from "../component/sidebar/sidebarChatUser";
+import Navbar from "../component/navbar/navbar";
 import { BiSend } from "react-icons/bi";
-import token from "../utils/token";
+import imgChat from "../assets/image/shopping-bag-chat.svg";
+import { useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
-import { useEffect } from "react";
+import token from "../utils/token";
+import { useParams } from "react-router-dom";
 
-function ChatToko() {
+function ChatUser() {
+  const { to_id } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const user_id = localStorage.getItem("user_id");
-  const [senderId, setSenderId] = useState(1);
-  const [receiverId, setReceiverId] = useState(user_id);
+  const [senderId, setSenderId] = useState(user_id);
+  const [receiverId, setReceiverId] = useState(to_id);
   const [lastTimestamp, setLastTimestamp] = useState(null);
 
   useEffect(() => {
+    setReceiverId(to_id);
     getMessages();
-  }, []);
-
-  console.log("Data pesan user", messages);
+  }, [to_id]);
 
   function getMessages() {
     axios
       .get(
         apiurl() +
-          `chatify/messages?from_id=${receiverId}&to_id=${senderId}&timestamp=${
+          `chatify/messages?from_id=${senderId}&to_id=${receiverId}&timestamp=${
             lastTimestamp || ""
           }`,
         {
@@ -82,8 +85,7 @@ function ChatToko() {
   };
 
   const renderChat = (message) => {
-    const isFromMe = message.from_id.toString() === receiverId;
-    const isToMe = message.to_user.id.toString() === senderId;
+    const isFromMe = message.from_id.toString() === senderId;
 
     return (
       <div
@@ -93,33 +95,50 @@ function ChatToko() {
         key={message.id}
       >
         <div className="message-content">{message.body}</div>
-        <div className="message-info">
-          {isFromMe ? "Anda" : isToMe ? "Penjual" : message.to_user.name}
+        <div className="message-info">{isFromMe ? "Anda" : "Penjual"}</div>
+      </div>
+    );
+  };
+
+  const renderHeader = () => {
+    const toUserInfo = messages.length > 0 ? messages[0].to_user.store : {};
+    const storeInfo = messages.length > 0 ? messages[0].to_user.store : {};
+
+    return (
+      <div className="header-name-chat-user">
+        <div className="img-chat-user">
+          <img src={toUserInfo.logo} alt="Toko Profile" />
+        </div>
+        <div className="name-chat-user">
+          <h3>{storeInfo.name}</h3>
         </div>
       </div>
     );
   };
 
   return (
-    <div className="container-chat">
-      <SidebarChat />
-      <div className="chat">
-        <div className="header-name-chat-user">
-          <div className="img-chat-user">
-            <img src={imgChat} alt="" />
+    <>
+      <Navbar />
+      <div className="container-chat-user">
+        <SidebarChatUser />
+        <div className="chat">
+          {renderHeader()}
+          <div className="content-chat-user-toko">
+            {messages.map(renderChat)}
           </div>
-          <div className="name-chat-user">
-            <h3>Amri Iqra</h3>
+          <div className="input-reply-chat-user">
+            <input
+              type="text"
+              placeholder="Tulis pesan..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+            />
+            <BiSend style={{ cursor: "pointer" }} onClick={handleSendMessage} />
           </div>
-        </div>
-        <div className="content-chat-user-toko">{messages.map(renderChat)}</div>
-        <div className="input-reply-chat-user">
-          <input type="text" placeholder="Tulis pesan..." />
-          <BiSend style={{ cursor: "pointer" }} />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export default ChatToko;
+export default ChatUser;

@@ -9,7 +9,6 @@ import iconRatings from "../assets/icon/icon star.svg";
 import iconToko from "../assets/icon/icon toko.svg";
 import cart from "../assets/icon/cart.svg";
 import { useState, useEffect } from "react";
-import exampProfile from "../assets/image/profile.png";
 import { Rating, Snackbar } from "@mui/material";
 import Footer from "../component/footer/footer";
 import axios from "axios";
@@ -18,7 +17,6 @@ import { formatPrice } from "../utils/helpers";
 import token from "../utils/token";
 import MuiAlert from "@mui/material/Alert";
 import { AiFillStar } from "react-icons/ai";
-import exampProduk from "../assets/image/fotobarang.svg";
 import Modal from "react-modal";
 import { MdClose } from "react-icons/md";
 import Skeleton from "react-loading-skeleton";
@@ -252,6 +250,12 @@ function DetailProduct() {
     setVisibleReviews(visibleReviews + 10);
   };
 
+  function handleChatButtonClick() {
+    if (detail.length > 0) {
+      const to_id = detail[0].store.user_id; // Ganti ini dengan cara mendapatkan to_id dari detail produk
+      navigate(`/chat/${to_id}`); // Navigasi ke halaman ChatUser dengan to_id sebagai parameter
+    }
+  }
   return (
     <div className="main-detail">
       <Navbar />
@@ -505,6 +509,12 @@ function DetailProduct() {
                           }
                         >
                           Beli Sekarang
+                        </button>
+                        <button
+                          className="btn-chat" // Tombol chat
+                          onClick={handleChatButtonClick} // Panggil fungsi untuk navigasi dan mengirim to_id
+                        >
+                          Chat
                         </button>
                       </>
                     ) : (

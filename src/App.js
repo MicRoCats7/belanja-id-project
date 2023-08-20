@@ -13,14 +13,13 @@ import Toko from "./pages/toko";
 import Event from "./pages/event";
 import Detailevent from "./pages/detailevent";
 import Search from "./pages/search.";
-import { SessionProvider } from "./utils/googlelogin";
 import Keranjang from "./pages/keranjang";
 import { SkeletonTheme } from "react-loading-skeleton";
 import Detailtoko from "./pages/detailtoko";
 import Notifikasi from "./pages/notifikasi";
 import UbahProduk from "./pages/ubahProduk";
 import CategoryPage from "./pages/categoryPage";
-import PesananToko from "./pages/pesananToko";
+import ChatUser from "./pages/chatUser";
 
 function App() {
   return (
@@ -45,6 +44,8 @@ function App() {
           <Route path="/detailtoko/:id" element={<Detailtoko />} />
           <Route path="/notifikasi" element={<Notifikasi />} />
           <Route path="/ubahProduk/:id" element={<UbahProduk />} />
+          <Route path="/chat" element={<ChatUser />} />
+          <Route path="/chat/:to_id" element={<ChatUser />} />
         </Routes>
       </SkeletonTheme>
     </div>

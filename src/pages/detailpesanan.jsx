@@ -138,7 +138,7 @@ function Detailpesanan() {
     axios
       .get(
         apiurl() +
-          "shipping/cost?origin_city_id=209&destination_city_id=209&weight=500",
+          "shipping/cost/1?origin_city_id=209&destination_city_id=209&weight=500",
         {
           headers: {
             Authorization: `Bearer ${token()}`,
@@ -147,6 +147,7 @@ function Detailpesanan() {
       )
       .then((response) => {
         setCouriers(response.data.data.delivery_courier);
+        console.log("Courier data:", response.data.data.delivery_courier);
       })
       .catch((error) => {
         console.error("Error fetching courier data:", error);
