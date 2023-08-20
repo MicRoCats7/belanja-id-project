@@ -4,13 +4,14 @@
     box-sizing: border-box;
 }
 
-.container-chat {
-    width: 100%;
+.container-chat-user {
+    width: 97%;
     height: 100%;
     background-color: #ffff;
     display: flex;
-    margin: 33px 30px;
+    margin: 120px 33px 30px 30px;
     border-radius: 10px;
+    border: 1px solid #adadad;
 }
 
 .chat {
@@ -55,7 +56,7 @@
     outline: none;
 }
 
-.chat .content-chat-user-toko {
+.content-chat-user-toko {
     display: flex;
     flex-direction: column;
     padding: 10px 20px;
@@ -63,7 +64,7 @@
     height: 100%;
 }
 
-.content-chat-user-toko .content-chat-user {
+.content-chat-user-toko .chat-user-in-toko {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -73,13 +74,13 @@
     border-radius: 10px;
 }
 
-.content-chat-user-toko .content-chat-user p {
+.content-chat-user-toko .chat-user-in-toko p {
     font-size: 14px;
     font-weight: 500;
     color: #000;
 }
 
-.content-chat-user-toko .content-chat-user span {
+.content-chat-user-toko .chat-user-in-toko span {
     font-size: 12px;
     font-weight: 400;
     color: #adadad;
@@ -92,7 +93,7 @@
 }
 
 
-.content-chat-user-toko .content-chat-toko-reply {
+.content-chat-user-toko .chat-reply-toko {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -103,13 +104,13 @@
     background-color: #EBEBEB;
 }
 
-.content-chat-user-toko .content-chat-toko-reply p {
+.content-chat-user-toko .chat-reply-toko p {
     font-size: 14px;
     font-weight: 500;
     color: #000;
 }
 
-.content-chat-user-toko .content-chat-toko-reply span {
+.content-chat-user-toko .chat-reply-toko span {
     font-size: 12px;
     font-weight: 400;
     color: #adadad;
@@ -118,4 +119,30 @@
 
 .imgchat {
     text-align: center;
+}
+
+.message-container {
+    display: flex;
+    align-items: flex-end;
+    margin: 10px 0;
+}
+
+.message-container-right {
+    justify-content: flex-end;
+}
+
+.message-container-left {
+    justify-content: flex-start;
+}
+
+.message-content {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #e1e1e1;
+}
+
+.message-info {
+    font-size: 12px;
+    margin: 5px;
+    color: #aaa;
 }

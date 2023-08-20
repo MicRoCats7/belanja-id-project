@@ -236,7 +236,9 @@ function Navbar() {
               <p>Event</p>
             </Link>
             <div className="icon-navbar">
-              {/* <img src={iconChat} alt="icon chat" /> */}
+              <Link to={"/chat"}>
+                <img src={iconChat} alt="icon chat" />
+              </Link>
               <Link to={"/cart"} className="cart-icon">
                 <div className="icon-cart">
                   <div className="icon-cart-navbar">

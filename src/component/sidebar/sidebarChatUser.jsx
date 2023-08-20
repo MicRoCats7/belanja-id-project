@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import "../../style/sidebarChatUser.css";
 import { CiSearch } from "react-icons/ci";
-import imgChat from "../../assets/image/shopping-bag-chat.svg";
 import { useState } from "react";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
 import token from "../../utils/token";
+import { useParams } from "react-router-dom";
 
 function SidebarChatUser() {
   const [selectedChat, setSelectedChat] = useState(null);
   const user_id = localStorage.getItem("user_id");
   const [chats, setChats] = useState([]);
-  const to_id = 58;
+  const to_id = useParams().to_id;
 
   useEffect(() => {
     getChats(); // Panggil fungsi getChats saat komponen dimount
@@ -27,7 +27,7 @@ function SidebarChatUser() {
     axios
       .get(
         apiurl() +
-          `chatify/messages?to_id=${user_id}&from_id=${to_id}&last=true`,
+          `chatify/messages?from_id=${user_id}&to_id=${to_id}&last=true`,
         {
           headers: {
             Authorization: `Bearer ${token()}`,
@@ -70,12 +70,12 @@ function SidebarChatUser() {
               onClick={() => handleChatClick(index)}
             >
               <div className="img-chat">
-                <img src={chat.from_user.profile_photo_path} alt="" />
+                <img src={chat.to_user.store.logo} alt="" />
               </div>
               <div className="content-chat">
                 <div className="chat-top">
                   <div className="namechat">
-                    <h4>{chat.from_user.name}</h4>
+                    <h4>{chat.to_user.store.name}</h4>
                     <p>{formatTime(chat.created_at)}</p>
                   </div>
                 </div>

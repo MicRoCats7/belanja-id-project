@@ -12,7 +12,7 @@ import LoadingSkeletonRiwayat from "../component/loader/LoadingSkeletonRiwayat";
 import { MdOutlineClose, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { BsShop } from "react-icons/bs";
 import { IoMdCopy } from "react-icons/io";
-import { Box, Rating, Snackbar, Typography } from "@mui/material";
+import { Box, Rating, Snackbar } from "@mui/material";
 import { BiImageAdd } from "react-icons/bi";
 import { FiTrash2 } from "react-icons/fi";
 import MuiAlert from "@mui/material/Alert";
@@ -20,6 +20,10 @@ import { Link } from "react-router-dom";
 import { set } from "react-hook-form";
 
 function Riwayat() {
+  useEffect(() => {
+    getRiwayatTransaksi();
+  }, []);
+
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
@@ -28,8 +32,6 @@ function Riwayat() {
   const [showStatusPopup, setShowStatusPopup] = useState(false);
   const [selectedStatusData, setSelectedStatusData] = useState(null);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
-  const [value, setValue] = React.useState(2);
-  const [selectedImagePath, setSelectedImagePath] = useState("");
   const [previewImg1, setPreviewImg1] = useState(null);
   const [previewImg2, setPreviewImg2] = useState(null);
   const [previewImg3, setPreviewImg3] = useState(null);
@@ -38,6 +40,7 @@ function Riwayat() {
     image_path: null,
     image_path_2: null,
     image_path_3: null,
+    image_path_4: null,
   });
   const [selectedProductId, setSelectedProductId] = useState([]);
   const [reviewText, setReviewText] = useState(""); // State untuk teks ulasan
@@ -92,9 +95,13 @@ function Riwayat() {
     ],
   };
 
-  useEffect(() => {
-    getRiwayatTransaksi();
-  }, []);
+  const renderNoTransactions = () => {
+    return (
+      <div className="no-transactions-message">
+        No transactions found for this status.
+      </div>
+    );
+  };
 
   const handleDetailTransaksi = (transaction) => {
     setSelectedTransaction(transaction);
@@ -400,119 +407,125 @@ function Riwayat() {
       ) : (
         <div className="form-riwayat">
           <h3>Daftar Transaksi</h3>
-          {riwayatTransaksi
-            .filter(filterByStatus)
-            .filter(searchFilter)
-            .map((transaksi) => (
-              <div className="box-riwayat" key={transaksi.id}>
-                <div className="info-pesanan">
-                  <img src={BagIcon} alt="" />
-                  <p className="text-belanja">Belanja</p>
-                  <div className="data-verifikasi">{transaksi.status}</div>
-                  <p>
-                    {new Date(transaksi.created_at).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }
-                    )}
-                  </p>
-                  <p style={{ color: "red" }}>ID ORDER : {transaksi.id}</p>
-                </div>
-                <div className="toko-barang">
-                  {transaksi.product &&
-                  transaksi.product.store &&
-                  transaksi.product.store.logo ? (
-                    <img src={transaksi.product.store.logo} alt="" />
-                  ) : null}
-                  <div className="info-detail-toko">
-                    <div className="nama-toko">
-                      {transaksi.product && transaksi.product.store
-                        ? transaksi.product.store.name
-                        : ""}
+          {riwayatTransaksi.filter(filterByStatus).filter(searchFilter)
+            .length === 0
+            ? renderNoTransactions()
+            : riwayatTransaksi
+                .filter(filterByStatus)
+                .filter(searchFilter)
+                .map((transaksi) => (
+                  <div className="box-riwayat" key={transaksi.id}>
+                    <div className="info-pesanan">
+                      <img src={BagIcon} alt="" />
+                      <p className="text-belanja">Belanja</p>
+                      <div className="data-verifikasi">{transaksi.status}</div>
+                      <p>
+                        {new Date(transaksi.created_at).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
+                      </p>
+                      <p style={{ color: "red" }}>ID ORDER : {transaksi.id}</p>
                     </div>
-                  </div>
-                </div>
-                <div className="info-detail-total" key={transaksi.product?.id}>
-                  <Link to={"/detailproduct/" + transaksi.product?.id}>
-                    <div className="wrap">
-                      <div className="images">
-                        <img src={transaksi.product?.picturePath} alt="" />
-                      </div>
+                    <div className="toko-barang">
+                      {transaksi.product &&
+                      transaksi.product.store &&
+                      transaksi.product.store.logo ? (
+                        <img src={transaksi.product.store.logo} alt="" />
+                      ) : null}
                       <div className="info-detail-toko">
-                        <div className="nama-barang">
-                          {transaksi.product?.name}
-                        </div>
-                        <div className="total-barang">
-                          {transaksi.quantity} barang
+                        <div className="nama-toko">
+                          {transaksi.product && transaksi.product.store
+                            ? transaksi.product.store.name
+                            : ""}
                         </div>
                       </div>
                     </div>
-                  </Link>
-                  <div className="total-riwayat">
-                    <div className="txt-belanja">Total Belanja</div>
-                    <div className="harga-belanja">
-                      Rp. {formatPrice(transaksi.total)}
+                    <div
+                      className="info-detail-total"
+                      key={transaksi.product?.id}
+                    >
+                      <Link to={"/detailproduct/" + transaksi.product?.id}>
+                        <div className="wrap">
+                          <div className="images">
+                            <img src={transaksi.product?.picturePath} alt="" />
+                          </div>
+                          <div className="info-detail-toko">
+                            <div className="nama-barang">
+                              {transaksi.product?.name}
+                            </div>
+                            <div className="total-barang">
+                              {transaksi.quantity} barang
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                      <div className="total-riwayat">
+                        <div className="txt-belanja">Total Belanja</div>
+                        <div className="harga-belanja">
+                          Rp. {formatPrice(transaksi.total)}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="opsi-belilagi-lihatdetail">
+                      {transaksi.status === "FINISHED" &&
+                        !isProductReviewedInLatestTransaction(
+                          transaksi.product?.id
+                        ) && (
+                          <button
+                            className="btn-belilagi"
+                            onClick={() =>
+                              handleShowReviewPopup(transaksi.product?.id)
+                            }
+                          >
+                            Review
+                          </button>
+                        )}
+                      {transaksi.status === "PENDING" && (
+                        <button
+                          className="btn-belilagi"
+                          onClick={() => handleDetailTransaksi(transaksi)}
+                        >
+                          Lihat Detail
+                        </button>
+                      )}
+                      {transaksi.status === "PROCESSED" && (
+                        <button
+                          className="btn-belilagi"
+                          onClick={() => handleShowStatusPopup(transaksi)}
+                        >
+                          Lihat Status
+                        </button>
+                      )}
+                      {transaksi.status === "SHIPPED" && (
+                        <>
+                          <button className="btn-belilagi">Lihat Status</button>
+                          <button
+                            className="btn-belilagi"
+                            onClick={() => acceptTransaction(transaksi.id)}
+                          >
+                            Selesaikan Pesanan
+                          </button>
+                        </>
+                      )}
+                      {transaksi.status === "FINISHED" && (
+                        <>
+                          <button
+                            className="btn-detailtransaksi"
+                            onClick={() => handleDetailTransaksi(transaksi)}
+                          >
+                            Detail Transaksi
+                          </button>
+                          <button className="btn-belilagi">Beli Lagi</button>
+                        </>
+                      )}
                     </div>
                   </div>
-                </div>
-                <div className="opsi-belilagi-lihatdetail">
-                  {transaksi.status === "FINISHED" &&
-                    !isProductReviewedInLatestTransaction(
-                      transaksi.product?.id
-                    ) && (
-                      <button
-                        className="btn-belilagi"
-                        onClick={() =>
-                          handleShowReviewPopup(transaksi.product?.id)
-                        }
-                      >
-                        Review
-                      </button>
-                    )}
-                  {transaksi.status === "PENDING" && (
-                    <button
-                      className="btn-belilagi"
-                      onClick={() => handleDetailTransaksi(transaksi)}
-                    >
-                      Lihat Detail
-                    </button>
-                  )}
-                  {transaksi.status === "PROCESSED" && (
-                    <button
-                      className="btn-belilagi"
-                      onClick={() => handleShowStatusPopup(transaksi)}
-                    >
-                      Lihat Status
-                    </button>
-                  )}
-                  {transaksi.status === "SHIPPED" && (
-                    <>
-                      <button className="btn-belilagi">Lihat Status</button>
-                      <button
-                        className="btn-belilagi"
-                        onClick={() => acceptTransaction(transaksi.id)}
-                      >
-                        Selesaikan Pesanan
-                      </button>
-                    </>
-                  )}
-                  {transaksi.status === "FINISHED" && (
-                    <>
-                      <button
-                        className="btn-detailtransaksi"
-                        onClick={() => handleDetailTransaksi(transaksi)}
-                      >
-                        Detail Transaksi
-                      </button>
-                      <button className="btn-belilagi">Beli Lagi</button>
-                    </>
-                  )}
-                </div>
-              </div>
-            ))}
+                ))}
         </div>
       )}
       {selectedStatusData && showStatusPopup && (
