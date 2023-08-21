@@ -7,11 +7,10 @@ import Biodata from "./biodata";
 import Alamat from "./alamat";
 import Riwayat from "./riwayat";
 import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
 
 function Profile() {
   useEffect(() => {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
   }, []);
   return (
     <div className="main-profile-info">

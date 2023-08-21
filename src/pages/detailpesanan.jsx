@@ -135,10 +135,19 @@ function Detailpesanan() {
   }, [snapToken]);
 
   useEffect(() => {
+    const selectedProductWeights = selectedItems.map(
+      (item) => item.product.weight * item.quantity
+    );
+    const totalWeight = selectedProductWeights.reduce(
+      (total, weight) => total + weight,
+      0
+    );
+    const originCityId = 1; // Ganti dengan ID kota asal yang sesuai
+    const destinationCityId = 58;
     axios
       .get(
         apiurl() +
-          "shipping/cost/1?origin_city_id=209&destination_city_id=209&weight=500",
+          `shipping/cost/${originCityId}?origin_city_id=${originCityId}&destination_city_id=${destinationCityId}&weight=${totalWeight}`,
         {
           headers: {
             Authorization: `Bearer ${token()}`,
@@ -159,7 +168,7 @@ function Detailpesanan() {
     selectedItems.forEach((item) => {
       totalPrice += item.product.price * item.quantity;
     });
-    return totalPrice + shippingCost;
+    return totalPrice + calculateShippingCost();
   }
 
   function calculateTotalOriginalPrice() {
@@ -526,11 +535,23 @@ function Detailpesanan() {
                     ) : (
                       <>
                         <p>Pilih kurir untuk melihat detail pengiriman.</p>
-                        <div className="btn-pilih-shipping">
+                        {/* <div className="btn-pilih-shipping">
                           <button onClick={handlePilihMetodeLain}>
                             Pilih Pengiriman
                           </button>
-                        </div>
+                        </div> */}
+                        {couriers.map((courier, index) => (
+                          <div
+                            className="list-couriers"
+                            key={index}
+                            onClick={() => handleSelectCourier(courier)}
+                          >
+                            <h1>
+                              {courier.courier} - Rp {formatPrice(courier.cost)}
+                            </h1>
+                            <h1>Estimasi pesanan sampai {courier.etd}</h1>
+                          </div>
+                        ))}
                       </>
                     )}
                   </div>

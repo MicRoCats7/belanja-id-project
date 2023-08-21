@@ -179,7 +179,7 @@ function TambahProduk() {
       const newProductData = response.data.data;
       console.log("Produk berhasil ditambahkan:", newProductData);
       setTimeout(() => {
-        navigate("/toko/daftarproduk/");
+        navigate(`/toko/daftarproduk/${newProductData.store_id}`);
       }, 900);
     } catch (error) {
       handleErrorAlertToko();
@@ -472,7 +472,7 @@ function TambahProduk() {
                     {previewImg && (
                       <div className="upload-row">
                         <span className="upload-content">
-                          <FiTrash2 onClick={() => setPreviewImg(null)} />
+                          <FiTrash2 onClick={() => setPreviewImg("")} />
                         </span>
                       </div>
                     )}

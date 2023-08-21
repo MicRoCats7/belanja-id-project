@@ -8,7 +8,7 @@ import MuiAlert from "@mui/material/Alert";
 import { useNavigate, useParams } from "react-router-dom";
 import token from "../../utils/token";
 
-function ModalEditAlamat() {
+function ModalEditAlamat({ EditNewAlamat, idalamat }) {
   const [modal, setModal] = useState(false);
   const { id } = useParams();
   const [alamat, setAlamat] = useState("");
@@ -27,11 +27,12 @@ function ModalEditAlamat() {
   const [selectedCityName, setSelectedCityName] = useState("");
   const [selectedPrimaryAddress, setSelectedPrimaryAddress] = useState(null);
   const [alamatList, setAlamatList] = useState([]);
-
+  const [label, setLabel] = useState("");
+  console.log(idalamat);
   useEffect(() => {
-    fetchAlamat();
+    fetchAlamat(idalamat, id);
     fetchProvinces();
-  }, [id]);
+  }, [idalamat, id]);
 
   const fetchProvinces = async () => {
     try {
@@ -54,18 +55,52 @@ function ModalEditAlamat() {
     }
   };
 
+  // const handleEditAlamat = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       apiurl() + "user_addresses/id" + id,
+  //       {
+  //         receiver_name: nama,
+  //         phone_number: phone,
+  //         province_id: selectedProvince,
+  //         city_id: selectedCity,
+  //         full_address: alamat,
+  //         // ... and other fields
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token()}`,
+  //         },
+  //       }
+  //     );
+
+  //     if (response.data.meta && response.data.meta.code === 200) {
+  //       // Sukses, lakukan pembaruan tampilan jika perlu
+  //       // Misalnya, panggil fungsi untuk mengambil data alamat kembali
+  //       fetchAlamat();
+  //       // Tutup modal
+  //       toggleModal();
+  //     } else {
+  //       console.log("Failed to edit address:", response.data.meta.message);
+  //       // Munculkan pesan kesalahan jika perlu
+  //     }
+  //   } catch (error) {
+  //     console.error("Error editing address:", error);
+  //   }
+  // };
   const handleEditAlamat = async () => {
+    const formData = new FormData();
+    formData.append("receiver_name", nama);
+    formData.append("phone_number", phone);
+    formData.append("provinces", selectedProvinceName);
+    formData.append("regencies", selectedCity.city_name);
+    formData.append("address_one", alamat);
+    formData.append("label_address", label);
+
     try {
-      const response = await axios.put(
-        apiurl() + "user_addresses/id" + id,
-        {
-          receiver_name: nama,
-          phone_number: phone,
-          province_id: selectedProvince,
-          city_id: selectedCity,
-          full_address: alamat,
-          // ... and other fields
-        },
+      const response = await axios.post(
+        apiurl() + "user_addresses/" + idalamat,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token()}`,
@@ -74,56 +109,104 @@ function ModalEditAlamat() {
       );
 
       if (response.data.meta && response.data.meta.code === 200) {
-        // Sukses, lakukan pembaruan tampilan jika perlu
-        // Misalnya, panggil fungsi untuk mengambil data alamat kembali
+        const newAlamatData = {
+          receiver_name: nama,
+          phone_number: phone,
+          provinces: selectedProvinceName,
+          regencies: selectedCity.city_name,
+          address_one: alamat,
+          label_address: label,
+        };
+        EditNewAlamat(newAlamatData);
         fetchAlamat();
-        // Tutup modal
         toggleModal();
       } else {
         console.log("Failed to edit address:", response.data.meta.message);
-        // Munculkan pesan kesalahan jika perlu
       }
     } catch (error) {
       console.error("Error editing address:", error);
     }
   };
 
-  function fetchAlamat() {
-    axios
-      .get(apiurl() + "user_addresses/" + id, {
+  // function fetchAlamat() {
+  //   axios
+  //     .get(apiurl() + "user_addresses/" + id, {
+  //
+  //     })
+  //     .then((response) => {
+  //       const responseData = response.data;
+  //       console.log(responseData);
+  //       if (responseData.data) {
+  //         setAlamatList(responseData.data);
+  //         const primaryAddress = responseData.data.find(
+  //           (alamat) => alamat.is_primary === "1"
+  //         );
+  //         if (!primaryAddress && responseData.data.length > 1) {
+  //           setSelectedPrimaryAddress(responseData.data[1]);
+  //         } else {
+  //           setSelectedPrimaryAddress(primaryAddress);
+  //         }
+  //       } else {
+  //         console.log(
+  //           "Gagal mengambil data alamat:",
+  //           responseData.meta.message
+  //         );
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("Gagal mengambil data alamat:", error);
+  //     });
+  // }
+
+  const fetchAlamat = async () => {
+    try {
+      const response = await axios.get(apiurl() + "user_addresses/" + id, {
         headers: {
           Authorization: `Bearer ${token()}`,
         },
-      })
-      .then((response) => {
-        const responseData = response.data;
-        if (responseData.data) {
-          setAlamatList(responseData.data);
-          const primaryAddress = responseData.data.find(
-            (alamat) => alamat.is_primary === "1"
-          );
-          if (!primaryAddress && responseData.data.length > 1) {
-            setSelectedPrimaryAddress(responseData.data[1]);
-          } else {
-            setSelectedPrimaryAddress(primaryAddress);
+        params: {
+          id: idalamat,
+        },
+      });
+      const responseData = response.data;
+
+      if (responseData.meta && responseData.meta.code === 200) {
+        const addressData = responseData.data;
+
+        setAlamatList(responseData.data);
+
+        const primaryAddress = addressData.find(
+          (alamat) => alamat.is_primary === "1"
+        );
+
+        if (primaryAddress) {
+          // Set values from primaryAddress to state variables
+          setNama(primaryAddress.receiver_name);
+          setNomor(primaryAddress.phone_number);
+          setSelectedProvince(primaryAddress.provinces); // assuming provinces is a string
+          setSelectedCity(primaryAddress.regencies); // assuming regencies is a string
+          setAlamat(primaryAddress.address_one);
+          setLabel(primaryAddress.label_address);
+
+          // Fetch cities based on the selected province
+          if (primaryAddress.provinces) {
+            fetchCitiesByProvince(primaryAddress.provinces);
           }
         } else {
-          console.log(
-            "Gagal mengambil data alamat:",
-            responseData.meta.message
-          );
+          console.log("No primary address found.");
         }
-      })
-      .catch((error) => {
-        console.log("Gagal mengambil data alamat:", error);
-      });
-  }
+      } else {
+        console.log("Failed to fetch address:", responseData.meta.message);
+      }
+    } catch (error) {
+      console.log("Failed to fetch address:", error);
+    }
+  };
 
   const handleProvinceChange = (e) => {
     const selectedId = e.target.value;
     setSelectedProvince(selectedId);
 
-    // Cari nama provinsi berdasarkan ID provinsi yang dipilih
     const selectedProvinceData = provinces.find(
       (province) => province.province_id === selectedId
     );
@@ -176,15 +259,9 @@ function ModalEditAlamat() {
     setSearchResultsVisibleCity(false);
   };
 
-  const toggleModal = () => {
+  const toggleModal = async () => {
+    await fetchAlamat(idalamat);
     setModal(!modal);
-    // Mengisi data alamat yang sedang diedit
-    setNama(selectedPrimaryAddress?.receiver_name);
-    setNomor(selectedPrimaryAddress?.phone_number);
-    setSelectedProvince(selectedPrimaryAddress?.province_id);
-    setSelectedCity(selectedPrimaryAddress?.city_id);
-    setAlamat(selectedPrimaryAddress?.full_address);
-    // ... dan lainnya
   };
 
   const handleNameChange = (event) => {
@@ -313,10 +390,18 @@ function ModalEditAlamat() {
               </div>
               <div className="label-kamu">
                 <h3>Label Alamat</h3>
-                <input type="text" placeholder="Label Alamat" />
+                <input
+                  type="text"
+                  placeholder="Label Alamat"
+                  value={label}
+                  onChange={(e) => setLabel(e.target.value)}
+                />
+                <p>Contoh: Rumah, Kantor, dan lainnya.</p>
               </div>
             </div>
-            <button className="btn-simpan-alamat">Ubah Alamat</button>
+            <button className="btn-simpan-alamat" onClick={handleEditAlamat}>
+              Ubah Alamat
+            </button>
           </div>
         </div>
       )}

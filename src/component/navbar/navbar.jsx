@@ -23,6 +23,7 @@ function Navbar() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [toko, setToko] = useState([]);
+  const [shopList, setShopList] = useState([]);
   const [hasShop, setHasShop] = useState(false);
   const [produkList, setProdukList] = useState([]);
   const [text, setText] = useState("");
@@ -35,6 +36,7 @@ function Navbar() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [tokoProducts, setTokoProducts] = useState([]);
 
   const handleLogoutModalOpen = () => {
     setLogoutModalOpen(true);
@@ -50,6 +52,7 @@ function Navbar() {
     getProfile();
     getCategories();
     getToko();
+    getStoko();
   }, []);
 
   const getProfile = async () => {
@@ -129,6 +132,27 @@ function Navbar() {
     }
   };
 
+  const getStoko = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(
+          apiurl() + "stores?store_name=" + text,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        setShopList(response.data.data);
+        console.log("Data successfully fetched:", response.data.data);
+      } catch (error) {
+        setHasShop(false);
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+
   const handleSuccessAlertOpen = () => {
     setSuccessAlertOpen(true);
   };
@@ -164,13 +188,29 @@ function Navbar() {
   };
 
   const onChangeHandler = (text) => {
-    let matches = [];
+    let productMatches = [];
+    let shopMatches = [];
+
     if (produkList && produkList.length > 0) {
       const regex = new RegExp(`${text}`, "gi");
-      matches = produkList.filter((pro) => pro.name.match(regex));
+      productMatches = produkList.filter((pro) => pro.name.match(regex));
     }
-    setSuggestions(matches);
+
+    if (shopList && shopList.length > 0) {
+      const shopRegex = new RegExp(`${text}`, "gi");
+      shopMatches = shopList.filter((shop) => shop.name.match(shopRegex));
+    }
+
+    const combinedSuggestions = [...productMatches, ...shopMatches];
+
+    setSuggestions(combinedSuggestions);
     setText(text);
+
+    const tokoProductMatches = produkList.filter((pro) =>
+      pro.store.name.toLowerCase().includes(text.toLowerCase())
+    );
+
+    setTokoProducts(tokoProductMatches);
   };
 
   const handleSearch = (query) => {
@@ -193,7 +233,7 @@ function Navbar() {
           Authorization: `Bearer ${token()}`,
         },
       });
-      setCartItemCount(response.data.data.cartItems.length); // Menyimpan jumlah produk di keranjang
+      setCartItemCount(response.data.data.cartItems.length);
       // getProduct();
     } catch (error) {
       console.log(error);
@@ -202,7 +242,6 @@ function Navbar() {
 
   const handleInputBlur = () => {
     setSearchClicked(false); // Sembunyikan dropdown ketika kehilangan fokus
-    // Hapus setTimeout dan setSuggestions([]) dari handleInputBlur
   };
 
   const handleInputClick = () => {
