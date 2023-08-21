@@ -176,7 +176,8 @@ input[type="text"]:focus {
 .opsi-belilagi-lihatdetail {
     display: flex;
     justify-content: flex-end;
-    gap: 20px;
+    align-items: center;
+    gap: 10px;
 }
 
 .btn-detail-transaksi {
@@ -216,7 +217,7 @@ input[type="text"]:focus {
 }
 
 .form-riwayat {
-    width: 900px;
+    width: 1000px;
     padding: 16px;
     border-radius: 6px;
     border: 1px solid rgb(224, 224, 224);
@@ -497,7 +498,7 @@ input[type="text"]:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .popup-content {
@@ -509,6 +510,17 @@ input[type="text"]:focus {
     width: 80%;
     height: 73%;
     max-width: 600px;
+}
+
+.popup-content-cara-pembayaran {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 80%;
+    height: 90%;
+    max-width: 570px;
 }
 
 .top-popup-content {
@@ -523,6 +535,17 @@ input[type="text"]:focus {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    overflow-y: auto;
+    max-height: 75vh;
+    padding: 20px;
+}
+
+.timeline h1 {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #000;
+    margin-bottom: 10px;
 }
 
 .timeline-item {
@@ -546,6 +569,50 @@ input[type="text"]:focus {
     margin-top: 4px;
 }
 
+.timeline .nomor-virtual {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.left-virtual p {
+    font-size: 16px;
+    color: #000;
+    font-weight: 400;
+}
+
+.left-virtual h2 {
+    font-size: 20px;
+    color: #000;
+    font-weight: 600;
+}
+
+.icon-salin {
+    color: #EF233C;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon-salin p {
+    font-size: 13px;
+    color: #EF233C;
+}
+
+.timeline .total-pembayaran-produk {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.line-top-modal-content .line-cara-pembayaran {
+    width: 100%;
+    height: 1px;
+}
+
 .popup-container-review {
     position: fixed;
     top: 0;
@@ -567,6 +634,28 @@ input[type="text"]:focus {
     position: relative;
     width: 80%;
     max-width: 600px;
+}
+
+.cancel-popup {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: 72%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 14px;
+    z-index: 9999;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.cancel-popup:hover {
+    background-color: #ffdcdc;
 }
 
 .rating-review-user {
@@ -671,6 +760,13 @@ input[type="text"]:focus {
     left: 50%;
     transform: translate(-50%, -50%); */
 }
+
+/* Custom style for success alert */
+.custom-success-alert {
+    z-index: 9999;
+}
+
+
 /* 
 .content-info-ongkir{
     display: flex;

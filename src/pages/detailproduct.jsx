@@ -508,7 +508,7 @@ function DetailProduct() {
                             addToCartAndNavigateToCartPage(quantity)
                           }
                         >
-                          Beli Sekarang
+                          Beli
                         </button>
                         <button
                           className="btn-chat" // Tombol chat

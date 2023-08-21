@@ -9,7 +9,9 @@ function NavbarCheckout() {
       <div className="navbar">
         <div className="container-navbar">
           <div className="navbar-logo">
-            <img src={logoBelanjaID} alt="logo belanja.id" />
+            <Link to={"/"}>
+              <img src={logoBelanjaID} alt="logo belanja.id" />
+            </Link>
           </div>
         </div>
       </div>
