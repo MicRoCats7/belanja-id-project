@@ -36,7 +36,7 @@ function UbahProduk() {
   const [selectedCategoryError, setSelectedCategoryError] = useState(false);
   const [kondisiProdukError, setKondisiProdukError] = useState(false);
   const [selectedImagePathError, setSelectedImagePathError] = useState(false);
-  const [previewImg, setPreviewImg1] = useState(null);
+  const [previewImg1, setPreviewImg1] = useState(null);
   const [previewImg2, setPreviewImg2] = useState(null);
   const [previewImg3, setPreviewImg3] = useState(null);
   const [previewImg4, setPreviewImg4] = useState(null);
@@ -105,7 +105,7 @@ function UbahProduk() {
         setKondisiProduk(productData.kondisi_produk);
         setDeskripsiProduk(productData.description);
         setSKU(productData.sku);
-        setPreviewImg1(productData.picturePath);
+        setPreviewImg1(productData.picturePath[0]);
         setValue3(productData.quantity);
         setValue2(productData.price);
         setValue4(productData.weight);
@@ -165,8 +165,8 @@ function UbahProduk() {
       const newProductData = response.data.data;
       console.log("Produk berhasil diedit:", newProductData);
       setTimeout(() => {
+        navigate(`/toko/daftarproduk/${newProductData.store_id}`);
         setIsLoading(false);
-        navigate("/toko/daftarproduk/");
       }, 2000);
     } catch (error) {
       handleErrorAlertToko();
@@ -410,14 +410,14 @@ function UbahProduk() {
                 <div className="inputFotoProduk">
                   <div className="addImg">
                     <label
-                      htmlFor="input-file"
+                      htmlFor="input-file1"
                       className={`file-label ${
                         !selectedImagePath ? "no-border" : ""
                       }`}
                     >
-                      {previewImg ? (
+                      {previewImg1 ? (
                         <img
-                          src={previewImg}
+                          src={previewImg1}
                           width={150}
                           height={150}
                           alt="Uploaded"
@@ -431,14 +431,14 @@ function UbahProduk() {
                       )}
                     </label>
                     <input
-                      id="input-file"
+                      id="input-file1"
                       type="file"
                       accept=".jpg, .jpeg, .png"
                       className="input-field"
                       onChange={handleImageChange1}
                       hidden
                     />
-                    {previewImg && (
+                    {previewImg1 && (
                       <div className="upload-row">
                         <span className="upload-content">
                           <FiTrash2 onClick={() => setPreviewImg1("")} />

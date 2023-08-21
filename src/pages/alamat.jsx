@@ -85,9 +85,8 @@ function Alamat() {
   };
 
   function updatePrimaryAddressInDatabase(addressId) {
-    // Menggunakan Promise.all untuk menjalankan kedua permintaan bersamaan
     Promise.all([
-      axios.put(
+      axios.post(
         apiurl() + "user_addresses/" + addressId,
         { is_primary: "1" },
         {
@@ -98,7 +97,7 @@ function Alamat() {
       ),
       // Mengubah is_primary menjadi 0 untuk alamat lainnya
       ...alamatList.map((alamat) =>
-        axios.put(
+        axios.post(
           apiurl() + "user_addresses/" + alamat.id,
           { is_primary: alamat.id === addressId ? "1" : "0" },
           {
@@ -185,7 +184,7 @@ function Alamat() {
 
   return (
     <>
-      {isLoading ? ( // Display the loading skeleton while isLoading is true
+      {isLoading ? (
         <LoadingAlamat />
       ) : alamatList.length === 0 ? (
         <div className="item-alamat-kosong">
@@ -245,6 +244,8 @@ function Alamat() {
                     <div>
                       <ModalEditAlamat
                         selectedPrimaryAddress={selectedPrimaryAddress}
+                        idalamat={alamat.id}
+                        EditNewAlamat={addNewAlamat}
                         closeModal={() => setEditingAddress(null)}
                       />
                     </div>
