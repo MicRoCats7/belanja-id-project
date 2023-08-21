@@ -339,7 +339,6 @@ function ModalAlamat({ addNewAlamat }) {
                       </div>
                     </div>
                   </div>
-
                   <div className="alamat-kamu">
                     <h3>Alamat Lengkap</h3>
                     <textarea

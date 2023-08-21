@@ -172,9 +172,9 @@ function App() {
             ))}
           </div>
           {visibleDataCount < provinces.length && (
-            <button className="show-more-button" onClick={handleShowMore}>
-              Tampilkan Lebih Banyak
-            </button>
+            <p className="merah-p" onClick={handleShowMore}>
+              Lihat Lebih Banyak
+            </p>
           )}
         </div>
       </div>
