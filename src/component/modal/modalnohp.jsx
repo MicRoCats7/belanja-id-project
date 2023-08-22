@@ -8,7 +8,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useEffect } from "react";
 
-function ModalHp({ nomProfileUpdate }) {
+function ModalHp({ nomProfileUpdate, isEdit }) {
   const [modal, setModal] = useState(false);
   const [phone, setNomor] = useState("");
   const [profile, setProfile] = useState({});
@@ -16,6 +16,7 @@ function ModalHp({ nomProfileUpdate }) {
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updatedNomor, setUpdatedNomor] = useState("");
+  const [isPhoneRegistered, setIsPhoneRegistered] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,6 +39,7 @@ function ModalHp({ nomProfileUpdate }) {
         handleSuccessAlertOpen();
         setProfile(response.data.data);
         setUpdatedNomor(phone);
+        setIsPhoneRegistered(true);
         nomProfileUpdate(response.data.data);
         console.log(response.data); // Panggil fungsi handleProfileUpdate dengan data pengguna yang diperbarui
       } catch (error) {
@@ -58,6 +60,14 @@ function ModalHp({ nomProfileUpdate }) {
     }
   }, [successAlertOpen, errorAlertOpen]);
 
+  useEffect(() => {
+    // Set isPhoneRegistered based on the profile data
+    if (profile.user && profile.user.phone) {
+      setIsPhoneRegistered(true);
+    } else {
+      setIsPhoneRegistered(false);
+    }
+  }, [profile]);
   const handlePhoneChange = (event) => {
     setNomor(event.target.value);
   };
@@ -82,10 +92,11 @@ function ModalHp({ nomProfileUpdate }) {
 
   return (
     <>
-      <h3 onClick={toggleModal} className="ubah-nohp">
-        Daftar
-      </h3>
-
+      {!isPhoneRegistered && (
+        <h3 onClick={toggleModal} className="ubah-nohp">
+          Daftar
+        </h3>
+      )}
       {modal && (
         <div className="modal-nomer">
           <div onClick={toggleModal} className="overlay"></div>

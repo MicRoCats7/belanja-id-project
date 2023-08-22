@@ -27,6 +27,8 @@ function ResultSearch() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
   const [selectedStoreId, setSelectedStoreId] = useState(null);
+  const [minPrice, setMinPrice] = useState(null); // New state for minimum price filter
+  const [maxPrice, setMaxPrice] = useState(null);
   const [queryType, setQueryType] = useState("store");
   const [queryTypeProduk, setQueryTypeP] = useState("product");
   const [selectedProvinces, setSelectedProvinces] = useState([]);
@@ -35,44 +37,67 @@ function ResultSearch() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(minPrice, maxPrice);
     calculateUnderlineStyle();
     getStoko().then((responseData) => {
       console.log(responseData);
       if (responseData.length > 0) {
         setSelectedStoreId(responseData[0].id);
-        fetchProducts(responseData[0].id);
+        fetchProducts(responseData[0].id, minPrice, maxPrice);
       }
     });
-  }, [query, activeTab, categoryId, selectedProvinces]);
+  }, [query, activeTab, categoryId, selectedProvinces, minPrice, maxPrice]);
 
   const fetchProducts = async (store_id, minPrice, maxPrice) => {
     setIsSearching(true);
+
     try {
       let response;
 
       if (queryTypeProduk === "product") {
         if (categoryId) {
           response = await axios.get(
-            apiurl() + `products?categoryId=${categoryId}`
+            apiurl() + `products?categoryId=${categoryId}`,
+            {
+              params: {
+                price_from: minPrice,
+                price_to: maxPrice,
+              },
+            }
           );
-        } else if (store_id) {
-          response = await axios.get(
-            apiurl() + `products?store_id=${store_id}`
-          );
-        } else {
-          response = await axios.get(apiurl() + `products?query=${query}`);
+        } else if (queryType === "store") {
+          if (store_id) {
+            response = await axios.get(
+              apiurl() + `products?store_id=${store_id}`,
+              {
+                params: {
+                  price_from: minPrice,
+                  price_to: maxPrice,
+                },
+              }
+            );
+          } else {
+            response = await axios.get(apiurl() + `products?query=${query}`, {
+              params: {
+                price_from: minPrice,
+                price_to: maxPrice,
+              },
+            });
+          }
         }
       } else if (queryType === "store") {
         if (store_id) {
           response = await axios.get(
             apiurl() + `products?store_id=${store_id}`
           );
-        } else {
         }
       }
+
       setIsLoading(false);
       setIsSearching(false);
+
+      console.log("minPrice:", minPrice);
+      console.log("maxPrice:", maxPrice);
 
       const filteredByProvinces = response.data.data.filter((product) =>
         selectedProvinces.includes(product.store.provinces)
@@ -82,16 +107,26 @@ function ResultSearch() {
         product.name.toLowerCase().includes(query.toLowerCase())
       );
 
+      const filteredByPrice = filteredProducts.filter((product) => {
+        const productPrice = parseFloat(product.price);
+        const isMinPriceMatch = !minPrice || productPrice >= minPrice;
+        const isMaxPriceMatch = !maxPrice || productPrice <= maxPrice;
+        console.log("Product Price:", productPrice);
+        console.log("isMinPriceMatch:", isMinPriceMatch);
+        console.log("isMaxPriceMatch:", isMaxPriceMatch);
+        return isMinPriceMatch && isMaxPriceMatch;
+      });
+      console.log("Filtered Products by Price:", filteredByPrice);
+
       setProducts(filteredProducts);
     } catch (error) {
       setIsLoading(false);
       setIsSearching(false);
       console.error(error);
-      setIsLoading(false);
     }
   };
 
-  const getStoko = async () => {
+  const getStoko = async (minPrice, maxPrice) => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -110,7 +145,13 @@ function ResultSearch() {
           const storeId = storeData.id;
 
           const productsResponse = await axios.get(
-            apiurl() + `products?store_id=${storeId}`
+            apiurl() + `products?store_id=${storeId}`,
+            {
+              params: {
+                price_from: minPrice,
+                price_to: maxPrice,
+              },
+            }
           );
           setTokoProduk(productsResponse.data.data);
         }
@@ -191,8 +232,13 @@ function ResultSearch() {
       });
     }
   };
+
   const handlePriceFilter = (minPrice, maxPrice) => {
-    fetchProducts(selectedStoreId, minPrice, maxPrice);
+    if (queryType === "store") {
+      fetchProducts(selectedStoreId, minPrice, maxPrice);
+    } else {
+      fetchProducts(null, minPrice, maxPrice);
+    }
   };
 
   return (
@@ -202,8 +248,8 @@ function ResultSearch() {
           <div className="filter-pro">
             {activeTab === "reviews" && (
               <FilterSearch
-              // onProvincesSelect={setSelectedProvinces}
-              // onPriceFilter={handlePriceFilter}
+                onProvincesSelect={setSelectedProvinces}
+                onPriceFilter={handlePriceFilter}
               />
             )}
             {activeTab === "ratings" && <FilterToko />}
