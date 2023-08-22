@@ -95,7 +95,9 @@ function DiProses() {
         {isLoading ? (
           <LoadingPesananToko />
         ) : riwayatTransaksi.length === 0 ? (
-          <h1 className="no-pesanan-text">Tidak ada pesanan.</h1>
+          <div className="no-pesanan-text">
+            <h3>Tidak ada pesanan yang akan diproses</h3>
+          </div>
         ) : (
           riwayatTransaksi
             .filter(searchFilter)

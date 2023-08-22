@@ -37,7 +37,7 @@ body.active-modal {
     background: rgba(49, 49, 49, 0.5);
 }
 
-.overlay{
+.overlay {
     background: rgba(49, 49, 49, 0.2);
 }
 
@@ -66,28 +66,28 @@ body.active-modal {
 }
 
 
-.ubah-nama-user{
+.ubah-nama-user {
     color: #EF233C;
     font-size: 0.857143rem;
     text-decoration: none;
     cursor: pointer;
 }
 
-.ubah-nohp{
+.ubah-nohp {
     color: #EF233C;
     font-size: 0.857143rem;
     text-decoration: none;
     cursor: pointer;
 }
 
-.ubah-tanggal-user{
+.ubah-tanggal-user {
     color: #EF233C;
     font-size: 0.857143rem;
     text-decoration: none;
     cursor: pointer;
 }
 
-.ubah-email-user{
+.ubah-email-user {
     color: #EF233C;
     font-size: 0.857143rem;
     text-decoration: none;
@@ -119,7 +119,7 @@ body.active-modal {
     background: rgba(49, 49, 49, 0.5);
 }
 
-.modal-delete, .overlay{
+.modal-delete, .overlay {
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -130,7 +130,7 @@ body.active-modal {
     overflow: hidden;
     background: rgba(49, 49, 49, 0.5);
 }
-  
+
 
 
 /* 
@@ -185,6 +185,7 @@ body.active-modal {
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
 /* .overlays {
     background: rgba(99, 99, 99, 0.8);
 } */
@@ -221,7 +222,7 @@ body.active-modal {
 
 
 
-.modals-content-ubah-alamat{
+.modals-content-ubah-alamat {
     width: 600px;
     height: 680px;
     background-color: white;
@@ -238,7 +239,7 @@ body.active-modal {
     overflow-y: auto;
 }
 
-.modals-content-add-alamat{
+.modals-content-add-alamat {
     width: 600px;
     height: 680px;
     background-color: white;
@@ -255,9 +256,9 @@ body.active-modal {
     overflow-y: auto;
 }
 
-.verification-content-modal{
+.verification-content-modal {
     width: 300px;
-    height: 300px;
+    height: 250px;
     background-color: white;
     border-radius: 10px;
     position: fixed;
@@ -267,21 +268,31 @@ body.active-modal {
     bottom: 0;
     margin: auto;
     padding: 2rem 2.5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    overflow-y: auto;
 }
 
-.modal-content-logout{
+.verification-content-modal h3 {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.verification-content-modal p {
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.modal-content-logout {
     background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
 }
 
-.modal-content-nomerhp{
+.modal-content-nomerhp {
     width: 400px;
     height: 350px;
     background-color: white;
@@ -308,58 +319,60 @@ body.active-modal {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* semi-transparent overlay */
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .verification-modal {
+}
+
+.verification-modal {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .modal-buttons {
+}
+
+.modal-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-  }
-  
-  .btn-lanjutkan,
-  .btn-kembali {
+}
+
+.btn-lanjutkan,
+.btn-kembali {
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .btn-lanjutkan {
+}
+
+.btn-lanjutkan {
     background-color: #EF233C;
     color: #fff;
-  }
-  
-  .btn-kembali {
+}
+
+.btn-kembali {
     background-color: #ccc;
     color: #fff;
-  }
-  
-.wrap-tulisan-email{
+}
+
+.wrap-tulisan-email {
+    margin: 20px 0px 20px 0px;
+}
+
+.wrap-tulisan-email p {
+    font-size: 14px;
+    text-align: center;
+}
+
+.tulisan-nomer {
     margin: 20px 0px 20px 0px;
     font-size: 14px;
     font-weight: 500;
 }
 
-
-
-.tulisan-nomer{
-    margin: 20px 0px 20px 0px;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.modal-content-email{
+.modal-content-email {
     width: 400px;
     height: 350px;
     background-color: white;
@@ -376,7 +389,7 @@ body.active-modal {
     overflow-y: auto;
 }
 
-.modal-content-delete{
+.modal-content-delete {
     width: 400px;
     height: 200px;
     background-color: white;
@@ -387,13 +400,10 @@ body.active-modal {
     top: 0;
     bottom: 0;
     margin: auto;
-    padding: 2rem 2.5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    overflow-y: auto;
+    padding: 0 2.5rem;
 }
 
-.modal-content-date{
+.modal-content-date {
     width: 500px;
     height: 350px;
     background-color: white;
@@ -410,7 +420,7 @@ body.active-modal {
     overflow-y: auto;
 }
 
-.modal-content-forgot{
+.modal-content-forgot {
     width: 450px;
     height: 300px;
     background-color: white;
@@ -427,7 +437,7 @@ body.active-modal {
     overflow-y: auto;
 }
 
-.modal-content-jadwal{
+.modal-content-jadwal {
     width: 500px;
     height: 500px;
     background-color: white;
@@ -444,7 +454,7 @@ body.active-modal {
     overflow-y: auto;
 }
 
-.modal-content-nama{
+.modal-content-nama {
     width: 500px;
     height: 500px;
     background-color: white;
@@ -510,23 +520,23 @@ body.active-modal {
     height: 45px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  .select-day::-ms-expand {
+}
+
+.select-day::-ms-expand {
     display: none;
-  }
-  
-  .select-day:after {
+}
+
+.select-day:after {
     content: "▼";
     font-size: 10px;
     margin-left: 5px;
     color: #666;
-  }
-  
-  /* Add hover effect to the dropdown arrow */
-  .select-day:hover:after {
+}
+
+/* Add hover effect to the dropdown arrow */
+.select-day:hover:after {
     color: #333;
-  }
+}
 
 .modal-content-nama p {
     margin: 20px 0px 20px 0px;
@@ -572,9 +582,9 @@ body.active-modal {
     bottom: 0;
     margin: auto;
     z-index: 999;
-  }
-  
-  .modal__cropper {
+}
+
+.modal__cropper {
     width: 500px;
     height: 600px;
     background-color: white;
@@ -589,41 +599,41 @@ body.active-modal {
     display: flex;
     align-items: center;
     flex-direction: column;
-  }
-  
-  .modal__cropper h1 {
+}
+
+.modal__cropper h1 {
     font-weight: 600;
     font-size: 20px;
     margin-bottom: 1rem;
     margin-right: auto;
     padding-left: 1rem;
-  }
-  
-  .wrapper__btn {
+}
+
+.wrapper__btn {
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin-top: auto;
     padding: 0 1rem;
-  }
-  
-  .wrapper__btn button {
+}
+
+.wrapper__btn button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
-  }
-  
-  .wrapper__btn button:first-child {
-    background-color: #666; 
-  }
-  
-  .wrapper__btn button:nth-child(2) {
-    background-color: #EF233C; 
-  }
-  
-  .reactEasyCrop_Container {
+}
+
+.wrapper__btn button:first-child {
+    background-color: #666;
+}
+
+.wrapper__btn button:nth-child(2) {
+    background-color: #EF233C;
+}
+
+.reactEasyCrop_Container {
     width: 100%;
     height: 80%;
     left: 0;
@@ -633,11 +643,17 @@ body.active-modal {
     background-color: white;
     filter: none;
     position: relative !important;
-  }
-  
+}
 
-.modal-buttons{
+
+.modal-buttons {
     margin-top: 20px;
+}
+
+.modal-button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
 }
 
 
@@ -667,7 +683,7 @@ body.active-modal {
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
 }
 
-.modal-delete{
+.modal-delete {
     z-index: 999;
     will-change: opacity;
     transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
@@ -838,7 +854,7 @@ input .input-email {
     width: 100%;
 }
 
-.btn-add-jadwal-toko{
+.btn-add-jadwal-toko {
     background-color: #EF233C;
     border: none;
     border-radius: 10px;
@@ -923,7 +939,7 @@ input .input-nomer {
 }
 
 
-.tutup-email{
+.tutup-email {
     margin: 0 5px;
     padding: 10px 20px;
     background-color: #ccc;
@@ -1018,7 +1034,7 @@ input .input-nomer {
 }
 
 
-.btn-kirim-pw{
+.btn-kirim-pw {
     padding: 8px 16px;
     width: 100%;
     border: none;
@@ -1028,7 +1044,7 @@ input .input-nomer {
     color: #fff;
 }
 
-.conten-forgot-pw{
+.conten-forgot-pw {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1037,17 +1053,17 @@ input .input-nomer {
 }
 
 
-.forgot-email{
+.forgot-email {
     cursor: pointer;
 }
 
-.conten-forgot-pw h3{
+.conten-forgot-pw h3 {
     margin-top: 20px;
     font-size: 15px;
     font-weight: 500;
 }
 
-.hapus-produk-ini{
+.hapus-produk-ini {
     font-size: 20px;
     font-weight: 600px;
     width: 100%;
@@ -1055,7 +1071,7 @@ input .input-nomer {
 }
 
 .btn-delete-popup {
-    background-color: #ff0000; 
+    background-color: #EF233C;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -1064,37 +1080,36 @@ input .input-nomer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40%;
+    width: 100%;
     gap: 10px;
     transition: background-color 0.3s;
-  }
-  
-    .btn-delete-popup:hover {
-        background-color: #cc0000; 
-    }
+}
 
-.btn-cancel-product{
-    background-color: #8f8b8b; 
+.btn-delete-popup:hover {
+    background-color: #ff4f4f;
+}
+
+.btn-cancel-product {
+    background-color: #8f8b8b;
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    width: 100px;
-    }
+    width: 100%;
+}
 
 
-   .wrapper-del-cancel{
+.wrapper-del-cancel {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: auto;
-    padding: 0 1rem;
-  }
-     
+    gap: 10px;
+}
 
 
-  .modal-container-detail-transaksi{
+
+.modal-container-detail-transaksi {
     position: fixed;
     top: 0;
     left: 0;
@@ -1105,23 +1120,26 @@ input .input-nomer {
     justify-content: center;
     align-items: center;
     z-index: 9999;
-  }
+}
 
-  @keyframes loading {
+@keyframes loading {
     0%, 20% {
-      content: ".";
+        content: ".";
     }
-    40% {
-      content: "..";
-    }
-    60% {
-      content: "...";
-    }
-    80% {
-      content: "";
-    }
-  }
 
-  .spinner-jadwal {
+    40% {
+        content: "..";
+    }
+
+    60% {
+        content: "...";
+    }
+
+    80% {
+        content: "";
+    }
+}
+
+.spinner-jadwal {
     animation: loading 1.5s steps(1) infinite;
-  }
+}

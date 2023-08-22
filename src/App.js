@@ -19,7 +19,7 @@ import Detailtoko from "./pages/detailtoko";
 import Notifikasi from "./pages/notifikasi";
 import UbahProduk from "./pages/ubahProduk";
 import CategoryPage from "./pages/categoryPage";
-import ChatUser from "./pages/chatUser";
+import MainChat from "./pages/mainchat";
 
 function App() {
   return (
@@ -44,8 +44,7 @@ function App() {
           <Route path="/detailtoko/:id" element={<Detailtoko />} />
           <Route path="/notifikasi" element={<Notifikasi />} />
           <Route path="/ubahProduk/:id" element={<UbahProduk />} />
-          <Route path="/chat" element={<ChatUser />} />
-          <Route path="/chat/:to_id" element={<ChatUser />} />
+          <Route path="/chat" element={<MainChat />} />
         </Routes>
       </SkeletonTheme>
     </div>

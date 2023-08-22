@@ -5,35 +5,46 @@ import { useState } from "react";
 import axios from "axios";
 import apiurl from "../../utils/apiurl";
 import token from "../../utils/token";
-import { useParams } from "react-router-dom";
+import Pusher from "pusher-js";
 
-function SidebarChatUser() {
+function SidebarChatUser({ onChatClick, pusherClient }) {
   const [selectedChat, setSelectedChat] = useState(null);
   const user_id = localStorage.getItem("user_id");
   const [chats, setChats] = useState([]);
-  const to_id = useParams().to_id;
 
   useEffect(() => {
-    getChats(); // Panggil fungsi getChats saat komponen dimount
+    const channel = pusherClient.subscribe(`chat-channel-${user_id}`);
+    channel.bind("new-message", (data) => {
+      const updatedChats = chats.map((c) =>
+        c.id === data.chat_id ? { ...c, latest_message: data.message } : c
+      );
+      setChats(updatedChats);
+    });
+
+    return () => {
+      channel.unbind("new-message");
+      pusherClient.unsubscribe(`chat-channel-${user_id}`);
+    };
+  }, [chats, pusherClient, user_id]);
+
+  useEffect(() => {
+    getChats();
   }, []);
 
-  const handleChatClick = (chatIndex) => {
-    setSelectedChat(chatIndex); // Update selected chat when a chat is clicked
+  const handleChatClick = (chatIndex, userId) => {
+    setSelectedChat(chatIndex);
+    onChatClick(userId);
   };
 
   console.log("Data chat", chats);
 
   const getChats = () => {
     axios
-      .get(
-        apiurl() +
-          `chatify/messages?from_id=${user_id}&to_id=${to_id}&last=true`,
-        {
-          headers: {
-            Authorization: `Bearer ${token()}`,
-          },
-        }
-      )
+      .get(apiurl() + `chatify/users/${user_id}`, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
       .then((response) => {
         setChats(response.data.data);
         console.log("Data chat dari server:", response.data.data);
@@ -67,20 +78,20 @@ function SidebarChatUser() {
                 selectedChat === index ? "active" : ""
               }`}
               key={index}
-              onClick={() => handleChatClick(index)}
+              onClick={() => handleChatClick(index, chat.id)}
             >
               <div className="img-chat">
-                <img src={chat.to_user.store.logo} alt="" />
+                <img src={chat.store?.logo} alt="" />
               </div>
               <div className="content-chat">
                 <div className="chat-top">
                   <div className="namechat">
-                    <h4>{chat.to_user.store.name}</h4>
+                    <h4>{chat.store?.name}</h4>
                     <p>{formatTime(chat.created_at)}</p>
                   </div>
                 </div>
                 <div className="chat-bottom">
-                  <p>{chat.body}</p>
+                  <p>{chat.latest_message.message}</p>
                 </div>
               </div>
             </div>

@@ -252,8 +252,25 @@ function DetailProduct() {
 
   function handleChatButtonClick() {
     if (detail.length > 0) {
-      const to_id = detail[0].store.user_id; // Ganti ini dengan cara mendapatkan to_id dari detail produk
-      navigate(`/chat/${to_id}`); // Navigasi ke halaman ChatUser dengan to_id sebagai parameter
+      const to_id = detail[0].store.user_id;
+
+      const messageData = {
+        message: to_id,
+      };
+
+      // Lakukan POST request ke API untuk memulai chat
+      axios
+        .post(apiurl() + `chatify/users/${to_id}/start-chat`, messageData, {
+          headers: {
+            Authorization: `Bearer ${token()}`, // Ganti dengan cara yang sesuai untuk mengambil token
+          },
+        })
+        .then((response) => {
+          navigate(`/chat`);
+        })
+        .catch((error) => {
+          console.error("Error starting chat:", error);
+        });
     }
   }
   return (

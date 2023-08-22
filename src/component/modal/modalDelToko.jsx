@@ -70,15 +70,15 @@ function ModalDelToko({ onClose, product, onDelete }) {
           <div className="modal-content-delete">
             <div className="wrap-tulisan-email">
               <h3 className="hapus-produk-ini">
-                Yakin Ingin Menghapus Produk Ini
+                Yakin Ingin Menghapus Produk Ini?
               </h3>
+              <p>Produk yang sudah dihapus tidak bisa kembali lagi</p>
             </div>
             <div className="wrapper-del-cancel">
               <button
                 className="btn-delete-popup"
                 onClick={() => handleDeleteItem(product.id)}
               >
-                <BsTrash3 />
                 Hapus
               </button>
               <button className="btn-cancel-product" onClick={toggleModal}>

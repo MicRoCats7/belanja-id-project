@@ -224,6 +224,12 @@ td {
     text-align: center;
     font-size: 17px;
     font-weight: 500;
+    padding: 50px;
+}
+
+.alert-notfound img {
+    width: 200px;
+    height: 200px;
 }
 
 .btn-table .btn-edit {
