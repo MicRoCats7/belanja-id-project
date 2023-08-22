@@ -102,7 +102,7 @@ function Navbar() {
       } catch (error) {
         console.error(error);
         setIsLoading(false);
-        setLoadingDots(""); // Reset the loading dots in case of error
+        setLoadingDots("");
       }
     }
   };
@@ -118,9 +118,8 @@ function Navbar() {
         });
         setToko(response.data.data);
         if (response.data.data) {
-          // Jika data toko ada (pengguna sudah memiliki toko), set nama toko di state shopName
           setHasShop(true);
-          setShopName(response.data.data.name); // Simpan nama toko
+          setShopName(response.data.data.name);
         } else {
           setHasShop(false);
         }
@@ -368,7 +367,7 @@ function Navbar() {
                       </Link>
                       <Link to={"/Whislist"}>
                         <button className="btn-menuju-whislist">
-                          Whislist
+                          Wishlist
                         </button>
                       </Link>
                       <button

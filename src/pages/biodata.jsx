@@ -389,7 +389,7 @@ function Biodata() {
                   nomProfileUpdate={() =>
                     setIsProfileUpdated(!isProfileUpdated)
                   }
-                  isEdit={isEditPhoneModal}
+                  isEdit={true}
                 />
               </div>
             </div>

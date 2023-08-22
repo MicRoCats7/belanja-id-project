@@ -16,18 +16,33 @@ function CategoryPage() {
   const [activeTab, setActiveTab] = useState("reviews");
   const [isLoading, setIsLoading] = useState(true);
   const [categoryName, setCategoryName] = useState("");
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [selectedProvinces, setSelectedProvinces] = useState([]);
 
   useEffect(() => {
-    fetchCategoryProducts();
+    fetchCategoryProducts(maxPrice, minPrice);
     fetchCategoryName();
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id, minPrice, maxPrice, selectedProvinces]);
 
-  const fetchCategoryProducts = () => {
+  const fetchCategoryProducts = (minPrice, maxPrice) => {
     axios
-      .get(apiurl() + `products?category_id=${id}` + name)
+      .get(apiurl() + `products?category_id=${id}` + name, {
+        params: {
+          price_from: minPrice,
+          price_to: maxPrice,
+        },
+      })
       .then((response) => {
-        setCategoryProducts(response.data.data);
+        const filteredProducts = response.data.data.filter((product) => {
+          const productPrice = parseFloat(product.price);
+          const isMinPriceMatch = !minPrice || productPrice >= minPrice;
+          const isMaxPriceMatch = !maxPrice || productPrice <= maxPrice;
+          return isMinPriceMatch && isMaxPriceMatch;
+        });
+
+        setCategoryProducts(filteredProducts);
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
@@ -35,11 +50,22 @@ function CategoryPage() {
 
   const fetchCategoryName = () => {
     axios
-      .get(apiurl() + `categories?id=${id}`)
+      .get(apiurl() + `categories?id=${id}`, {
+        params: {
+          price_from: minPrice,
+          price_to: maxPrice,
+        },
+      })
       .then((response) => {
         setCategoryName(response.data.data.name);
       })
       .catch((error) => console.error(error));
+  };
+
+  const handlePriceFilter = (minPrice, maxPrice) => {
+    setMinPrice(minPrice);
+    setMaxPrice(maxPrice);
+    fetchCategoryProducts();
   };
 
   return (
@@ -50,7 +76,10 @@ function CategoryPage() {
           <div className="filter-container">
             <div className="filter-sidebar">
               <div className="filter-pro">
-                <FilterSearch />
+                <FilterSearch
+                  onProvincesSelect={setSelectedProvinces}
+                  onPriceFilter={handlePriceFilter}
+                />
               </div>
             </div>
           </div>
