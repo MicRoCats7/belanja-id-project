@@ -422,3 +422,42 @@
     outline: none;
     cursor: pointer;
 }
+
+.select-filter-reviews{
+  padding: 3px 13px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+
+.select-filter-reviews:hover{
+    border-color: #EF233C;
+}
+
+.select-filter-reviews:focus{
+border-color: #EF233C;
+  background-color: #f0f0f0;
+}
+
+
+.select-filter-reviews::-ms-expand{
+    display: none;
+}
+
+.select-filter-reviews::after {
+    content: "\25BC"; 
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+
+

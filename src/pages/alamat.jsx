@@ -22,11 +22,14 @@ function Alamat() {
   const [selectedPrimaryAddress, setSelectedPrimaryAddress] = useState(null);
   const [editingAddress, setEditingAddress] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [updateAddressTrigger, setUpdateAddressTrigger] = useState(false);
+  const [shouldRefresh, setShouldRefresh] = useState(false);
 
   useEffect(() => {
     fetchAlamat();
     getProfile();
-  }, []);
+    setShouldRefresh(false); // Set back to false after refresh
+  }, [shouldRefresh]);
 
   useEffect(() => {
     if (selectedPrimaryAddress) {
@@ -182,6 +185,20 @@ function Alamat() {
     setEditingAddress(address);
   };
 
+  const handleEditAddressSuccess = (updatedAlamat) => {
+    const updatedAlamatList = alamatList.map((alamat) =>
+      alamat.id === updatedAlamat.id ? updatedAlamat : alamat
+    );
+
+    setAlamatList(updatedAlamatList);
+  };
+
+  const EditNewAlamat = (newAlamat) => {
+    setAlamatList([...alamatList, newAlamat]);
+    setIsAddModalOpen(false);
+    setShouldRefresh(true); // Set to true to trigger refresh
+  };
+
   return (
     <>
       {isLoading ? (
@@ -245,8 +262,9 @@ function Alamat() {
                       <ModalEditAlamat
                         selectedPrimaryAddress={selectedPrimaryAddress}
                         idalamat={alamat.id}
-                        EditNewAlamat={addNewAlamat}
-                        closeModal={() => setEditingAddress(null)}
+                        EditNewAlamat={EditNewAlamat}
+                        // updateAddressList={handleEditAddressSuccess} // Pass the callback here
+                        closeModal={() => setIsAddModalOpen(false)}
                       />
                     </div>
                   </div>

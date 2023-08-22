@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import apiurl from "../../utils/apiurl";
 import axios from "axios";
 
-function App() {
+function App({ onProvincesSelect, onPriceFilter }) {
   const [accordionOpen, setAccordionOpen] = useState(true);
   const [accordionOpen2, setAccordionOpen2] = useState(true);
   const [accordionOpen3, setAccordionOpen3] = useState(true);
@@ -25,6 +25,16 @@ function App() {
   const [showAllProvinces, setShowAllProvinces] = useState(false);
   const [visibleDataCount, setVisibleDataCount] = useState(15);
   const dataPerPage = 15;
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  const handleMinPriceChange = (event) => {
+    setMinPrice(event.target.value);
+  };
+
+  const handleMaxPriceChange = (event) => {
+    setMaxPrice(event.target.value);
+  };
 
   const toggleAccordion = () => {
     setAccordionOpen(!accordionOpen);
@@ -132,18 +142,34 @@ function App() {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
-  const handleProvinceChange = (provinceId) => {
-    setSelectedProvinces((prevSelectedProvinces) => {
-      if (prevSelectedProvinces.includes(provinceId)) {
-        return prevSelectedProvinces.filter((id) => id !== provinceId);
-      } else {
-        return [...prevSelectedProvinces, provinceId];
-      }
-    });
+  // const handleProvinceChange = (provinceId) => {
+  //   setSelectedProvinces((prevSelectedProvinces) => {
+  //     if (prevSelectedProvinces.includes(provinceId)) {
+  //       return prevSelectedProvinces.filter((id) => id !== provinceId);
+  //     } else {
+  //       return [...prevSelectedProvinces, provinceId];
+  //     }
+  //   });
+  // };
+
+  const handleFilter = () => {
+    onPriceFilter(minPrice, maxPrice);
   };
 
+  const handleProvinceChange = (provinceId) => {
+    setSelectedProvinces((prevSelectedProvinces) => {
+      const updatedSelectedProvinces = prevSelectedProvinces.includes(
+        provinceId
+      )
+        ? prevSelectedProvinces.filter((id) => id !== provinceId)
+        : [...prevSelectedProvinces, provinceId];
+
+      onProvincesSelect(updatedSelectedProvinces);
+      return updatedSelectedProvinces;
+    });
+  };
   useEffect(() => {
-    fetchProvinces();
+    // fetchProvinces();
   }, []);
 
   return (
@@ -195,10 +221,10 @@ function App() {
                 <h4>Rp</h4>
               </div>
               <input
-                type="text"
-                placeholder="Harga Minimum"
-                value={value}
-                onChange={handleChangeNumber2}
+                type="number"
+                placeholder="Harga Terendah"
+                value={minPrice}
+                onChange={handleMinPriceChange}
                 maxLength={100}
               />
             </div>
@@ -207,14 +233,15 @@ function App() {
                 <h4>Rp</h4>
               </div>
               <input
-                type="text"
-                placeholder="Harga Maksimum"
-                value={value}
-                onChange={handleChangeNumber2}
+                type="number"
+                placeholder="Harga Tertinggi"
+                value={maxPrice}
+                onChange={handleMaxPriceChange}
                 maxLength={100}
               />
             </div>
-            <div
+            {/* <button onClick={handleFilter}>Filter</button> */}
+            {/* <div
               className={`box-harga-filter ${
                 activeIndex === 0 ? "active" : ""
               }`}
@@ -237,7 +264,7 @@ function App() {
               onClick={() => handleClick(2)}
             >
               <h1>Rp1 jt-Rp5 jt</h1>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
