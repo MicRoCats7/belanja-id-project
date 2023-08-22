@@ -141,15 +141,17 @@
 }
 
 .btn-join-event button{
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 10px 25px;
-    border: none;
-    background-color: #EF233C;
-    border-radius: 5px;
+    width: 325px;
+    height: 46px;
+    background-color: #FFFFFF;
+    border: 1px solid #EF233C;
+    border-radius: 10px;
+    padding: 6px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
     cursor: pointer;
-    transition: 0.2s ease-in;
+    margin-top: 15px;
 }
 
 
@@ -167,6 +169,22 @@
     color: rgb(201, 36, 18);
     justify-content: center;
     transition: all 300ms ease-out 0s;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.load-spiner-event{
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #000;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    margin-left: 120px;
 }
 
 

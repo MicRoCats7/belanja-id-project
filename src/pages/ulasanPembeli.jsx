@@ -19,6 +19,7 @@ function UlasanPembeli() {
   const [filteredReviews, setFilteredReviews] = useState([]);
   const [showImageOnlyReviews, setShowImageOnlyReviews] = useState(false);
   const [imageReviewCount, setImageReviewCount] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState("all");
 
   const hasProductImage = (review) => {
     const hasImage =
@@ -85,12 +86,12 @@ function UlasanPembeli() {
     }
   };
 
-  const handleFilterImageOnlyReviews = (review) => {
-    if (showImageOnlyReviews) {
-      return hasProductImage(review);
-    }
-    return true;
-  };
+  // const handleFilterImageOnlyReviews = (review) => {
+  //   if (showImageOnlyReviews) {
+  //     return hasProductImage(review);
+  //   }
+  //   return true;
+  // };
 
   const handleToggleImageOnlyReviews = () => {
     console.log("Before Toggle:", showImageOnlyReviews);
@@ -109,8 +110,6 @@ function UlasanPembeli() {
 
     setLastActiveTab(activeTab);
     setActiveTab("reviews");
-
-    setShowImageOnlyReviews(showImageOnlyReviews && star !== null);
   };
 
   const toggleAccordion = () => {
@@ -119,10 +118,16 @@ function UlasanPembeli() {
   const toggleAccordion2 = () => {
     setAccordionOpen2(!accordionOpen2);
   };
+  const handleFilterImageOnlyReviews = (review) => {
+    if (selectedFilter === "image") {
+      return hasProductImage(review);
+    }
+    return true;
+  };
 
   useEffect(() => {
     setFilteredReviews(toko.filter(handleFilterImageOnlyReviews));
-  }, [toko, showImageOnlyReviews]);
+  }, [toko, selectedFilter]);
 
   return (
     <div className="container-ulasan">
@@ -181,12 +186,14 @@ function UlasanPembeli() {
                 >
                   <AiFillStar /> 5
                 </button>
-                <button
-                  className={showImageOnlyReviews ? "active" : ""}
-                  onClick={handleToggleImageOnlyReviews}
+                <select
+                  className="select-filter-reviews"
+                  value={selectedFilter}
+                  onChange={(e) => setSelectedFilter(e.target.value)}
                 >
-                  ({imageReviewCount})
-                </button>
+                  <option value="all">Semua</option>
+                  <option value="image">Foto ({imageReviewCount})</option>
+                </select>
               </div>
               <div className="page-ulasan">
                 {filteredReviews.length === 0 ? (
@@ -227,28 +234,32 @@ function UlasanPembeli() {
                             </p>
                           </div>
                           <div className="img-ulasan">
-                            {review.gallery_reviews.map((galleryReview) => (
-                              <div
-                                key={galleryReview.id}
-                                className="img-container"
-                              >
-                                {galleryReview.image_path && (
-                                  <img src={galleryReview.image_path} alt="" />
-                                )}
-                                {galleryReview.image_path_2 && (
-                                  <img
-                                    src={galleryReview.image_path_2}
-                                    alt=""
-                                  />
-                                )}
-                                {galleryReview.image_path_3 && (
-                                  <img
-                                    src={galleryReview.image_path_3}
-                                    alt=""
-                                  />
-                                )}
-                              </div>
-                            ))}
+                            {selectedFilter === "image" &&
+                              review.gallery_reviews.map((galleryReview) => (
+                                <div
+                                  key={galleryReview.id}
+                                  className="img-container"
+                                >
+                                  {galleryReview.image_path && (
+                                    <img
+                                      src={galleryReview.image_path}
+                                      alt=""
+                                    />
+                                  )}
+                                  {galleryReview.image_path_2 && (
+                                    <img
+                                      src={galleryReview.image_path_2}
+                                      alt=""
+                                    />
+                                  )}
+                                  {galleryReview.image_path_3 && (
+                                    <img
+                                      src={galleryReview.image_path_3}
+                                      alt=""
+                                    />
+                                  )}
+                                </div>
+                              ))}
                           </div>
                           <div className="form-balasan">
                             <p>{review.review}</p>

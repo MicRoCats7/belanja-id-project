@@ -56,20 +56,6 @@ function DetailProduct() {
     window.scrollTo(0, 0);
   }, [id]);
 
-  useEffect(() => {
-    // ... (other useEffect code)
-
-    // Filter reviews based on activeFilterStar
-    if (activeFilterStar === null) {
-      setFilteredReviews(reviews);
-    } else {
-      const filtered = reviews.filter(
-        (review) => review.rate === activeFilterStar
-      );
-      setFilteredReviews(filtered);
-    }
-  }, [reviews, activeFilterStar]);
-
   function toggleActive(index) {
     changeState({ ...appState, activeObject: appState.objects[index] });
   }
@@ -231,10 +217,6 @@ function DetailProduct() {
     setFilteredData(sortedData);
   };
 
-  const handleFilterStarClick = (star) => {
-    setActiveFilterStar(star);
-  };
-
   const openModal = (imageSrc) => {
     setSelectedImage(imageSrc);
     setIsOpen(true);
@@ -273,6 +255,24 @@ function DetailProduct() {
         });
     }
   }
+
+  const handleFilterStarClick = (star) => {
+    setActiveFilterStar(star);
+
+    if (star === null) {
+      setFilteredReviews(reviews);
+    } else {
+      const filtered = reviews.filter(
+        (review) => review.rate === star.toString()
+      );
+      setFilteredReviews(filtered);
+    }
+  };
+
+  useEffect(() => {
+    setFilteredReviews(reviews);
+  }, [reviews]);
+
   return (
     <div className="main-detail">
       <Navbar />
@@ -598,92 +598,104 @@ function DetailProduct() {
                 </button>
               </div>
               <div className="penilaian-item">
-                {filteredReviews.slice(0, visibleReviews).map((review) => (
-                  <div className="penilaian-item1">
-                    <div className="profile-nilai">
-                      <div className="profile-penilaian">
-                        <div className="img-profile-ulasan">
-                          <img
-                            src={review.user.profile_photo_path}
-                            alt="profile"
+                {filteredReviews.length > 0 ? (
+                  filteredReviews.slice(0, visibleReviews).map((review) => (
+                    <div className="penilaian-item1">
+                      <div className="profile-nilai">
+                        <div className="profile-penilaian">
+                          <div className="img-profile-ulasan">
+                            <img
+                              src={review.user.profile_photo_path}
+                              alt="profile"
+                            />
+                          </div>
+                          <h4>{review.user.name}</h4>
+                        </div>
+                        <div className="tgl-penilaian">
+                          <h4>
+                            {" "}
+                            {new Date(review.created_at).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )}
+                          </h4>
+                        </div>
+                      </div>
+                      <div className="desc-penilaian">
+                        <div className="rating">
+                          <h4>
+                            {reviews.length > 0 ? reviews[0].product.name : ""}
+                          </h4>
+                          <Rating
+                            name="read-only"
+                            value={parseInt(review.rate)}
+                            readOnly
                           />
                         </div>
-                        <h4>{review.user.name}</h4>
+                        <p>{review.review}</p>
                       </div>
-                      <div className="tgl-penilaian">
-                        <h4>
-                          {" "}
-                          {new Date(review.created_at).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            }
-                          )}
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="desc-penilaian">
-                      <div className="rating">
-                        <h4>
-                          {reviews.length > 0 ? reviews[0].product.name : ""}
-                        </h4>
-                        <Rating
-                          name="read-only"
-                          value={parseInt(review.rate)}
-                          readOnly
-                        />
-                      </div>
-                      <p>{review.review}</p>
-                    </div>
-                    {review.gallery_reviews.map((gallery) => (
-                      <div className="img-produk-penilaian" key={gallery.id}>
-                        {gallery.image_path && (
-                          <img
-                            src={gallery.image_path}
-                            alt="foto produk ulasan"
-                            onClick={() => openModal(gallery.image_path)}
-                          />
-                        )}
-                        {gallery.image_path_2 && (
-                          <img
-                            src={gallery.image_path_2}
-                            alt="foto produk ulasan"
-                            onClick={() => openModal(gallery.image_path_2)}
-                          />
-                        )}
-                        {gallery.image_path_3 && (
-                          <img
-                            src={gallery.image_path_3}
-                            alt="foto produk ulasan"
-                            onClick={() => openModal(gallery.image_path_3)}
-                          />
-                        )}
-                        <Modal
-                          isOpen={isOpen}
-                          onRequestClose={closeModal}
-                          contentLabel="Gambar Popup"
-                          shouldCloseOnOverlayClick={true}
-                          shouldCloseOnEsc={true}
-                          className="modal-content-penilaian"
-                          overlayClassName="modal-overlay"
-                        >
-                          {selectedImage && (
+                      {review.gallery_reviews.map((gallery) => (
+                        <div className="img-produk-penilaian" key={gallery.id}>
+                          {gallery.image_path && (
                             <img
-                              src={selectedImage}
-                              alt="foto produk popup"
-                              className="modal-image"
+                              src={gallery.image_path}
+                              alt="foto produk ulasan"
+                              onClick={() => openModal(gallery.image_path)}
                             />
                           )}
-                          <button className="modal-close" onClick={closeModal}>
-                            <MdClose />
-                          </button>
-                        </Modal>
-                      </div>
-                    ))}
-                  </div>
-                ))}
+                          {gallery.image_path_2 && (
+                            <img
+                              src={gallery.image_path_2}
+                              alt="foto produk ulasan"
+                              onClick={() => openModal(gallery.image_path_2)}
+                            />
+                          )}
+                          {gallery.image_path_3 && (
+                            <img
+                              src={gallery.image_path_3}
+                              alt="foto produk ulasan"
+                              onClick={() => openModal(gallery.image_path_3)}
+                            />
+                          )}
+                          <Modal
+                            isOpen={isOpen}
+                            onRequestClose={closeModal}
+                            contentLabel="Gambar Popup"
+                            shouldCloseOnOverlayClick={true}
+                            shouldCloseOnEsc={true}
+                            className="modal-content-penilaian"
+                            overlayClassName="modal-overlay"
+                          >
+                            {selectedImage && (
+                              <img
+                                src={selectedImage}
+                                alt="foto produk popup"
+                                className="modal-image"
+                              />
+                            )}
+                            <button
+                              className="modal-close"
+                              onClick={closeModal}
+                            >
+                              <MdClose />
+                            </button>
+                          </Modal>
+                        </div>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  <p className="centered-red-text">Belum ada review produk.</p>
+                )}
+                {activeFilterStar !== null && filteredReviews.length === 0 && (
+                  <p className="centered-red-text">
+                    Produk tidak tersedia untuk rating ini.
+                  </p>
+                )}
               </div>
               {filteredReviews.length > visibleReviews && (
                 <div

@@ -29,7 +29,7 @@ function ResultSearch() {
   const [selectedStoreId, setSelectedStoreId] = useState(null);
   const [queryType, setQueryType] = useState("store");
   const [queryTypeProduk, setQueryTypeP] = useState("product");
-
+  const [selectedProvinces, setSelectedProvinces] = useState([]);
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -40,13 +40,13 @@ function ResultSearch() {
     getStoko().then((responseData) => {
       console.log(responseData);
       if (responseData.length > 0) {
-        // setSelectedStoreId(responseData[0].id);
+        setSelectedStoreId(responseData[0].id);
         fetchProducts(responseData[0].id);
       }
     });
-  }, [query, activeTab, categoryId]);
+  }, [query, activeTab, categoryId, selectedProvinces]);
 
-  const fetchProducts = async (store_id) => {
+  const fetchProducts = async (store_id, minPrice, maxPrice) => {
     setIsSearching(true);
     try {
       let response;
@@ -71,13 +71,17 @@ function ResultSearch() {
         } else {
         }
       }
-
       setIsLoading(false);
       setIsSearching(false);
+
+      const filteredByProvinces = response.data.data.filter((product) =>
+        selectedProvinces.includes(product.store.provinces)
+      );
 
       const filteredProducts = response.data.data.filter((product) =>
         product.name.toLowerCase().includes(query.toLowerCase())
       );
+
       setProducts(filteredProducts);
     } catch (error) {
       setIsLoading(false);
@@ -187,13 +191,21 @@ function ResultSearch() {
       });
     }
   };
+  const handlePriceFilter = (minPrice, maxPrice) => {
+    fetchProducts(selectedStoreId, minPrice, maxPrice);
+  };
 
   return (
     <div className="pro-filter">
       <div className="filter-container">
         <div className="filter-sidebar">
           <div className="filter-pro">
-            {activeTab === "reviews" && <FilterSearch />}
+            {activeTab === "reviews" && (
+              <FilterSearch
+              // onProvincesSelect={setSelectedProvinces}
+              // onPriceFilter={handlePriceFilter}
+              />
+            )}
             {activeTab === "ratings" && <FilterToko />}
           </div>
         </div>
@@ -304,36 +316,41 @@ function ResultSearch() {
                       </div>
                     ) : (
                       <div className="list-toko">
-                        {tokoproducts.map((toko, index) => (
-                          <div className="card-toko" key={index}>
-                            <Link to={`/detailtoko/${toko.store?.id}`}>
-                              <div className="top-card-toko">
-                                <div className="img-name-toko">
-                                  <img src={toko.store?.logo} />
-                                  <div className="name-toko-card">
-                                    <h1>{toko.store?.name}</h1>
-                                    <p>{toko.store?.provinces}</p>
+                        <div className="card-toko" key={tokoproducts[0].id}>
+                          <Link to={`/detailtoko/${tokoproducts[0].store?.id}`}>
+                            <div className="top-card-toko">
+                              <div className="img-name-toko">
+                                <img src={tokoproducts[0].store?.logo} />
+                                <div className="name-toko-card">
+                                  <h1>{tokoproducts[0].store?.name}</h1>
+                                  <p>{tokoproducts[0].store?.provinces}</p>
+                                </div>
+                              </div>
+                              <button>Lihat Toko</button>
+                            </div>
+                          </Link>
+                          <div className="bottom-card-toko">
+                            <h3>Produk yang dijual</h3>
+                            <div className="list-produk-toko">
+                              <div className="produk-toko">
+                                <img src={tokoproducts[0].picturePath} />
+                                <div className="name-price-produk">
+                                  <p>{tokoproducts[0].name}</p>
+                                  <p>Rp {tokoproducts[0].price}</p>
+                                </div>
+                              </div>
+                              {tokoproducts[1] && (
+                                <div className="produk-toko">
+                                  <img src={tokoproducts[1].picturePath} />
+                                  <div className="name-price-produk">
+                                    <p>{tokoproducts[1].name}</p>
+                                    <p>Rp {tokoproducts[1].price}</p>
                                   </div>
                                 </div>
-                                <button>Lihat Toko</button>
-                              </div>
-                            </Link>
-                            <div className="bottom-card-toko">
-                              <h3>Produk yang dijual</h3>
-                              <div className="list-produk-toko">
-                                {tokoproducts.map((produk, index) => (
-                                  <div className="produk-toko" key={index}>
-                                    <img src={produk.picturePath} />
-                                    <div className="name-price-produk">
-                                      <p>{produk.name}</p>
-                                      <p>Rp {produk.price}</p>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
+                              )}
                             </div>
                           </div>
-                        ))}
+                        </div>
                       </div>
                     )}
                   </div>

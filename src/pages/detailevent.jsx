@@ -18,6 +18,7 @@ function Detailevent() {
   const { id } = useParams();
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
     checkUserRegistration();
@@ -35,49 +36,44 @@ function Detailevent() {
   }
 
   function handleJoinEvent() {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.error("Token not found");
-      return;
-    }
-
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token()}`,
       },
     };
-
+    setIsRegistering(true);
     axios
       .post(apiurl() + `events/${id}/register-send-invoice`, null, config)
       .then((response) => {
         setIsRegistered(true);
+        setIsRegistering(false);
         console.log("Response data:", response.data);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        setIsRegistering(false);
+        console.error(error);
+      });
   }
 
   function checkUserRegistration() {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.error("Token not found");
-      return;
-    }
-
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token()}`,
       },
     };
 
     axios
       .get(apiurl() + `events/${id}/registered-users`, config)
       .then((response) => {
-        setIsRegistered(response.data.data[0]);
+        console.log("Response data:", response.data);
+
+        setIsRegistered(response.data.data[0].pivot);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+      });
   }
+
   return (
     <div className="main-evnt">
       <Navbar />
@@ -126,8 +122,16 @@ function Detailevent() {
                 </div>
                 <div className="btn-join-event">
                   {!isRegistered ? (
-                    <button className="" onClick={handleJoinEvent}>
-                      Daftar Event
+                    <button
+                      className=""
+                      onClick={handleJoinEvent}
+                      disabled={isRegistering}
+                    >
+                      {isRegistering ? (
+                        <div className="load-spiner-event"></div>
+                      ) : (
+                        "Daftar Event"
+                      )}
                     </button>
                   ) : (
                     <p className="check-event-daftar">
