@@ -38,8 +38,9 @@ function Detailtoko() {
     axios
       .get(apiurl() + `stores?id=${id}`)
       .then((response) => {
-        setToko(response.data.data[0]);
-        setIsFollowing(response.data.data[0]);
+        const storeData = response.data.data[0];
+        setToko(storeData);
+        setIsFollowing(storeData.followers !== null && storeData.followers > 0);
         console.log("Data Store by ID:", response.data.data);
       })
       .catch((error) => console.error(error));
@@ -59,7 +60,10 @@ function Detailtoko() {
           .then((response) => {
             setToko((prevToko) => ({
               ...prevToko,
-              followers: prevToko.followers ? prevToko.followers - 1 : 0,
+              followers:
+                prevToko.followers !== null && prevToko.followers > 0
+                  ? prevToko.followers - 1
+                  : 0,
             }));
             setIsFollowing(false); // Set isFollowing to false
             console.log("Berhasil Berhenti Mengikuti toko", response.data);
@@ -82,7 +86,8 @@ function Detailtoko() {
             handleSuccessAlertFollow();
             setToko((prevToko) => ({
               ...prevToko,
-              followers: prevToko.followers ? prevToko.followers + 1 : 1,
+              followers:
+                prevToko.followers !== null ? prevToko.followers + 1 : 1,
             }));
             setIsFollowing(true); // Set isFollowing to true
             console.log("Berhasil mengikuti toko", response.data);
@@ -156,9 +161,13 @@ function Detailtoko() {
             </div>
             <div className="total-followers-detail-toko">
               <RiUserFollowLine />
-              <p>
-                Pengikut: <span>{shop.followers}</span>
-              </p>
+              <div className="total-followers-detail-toko">
+                <RiUserFollowLine />
+                <p>
+                  Pengikut:{" "}
+                  <span>{shop.followers !== null ? shop.followers : 0}</span>
+                </p>
+              </div>
             </div>
             <div className="total-followers-detail-toko">
               <MdOutlineLeaderboard />
