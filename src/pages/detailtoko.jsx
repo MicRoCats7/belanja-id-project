@@ -40,7 +40,7 @@ function Detailtoko() {
       .then((response) => {
         const storeData = response.data.data[0];
         setToko(storeData);
-        setIsFollowing(storeData.followers !== null && storeData.followers > 0);
+        setIsFollowing(response.data.data.followers);
         console.log("Data Store by ID:", response.data.data);
       })
       .catch((error) => console.error(error));
@@ -58,14 +58,12 @@ function Detailtoko() {
             },
           })
           .then((response) => {
-            setToko((prevToko) => ({
-              ...prevToko,
-              followers:
-                prevToko.followers !== null && prevToko.followers > 0
-                  ? prevToko.followers - 1
-                  : 0,
+            setToko((prevShop) => ({
+              ...prevShop,
+              followers: prevShop.followers > 0 ? prevShop.followers - 1 : 0,
             }));
-            setIsFollowing(false); // Set isFollowing to false
+
+            setIsFollowing(false);
             console.log("Berhasil Berhenti Mengikuti toko", response.data);
           })
           .catch((error) =>
@@ -86,8 +84,7 @@ function Detailtoko() {
             handleSuccessAlertFollow();
             setToko((prevToko) => ({
               ...prevToko,
-              followers:
-                prevToko.followers !== null ? prevToko.followers + 1 : 1,
+              followers: response.data.data.followers,
             }));
             setIsFollowing(true); // Set isFollowing to true
             console.log("Berhasil mengikuti toko", response.data);
@@ -125,6 +122,7 @@ function Detailtoko() {
   return (
     <>
       <Navbar />
+
       <div className="container-detail-toko">
         <div className="container-info-detail-toko">
           <div className="container-img-detail-toko">
@@ -159,16 +157,18 @@ function Detailtoko() {
                 Rating: <span>{shop.rate}</span>
               </p>
             </div>
-            <div className="total-followers-detail-toko">
-              <RiUserFollowLine />
+            {shop && (
               <div className="total-followers-detail-toko">
                 <RiUserFollowLine />
-                <p>
-                  Pengikut:{" "}
-                  <span>{shop.followers !== null ? shop.followers : 0}</span>
-                </p>
+                {shop.followers_count !== null ? (
+                  <p>
+                    Followers: <span>{shop.followers}</span>
+                  </p>
+                ) : (
+                  <p>No followers</p>
+                )}
               </div>
-            </div>
+            )}
             <div className="total-followers-detail-toko">
               <MdOutlineLeaderboard />
               <p>

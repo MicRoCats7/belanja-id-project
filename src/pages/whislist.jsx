@@ -191,12 +191,12 @@ function Whislist() {
       <Navbar />
       <div className="whis-page">
         <div className="whis-arrow">
-          <h3 className="whisone">Whislist</h3>
+          <h3 className="whisone">Wishlist</h3>
           <img src={arrowWhislist} alt="arrow" loading="lazy" />
-          <h3 className="all-whist">Semua Whislist</h3>
+          <h3 className="all-whist">Semua Wishlist</h3>
         </div>
         <div className="drpdwn-whislist">
-          <h3 className="smuawhist-teks">Semua Whislist</h3>
+          <h3 className="smuawhist-teks">Semua Wishlist</h3>
           <div className="drpdwn-urutkan">
             <h3 className="urutkan-teks">Urutkan</h3>
             <div className="center">

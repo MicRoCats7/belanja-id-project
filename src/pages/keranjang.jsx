@@ -30,10 +30,16 @@ function Keranjang(props) {
   const [discountApplied, setDiscountApplied] = useState(false); // Ganti nilai awal sesuai kebutuhan
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [successAlertOpenwhis, setSuccessAlertOpenWhis] = useState(false);
+  const [errorAlertOpenWhis, setErrorAlertOpenWhis] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
   const [whislistData, setDataWhislist] = useState([]);
+  const [wishlistAdded, setWishlistAdded] = useState(false);
   const firstThreeWishlistItems = whislistData.slice(0, 2);
+  const [refreshAfterAdd, setRefreshAfterAdd] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [itemToDeleteId, setItemToDeleteId] = useState(null);
 
   useEffect(() => {
     getCart();
@@ -317,12 +323,72 @@ function Keranjang(props) {
       });
   }
 
+  const addToWishlist = async (productId) => {
+    try {
+      const response = await axios.post(
+        apiurl() + "wishlist/add",
+        { product_id: productId },
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setWishlistAdded(true);
+        handleSuccessAlertOpenWhis();
+      } else {
+        handleErrorAlertOpen();
+      }
+    } catch (error) {
+      console.error("Gagal menambahkan produk ke wishlist:", error);
+      handleErrorAlertOpenWhis();
+    }
+  };
+
+  function addToCart(productId) {
+    const payload = {
+      products_id: productId,
+    };
+
+    axios
+      .post(apiurl() + "cart/add", payload, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        handleSuccessAlertOpen();
+        setIsLoading(false);
+        setRefreshAfterAdd(true);
+      })
+      .catch((error) => {
+        handleErrorAlertOpen();
+        console.error(error);
+      });
+  }
+
+  useEffect(() => {
+    if (refreshAfterAdd) {
+      window.location.reload();
+    }
+  }, [refreshAfterAdd]);
+
   const handleSuccessAlertOpen = () => {
     setSuccessAlertOpen(true);
   };
 
   const handleErrorAlertOpen = () => {
     setErrorAlertOpen(true);
+  };
+
+  const handleSuccessAlertOpenWhis = () => {
+    setSuccessAlertOpenWhis(true);
+  };
+
+  const handleErrorAlertOpenWhis = () => {
+    setErrorAlertOpenWhis(true);
   };
 
   function renderEmptyCart() {
@@ -422,11 +488,16 @@ function Keranjang(props) {
                     </div>
                     <div className="item-pro-bottom">
                       <div className="pro-bottom-wish">
-                        <span>Pindahkan ke Wishlist</span>
+                        <span onClick={() => addToWishlist(item.product.id)}>
+                          Pindahkan ke Wishlist
+                        </span>
                         <div className="line-bottom-wish"></div>
                         <BsTrash3
                           className="icon-trash-cart"
-                          onClick={() => deleteItem(item.id)}
+                          onClick={() => {
+                            setItemToDeleteId(item.id); // Set id item yang akan dihapus
+                            setShowDeleteConfirmation(true); // Tampilkan modal konfirmasi
+                          }}
                         />
                         <div className="kuantitas-keranjang">
                           <div className="kuantitas-item">
@@ -481,10 +552,16 @@ function Keranjang(props) {
                           </div>
                         </div>
                         <div className="wishlist-bottom-action">
-                          <BsTrash3 className="icon-bottom-action" />
-                          <div className="btn-keranjang-action">
+                          <BsTrash3
+                            className="icon-trash-cart"
+                            onClick={() => deleteItem(item.product.id)}
+                          />
+                          <div
+                            className="btn-keranjang-action"
+                            onClick={() => addToCart(item.product.id)} // Panggil addProductToCart dengan product.id sebagai argumen
+                          >
                             <AiOutlinePlus className="icon-btn-keranjang-icon" />
-                            <span>Keranjang</span>
+                            <span>Tambah ke Keranjang</span>
                           </div>
                         </div>
                       </div>
@@ -539,6 +616,35 @@ function Keranjang(props) {
           </div>
         )}
       </div>
+      {showDeleteConfirmation && (
+        <div className="delete-confirmation">
+          <div className="confirmation-content">
+            <p>Anda yakin ingin menghapus produk dari keranjang?</p>
+            <div className="confirmation-buttons">
+              <button
+                className="back"
+                onClick={() => {
+                  setShowDeleteConfirmation(false);
+                  setItemToDeleteId(null);
+                }}
+              >
+                Kembali
+              </button>
+
+              <button
+                className="confirm-hapus"
+                onClick={() => {
+                  deleteItem(itemToDeleteId);
+                  setShowDeleteConfirmation(false);
+                  setItemToDeleteId(null);
+                }}
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <Snackbar
         open={successAlertOpen}
         autoHideDuration={5000}
@@ -567,6 +673,36 @@ function Keranjang(props) {
           sx={{ width: "100%" }}
         >
           Gagal Menghapus Produk Dari Keranjang
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={successAlertOpenwhis}
+        autoHideDuration={5000}
+        variant="filled"
+        onClose={() => setSuccessAlertOpenWhis(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpenWhis(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Produk Berhasil Ditambahkan ke Whislist
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpenWhis}
+        autoHideDuration={3000}
+        variant="filled"
+        onClose={() => setErrorAlertOpenWhis(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpenWhis(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Produk gagal ditambahkan ke whislist
         </MuiAlert>
       </Snackbar>
       <Footer />

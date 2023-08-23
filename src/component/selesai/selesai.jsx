@@ -288,8 +288,12 @@ function Selesai() {
                     <span>Midtrans</span>
                   </div>
                   <div className="no-invoice">
-                    <h2>Total Harga ({Transaction.quantity} barang)</h2>
-                    <span>Rp {formatPrice(Transaction.total)}</span>
+                    <h2>Jumlah barang</h2>
+                    <span>({Transaction.quantity} barang)</span>
+                  </div>
+                  <div className="no-invoice">
+                    {Transaction.product && <h2>Harga Barang</h2>}
+                    <span>Rp {formatPrice(Transaction.product.price)}</span>
                   </div>
                   <div className="no-invoice">
                     {Transaction.product && (
@@ -304,7 +308,7 @@ function Selesai() {
                       Total Belanja
                     </h2>
                     <h2 style={{ fontSize: "20px", color: "#EF233C" }}>
-                      Rp {formatPrice(calculateTotalBelanja(Transaction))}
+                      Rp {formatPrice(Transaction.total)}
                     </h2>
                   </div>
                 </div>

@@ -169,7 +169,7 @@ function App({ onProvincesSelect, onPriceFilter }) {
     });
   };
   useEffect(() => {
-    // fetchProvinces();
+    fetchProvinces();
   }, []);
 
   return (
@@ -240,7 +240,7 @@ function App({ onProvincesSelect, onPriceFilter }) {
                 maxLength={100}
               />
             </div>
-            {/* <button onClick={handleFilter}>Filter</button> */}
+            <button onClick={handleFilter}>Filter</button>
             {/* <div
               className={`box-harga-filter ${
                 activeIndex === 0 ? "active" : ""
