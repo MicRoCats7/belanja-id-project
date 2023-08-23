@@ -166,10 +166,10 @@ function Sidebar() {
                 <h3 className="jadwal">Jadwal Buka</h3>
                 <span className="jam">24jam</span>
               </div>
-              <div className="total-transaksi">
+              {/* <div className="total-transaksi">
                 <h3 className="jadwal">Total Transaksi</h3>
                 <span className="jam">0/100</span>
-              </div>
+              </div> */}
               <div className="followers">
                 <h3 className="jadwal">Followers</h3>
                 <span className="jam">{toko.followers}</span>

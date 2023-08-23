@@ -837,7 +837,7 @@ function TambahProduk() {
             </div>
           </div>
           <div className="btn-eksekusi">
-            <Link to={"/toko/produk"}>
+            <Link to={"/toko/hometoko"}>
               <button className="btn-btl">Kembali</button>
             </Link>
             <button className="btn-baru" disabled={isLoading}>

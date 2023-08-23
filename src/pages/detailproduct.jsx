@@ -23,6 +23,8 @@ import Skeleton from "react-loading-skeleton";
 import ProductDetailSkeleton from "../component/loader/ProductDetailSkeleton";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
+import { BsChatLeftText } from "react-icons/bs";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 
 function DetailProduct() {
   const [value, setValue] = React.useState(5);
@@ -50,11 +52,22 @@ function DetailProduct() {
   });
   const [reviews, setReviews] = useState([]);
   const [filteredReviews, setFilteredReviews] = useState([]);
+  const [wishlistAdded, setWishlistAdded] = useState(false);
+  const [productDetail, setProductDetail] = useState({});
+  const [hasReviewsWithFilter, setHasReviewsWithFilter] = useState(false);
 
   useEffect(() => {
     getDetail(id);
+    fetchUserWishlist();
     window.scrollTo(0, 0);
   }, [id]);
+
+  useEffect(() => {
+    const reviewsWithFilter = filteredReviews.filter(
+      (review) => parseInt(review.rate) === activeFilterStar
+    );
+    setHasReviewsWithFilter(reviewsWithFilter.length > 0);
+  }, [activeFilterStar, filteredReviews]);
 
   function toggleActive(index) {
     changeState({ ...appState, activeObject: appState.objects[index] });
@@ -234,8 +247,25 @@ function DetailProduct() {
 
   function handleChatButtonClick() {
     if (detail.length > 0) {
-      const to_id = detail[0].store.user_id; // Ganti ini dengan cara mendapatkan to_id dari detail produk
-      navigate(`/chat/${to_id}`); // Navigasi ke halaman ChatUser dengan to_id sebagai parameter
+      const to_id = detail[0].store.user_id;
+
+      const messageData = {
+        message: to_id,
+      };
+
+      // Lakukan POST request ke API untuk memulai chat
+      axios
+        .post(apiurl() + `chatify/users/${to_id}/start-chat`, messageData, {
+          headers: {
+            Authorization: `Bearer ${token()}`, // Ganti dengan cara yang sesuai untuk mengambil token
+          },
+        })
+        .then((response) => {
+          navigate(`/chat`);
+        })
+        .catch((error) => {
+          console.error("Error starting chat:", error);
+        });
     }
   }
 
@@ -255,6 +285,94 @@ function DetailProduct() {
   useEffect(() => {
     setFilteredReviews(reviews);
   }, [reviews]);
+
+  async function addToWishlist() {
+    const payload = {
+      product_id: detail[0].id,
+    };
+
+    try {
+      const response = await axios.post(apiurl() + "wishlist/add", payload, {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      });
+
+      if (response.status === 200) {
+        handleSuccessAlertOpen();
+        setWishlistAdded(true); // Update the state to indicate the product was added to wishlist
+      } else {
+        console.error("Failed to add product to wishlist.");
+      }
+    } catch (error) {
+      console.error("Failed to add product to wishlist:", error);
+    }
+  }
+
+  async function removeFromWishlist() {
+    // Find the user's wishlist entry for the current product
+    const wishlistEntry = await findWishlistEntry();
+
+    if (!wishlistEntry) {
+      console.error("Wishlist entry not found.");
+      return;
+    }
+
+    try {
+      const response = await axios.delete(
+        apiurl() + `wishlist/delete/${wishlistEntry.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setWishlistAdded(false); // Update the state to indicate the product was removed from wishlist
+      } else {
+        console.error("Failed to remove product from wishlist.");
+      }
+    } catch (error) {
+      console.error("Failed to remove product from wishlist:", error);
+    }
+  }
+
+  async function findWishlistEntry() {
+    try {
+      const response = await axios.get(apiurl() + "wishlist/all", {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      });
+
+      const wishlistEntry = response.data.data.find(
+        (item) => item.product_id === productDetail.id
+      );
+
+      return wishlistEntry;
+    } catch (error) {
+      console.error("Failed to fetch wishlist entries:", error);
+      return null;
+    }
+  }
+
+  async function fetchUserWishlist() {
+    try {
+      const response = await axios.get(apiurl() + "wishlist/all", {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      });
+
+      const wishlistProducts = response.data.data.map(
+        (item) => item.product_id
+      );
+      setWishlistAdded(wishlistProducts.includes(productDetail.id));
+    } catch (error) {
+      console.error("Failed to fetch user's wishlist:", error);
+    }
+  }
 
   return (
     <div className="main-detail">
@@ -390,9 +508,20 @@ function DetailProduct() {
                       {detail.length > 0 ? detail[0].review : ""} Ulasan)
                     </h4>
                   </div>
-                  <div className="like">
-                    <img src={iconLove} alt="" />
-                    <h4>Suka</h4>
+                  <div className="wishlist-button">
+                    <button
+                      onClick={
+                        wishlistAdded ? removeFromWishlist : addToWishlist
+                      }
+                      style={{ cursor: "pointer" }}
+                    >
+                      {wishlistAdded ? (
+                        <FcLike fontSize={25} />
+                      ) : (
+                        <FcLikePlaceholder fontSize={25} />
+                      )}
+                      Wishlist
+                    </button>
                   </div>
                   <div className="line-detail"></div>
                   <div className="toko-detail">
@@ -496,6 +625,12 @@ function DetailProduct() {
                     ) : detail[0].quantity > 0 ? (
                       <>
                         <button
+                          className="btn-chat" // Tombol chat
+                          onClick={handleChatButtonClick} // Panggil fungsi untuk navigasi dan mengirim to_id
+                        >
+                          <BsChatLeftText />
+                        </button>
+                        <button
                           className="btn-cart"
                           onClick={() => addToCart(quantity)}
                         >
@@ -509,12 +644,6 @@ function DetailProduct() {
                           }
                         >
                           Beli
-                        </button>
-                        <button
-                          className="btn-chat" // Tombol chat
-                          onClick={handleChatButtonClick} // Panggil fungsi untuk navigasi dan mengirim to_id
-                        >
-                          Chat
                         </button>
                       </>
                     ) : (
@@ -541,45 +670,49 @@ function DetailProduct() {
             </div>
             <div className="penilaian-produk">
               <h3>Penilaian Produk</h3>
-              <div className="tab-filterStar-penilaian">
-                <p>Filter</p>
-                <button
-                  className={activeFilterStar === null ? "active" : ""}
-                  onClick={() => handleFilterStarClick(null)}
-                >
-                  Semua
-                </button>
-                <button
-                  className={activeFilterStar === 1 ? "active" : ""}
-                  onClick={() => handleFilterStarClick(1)}
-                >
-                  <AiFillStar /> 1
-                </button>
-                <button
-                  className={activeFilterStar === 2 ? "active" : ""}
-                  onClick={() => handleFilterStarClick(2)}
-                >
-                  <AiFillStar /> 2
-                </button>
-                <button
-                  className={activeFilterStar === 3 ? "active" : ""}
-                  onClick={() => handleFilterStarClick(3)}
-                >
-                  <AiFillStar /> 3
-                </button>
-                <button
-                  className={activeFilterStar === 4 ? "active" : ""}
-                  onClick={() => handleFilterStarClick(4)}
-                >
-                  <AiFillStar /> 4
-                </button>
-                <button
-                  className={activeFilterStar === 5 ? "active" : ""}
-                  onClick={() => handleFilterStarClick(5)}
-                >
-                  <AiFillStar /> 5
-                </button>
-              </div>
+              {hasReviewsWithFilter && (
+                <div className="tab-filterStar-penilaian">
+                  <p>Filter</p>
+                  <button
+                    className={activeFilterStar === null ? "active" : ""}
+                    onClick={() => handleFilterStarClick(null)}
+                  >
+                    Semua
+                  </button>
+                  <>
+                    <button
+                      className={activeFilterStar === 1 ? "active" : ""}
+                      onClick={() => handleFilterStarClick(1)}
+                    >
+                      <AiFillStar /> 1
+                    </button>
+                    <button
+                      className={activeFilterStar === 2 ? "active" : ""}
+                      onClick={() => handleFilterStarClick(2)}
+                    >
+                      <AiFillStar /> 2
+                    </button>
+                    <button
+                      className={activeFilterStar === 3 ? "active" : ""}
+                      onClick={() => handleFilterStarClick(3)}
+                    >
+                      <AiFillStar /> 3
+                    </button>
+                    <button
+                      className={activeFilterStar === 4 ? "active" : ""}
+                      onClick={() => handleFilterStarClick(4)}
+                    >
+                      <AiFillStar /> 4
+                    </button>
+                    <button
+                      className={activeFilterStar === 5 ? "active" : ""}
+                      onClick={() => handleFilterStarClick(5)}
+                    >
+                      <AiFillStar /> 5
+                    </button>
+                  </>
+                </div>
+              )}
               <div className="penilaian-item">
                 {filteredReviews.length > 0 ? (
                   filteredReviews.slice(0, visibleReviews).map((review) => (

@@ -13,7 +13,7 @@ import MuiAlert from "@mui/material/Alert";
 import { MdOutlineClose, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { BsShop } from "react-icons/bs";
 import { IoMdCopy } from "react-icons/io";
-import fotobarang from "../../assets/image/fotobarangg.svg";
+import fotoPesananKosong from "../../assets/image/cyber-monday.png";
 
 function PesananBaru() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -24,6 +24,7 @@ function PesananBaru() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [Transaction, setSelectedTransaction] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleOpenDetailTransaksi = (transaction) => {
     setSelectedTransaction(transaction);
@@ -47,9 +48,10 @@ function PesananBaru() {
       .then((response) => {
         setRiwayatTransaksi(response.data.data);
         setSelectedTransaction(response.data[0]);
+        setIsLoading(false);
         console.log("Data transaksi dari server:", response.data.data);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error) && setIsLoading(false));
   }
 
   function filterByStatus(transaksi) {
@@ -136,7 +138,20 @@ function PesananBaru() {
         </div>
       </div>
       <div className="item-pesanan-baru">
-        {riwayatTransaksi.length > 0 ? (
+        {isLoading ? (
+          <LoadingPesananToko />
+        ) : riwayatTransaksi.length === 0 ? (
+          <div className="no-pesanan-text">
+            <img src={fotoPesananKosong} alt="" />
+            <h3>Belum ada pesanan yang masuk</h3>
+          </div>
+        ) : riwayatTransaksi.filter(filterByStatus).filter(searchFilter)
+            .length === 0 ? (
+          <div className="no-pesanan-text">
+            <img src={fotoPesananKosong} alt="" />
+            <h3>Tidak ada hasil pencarian</h3>
+          </div>
+        ) : (
           riwayatTransaksi
             .filter(filterByStatus)
             .filter(searchFilter)
@@ -229,8 +244,6 @@ function PesananBaru() {
                 </div>
               </div>
             ))
-        ) : (
-          <LoadingPesananToko />
         )}
         {Transaction && (
           <div className="modal-container-detail-transaksi">

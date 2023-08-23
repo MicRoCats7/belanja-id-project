@@ -1,0 +1,59 @@
+.container-transaksi-succes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.transaksi-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+}
+
+.transaksi-success img {
+    width: 350px;
+    height: 350px;
+}
+
+.transaksi-success h1 {
+    font-size: 45px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.transaksi-success .btn-transaksi-succes {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-transaksi-succes .btn-backshop {
+    width: 200px;
+    height: 50px;
+    background-color: #EF233C;
+    border-radius: 10px;
+    border: none;
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-transaksi-succes .btn-keriwayat {
+    width: 200px;
+    height: 50px;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+}

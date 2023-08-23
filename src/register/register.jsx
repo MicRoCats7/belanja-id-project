@@ -41,7 +41,7 @@ function Register() {
     formData.append("name", data.username);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("phone", data.phone || "belum terdaftar");
+    formData.append("phone", data.phone || "Nomor kamu Belum Terdaftar");
 
     try {
       setLoading(true);

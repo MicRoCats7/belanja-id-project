@@ -68,7 +68,7 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
   return (
     <>
       <h3 onClick={toggleModal} className="ubah-nama-user">
-        verikasi
+        Verifikasi Email
       </h3>
 
       {modal && (

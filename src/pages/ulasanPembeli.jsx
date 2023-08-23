@@ -205,67 +205,70 @@ function UlasanPembeli() {
                       {countReviewsWithImageGallery()}
                     </p>
                     {filteredReviews.map((review) => (
-                      <div className="ulasan-item" key={review.id}>
-                        <div className="info-ulasan">
-                          <div className="rating-ulasan">
-                            <AiFillStar />
-                            <h3>{review.rate}</h3>
-                          </div>
-                          <p>
-                            Oleh <span>{review.user.name}</span>
-                          </p>
-                          <p>
-                            {new Date(review.created_at).toLocaleDateString(
-                              "en-US",
-                              {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              }
-                            )}
-                          </p>
-                        </div>
-                        <div className="balas-ulasan">
-                          <div className="img-comment">
-                            <img src={review.product.picturePath} alt="" />
-                            {/* <img src={review.product.photo4} alt="" /> */}
-                            <p className="comment-user">
-                              {review.product.name}
+                      <>
+                        <div className="ulasan-item" key={review.id}>
+                          <div className="info-ulasan">
+                            <div className="rating-ulasan">
+                              <AiFillStar />
+                              <h3>{review.rate}</h3>
+                            </div>
+                            <p>
+                              Oleh <span>{review.user.name}</span>
+                            </p>
+                            <p>
+                              {new Date(review.created_at).toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )}
                             </p>
                           </div>
-                          <div className="img-ulasan">
-                            {selectedFilter === "image" &&
-                              review.gallery_reviews.map((galleryReview) => (
-                                <div
-                                  key={galleryReview.id}
-                                  className="img-container"
-                                >
-                                  {galleryReview.image_path && (
-                                    <img
-                                      src={galleryReview.image_path}
-                                      alt=""
-                                    />
-                                  )}
-                                  {galleryReview.image_path_2 && (
-                                    <img
-                                      src={galleryReview.image_path_2}
-                                      alt=""
-                                    />
-                                  )}
-                                  {galleryReview.image_path_3 && (
-                                    <img
-                                      src={galleryReview.image_path_3}
-                                      alt=""
-                                    />
-                                  )}
-                                </div>
-                              ))}
-                          </div>
-                          <div className="form-balasan">
-                            <p>{review.review}</p>
+                          <div className="balas-ulasan">
+                            <div className="img-comment">
+                              <img src={review.product.picturePath} alt="" />
+                              {/* <img src={review.product.photo4} alt="" /> */}
+                              <p className="comment-user">
+                                {review.product.name}
+                              </p>
+                            </div>
+                            <div className="img-ulasan">
+                              {selectedFilter === "image" &&
+                                review.gallery_reviews.map((galleryReview) => (
+                                  <div
+                                    key={galleryReview.id}
+                                    className="img-container"
+                                  >
+                                    {galleryReview.image_path && (
+                                      <img
+                                        src={galleryReview.image_path}
+                                        alt=""
+                                      />
+                                    )}
+                                    {galleryReview.image_path_2 && (
+                                      <img
+                                        src={galleryReview.image_path_2}
+                                        alt=""
+                                      />
+                                    )}
+                                    {galleryReview.image_path_3 && (
+                                      <img
+                                        src={galleryReview.image_path_3}
+                                        alt=""
+                                      />
+                                    )}
+                                  </div>
+                                ))}
+                            </div>
+                            <div className="form-balasan">
+                              <p>{review.review}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                        <div className="line-ulasan"></div>
+                      </>
                     ))}
                   </>
                 )}
