@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+.loading-spinner-chats {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+}
+
 .container-chat-user {
     width: 97%;
     height: 80vh;
@@ -15,7 +21,7 @@
 }
 
 .chat {
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
 }
@@ -118,8 +124,13 @@
     text-align: end;
 }
 
-.imgchat {
-    text-align: center;
+.imgchat-not-selected {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .message-container {

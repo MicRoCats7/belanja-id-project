@@ -4,15 +4,16 @@
     box-sizing: border-box;
 }
 
-.container-events{
-    margin: 200px 48px 50px 48px;
+.container-events {
+    margin: 100px 48px 50px 48px;
     padding: 20px;
 }
 
-.main-evnt{
+.main-evnt {
     overflow-x: hidden;
 }
-.con-box-detail-evnt{
+
+.con-box-detail-evnt {
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -21,7 +22,7 @@
     box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.25);
 }
 
-.box-event-detail{
+.box-event-detail {
     display: flex;
     width: 70%;
     height: 70%;
@@ -31,35 +32,35 @@
     margin: 30px 0 30px 0;
 }
 
-.image-detail-event{
+.image-detail-event {
     display: flex;
-   align-items: start;
-   justify-content: center;
+    align-items: start;
+    justify-content: center;
     position: sticky;
     margin-top: 30px;
 }
 
-.img-event-detail{
+.img-event-detail {
     border-radius: 10px;
     width: 300px;
-    height:350px;
+    height: 350px;
     object-fit: cover;
 }
 
-.con-detail-event{
+.con-detail-event {
     display: flex;
     flex-direction: column;
     gap: 30px;
     margin: 40px;
 }
 
-.desk-event-umkm{
+.desk-event-umkm {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-.isi-deskripsi{
+.isi-deskripsi {
     font-weight: 500;
     font-size: 15px;
     line-height: 18px;
@@ -68,7 +69,7 @@
     width: 459px;
 }
 
-.teks-ajakan{
+.teks-ajakan {
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
@@ -76,50 +77,50 @@
     width: 650px;
 }
 
-.info-waktu-tempat{
+.info-waktu-tempat {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.tgl-hari{
+.tgl-hari {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.jam-event{
+.jam-event {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.mentor-event{
+.mentor-event {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.tgl-hari svg{
+.tgl-hari svg {
     font-size: 20px;
 }
 
-.jam-event svg{
+.jam-event svg {
     font-size: 20px;
 }
 
-.mentor-event svg{
+.mentor-event svg {
     font-size: 20px;
 }
 
-.text-kelas-gratis{
+.text-kelas-gratis {
     font-weight: 500;
     font-size: 16px;
     line-height: 18px;
     color: #000000;
 }
 
-.ayo-join h3{
+.ayo-join h3 {
     width: 514px;
     font-weight: 500;
     font-size: 15px;
@@ -127,12 +128,12 @@
     color: #000000;
 }
 
-.ayo-join p{
+.ayo-join p {
     margin-top: 15px;
     color: #000000;
 }
 
-.ayo-join a{
+.ayo-join a {
     margin-top: 15px;
     text-decoration: none;
     color: #000000;
@@ -140,7 +141,7 @@
     font-weight: 500;
 }
 
-.btn-join-event button{
+.btn-join-event button {
     width: 325px;
     height: 46px;
     background-color: #FFFFFF;
@@ -155,7 +156,7 @@
 }
 
 
-.check-event-daftar{
+.check-event-daftar {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -172,11 +173,16 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+    0% {
+        transform: rotate(0deg);
+    }
 
-.load-spiner-event{
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.load-spiner-event {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-left: 4px solid #000;
     border-radius: 50%;
@@ -186,5 +192,3 @@
     margin-right: 8px;
     margin-left: 120px;
 }
-
-

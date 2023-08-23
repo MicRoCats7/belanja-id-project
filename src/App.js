@@ -20,6 +20,8 @@ import Notifikasi from "./pages/notifikasi";
 import UbahProduk from "./pages/ubahProduk";
 import CategoryPage from "./pages/categoryPage";
 import MainChat from "./pages/mainchat";
+import TransaksiSukses from "./pages/transaksiSukses";
+import TransaksiPending from "./pages/transaksiPending";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
           <Route path="/notifikasi" element={<Notifikasi />} />
           <Route path="/ubahProduk/:id" element={<UbahProduk />} />
           <Route path="/chat" element={<MainChat />} />
+          <Route path="/transaksisucces" element={<TransaksiSukses />} />
+          <Route path="/transaksipending" element={<TransaksiPending />} />
         </Routes>
       </SkeletonTheme>
     </div>

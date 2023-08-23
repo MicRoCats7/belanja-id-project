@@ -13,7 +13,7 @@ import MuiAlert from "@mui/material/Alert";
 import { MdOutlineClose, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { BsShop } from "react-icons/bs";
 import { IoMdCopy } from "react-icons/io";
-import fotobarang from "../../assets/image/fotobarangg.svg";
+import fotoPesananKosong from "../../assets/image/cyber-monday.png";
 
 function PesananBaru() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -24,6 +24,7 @@ function PesananBaru() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [Transaction, setSelectedTransaction] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleOpenDetailTransaksi = (transaction) => {
     setSelectedTransaction(transaction);
@@ -47,9 +48,10 @@ function PesananBaru() {
       .then((response) => {
         setRiwayatTransaksi(response.data.data);
         setSelectedTransaction(response.data[0]);
+        setIsLoading(false);
         console.log("Data transaksi dari server:", response.data.data);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error) && setIsLoading(false));
   }
 
   function filterByStatus(transaksi) {
@@ -136,113 +138,112 @@ function PesananBaru() {
         </div>
       </div>
       <div className="item-pesanan-baru">
-        {riwayatTransaksi.length === 0 && <LoadingPesananToko /> ? (
+        {isLoading ? (
+          <LoadingPesananToko />
+        ) : riwayatTransaksi.length === 0 ? (
           <div className="no-pesanan-text">
+            <img src={fotoPesananKosong} alt="" />
             <h3>Belum ada pesanan yang masuk</h3>
           </div>
+        ) : riwayatTransaksi.filter(filterByStatus).filter(searchFilter)
+            .length === 0 ? (
+          <div className="no-pesanan-text">
+            <img src={fotoPesananKosong} alt="" />
+            <h3>Tidak ada hasil pencarian</h3>
+          </div>
         ) : (
-          <>
-            {riwayatTransaksi.length > 0 ? (
-              riwayatTransaksi
-                .filter(filterByStatus)
-                .filter(searchFilter)
-                .map((transaksi) => (
-                  <div className="box-item-pesanan-baru" key={transaksi.id}>
-                    <div className="top-item-box-pesanan-baru">
-                      <div className="text-top-item-box-pesanan-baru">
-                        <div className="point-left"></div>
-                        <span style={{ color: "#EF233C" }}>{transaksi.id}</span>
-                        <h1>/{transaksi.user?.name}/</h1>
-                        <CiClock2 />
-                        <h1>
-                          {new Date(transaksi.created_at).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            }
-                          )}
-                        </h1>
-                      </div>
-                      <div className="label-top-item-box-pesanan-baru">
-                        <h1>{transaksi.status}</h1>
-                      </div>
-                    </div>
-                    <div className="product-item-pesanan-baru">
-                      <div className="detail-product-pesanan-baru">
-                        <Link
-                          to={"/detailproduct/" + transaksi.product.id}
-                          className="detail-product-pesanan-baru"
-                        >
-                          <div className="img-pesanan-baru">
-                            <img src={transaksi.product.picturePath} alt="" />
-                          </div>
-                          <div className="text-detail-pesanan-baru">
-                            <h2>{transaksi.product.name}</h2>
-                            <p>Rp {formatPrice(transaksi.product.price)}</p>
-                          </div>
-                        </Link>
-                      </div>
-                      <div className="detail-alamat-pesanan-baru">
-                        <h2>Alamat</h2>
-                        {transaksi.user?.user_addresses?.map(
-                          (address, index) => (
-                            <p key={index}>
-                              {address.receiver_name} - ({address.phone_number}){" "}
-                              <br />
-                              {address.address_one} - {address.regencies} -{" "}
-                              {address.provinces} - {address.zip_code}
-                            </p>
-                          )
-                        )}
-                      </div>
-                      <div className="detail-kurir-pesanan-baru">
-                        <h2>Kurir</h2>
-                        <p>{transaksi.courier?.title}</p>
-                      </div>
-                    </div>
-                    <div className="btn-total-pesanan-baru">
-                      <h2>{formatPrice(transaksi.total)}</h2>
-                      <div className="opsi-belilagi-lihatdetail">
-                        {transaksi.status === "PROCESSED" && (
-                          <button
-                            className="btn-terima-pesanan-baru"
-                            onClick={() => acceptTransaction(transaksi.id)}
-                            style={{
-                              cursor: "pointer",
-                            }}
-                          >
-                            Kirim Pesanan
-                          </button>
-                        )}
-                        {transaksi.status === "SHIPPED" && (
-                          <>
-                            <button className="btn-terima-pesanan-baru">
-                              Lihat Status
-                            </button>
-                          </>
-                        )}
-                        {transaksi.status === "FINISHED" && (
-                          <>
-                            <button
-                              className="btn-terima-pesanan-baru"
-                              onClick={() =>
-                                handleOpenDetailTransaksi(transaksi)
-                              }
-                            >
-                              Detail Transaksi
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </div>
+          riwayatTransaksi
+            .filter(filterByStatus)
+            .filter(searchFilter)
+            .map((transaksi) => (
+              <div className="box-item-pesanan-baru" key={transaksi.id}>
+                <div className="top-item-box-pesanan-baru">
+                  <div className="text-top-item-box-pesanan-baru">
+                    <div className="point-left"></div>
+                    <span style={{ color: "#EF233C" }}>{transaksi.id}</span>
+                    <h1>/{transaksi.user?.name}/</h1>
+                    <CiClock2 />
+                    <h1>
+                      {new Date(transaksi.created_at).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )}
+                    </h1>
                   </div>
-                ))
-            ) : (
-              <LoadingPesananToko />
-            )}
-          </>
+                  <div className="label-top-item-box-pesanan-baru">
+                    <h1>{transaksi.status}</h1>
+                  </div>
+                </div>
+                <div className="product-item-pesanan-baru">
+                  <div className="detail-product-pesanan-baru">
+                    <Link
+                      to={"/detailproduct/" + transaksi.product.id}
+                      className="detail-product-pesanan-baru"
+                    >
+                      <div className="img-pesanan-baru">
+                        <img src={transaksi.product.picturePath} alt="" />
+                      </div>
+                      <div className="text-detail-pesanan-baru">
+                        <h2>{transaksi.product.name}</h2>
+                        <p>Rp {formatPrice(transaksi.product.price)}</p>
+                      </div>
+                    </Link>
+                  </div>
+                  <div className="detail-alamat-pesanan-baru">
+                    <h2>Alamat</h2>
+                    {transaksi.user?.user_addresses?.map((address, index) => (
+                      <p key={index}>
+                        {address.receiver_name} - ({address.phone_number}){" "}
+                        <br />
+                        {address.address_one} - {address.regencies} -{" "}
+                        {address.provinces} - {address.zip_code}
+                      </p>
+                    ))}
+                  </div>
+                  <div className="detail-kurir-pesanan-baru">
+                    <h2>Kurir</h2>
+                    <p>{transaksi.courier?.title}</p>
+                  </div>
+                </div>
+                <div className="btn-total-pesanan-baru">
+                  <h2>{formatPrice(transaksi.total)}</h2>
+                  <div className="opsi-belilagi-lihatdetail">
+                    {transaksi.status === "PROCESSED" && (
+                      <button
+                        className="btn-terima-pesanan-baru"
+                        onClick={() => acceptTransaction(transaksi.id)}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
+                        Kirim Pesanan
+                      </button>
+                    )}
+                    {transaksi.status === "SHIPPED" && (
+                      <>
+                        <button className="btn-terima-pesanan-baru">
+                          Lihat Status
+                        </button>
+                      </>
+                    )}
+                    {transaksi.status === "FINISHED" && (
+                      <>
+                        <button
+                          className="btn-terima-pesanan-baru"
+                          onClick={() => handleOpenDetailTransaksi(transaksi)}
+                        >
+                          Detail Transaksi
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
         )}
         {Transaction && (
           <div className="modal-container-detail-transaksi">

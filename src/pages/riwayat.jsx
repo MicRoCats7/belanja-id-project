@@ -17,7 +17,8 @@ import ModalStatusBarang from "../component/modal/modalStatusBarang";
 import SimpleAccordion from "../component/accordion/accordionCaraPembayaran";
 import { CgCopy } from "react-icons/cg";
 import { MdOutlineClose } from "react-icons/md";
-import { BsThreeDots, BsThreeDotsVertical, BsTrash3 } from "react-icons/bs";
+import { BsThreeDots, BsTrash3 } from "react-icons/bs";
+import fotoNoTransaksi from "../assets/image/shopping-bag (4).png";
 
 function Riwayat() {
   useEffect(() => {
@@ -61,7 +62,8 @@ function Riwayat() {
   const renderNoTransactions = () => {
     return (
       <div className="no-transactions-message">
-        No transactions found for this status.
+        <img src={fotoNoTransaksi} alt="" />
+        Riwayat yang kamu cari tidak ada nih
       </div>
     );
   };

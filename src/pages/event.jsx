@@ -9,6 +9,7 @@ import { MdOutlineDateRange, MdOutlineSchedule } from "react-icons/md";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import axios from "axios";
 import apiurl from "../utils/apiurl";
+import EventSkeleton from "../component/loader/LoadingSkeletonEvent";
 
 function Event() {
   const itemsPerPage = 6; // Jumlah item per halaman
@@ -123,7 +124,7 @@ function Event() {
               </Link>
             ))
           ) : (
-            <p>Loading...</p>
+            <EventSkeleton />
           )}
         </div>
         {totalPages > 1 && (

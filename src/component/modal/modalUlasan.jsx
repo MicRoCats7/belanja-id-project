@@ -2,6 +2,10 @@ import { React, useState } from "react";
 import { Box, Rating } from "@mui/material";
 import { BiImageAdd } from "react-icons/bi";
 import { FiTrash2 } from "react-icons/fi";
+import { useEffect } from "react";
+import axios from "axios";
+import apiurl from "../../utils/apiurl";
+import token from "../../utils/token";
 
 function ModalUlasan({
   ratingValue,
@@ -27,6 +31,39 @@ function ModalUlasan({
     image_path_3: null,
     image_path_4: null,
   });
+  const [ratingLabels, setRatingLabels] = useState([]);
+  const [selectedLabels, setSelectedLabels] = useState([]);
+
+  function handleLabelClick(label) {
+    if (selectedLabels.includes(label)) {
+      setSelectedLabels(
+        selectedLabels.filter((selected) => selected !== label)
+      );
+    } else {
+      setSelectedLabels([label]);
+    }
+  }
+
+  useEffect(() => {
+    fetchRatingLabels();
+  }, []);
+
+  function fetchRatingLabels() {
+    axios
+      .get(apiurl() + "review/labels", {
+        headers: {
+          Authorization: `Bearer ${token()}`,
+        },
+      })
+      .then((response) => {
+        const labels = response.data.data.map((label) => label.label);
+        setRatingLabels(labels);
+      })
+      .catch((error) => {
+        console.error("Error fetching rating labels:", error);
+      });
+  }
+
   return (
     <div className="popup-container-review">
       <div className="popup-content-review">
@@ -217,23 +254,21 @@ function ModalUlasan({
               cols="30"
               rows="10"
               placeholder="Tulis Review Anda"
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
+              onChange={(e) => setReviewText(e.target.value.split("\n")[1])} // Menghilangkan label saat mengedit ulasan
             ></textarea>
           </div>
           <div className="label-oto-review">
-            <div className="label-review">
-              <h1>Luar Biasa</h1>
-            </div>
-            <div className="label-review">
-              <h1>Kualitas Unggul</h1>
-            </div>
-            <div className="label-review">
-              <h1>Worth it</h1>
-            </div>
-            <div className="label-review">
-              <h1>Design Elegan</h1>
-            </div>
+            {ratingLabels.map((label, index) => (
+              <div
+                className={`label-review ${
+                  selectedLabels.includes(label) ? "selected" : ""
+                }`}
+                key={index}
+                onClick={() => handleLabelClick(label)}
+              >
+                <h1>{label}</h1>
+              </div>
+            ))}
           </div>
           <div className="btn-kirim-review">
             <button

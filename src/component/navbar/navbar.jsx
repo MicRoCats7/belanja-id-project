@@ -14,7 +14,6 @@ import axios from "axios";
 import { CiSearch } from "react-icons/ci";
 import { BsCart2 } from "react-icons/bs";
 import token from "../../utils/token";
-import ModalLogout from "../modal/modalLogout.";
 
 function Navbar() {
   const [profile, setProfile] = useState({});

@@ -534,12 +534,11 @@ function Detailpesanan() {
                       </>
                     ) : (
                       <>
-                        <p>Pilih kurir untuk melihat detail pengiriman.</p>
-                        {/* <div className="btn-pilih-shipping">
+                        <div className="btn-pilih-shipping">
                           <button onClick={handlePilihMetodeLain}>
                             Pilih Pengiriman
                           </button>
-                        </div> */}
+                        </div>
                         {couriers.map((courier, index) => (
                           <div
                             className="list-couriers"

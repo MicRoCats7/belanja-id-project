@@ -10,6 +10,7 @@ import { formatPrice } from "../../utils/helpers";
 import LoadingPesananToko from "../loader/LoadingPesananToko";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
+import fotoPesananProgres from "../../assets/image/ecommerce.png";
 
 function DiProses() {
   const [riwayatTransaksi, setRiwayatTransaksi] = useState([]);
@@ -19,6 +20,7 @@ function DiProses() {
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   useEffect(() => {
     getRiwayatTransaksi();
@@ -43,20 +45,27 @@ function DiProses() {
   }
 
   function acceptTransaction(transactionId) {
+    setSelectedTransaction(transactionId); // Store selected transaction
+  }
+
+  function confirmSendTransaction() {
+    // Perform API request to send the transaction
     axios
-      .get(apiurl() + `transactions/shipped/${transactionId}`, {
+      .get(apiurl() + `transactions/shipped/${selectedTransaction}`, {
         headers: {
           Authorization: `Bearer ${token()}`,
         },
       })
       .then((response) => {
-        // Manajemen status atau tampilan jika permintaan sukses
         console.log("Transaction accepted:", response.data);
         handleSuccessAlertOpen();
+        setItemsToRemove((prevItems) => [...prevItems, selectedTransaction]);
+        setSelectedTransaction(null); // Clear selected transaction
       })
       .catch((error) => {
         console.error("Error accepting transaction:", error);
         handleErrorAlertOpen();
+        setSelectedTransaction(null); // Clear selected transaction
       });
   }
 
@@ -96,15 +105,16 @@ function DiProses() {
           <LoadingPesananToko />
         ) : riwayatTransaksi.length === 0 ? (
           <div className="no-pesanan-text">
+            <img src={fotoPesananProgres} alt="" />
             <h3>Tidak ada pesanan yang akan diproses</h3>
           </div>
         ) : (
-          riwayatTransaksi
-            .filter(searchFilter)
-            .filter((transaksi) => transaksi.status === "PROCESSED")
-            .map(
-              (transaksi) =>
-                !itemsToRemove.includes(transaksi.id) && (
+          <>
+            {riwayatTransaksi
+              .filter(searchFilter)
+              .filter((transaksi) => transaksi.status === "PROCESSED")
+              .map((transaksi) =>
+                !itemsToRemove.includes(transaksi.id) ? (
                   <div className="box-item-pesanan-baru" key={transaksi.id}>
                     <div className="top-item-box-pesanan-baru">
                       <div className="text-top-item-box-pesanan-baru">
@@ -180,8 +190,35 @@ function DiProses() {
                       </div>
                     </div>
                   </div>
-                )
-            )
+                ) : null
+              )}
+            {selectedTransaction && (
+              <div className="popup-container">
+                <div className="popup-diproses">
+                  <h2>Kirim Pesanan</h2>
+                  <p>Apakah Anda yakin ingin mengirim pesanan ini?</p>
+                  <div className="popup-buttons">
+                    <button onClick={confirmSendTransaction}>Ya</button>
+                    <button
+                      onClick={() => setSelectedTransaction(null)}
+                      style={{ background: "#9e9e9e" }}
+                    >
+                      Batal
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            {riwayatTransaksi
+              .filter(searchFilter)
+              .filter((transaksi) => transaksi.status === "PROCESSED")
+              .length === 0 && (
+              <div className="no-pesanan-text">
+                <img src={fotoPesananProgres} alt="" />
+                <h3>Tidak ada pesanan yang cocok dengan pencarian</h3>
+              </div>
+            )}
+          </>
         )}
       </div>
       <Snackbar

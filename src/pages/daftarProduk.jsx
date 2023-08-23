@@ -16,7 +16,7 @@ import fotoTidakAdaDataProduk from "../assets/icon/ecommerce.png";
 import fotoProdukBelumAda from "../assets/icon/shopping.png";
 
 function DaftarProduk() {
-  const [products, setProduct] = useState([]); // Ensure the initial state is an empty array
+  const [products, setProduct] = useState([]);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProducts] = useState([]);
@@ -212,7 +212,7 @@ function DaftarProduk() {
               </div>
             </div>
             <div className="table-produk">
-              <table>
+              <tauble>
                 <tr>
                   <th>No</th>
                   <th>INFO PRODUK</th>
@@ -279,7 +279,7 @@ function DaftarProduk() {
                     </td>
                   </tr>
                 )}
-              </table>
+              </tauble>
             </div>
           </div>
           <Snackbar

@@ -1,6 +1,7 @@
 import React from "react";
 import "../style/chatUser.css";
 import Navbar from "../component/navbar/navbar";
+import imgChat from "../assets/image/shopping-bag-chat.svg";
 import { BiSend } from "react-icons/bi";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,6 +9,7 @@ import axios from "axios";
 import apiurl from "../utils/apiurl";
 import token from "../utils/token";
 import Pusher from "pusher-js";
+import LoadingSpinner from "../component/loader/LoadingSpinner";
 
 function ChatUser({ selectedChatId, pusherClient }) {
   const [messages, setMessages] = useState([]);
@@ -19,24 +21,31 @@ function ChatUser({ selectedChatId, pusherClient }) {
     name: "",
     logo: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const isChatSelected = selectedChatId !== null;
 
   useEffect(() => {
-    setReceiverId(selectedChatId);
-    getMessages(selectedChatId);
-  }, [selectedChatId]);
+    if (isChatSelected) {
+      setIsLoading(true);
+      setReceiverId(selectedChatId);
+      getMessages(selectedChatId);
+    }
+  }, [selectedChatId, isChatSelected]);
 
   useEffect(() => {
-    const channel = pusherClient.subscribe(`chat-channel-${receiverId}`);
-    channel.bind("new-message", (data) => {
-      const updatedMessages = [...messages, data];
-      setMessages(updatedMessages);
-    });
+    if (isChatSelected) {
+      const channel = pusherClient.subscribe(`chat-channel-${receiverId}`);
+      channel.bind("new-message", (data) => {
+        const updatedMessages = [...messages, data];
+        setMessages(updatedMessages);
+      });
 
-    return () => {
-      channel.unbind("new-message");
-      pusherClient.unsubscribe(`chat-channel-${receiverId}`);
-    };
-  }, [receiverId, messages, pusherClient]);
+      return () => {
+        channel.unbind("new-message");
+        pusherClient.unsubscribe(`chat-channel-${receiverId}`);
+      };
+    }
+  }, [receiverId, messages, pusherClient, isChatSelected]);
 
   function getMessages(chatId) {
     axios
@@ -48,11 +57,13 @@ function ChatUser({ selectedChatId, pusherClient }) {
       .then((response) => {
         setMessages(response.data.data.messages);
         setStoreInfo({
-          name: response.data.data.other_user.user_data.name,
-          logo: response.data.data.other_user.user_data.profile_photo_path,
+          name: response.data.data.other_user.user_data.store.name,
+          logo: response.data.data.other_user.user_data.store.logo,
         });
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.error("Error getting messages:", error);
       });
   }
@@ -90,48 +101,64 @@ function ChatUser({ selectedChatId, pusherClient }) {
         } else {
           console.log("Error sending message:", response);
         }
+        setIsLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error getting messages:", error);
+      });
   };
 
   return (
     <>
       <Navbar />
-      <div className="chat">
-        <div className="header-name-chat-user">
-          <div className="img-chat-user">
-            <img src={storeInfo.logo} alt="Toko Profile" />
+      {isLoading ? (
+        <div className="loading-spinner-chats">
+          <LoadingSpinner />
+        </div>
+      ) : isChatSelected ? (
+        <div className="chat">
+          <div className="header-name-chat-user">
+            <div className="img-chat-user">
+              <img src={storeInfo.logo} alt="Toko Profile" />
+            </div>
+            <div className="name-chat-user">
+              <h3>{storeInfo.name}</h3>
+            </div>
           </div>
-          <div className="name-chat-user">
-            <h3>{storeInfo.name}</h3>
+          <div className="content-chat-user-toko">
+            {Array.isArray(messages) &&
+              messages.map((message, index) => (
+                <div
+                  className={`message-container ${
+                    message.user_id && message.user_id.toString() === senderId
+                      ? "message-container-right"
+                      : "message-container-left"
+                  }`}
+                  key={message.id}
+                >
+                  <div className="message-content">{message.message}</div>
+                  <div className="message-info">{message.user}</div>
+                </div>
+              ))}
+          </div>
+          <div className="input-reply-chat-user">
+            <input
+              type="text"
+              placeholder="Tulis pesan..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+            />
+            <BiSend style={{ cursor: "pointer" }} onClick={handleSendMessage} />
           </div>
         </div>
-        <div className="content-chat-user-toko">
-          {Array.isArray(messages) &&
-            messages.map((message, index) => (
-              <div
-                className={`message-container ${
-                  message.user_id && message.user_id.toString() === senderId
-                    ? "message-container-right"
-                    : "message-container-left"
-                }`}
-                key={message.id}
-              >
-                <div className="message-content">{message.message}</div>
-                <div className="message-info">{message.user}</div>
-              </div>
-            ))}
+      ) : (
+        <div className="imgchat-not-selected">
+          <img src={imgChat} alt="" />
+          <h1>Mari memulai obrolan!</h1>
+          <p>Pilih pesan di samping untuk mulai chat dengan penjual.</p>
         </div>
-        <div className="input-reply-chat-user">
-          <input
-            type="text"
-            placeholder="Tulis pesan..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-          />
-          <BiSend style={{ cursor: "pointer" }} onClick={handleSendMessage} />
-        </div>
-      </div>
+      )}
     </>
   );
 }
