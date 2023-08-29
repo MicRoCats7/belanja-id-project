@@ -33,7 +33,7 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
       console.log("User ID:", response.data.user_id);
       console.log("Verification URL:", response.data.verification_url);
       console.log("Email Pengguna:", response.data.email_pengguna);
-      setVerificationData(response.data.data);
+      setVerificationData(response.data);
       onClose();
     } catch (error) {
       handleErrorAlertOpen();

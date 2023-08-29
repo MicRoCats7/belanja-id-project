@@ -55,8 +55,10 @@ function Register() {
       console.log("showVerificationModal:", showVerificationModal);
       console.log(response);
       localStorage.setItem("token", response.data.data.access_token);
-      setEmail(response.data.email);
-      setUserId(response.data.data.id);
+      localStorage.setItem("user_id", response.data.data.user.id);
+      setEmail(response.data.data.user.email);
+      setUserId(response.data.data.user.id);
+      setIsRegistered(response.data.data);
       setLoading(false);
       setTimeout(() => {
         // navigate("/login");

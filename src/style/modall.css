@@ -87,25 +87,27 @@ body.active-modal {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    gap: 10px;
   }
   
   .back{
-    background-color: #8f8b8b; 
-    color: white;
+    background-color: #ffff; 
+    color: black;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     display: flex;
     align-items: center;
+    border: 1px solid #000000;
     justify-content: center;
-    width: 40%;
+    width: 50%;
     gap: 10px;
     transition: background-color 0.3s;
   }
 
 .confirm-hapus{
-    background-color: #ff0000; 
+    background-color: #EF233C; 
     color: rgb(255, 255, 255);
     border: none;
     padding: 8px 16px;
@@ -114,14 +116,11 @@ body.active-modal {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40%;
+    width: 50%;
     gap: 10px;
     transition: background-color 0.3s;
 }
 
-.tutup-email{
-
-}
 .modal-date, .overlay-date {
     width: 100vw;
     height: 100vh;
@@ -135,7 +134,23 @@ body.active-modal {
 }
 
 
+<<<<<<< HEAD
+.modal-logout .overlay-logout{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    overflow: hidden;
+    background: rgba(49, 49, 49, 0.5);
+}
+
+.ubah-nama-user{
+=======
 .ubah-nama-user {
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
     color: #EF233C;
     font-size: 0.857143rem;
     text-decoration: none;
@@ -199,9 +214,13 @@ body.active-modal {
     overflow: hidden;
     background: rgba(49, 49, 49, 0.5);
 }
+<<<<<<< HEAD
+  
+=======
 
 
 
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
 /* 
 .bg__modal__cropper .modal__cropper {
     align-items: center;
@@ -334,6 +353,7 @@ body.active-modal {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 10px;
 }
 
 
@@ -413,6 +433,24 @@ body.active-modal {
     overflow-y: auto;
 }
 
+<<<<<<< HEAD
+.modal-content-logout{
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width:400px;
+  height: 300px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tulisan-logout {
+    font-size: 16px;
+=======
 .verification-content-modal {
     width: 300px;
     height: 250px;
@@ -446,6 +484,7 @@ body.active-modal {
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     width: 300px;
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
     text-align: center;
 }
 
@@ -494,10 +533,49 @@ body.active-modal {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+<<<<<<< HEAD
+  }
+  
+  .modal-button-logout{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .btn-submit-logout{
+    padding: 8px 16px;
+    width: 50%;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #EF233C;
+    color: #fff;
+  }
+
+
+  .btn-batal-logout{
+    padding: 8px 16px;
+    font-size: 16px;
+    width: 50%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    color: #000000;
+    width: 50%;
+  }
+
+  .btn-lanjutkan,
+  .btn-kembali {
+=======
 }
 
 .btn-lanjutkan,
 .btn-kembali {
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
@@ -546,9 +624,15 @@ body.active-modal {
     overflow-y: auto;
 }
 
+<<<<<<< HEAD
+.modal-content-delete{
+    width: 350px;
+    height: 250px;
+=======
 .modal-content-delete {
     width: 400px;
     height: 200px;
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
     background-color: white;
     border-radius: 10px;
     position: fixed;
@@ -557,7 +641,18 @@ body.active-modal {
     top: 0;
     bottom: 0;
     margin: auto;
+<<<<<<< HEAD
+    padding: 2rem 2.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px
+=======
     padding: 0 2.5rem;
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
 }
 
 .modal-content-date {
@@ -780,6 +875,21 @@ body.active-modal {
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
+<<<<<<< HEAD
+  }
+  
+  .wrapper__btn button:first-child {
+    background-color: #ffffff; 
+    color: #000000;
+    border: 1px solid #000000;
+  }
+  
+  .wrapper__btn button:nth-child(2) {
+    background-color: #EF233C; 
+  }
+  
+  .reactEasyCrop_Container {
+=======
 }
 
 .wrapper__btn button:first-child {
@@ -791,6 +901,7 @@ body.active-modal {
 }
 
 .reactEasyCrop_Container {
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
     width: 100%;
     height: 80%;
     left: 0;
@@ -1234,7 +1345,11 @@ input .input-nomer {
 }
 
 .btn-delete-popup {
+<<<<<<< HEAD
+    background-color: #EF233C; 
+=======
     background-color: #EF233C;
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
     color: white;
     border: none;
     padding: 8px 16px;
@@ -1243,6 +1358,21 @@ input .input-nomer {
     display: flex;
     align-items: center;
     justify-content: center;
+<<<<<<< HEAD
+    width: 50%;
+    gap: 10px;
+  }
+
+.btn-cancel-product{
+    background-color: #ffffff; 
+    color: black;
+    border: 1px solid #000000;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+    }
+=======
     width: 100%;
     gap: 10px;
     transition: background-color 0.3s;
@@ -1261,6 +1391,7 @@ input .input-nomer {
     cursor: pointer;
     width: 100%;
 }
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
 
 
 .wrapper-del-cancel {
@@ -1268,7 +1399,13 @@ input .input-nomer {
     display: flex;
     justify-content: space-between;
     gap: 10px;
+<<<<<<< HEAD
+    padding: 0 1rem;
+  }
+     
+=======
 }
+>>>>>>> 991aa9413b74c5f8dae237f5946fd41b5e7c6605
 
 
 
