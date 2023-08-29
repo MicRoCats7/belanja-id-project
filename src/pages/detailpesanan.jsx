@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../style/detailpesanan.css";
 import NavbarCheckout from "../component/navbar/navbarCheckout";
-import {
-  MdDone,
-  MdKeyboardArrowRight,
-  MdLocationOn,
-  MdOutlineClose,
-} from "react-icons/md";
-import { TbDiscount2, TbTruckDelivery } from "react-icons/tb";
+import { MdDone, MdLocationOn, MdOutlineClose } from "react-icons/md";
+import { TbTruckDelivery } from "react-icons/tb";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { formatPrice } from "../utils/helpers";
 import { useLocation } from "react-router-dom";
@@ -142,25 +137,34 @@ function Detailpesanan() {
       (total, weight) => total + weight,
       0
     );
-    const originCityId = 1; // Ganti dengan ID kota asal yang sesuai
-    const destinationCityId = 58;
-    axios
-      .get(
-        apiurl() +
-          `shipping/cost/${originCityId}?origin_city_id=${originCityId}&destination_city_id=${destinationCityId}&weight=${totalWeight}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token()}`,
-          },
-        }
-      )
-      .then((response) => {
-        setCouriers(response.data.data.delivery_courier);
-        console.log("Courier data:", response.data.data.delivery_courier);
-      })
-      .catch((error) => {
-        console.error("Error fetching courier data:", error);
-      });
+    const storedSelectedProducts = JSON.parse(
+      localStorage.getItem("selectedProducts")
+    );
+    if (selectedPrimaryAddress) {
+      const store_id = storedSelectedProducts[0].product.store.id;
+      const destinationCityId = selectedPrimaryAddress.city_id;
+      const originCityId = storedSelectedProducts[0].city_id;
+      console.log("Origin city id:", store_id);
+      console.log("Origin city id:", destinationCityId);
+      console.log("Origin city id:", originCityId);
+      axios
+        .get(
+          apiurl() +
+            `shipping/cost/${store_id}?origin_city_id=${originCityId}&destination_city_id=${destinationCityId}&weight=${totalWeight}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token()}`,
+            },
+          }
+        )
+        .then((response) => {
+          setCouriers(response.data.data.delivery_courier);
+          console.log("Courier data:", response.data.data.delivery_courier);
+        })
+        .catch((error) => {
+          console.error("Error fetching courier data:", error);
+        });
+    }
   }, []);
 
   function calculateTotalPrice() {
@@ -180,7 +184,11 @@ function Detailpesanan() {
   }
 
   function calculateGrandTotal() {
-    return calculateTotalOriginalPrice() + calculateShippingCost();
+    const totalOriginalPrice = calculateTotalOriginalPrice();
+    const totalShippingCost = calculateShippingCost();
+    const totalDiscount = calculateTotalDiscount();
+
+    return totalOriginalPrice + totalShippingCost - totalDiscount;
   }
 
   function calculateShippingCost() {
@@ -220,6 +228,7 @@ function Detailpesanan() {
         weights.forEach((weight, index) => {
           formData.append("weight[]", weight);
           formData.append("courier[]", "jne");
+          formData.append("total", calculateGrandTotal());
         });
       });
 
@@ -534,24 +543,11 @@ function Detailpesanan() {
                       </>
                     ) : (
                       <>
-                        <p>Pilih kurir untuk melihat detail pengiriman.</p>
-                        {/* <div className="btn-pilih-shipping">
+                        <div className="btn-pilih-shipping">
                           <button onClick={handlePilihMetodeLain}>
                             Pilih Pengiriman
                           </button>
-                        </div> */}
-                        {couriers.map((courier, index) => (
-                          <div
-                            className="list-couriers"
-                            key={index}
-                            onClick={() => handleSelectCourier(courier)}
-                          >
-                            <h1>
-                              {courier.courier} - Rp {formatPrice(courier.cost)}
-                            </h1>
-                            <h1>Estimasi pesanan sampai {courier.etd}</h1>
-                          </div>
-                        ))}
+                        </div>
                       </>
                     )}
                   </div>
@@ -561,11 +557,6 @@ function Detailpesanan() {
           </div>
           <div className="container-payment-detail">
             <div className="border-subtotal">
-              <div className="container-diskon">
-                <TbDiscount2 className="icon-container-diskon" />
-                <h1>Makin Hemat Pakai Promo</h1>
-                <MdKeyboardArrowRight className="icon-container-arrow" />
-              </div>
               <div className="container-total-produk">
                 <h2>Ringkasan Belanja</h2>
                 <div className="total-pro">

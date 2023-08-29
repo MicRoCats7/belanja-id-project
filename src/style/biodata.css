@@ -67,12 +67,18 @@
     border: 1px solid #606060;
     border-radius: 5px;
     width: 100%;
-    height: 170px;
+    height: 200px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
+}
+
+.file-labelprofile img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .image-bapak {
@@ -277,11 +283,16 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .load-spin-photo {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.load-spin-photo {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-left: 4px solid #000;
     border-radius: 50%;
@@ -290,8 +301,8 @@
     animation: spin 1s linear infinite;
     margin-right: 8px;
     margin-left: 100px;
-  }
-  
+}
+
 /* .txt-email{
     width: 20%;
 }

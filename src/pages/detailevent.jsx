@@ -13,6 +13,7 @@ import apiurl from "../utils/apiurl";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import token from "../utils/token";
+import DetaileventSkeleton from "../component/loader/LoadingSkeletonDetailEvent";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -162,7 +163,7 @@ function Detailevent() {
             </div>
           </div>
         ) : (
-          <p>Tunggu sebentar...</p>
+          <DetaileventSkeleton />
         )}
       </div>
       <Footer />

@@ -1,3 +1,42 @@
+.popup-diproses {
+    width: 450px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 2rem 2.5rem;
+}
+
+.popup-diproses .popup-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.popup-diproses .popup-buttons button {
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    background-color: #EF233C;
+    color: #ffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
 .container-pesanan-toko {
     width: 100%;
     height: 100%;
@@ -240,4 +279,26 @@
     color: #ffff;
     font-size: 12px;
     font-weight: 500;
+}
+
+.no-pesanan-text {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.no-pesanan-text h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.no-pesanan-text img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 15px;
 }

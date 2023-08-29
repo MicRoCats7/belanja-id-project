@@ -9,6 +9,7 @@ import DaftarProduk from "./daftarProduk";
 import PesananToko from "./pesananToko";
 import UlasanPembeli from "./ulasanPembeli";
 import PengaturanToko from "./pengaturanToko";
+import MainChatToko from "./mainChatToko";
 
 function Toko() {
   useEffect(() => {
@@ -22,7 +23,7 @@ function Toko() {
         <Sidebar />
         <Routes>
           <Route path="/hometoko" element={<HomeToko />} />
-          <Route path="/chat" element={<ChatToko />} />
+          <Route path="/chat" element={<MainChatToko />} />
           <Route path="/daftarproduk/:id" element={<DaftarProduk />} />
           <Route path="/pesanantoko/:id" element={<PesananToko />} />
           <Route path="/ulasanpembeli/:id" element={<UlasanPembeli />} />

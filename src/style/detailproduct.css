@@ -358,6 +358,35 @@ input[type="number"]::-webkit-outer-spin-button {
     background: #ef233bc1;
 }
 
+.btn-chat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 70px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    background-color: #EF233C;
+    color: #ffff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.btn-chat:hover {
+    background: #ef233bc1;
+}
+
+.wishlist-button button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    font-weight: normal;
+    color: #727272;
+}
 
 .spesifikasi h3 {
     font-size: 18px;
@@ -735,9 +764,9 @@ input[type="number"]::-webkit-outer-spin-button {
     font-weight: 600;
 }
 
-.centered-red-text{
-  text-align: center;
-  color: #EF233C;
-  font-weight: 500;
-  font-size: 15px;
+.centered-red-text {
+    text-align: center;
+    color: #EF233C;
+    font-weight: 500;
+    font-size: 15px;
 }

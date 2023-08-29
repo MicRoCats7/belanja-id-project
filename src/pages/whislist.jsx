@@ -14,6 +14,7 @@ import token from "../utils/token";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import imgbelanja from "../assets/image/shopping-bag-chat.svg";
+import ProductWishlist from "../component/product/productWishlist";
 
 function Whislist() {
   const [filteredData, setFilteredData] = useState([]);
@@ -160,7 +161,7 @@ function Whislist() {
     }
     const isProductInWishlist = checkIfProductInWishlist(item.product.id);
     return (
-      <Product
+      <ProductWishlist
         key={item.product.id}
         name={item.product.name}
         url={item.product.picturePath}
@@ -197,7 +198,7 @@ function Whislist() {
         </div>
         <div className="drpdwn-whislist">
           <h3 className="smuawhist-teks">Semua Wishlist</h3>
-          <div className="drpdwn-urutkan">
+          {/* <div className="drpdwn-urutkan">
             <h3 className="urutkan-teks">Urutkan</h3>
             <div className="center">
               <select
@@ -212,16 +213,16 @@ function Whislist() {
                 <option value="harga-rendah">Harga Terendah</option>
               </select>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="filter">
-          <div className="acc-filter">
+          {/* <div className="acc-filter">
             <h2 className="name-filter">Filter</h2>
             <FilterWhis
               selectedCategory={selectedCategory}
               onCategoryChange={handleCategoryFilterChange}
             />
-          </div>
+          </div> */}
           <div className="card-barang">
             <h2 className="barang">Barang</h2>
             {isLoading ? (
