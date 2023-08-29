@@ -27,7 +27,6 @@ import { BsChatLeftText } from "react-icons/bs";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 
 function DetailProduct() {
-  const [value, setValue] = React.useState(5);
   const [detail, setDetail] = useState([]);
   const [gallery, setGalleryImg] = useState([]);
   const { id } = useParams();
@@ -44,7 +43,7 @@ function DetailProduct() {
   const navigate = useNavigate();
   const user_id = localStorage.getItem("user_id");
   const productOwnerId = detail.length > 0 ? detail[0].store.user_id : null;
-  const loggedInUserId = user_id; // Ganti ini dengan cara yang benar untuk mendapatkan ID pengguna yang sedang masuk
+  const loggedInUserId = user_id;
   const isOwner = loggedInUserId === productOwnerId;
   const [appState, changeState] = useState({
     activeObject: null,
@@ -55,12 +54,14 @@ function DetailProduct() {
   const [wishlistAdded, setWishlistAdded] = useState(false);
   const [productDetail, setProductDetail] = useState({});
   const [hasReviewsWithFilter, setHasReviewsWithFilter] = useState(false);
+  const [wishlistProducts, setWishlistProducts] = useState([]);
+  const [isInWishlist, setIsInWishlist] = useState(false);
 
   useEffect(() => {
     getDetail(id);
     fetchUserWishlist();
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id, wishlistProducts]);
 
   useEffect(() => {
     const reviewsWithFilter = filteredReviews.filter(
@@ -286,6 +287,18 @@ function DetailProduct() {
     setFilteredReviews(reviews);
   }, [reviews]);
 
+  function updateWishlistStatus(isInWishlist) {
+    localStorage.setItem(`wishlist_${id}`, isInWishlist);
+  }
+
+  useEffect(() => {
+    // fetchUserWishlist();
+    const storedStatus = localStorage.getItem(`wishlist_${id}`);
+    if (storedStatus !== null) {
+      setIsInWishlist(JSON.parse(storedStatus));
+    }
+  }, []);
+
   async function addToWishlist() {
     const payload = {
       product_id: detail[0].id,
@@ -300,7 +313,11 @@ function DetailProduct() {
 
       if (response.status === 200) {
         handleSuccessAlertOpen();
-        setWishlistAdded(true); // Update the state to indicate the product was added to wishlist
+        updateWishlistStatus(true);
+        setIsInWishlist(true);
+        setWishlistAdded(true);
+        localStorage.setItem(`wishlist_${id}`, true);
+        // fetchUserWishlist();
       } else {
         console.error("Failed to add product to wishlist.");
       }
@@ -310,7 +327,6 @@ function DetailProduct() {
   }
 
   async function removeFromWishlist() {
-    // Find the user's wishlist entry for the current product
     const wishlistEntry = await findWishlistEntry();
 
     if (!wishlistEntry) {
@@ -329,7 +345,11 @@ function DetailProduct() {
       );
 
       if (response.status === 200) {
-        setWishlistAdded(false); // Update the state to indicate the product was removed from wishlist
+        updateWishlistStatus(false);
+        setIsInWishlist(false);
+        setWishlistAdded(false);
+        localStorage.setItem(`wishlist_${id}`, false);
+        // fetchUserWishlist();
       } else {
         console.error("Failed to remove product from wishlist.");
       }
@@ -359,16 +379,26 @@ function DetailProduct() {
 
   async function fetchUserWishlist() {
     try {
-      const response = await axios.get(apiurl() + "wishlist/all", {
-        headers: {
-          Authorization: `Bearer ${token()}`,
-        },
-      });
+      const response = await axios.get(
+        apiurl() + `wishlist/all?user_id=${user_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token()}`,
+          },
+        }
+      );
 
       const wishlistProducts = response.data.data.map(
-        (item) => item.product_id
+        (item) => item.product.id
       );
-      setWishlistAdded(wishlistProducts.includes(productDetail.id));
+      setIsInWishlist(wishlistProducts.includes(detail[0].id));
+      setWishlistAdded(wishlistProducts.includes(detail[0].id));
+      setWishlistProducts(wishlistProducts);
+
+      const storedStatus = localStorage.getItem(`wishlist_${id}`);
+      if (storedStatus !== null) {
+        setIsInWishlist(JSON.parse(storedStatus));
+      }
     } catch (error) {
       console.error("Failed to fetch user's wishlist:", error);
     }
@@ -511,11 +541,12 @@ function DetailProduct() {
                   <div className="wishlist-button">
                     <button
                       onClick={
-                        wishlistAdded ? removeFromWishlist : addToWishlist
+                        isInWishlist ? removeFromWishlist : addToWishlist
                       }
                       style={{ cursor: "pointer" }}
                     >
-                      {wishlistAdded ? (
+                      {isInWishlist ||
+                      wishlistProducts.includes(detail[0].id) ? (
                         <FcLike fontSize={25} />
                       ) : (
                         <FcLikePlaceholder fontSize={25} />

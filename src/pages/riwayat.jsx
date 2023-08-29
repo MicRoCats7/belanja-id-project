@@ -444,7 +444,14 @@ function Riwayat() {
                 .filter(filterByStatus)
                 .filter(searchFilter)
                 .map((transaksi) => (
-                  <div className="box-riwayat" key={transaksi.id}>
+                  <div
+                    className={`box-riwayat ${
+                      !reviewedProducts.includes(transaksi.product?.id)
+                        ? "not-reviewed"
+                        : ""
+                    }`}
+                    key={transaksi.id}
+                  >
                     <div className="info-pesanan">
                       <img src={BagIcon} alt="" />
                       <p className="text-belanja">Belanja</p>

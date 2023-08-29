@@ -240,7 +240,7 @@ function App({ onProvincesSelect, onPriceFilter }) {
                 maxLength={100}
               />
             </div>
-            <button onClick={handleFilter}>Filter</button>
+            <span onClick={handleFilter}>Terapkan</span>
             {/* <div
               className={`box-harga-filter ${
                 activeIndex === 0 ? "active" : ""

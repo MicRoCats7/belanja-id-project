@@ -36,6 +36,7 @@ function Navbar() {
   const [isLoading, setIsLoading] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [tokoProducts, setTokoProducts] = useState([]);
+  const isLoggedIn = localStorage.getItem("token");
 
   const handleLogoutModalOpen = () => {
     setLogoutModalOpen(true);
@@ -294,24 +295,25 @@ function Navbar() {
               <p>Event</p>
             </Link>
             <div className="icon-navbar">
-              <Link to={"/chat"}>
-                <img src={iconChat} alt="icon chat" />
-              </Link>
-              <Link to={"/cart"} className="cart-icon">
-                <div className="icon-cart">
-                  <div className="icon-cart-navbar">
-                    <BsCart2 />
-                  </div>
-                </div>
-                <div className="item-count">
-                  {cartItemCount > 0 && (
-                    <span className="cart-item-count">{cartItemCount}</span>
-                  )}
-                </div>
-              </Link>
-              {/* <Link to={"/notifikasi"}>
-                <img src={IconNotif} alt="icon notif" />
-              </Link> */}
+              {isLoggedIn && (
+                <>
+                  <Link to={"/chat"}>
+                    <img src={iconChat} alt="icon chat" />
+                  </Link>
+                  <Link to={"/cart"} className="cart-icon">
+                    <div className="icon-cart">
+                      <div className="icon-cart-navbar">
+                        <BsCart2 />
+                      </div>
+                    </div>
+                    <div className="item-count">
+                      {cartItemCount > 0 && (
+                        <span className="cart-item-count">{cartItemCount}</span>
+                      )}
+                    </div>
+                  </Link>
+                </>
+              )}
             </div>
             <div className="line"></div>
             {localStorage.getItem("token") ? (
@@ -363,6 +365,9 @@ function Navbar() {
                     <div className="opsi-menu-dropdwn">
                       <Link to={"/profile/biodata"}>
                         <button className="btn-menuju-profile">Profile</button>
+                      </Link>
+                      <Link to={"/profile/riwayat"}>
+                        <button className="btn-menuju-profile">Riwayat Pesanan</button>
                       </Link>
                       <Link to={"/Whislist"}>
                         <button className="btn-menuju-whislist">

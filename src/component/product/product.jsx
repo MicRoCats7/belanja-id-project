@@ -18,60 +18,12 @@ function formatPrice(price) {
 function Product(props) {
   const [showWishlist, setShowWishlist] = useState(false);
   const formattedPrice = formatPrice(props.price);
-  const wishlistRef = useRef(null);
-  const [wishlistAdded, setWishlistAdded] = useState(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
-
-  useEffect(() => {
-    setWishlistAdded(false);
-    const handleClickOutside = (event) => {
-      if (wishlistRef.current && !wishlistRef.current.contains(event.target)) {
-        setShowWishlist(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [props.id]);
-
-  const addToWishlist = async () => {
-    const payload = {
-      product_id: props.id,
-    };
-    try {
-      const response = await axios.post(apiurl() + "wishlist/add", payload, {
-        headers: {
-          Authorization: `Bearer ${token()}`,
-        },
-      });
-
-      if (response.status === 200) {
-        setWishlistAdded(true);
-        handleSuccessAlertOpen();
-      } else {
-        handleErrorAlertOpen();
-      }
-    } catch (error) {
-      console.error("Gagal menambahkan produk ke wishlist:", error);
-      handleErrorAlertOpen();
-    }
-  };
 
   const handleClickWishlist = (event) => {
     event.stopPropagation();
     setShowWishlist(!showWishlist);
-  };
-
-  const handleSuccessAlertOpen = () => {
-    setSuccessAlertOpen(true);
-  };
-
-  const handleErrorAlertOpen = () => {
-    setErrorAlertOpen(true);
   };
 
   return (
@@ -101,27 +53,6 @@ function Product(props) {
             </div>
           </div>
         </Link>
-        <div className="wishlist-produk">
-          <FiMoreHorizontal
-            color="#EF233C"
-            fontSize="23px"
-            onClick={handleClickWishlist}
-          />
-        </div>
-        {showWishlist && (
-          <div className="wishlist-div" ref={wishlistRef}>
-            {props.wishlistAdded ? (
-              <button
-                className="btn-secondary"
-                onClick={() => props.onDelete(props.id)}
-              >
-                Hapus
-              </button>
-            ) : (
-              <button onClick={addToWishlist}>Simpan ke Wishlist</button>
-            )}
-          </div>
-        )}
       </div>
       <Snackbar
         open={successAlertOpen}

@@ -575,11 +575,11 @@ function Keranjang(props) {
         {product.length > 0 && (
           <div className="container-subtotal">
             <div className="border-subtotal">
-              <div className="container-diskon">
+              {/* <div className="container-diskon">
                 <TbDiscount2 className="icon-container-diskon" />
                 <h1>Makin Hemat Pakai Promo</h1>
                 <MdKeyboardArrowRight className="icon-container-arrow" />
-              </div>
+              </div> */}
               <div className="container-total-produk">
                 <h2>Ringkasan Belanja</h2>
                 <div className="total-pro">
