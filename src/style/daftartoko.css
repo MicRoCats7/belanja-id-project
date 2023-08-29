@@ -296,7 +296,7 @@
 .btn-buatToko {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-top: 20px;
     width: 100%;
     gap: 10px;
@@ -325,10 +325,10 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    margin-left: 20px;
+    margin-left: 55px;
 }
 
-.btn-buatToko a .btn-kembali {
+.btn-buatToko a .btn-kembali-toko {
     width: 100%;
     height: 40px;
     border-radius: 5px;
@@ -338,6 +338,7 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+
 }
 
 .timeline-toko {

@@ -87,25 +87,27 @@ body.active-modal {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    gap: 10px;
   }
   
   .back{
-    background-color: #8f8b8b; 
-    color: white;
+    background-color: #ffff; 
+    color: black;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     display: flex;
     align-items: center;
+    border: 1px solid #000000;
     justify-content: center;
-    width: 40%;
+    width: 50%;
     gap: 10px;
     transition: background-color 0.3s;
   }
 
 .confirm-hapus{
-    background-color: #ff0000; 
+    background-color: #EF233C; 
     color: rgb(255, 255, 255);
     border: none;
     padding: 8px 16px;
@@ -114,14 +116,11 @@ body.active-modal {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40%;
+    width: 50%;
     gap: 10px;
     transition: background-color 0.3s;
 }
 
-.tutup-email{
-
-}
 .modal-date, .overlay-date {
     width: 100vw;
     height: 100vh;
@@ -134,6 +133,18 @@ body.active-modal {
     background: rgba(49, 49, 49, 0.5);
 }
 
+
+.modal-logout .overlay-logout{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    overflow: hidden;
+    background: rgba(49, 49, 49, 0.5);
+}
 
 .ubah-nama-user{
     color: #EF233C;
@@ -200,8 +211,6 @@ body.active-modal {
     background: rgba(49, 49, 49, 0.5);
 }
   
-
-
 /* 
 .bg__modal__cropper .modal__cropper {
     align-items: center;
@@ -333,6 +342,7 @@ body.active-modal {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 10px;
 }
 
 
@@ -376,12 +386,22 @@ body.active-modal {
 }
 
 .modal-content-logout{
-    background-color: #fff;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  width: 300px;
+  width:400px;
+  height: 300px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tulisan-logout {
+    font-size: 16px;
+    text-align: center;
 }
 
 .modal-content-nomerhp{
@@ -430,6 +450,38 @@ body.active-modal {
     margin-top: 20px;
   }
   
+  .modal-button-logout{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .btn-submit-logout{
+    padding: 8px 16px;
+    width: 50%;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #EF233C;
+    color: #fff;
+  }
+
+
+  .btn-batal-logout{
+    padding: 8px 16px;
+    font-size: 16px;
+    width: 50%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    color: #000000;
+    width: 50%;
+  }
+
   .btn-lanjutkan,
   .btn-kembali {
     padding: 8px 16px;
@@ -480,8 +532,8 @@ body.active-modal {
 }
 
 .modal-content-delete{
-    width: 400px;
-    height: 200px;
+    width: 350px;
+    height: 250px;
     background-color: white;
     border-radius: 10px;
     position: fixed;
@@ -494,6 +546,10 @@ body.active-modal {
     display: -webkit-box;
     display: -ms-flexbox;
     overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px
 }
 
 .modal-content-date{
@@ -719,7 +775,9 @@ body.active-modal {
   }
   
   .wrapper__btn button:first-child {
-    background-color: #666; 
+    background-color: #ffffff; 
+    color: #000000;
+    border: 1px solid #000000;
   }
   
   .wrapper__btn button:nth-child(2) {
@@ -1164,7 +1222,7 @@ input .input-nomer {
 }
 
 .btn-delete-popup {
-    background-color: #ff0000; 
+    background-color: #EF233C; 
     color: white;
     border: none;
     padding: 8px 16px;
@@ -1173,23 +1231,18 @@ input .input-nomer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40%;
+    width: 50%;
     gap: 10px;
-    transition: background-color 0.3s;
   }
-  
-    .btn-delete-popup:hover {
-        background-color: #cc0000; 
-    }
 
 .btn-cancel-product{
-    background-color: #8f8b8b; 
-    color: white;
-    border: none;
+    background-color: #ffffff; 
+    color: black;
+    border: 1px solid #000000;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    width: 100px;
+    width: 50%;
     }
 
 
@@ -1197,7 +1250,7 @@ input .input-nomer {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: auto;
+    gap: 10px;
     padding: 0 1rem;
   }
      

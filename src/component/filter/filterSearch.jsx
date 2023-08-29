@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import apiurl from "../../utils/apiurl";
 import axios from "axios";
 
-function App({ onProvincesSelect, onPriceFilter }) {
+function App({ onProvincesSelect, onPriceFilter, onRatingFilter }) {
   const [accordionOpen, setAccordionOpen] = useState(true);
   const [accordionOpen2, setAccordionOpen2] = useState(true);
   const [accordionOpen3, setAccordionOpen3] = useState(true);
@@ -153,7 +153,8 @@ function App({ onProvincesSelect, onPriceFilter }) {
   // };
 
   const handleFilter = () => {
-    onPriceFilter(minPrice, maxPrice);
+    onPriceFilter(minPrice, maxPrice, minRating);
+    onRatingFilter(valueRate);
   };
 
   const handleProvinceChange = (provinceId) => {
@@ -166,6 +167,14 @@ function App({ onProvincesSelect, onPriceFilter }) {
 
       onProvincesSelect(updatedSelectedProvinces);
       return updatedSelectedProvinces;
+    });
+  };
+
+  const handleChangeRating = (newValue, ratingIndex) => {
+    setMinRatings((prevRatings) => {
+      const updatedRatings = [...prevRatings];
+      updatedRatings[ratingIndex] = newValue;
+      return updatedRatings;
     });
   };
   useEffect(() => {
@@ -281,23 +290,48 @@ function App({ onProvincesSelect, onPriceFilter }) {
         >
           <div className="page-filter">
             <div className="page-filter-rate">
-              <Rating name="read-only" value={valueRate} readOnly />
+              <Rating
+                name="read-only"
+                value={valueRate[0]}
+                readOnly
+                onChange={(event, newValue) => handleChangeRating(newValue, 0)}
+              />
               <h1>Keatas</h1>
             </div>
             <div className="page-filter-rate">
-              <Rating name="read-only" value={valueRate2} readOnly />
+              <Rating
+                name="read-only"
+                value={valueRate[1]}
+                readOnly
+                onChange={(event, newValue) => handleChangeRating(newValue, 1)}
+              />
               <h1>Keatas</h1>
             </div>
             <div className="page-filter-rate">
-              <Rating name="read-only" value={valueRate3} readOnly />
+              <Rating
+                name="read-only"
+                value={valueRate[2]}
+                readOnly
+                onChange={(event, newValue) => handleChangeRating(newValue, 2)}
+              />
               <h1>Keatas</h1>
             </div>
             <div className="page-filter-rate">
-              <Rating name="read-only" value={valueRate4} readOnly />
+              <Rating
+                name="read-only"
+                value={valueRate[3]}
+                readOnly
+                onChange={(event, newValue) => handleChangeRating(newValue, 3)}
+              />
               <h1>Keatas</h1>
             </div>
             <div className="page-filter-rate">
-              <Rating name="read-only" value={valueRate5} readOnly />
+              <Rating
+                name="read-only"
+                value={valueRate[4]}
+                readOnly
+                onChange={(event, newValue) => handleChangeRating(newValue, 4)}
+              />
               <h1>Keatas</h1>
             </div>
           </div>

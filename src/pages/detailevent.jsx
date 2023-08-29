@@ -13,21 +13,29 @@ import apiurl from "../utils/apiurl";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import token from "../utils/token";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Detailevent() {
   const { id } = useParams();
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
-
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   useEffect(() => {
-    checkUserRegistration();
     getEventById();
+    checkUserRegistrationUser();
   }, []);
 
   function getEventById() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token()}`,
+      },
+    };
     axios
-      .get(apiurl() + `events?id=${id}`)
+      .get(apiurl() + `events?id=${id}`, config)
       .then((response) => {
         setSelectedEvent(response.data.data);
         console.log("Data event by ID:", response.data.data);
@@ -45,34 +53,45 @@ function Detailevent() {
     axios
       .post(apiurl() + `events/${id}/register-send-invoice`, null, config)
       .then((response) => {
+        handleSuccessAlertToko();
         setIsRegistered(true);
         setIsRegistering(false);
         console.log("Response data:", response.data);
       })
       .catch((error) => {
+        handleErrorAlertToko();
         setIsRegistering(false);
         console.error(error);
       });
   }
 
-  function checkUserRegistration() {
+  function checkUserRegistrationUser() {
+    const token = localStorage.getItem("token");
+
     const config = {
       headers: {
-        Authorization: `Bearer ${token()}`,
+        Authorization: `Bearer ${token}`,
       },
     };
-
     axios
-      .get(apiurl() + `events/${id}/registered-users`, config)
+      .get(apiurl() + `events/${id}/registration-status`, config)
       .then((response) => {
-        console.log("Response data:", response.data);
-
-        setIsRegistered(response.data.data[0].pivot);
+        console.log("Response data:", response.data.data);
+        const status = response.data.data.status;
+        setIsRegistered(status);
       })
       .catch((error) => {
         console.error(error);
       });
   }
+
+  const handleSuccessAlertToko = () => {
+    setSuccessAlertOpen(true);
+  };
+
+  const handleErrorAlertToko = () => {
+    setErrorAlertOpen(true);
+  };
 
   return (
     <div className="main-evnt">
@@ -121,7 +140,7 @@ function Detailevent() {
                   </h3>
                 </div>
                 <div className="btn-join-event">
-                  {!isRegistered ? (
+                  {isRegistered === "pending" ? (
                     <button
                       className=""
                       onClick={handleJoinEvent}
@@ -147,6 +166,34 @@ function Detailevent() {
         )}
       </div>
       <Footer />
+      <Snackbar
+        open={successAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setSuccessAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setSuccessAlertOpen(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Berhasil Mendaftar Event!, silahkan cek email anda
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setErrorAlertOpen(false)}
+      >
+        <MuiAlert
+          onClose={() => setErrorAlertOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Daftar Event Gagal
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

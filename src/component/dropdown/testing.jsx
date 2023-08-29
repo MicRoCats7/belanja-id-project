@@ -55,47 +55,6 @@ function ImageUploader() {
 
   return (
     <div>
-      <div>
-        <label
-          htmlFor="input-file"
-          className={`file-labelprofile ${
-            !selectedImagePath ? "no-border" : ""
-          }`}
-        >
-          {previewImg ? (
-            <img
-              src={previewImg}
-              width={170}
-              height={160}
-              alt="Uploaded"
-              className="uploaded-image-toko"
-            />
-          ) : (
-            <>
-              <BiImageAdd color="#606060" size={60} />
-              <p>Pilih Foto Anda</p>
-            </>
-          )}
-        </label>
-        <input
-          id="input-file"
-          type="file"
-          accept=".jpg, .jpeg, .png"
-          className="input-field"
-          onChange={handleImageChange1}
-          hidden
-        />
-        {previewImg && (
-          <div className="upload-row">
-            <span className="upload-content">
-              <FiTrash2 onClick={() => setPreviewImg("")} />
-            </span>
-          </div>
-        )}
-      </div>
-      <button onClick={AploadFotoProfile} className="input-image">
-        Simpan
-      </button>
       <Snackbar
         open={successAlertOpen}
         autoHideDuration={3000}

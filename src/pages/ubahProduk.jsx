@@ -99,13 +99,18 @@ function UbahProduk() {
       })
       .then((response) => {
         const productData = response.data.data;
+        const cleanPicturePath = productData.picturePath.replace(
+          "https://belanja.penuhmakna.co.id/",
+          ""
+        );
         setProductToEdit(productData);
         setInputText(productData.name);
         setSelectedCategory(productData.category_id);
         setKondisiProduk(productData.kondisi_produk);
         setDeskripsiProduk(productData.description);
         setSKU(productData.sku);
-        setPreviewImg1(productData.picturePath[0]);
+        // setPreviewImg1(productData.picturePath);
+        setPreviewImg1(cleanPicturePath);
         setValue3(productData.quantity);
         setValue2(productData.price);
         setValue4(productData.weight);
@@ -113,6 +118,7 @@ function UbahProduk() {
         setPreviewImg3(productData.photo2);
         setPreviewImg4(productData.photo3);
         setPreviewImg5(productData.photo4);
+        console.log(cleanPicturePath);
         console.log("Data produk dari server:", response.data.data);
       })
       .catch((error) => console.error(error));

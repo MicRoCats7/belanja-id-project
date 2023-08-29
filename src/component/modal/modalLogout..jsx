@@ -78,7 +78,9 @@ function ModalLogout({ onClose }) {
           <div className="modal-content-logout">
             <h2>Logout</h2>
             <div className="conten-forgot-pw">
-              <h3 className="masuk-email-pw">Yakin Dek Mau Keluar?</h3>
+              <h3 className="logout-tulisan">
+                Anda yakin ingin keluar dari Belanja.id?
+              </h3>
               <button className="btn-logout" onClick={logout}>
                 Logout
               </button>

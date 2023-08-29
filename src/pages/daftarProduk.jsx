@@ -27,21 +27,46 @@ function DaftarProduk() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [priceSortOption, setPriceSortOption] = useState("default");
 
+  // function performSearch(searchQuery) {
+  //   const lowercasedQuery = searchQuery.toLowerCase();
+  //   const filtered = products.filter(
+  //     (product) =>
+  //       product &&
+  //       product.name &&
+  //       product.sku &&
+  //       product.kondisi_produk &&
+  //       product.category_id &&
+  //       (product.name.toLowerCase().includes(lowercasedQuery) ||
+  //         product.sku.toLowerCase().includes(lowercasedQuery)) &&
+  //       (conditionFilter === "all" ||
+  //         product.kondisi_produk.toLowerCase() === conditionFilter) &&
+  //       (selectedCategory === "all" || product.category_id === selectedCategory)
+  //   );
+
+  //   if (priceSortOption === "harga-tertinggi") {
+  //     filtered.sort((a, b) => b.price - a.price);
+  //   } else if (priceSortOption === "harga-terendah") {
+  //     filtered.sort((a, b) => a.price - b.price);
+  //   }
+  //   setFilteredProducts(filtered);
+
   function performSearch(searchQuery) {
     const lowercasedQuery = searchQuery.toLowerCase();
-    const filtered = products.filter(
-      (product) =>
-        product &&
+    const filtered = products.filter((product) => {
+      const isMatchingSearch =
         product.name &&
-        product.sku &&
-        product.kondisi_produk &&
-        product.category_id &&
         (product.name.toLowerCase().includes(lowercasedQuery) ||
-          product.sku.toLowerCase().includes(lowercasedQuery)) &&
-        (conditionFilter === "all" ||
-          product.kondisi_produk.toLowerCase() === conditionFilter) &&
-        (selectedCategory === "all" || product.category_id === selectedCategory)
-    );
+          (product.sku && product.sku.toLowerCase().includes(lowercasedQuery)));
+
+      const isMatchingCondition =
+        conditionFilter === "all" ||
+        product.kondisi_produk.toLowerCase() === conditionFilter;
+
+      const isMatchingCategory =
+        selectedCategory === "all" || product.category_id === selectedCategory;
+
+      return isMatchingSearch && isMatchingCondition && isMatchingCategory;
+    });
 
     if (priceSortOption === "harga-tertinggi") {
       filtered.sort((a, b) => b.price - a.price);
@@ -50,6 +75,7 @@ function DaftarProduk() {
     }
     setFilteredProducts(filtered);
   }
+
   const handleDeleteProduct = (productId) => {
     // Memperbarui state produk setelah penghapusan
     const updatedProducts = products.filter(

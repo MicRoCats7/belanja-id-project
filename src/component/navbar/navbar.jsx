@@ -397,13 +397,20 @@ function Navbar() {
         <div className="modal-overlay">
           <div className="modal-content-logout">
             <h2>Logout</h2>
-            <p>Yakin Dek Mau Keluar?</p>
-            <div className="modal-buttons">
-              <button className="btn-batal" onClick={handleLogoutModalClose}>
+            <div className="text-logout">
+              <p className="tulisan-logout">
+                Apakah Anda yakin ingin keluar dari Belanja.id?
+              </p>
+            </div>
+            <div className="modal-button-logout">
+              <button
+                className="btn-batal-logout"
+                onClick={handleLogoutModalClose}
+              >
                 Batal
               </button>
               <button
-                className="btn-submit"
+                className="btn-submit-logout"
                 onClick={logout}
                 disabled={isLoading}
               >

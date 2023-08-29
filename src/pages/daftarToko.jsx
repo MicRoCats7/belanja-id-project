@@ -276,7 +276,7 @@ function DaftarToko() {
             ayo isi detail tokomu!
           </h1>
           <div className="con-input">
-            <div className="timeline">
+            <div className="timelines">
               <div className="step">
                 <form onSubmit={onSubmit}>
                   <div className="step__marker">
@@ -391,7 +391,7 @@ function DaftarToko() {
                     </div>
                     <div className="btn-buatToko">
                       <Link to={"/"}>
-                        <button className="btn-kembali">Kembali</button>
+                        <button className="btn-kembali-toko">Kembali</button>
                       </Link>
                       <button className="btn-create-shop">Buat Toko</button>
                     </div>

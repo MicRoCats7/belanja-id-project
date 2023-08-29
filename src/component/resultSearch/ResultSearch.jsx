@@ -32,6 +32,8 @@ function ResultSearch() {
   const [queryType, setQueryType] = useState("store");
   const [queryTypeProduk, setQueryTypeP] = useState("product");
   const [selectedProvinces, setSelectedProvinces] = useState([]);
+  const [minRating, setMinRating] = useState(0);
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -48,7 +50,7 @@ function ResultSearch() {
     });
   }, [query, activeTab, categoryId, selectedProvinces, minPrice, maxPrice]);
 
-  const fetchProducts = async (store_id, minPrice, maxPrice) => {
+  const fetchProducts = async (store_id, minPrice, maxPrice, minRating) => {
     setIsSearching(true);
 
     try {
@@ -81,6 +83,7 @@ function ResultSearch() {
               params: {
                 price_from: minPrice,
                 price_to: maxPrice,
+                rate: minRating,
               },
             });
           }
@@ -240,6 +243,9 @@ function ResultSearch() {
       fetchProducts(null, minPrice, maxPrice);
     }
   };
+  const handleRatingFilter = (minRating) => {
+    setMinRating(minRating);
+  };
 
   return (
     <div className="pro-filter">
@@ -250,6 +256,7 @@ function ResultSearch() {
               <FilterSearch
                 onProvincesSelect={setSelectedProvinces}
                 onPriceFilter={handlePriceFilter}
+                // onRatingFilter={handleRatingFilter}
               />
             )}
             {activeTab === "ratings" && <FilterToko />}

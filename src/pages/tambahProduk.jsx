@@ -121,10 +121,10 @@ function TambahProduk() {
       isValid = false;
     }
 
-    if (sku.trim() === "") {
-      setSkuError(true);
-      isValid = false;
-    }
+    // if (sku.trim() === "") {
+    //   setSkuError(true);
+    //   isValid = false;
+    // }
 
     if (selectedCategory === "") {
       setSelectedCategoryError(true);
@@ -774,7 +774,7 @@ function TambahProduk() {
                   <div className="namapro-top">
                     <h1>SKU (Stock Keeping Unit)</h1>
                     <div className="box-wajib">
-                      <p>Wajib</p>
+                      <p>Opsional</p>
                     </div>
                   </div>
                   <p>

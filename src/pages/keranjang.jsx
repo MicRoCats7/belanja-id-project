@@ -323,6 +323,31 @@ function Keranjang(props) {
       });
   }
 
+  const handleDeleteItem = async (wishlistId) => {
+    try {
+      const response = await axios.delete(
+        apiurl() + "wishlist/delete/" + wishlistId,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        handleSuccessAlertOpen();
+        console.log("Item berhasil dihapus dari API");
+        setDataWhislist((prevData) =>
+          prevData.filter((item) => item.id !== wishlistId)
+        );
+      } else {
+        console.error("Gagal menghapus item dari API");
+      }
+    } catch (error) {
+      console.error("Gagal menghapus item dari API:", error);
+    }
+  };
+
   const addToWishlist = async (productId) => {
     try {
       const response = await axios.post(
@@ -554,7 +579,7 @@ function Keranjang(props) {
                         <div className="wishlist-bottom-action">
                           <BsTrash3
                             className="icon-trash-cart"
-                            onClick={() => deleteItem(item.product.id)}
+                            onClick={() => handleDeleteItem(item.id)}
                           />
                           <div
                             className="btn-keranjang-action"
