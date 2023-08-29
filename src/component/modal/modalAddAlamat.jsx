@@ -58,13 +58,18 @@ function ModalAlamat({ addNewAlamat }) {
     }
   };
 
-  const fetchCitiesByProvince = async (provinceId) => {
+  const fetchCitiesByProvince = async (selectedId) => {
     try {
       const response = await axios.get(
-        apiurl() + `cities?province_id=${provinceId}`
+        apiurl() + `cities?province_id=${selectedId}`
       );
       const data = response.data;
-      setCities(data.data);
+      const formattedCities = data.data.map((city) => ({
+        ...city,
+        city_id: parseInt(city.city_id),
+        province_id: parseInt(city.province_id),
+      }));
+      setCities(formattedCities);
     } catch (error) {
       console.log(error);
     }

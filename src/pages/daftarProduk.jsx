@@ -201,8 +201,8 @@ function DaftarProduk() {
                   <select
                     name="urutkan-produk"
                     id="urutkan-produk"
-                    value={priceSortOption} // Memberikan nilai state priceSortOption pada value
-                    onChange={(e) => setPriceSortOption(e.target.value)} // Update state priceSortOption saat pengguna memilih opsi pengurutan harga
+                    value={priceSortOption}
+                    onChange={(e) => setPriceSortOption(e.target.value)}
                   >
                     <option value="default">Urutkan</option>
                     <option value="harga-tertinggi">Harga Tertinggi</option>
@@ -212,7 +212,7 @@ function DaftarProduk() {
               </div>
             </div>
             <div className="table-produk">
-              <tauble>
+              <table>
                 <tr>
                   <th>No</th>
                   <th>INFO PRODUK</th>
@@ -279,7 +279,7 @@ function DaftarProduk() {
                     </td>
                   </tr>
                 )}
-              </tauble>
+              </table>
             </div>
           </div>
           <Snackbar

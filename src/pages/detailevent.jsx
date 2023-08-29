@@ -68,7 +68,7 @@ function Detailevent() {
       .then((response) => {
         console.log("Response data:", response.data);
 
-        setIsRegistered(response.data.data[0].pivot);
+        setIsRegistered(response.data.data);
       })
       .catch((error) => {
         console.error(error);

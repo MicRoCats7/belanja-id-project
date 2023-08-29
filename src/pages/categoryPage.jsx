@@ -76,10 +76,10 @@ function CategoryPage() {
           <div className="filter-container">
             <div className="filter-sidebar">
               <div className="filter-pro">
-                <FilterSearch
+                {/* <FilterSearch
                   onProvincesSelect={setSelectedProvinces}
                   onPriceFilter={handlePriceFilter}
-                />
+                /> */}
               </div>
             </div>
           </div>

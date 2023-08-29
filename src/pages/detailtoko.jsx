@@ -40,7 +40,7 @@ function Detailtoko() {
       .then((response) => {
         const storeData = response.data.data[0];
         setToko(storeData);
-        setIsFollowing(response.data.data.followers);
+        setIsFollowing(response.data.data);
         console.log("Data Store by ID:", response.data.data);
       })
       .catch((error) => console.error(error));

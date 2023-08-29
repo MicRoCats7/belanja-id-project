@@ -254,10 +254,10 @@ function ModalUlasan({
               cols="30"
               rows="10"
               placeholder="Tulis Review Anda"
-              onChange={(e) => setReviewText(e.target.value.split("\n")[1])} // Menghilangkan label saat mengedit ulasan
+              onChange={(e) => setReviewText(e.target.value)} // Menghilangkan label saat mengedit ulasan
             ></textarea>
           </div>
-          <div className="label-oto-review">
+          {/* <div className="label-oto-review">
             {ratingLabels.map((label, index) => (
               <div
                 className={`label-review ${
@@ -269,7 +269,7 @@ function ModalUlasan({
                 <h1>{label}</h1>
               </div>
             ))}
-          </div>
+          </div> */}
           <div className="btn-kirim-review">
             <button
               className="btn-batal-ulasan"
