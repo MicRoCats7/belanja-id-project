@@ -41,7 +41,7 @@ function Register() {
     formData.append("name", data.username);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("phone", data.phone || "Nomor kamu Belum Terdaftar");
+    formData.append("phone", data.phone || "belum terdaftar");
 
     try {
       setLoading(true);
@@ -50,7 +50,7 @@ function Register() {
           "Content-Type": "multipart/form-data",
         },
       });
-      handleSuccessAlertOpen();
+      // handleSuccessAlertOpen();
       setShowVerificationModal(true);
       console.log("showVerificationModal:", showVerificationModal);
       console.log(response);

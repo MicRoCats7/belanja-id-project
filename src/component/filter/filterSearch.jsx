@@ -27,6 +27,7 @@ function App({ onProvincesSelect, onPriceFilter, onRatingFilter }) {
   const dataPerPage = 15;
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [minRating, setMinRatings] = useState([1, 2, 3, 4, 5]);
 
   const handleMinPriceChange = (event) => {
     setMinPrice(event.target.value);

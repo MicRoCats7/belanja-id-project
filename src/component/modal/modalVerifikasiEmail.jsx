@@ -80,13 +80,13 @@ function ModalVerifikasiEmail({ onClose, email, user }) {
               Silahkan klik tombol lanjutkan untuk memverifikasi , dan cek
               melalui email anda!
             </p>
-            <div className="modal-buttons">
+            <div className="modal-button">
               <button
                 className="btn-lanjutkan"
                 onClick={handleResendVerificationEmail}
                 disabled={isLoading}
               >
-                {isLoading ? "Loading..." : "Lanjutkan"}{" "}
+                {isLoading ? "Loading....." : "Lanjutkan"}{" "}
               </button>
               <button className="tutup-email" onClick={toggleModal}>
                 Kembali

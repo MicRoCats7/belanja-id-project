@@ -57,12 +57,12 @@ function ModalDetailTransaksi({
             </div>
             <div className="info-produk">
               {selectedTransaction.product && (
-                <h2>{selectedTransaction.product.name}</h2>
+                <h2>{selectedTransaction.product_name}</h2>
               )}
               {selectedTransaction.product && (
                 <h2 style={{ color: "#727272" }}>
                   {selectedTransaction.quantity}x Rp{" "}
-                  {formatPrice(selectedTransaction.product.price)}
+                  {formatPrice(selectedTransaction.product_price)}
                 </h2>
               )}
             </div>
@@ -133,7 +133,7 @@ function ModalDetailTransaksi({
               </div>
               <div className="no-invoice">
                 {selectedTransaction.product && <h2>Harga Barang</h2>}
-                <span>Rp {formatPrice(selectedTransaction.product.price)}</span>
+                <span>Rp {formatPrice(selectedTransaction.product_price)}</span>
               </div>
               <div className="no-invoice">
                 {selectedTransaction.product && (
