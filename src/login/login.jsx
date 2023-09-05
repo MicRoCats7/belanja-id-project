@@ -68,7 +68,7 @@ function Login() {
       setLoading(false);
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 500);
     } catch (error) {
       handleErrorAlertOpen();
       setLoading(false);
@@ -204,7 +204,7 @@ function Login() {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Alhamdulillah login sukses
+          Kamu berhasil login!
         </MuiAlert>
       </Snackbar>
       <Snackbar

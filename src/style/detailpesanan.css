@@ -232,7 +232,7 @@
     cursor: pointer;
 }
 
-.btn-pilih-shipping button{
+.btn-pilih-shipping button {
     background-color: #EF233C;
     color: #fff;
     border: none;
@@ -317,7 +317,9 @@
 
 /* CSS untuk tombol "Cancel" */
 .modal-buttons button:nth-child(1) {
-    background-color: #bbb;
+    background-color: #fff;
+    border: 2px solid #000;
+    color: #000;
 }
 
 /* hover */

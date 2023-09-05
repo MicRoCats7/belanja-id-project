@@ -147,6 +147,7 @@ function Keranjang(props) {
         setIsLoading(false);
         if (response.data.data && response.data.data.cartItems.length > 0) {
           const cartItems = response.data.data.cartItems;
+          setCart(cartItems);
           const storedCartItems = JSON.parse(localStorage.getItem("cartItems"));
           const updatedProduct = cartItems.map((item) => {
             const storedItem = storedCartItems?.find(
@@ -162,14 +163,17 @@ function Keranjang(props) {
             }
           });
           setCart(updatedProduct);
-          console.log("cart", updatedProduct);
+          // console.log("cart", updatedProduct);
           setCartId(response.data.data.id);
           saveToLocalStorage(updatedProduct);
         } else {
           storedCart();
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false); // Handle error loading state
+      });
   }
 
   function storedCart() {
@@ -284,7 +288,7 @@ function Keranjang(props) {
       console.error("Gagal menambahkan produk ke wishlist:", error);
       handleErrorAlertOpen();
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -428,13 +432,16 @@ function Keranjang(props) {
       </div>
     );
   }
-
+  console.log(isLoading);
+  console.log(product);
   return (
     <div className="cart">
       <Navbar />
       <div className="container-keranjang">
         <div className="container-item-keranjang">
-          {product.length > 0 && (
+          {isLoading ? (
+            <LoadingKeranjang />
+          ) : product.length > 0 ? (
             <>
               <h1>Keranjang</h1>
               <div className="checkbox-keranjang">
@@ -445,16 +452,6 @@ function Keranjang(props) {
                 <label htmlFor="">Pilih Semua</label>
               </div>
               <div className="line-keranjang"></div>
-            </>
-          )}
-          {product.length === 0 ? (
-            isLoading ? (
-              <LoadingKeranjang />
-            ) : (
-              renderEmptyCart()
-            )
-          ) : (
-            <>
               <div className="item-cart">
                 {product.map((item, index) => (
                   <div key={item.id} className="keranjang-item">
@@ -595,7 +592,9 @@ function Keranjang(props) {
                 </div>
               )}
             </>
-          )}
+          ) : product.length === 0 && !isLoading ? (
+            renderEmptyCart()
+          ) : null}
         </div>
         {product.length > 0 && (
           <div className="container-subtotal">

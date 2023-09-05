@@ -76,7 +76,7 @@ function UbahProduk() {
   };
 
   useEffect(() => {
-    getProductByUserId();
+    getProductByUserId(id);
     getCategories();
   }, []);
 
@@ -128,6 +128,7 @@ function UbahProduk() {
     event.preventDefault();
     setIsLoading(true);
     try {
+      const productData = await getProductByUserId(id);
       const formData = new FormData();
       formData.append("name", name);
       formData.append("price", value2);
@@ -137,7 +138,13 @@ function UbahProduk() {
       formData.append("sku", skuInput);
       formData.append("category_id", selectedCategory);
       formData.append("kondisi_produk", kondisiProduk);
-      formData.append("picturePath", selectedImagePath);
+
+      if (selectedImagePath) {
+        formData.append("picturePath", selectedImagePath);
+      } else if (productData && productData.picturePath) {
+        formData.append("picturePath", productData.picturePath);
+      }
+
       if (selectedImagePath2) {
         formData.append("photo1", selectedImagePath2);
       }
@@ -157,7 +164,7 @@ function UbahProduk() {
 
       const token = localStorage.getItem("token");
       const config = {
-        headers: {
+      headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + token,
         },
@@ -168,15 +175,16 @@ function UbahProduk() {
         config
       );
       handleSuccessAlertToko();
+      setIsLoading(false);
       const newProductData = response.data.data;
       console.log("Produk berhasil diedit:", newProductData);
       setTimeout(() => {
         navigate(`/toko/daftarproduk/${newProductData.store_id}`);
-        setIsLoading(false);
       }, 2000);
     } catch (error) {
       handleErrorAlertToko();
       console.error("Error saat mengedit produk:", error);
+      setIsLoading(false);
     }
   };
 
@@ -740,7 +748,7 @@ function UbahProduk() {
                   <div className="namapro-top">
                     <h1>SKU (Stock Keeping Unit)</h1>
                     <div className="box-wajib">
-                      <p>Wajib</p>
+                      <p>Opsional</p>
                     </div>
                   </div>
                   <p>

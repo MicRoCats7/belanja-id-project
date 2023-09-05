@@ -94,11 +94,12 @@ function Navbar() {
         );
         clearInterval(interval); // Stop adding dots
         handleSuccessAlertOpen();
+        setLogoutModalOpen(false);
         localStorage.removeItem("token");
         setIsLoading(false);
         setTimeout(() => {
-          navigate("/login");
-        }, 1500);
+          navigate("/");
+        }, 1000);
       } catch (error) {
         console.error(error);
         setIsLoading(false);
@@ -367,7 +368,9 @@ function Navbar() {
                         <button className="btn-menuju-profile">Profile</button>
                       </Link>
                       <Link to={"/profile/riwayat"}>
-                        <button className="btn-menuju-profile">Riwayat Pesanan</button>
+                        <button className="btn-menuju-profile">
+                          Riwayat Pesanan
+                        </button>
                       </Link>
                       <Link to={"/Whislist"}>
                         <button className="btn-menuju-whislist">
