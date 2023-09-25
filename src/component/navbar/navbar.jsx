@@ -98,7 +98,7 @@ function Navbar() {
         localStorage.removeItem("token");
         setIsLoading(false);
         setTimeout(() => {
-          navigate("/");
+          navigate("/login");
         }, 1000);
       } catch (error) {
         console.error(error);
